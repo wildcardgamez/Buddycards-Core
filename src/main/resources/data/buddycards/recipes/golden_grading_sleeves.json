@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YYY",
+    "YXY",
+    "YYY"
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:grading_sleeve"
+    },
+    "Y": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "result": {
+    "item": "buddycards:golden_grading_sleeve"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "replace": "false",
+  "values": [
+    "buddycards:buddysteel_medal_base",
+    "buddycards:buddysteel_medal_nether",
+    "buddycards:buddysteel_medal_end"
+  ]
+}

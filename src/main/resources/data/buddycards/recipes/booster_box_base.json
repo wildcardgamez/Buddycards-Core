@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:buddycard_pack_base"
+    }
+  },
+  "result": {
+    "item": "buddycards:buddycard_booster_box_base"
+  }
+}

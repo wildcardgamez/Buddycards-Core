@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:acacia_card_display",
+    "buddycards:birch_card_display",
+    "buddycards:crimson_card_display",
+    "buddycards:dark_oak_card_display",
+    "buddycards:jungle_card_display",
+    "buddycards:oak_card_display",
+    "buddycards:spruce_card_display",
+    "buddycards:warped_card_display",
+    "buddycards:buddycard_booster_box_base",
+    "buddycards:buddycard_booster_box_nether",
+    "buddycards:buddycard_booster_box_end",
+    "buddycards:buddycard_booster_box_mystery"
+  ]
+}

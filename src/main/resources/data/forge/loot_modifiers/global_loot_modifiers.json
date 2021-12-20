@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "entries": [
+    "buddycards:abandoned_mineshaft",
+    "buddycards:bastion_bridge",
+    "buddycards:bastion_other",
+    "buddycards:bastion_treasure",
+    "buddycards:buried_treasure",
+    "buddycards:desert_pyramid",
+    "buddycards:end_city_treasure",
+    "buddycards:nether_bridge",
+    "buddycards:piglin_bartering",
+    "buddycards:simple_dungeon",
+    "buddycards:spawn_bonus_chest",
+    "buddycards:village_house"
+  ]
+}

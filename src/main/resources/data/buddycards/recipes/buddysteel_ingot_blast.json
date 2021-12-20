@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "buddycards:buddysteel_blend"
+  },
+  "result": "buddycards:buddysteel_ingot",
+  "experience": 4.0,
+  "cookingtime": 800
+}

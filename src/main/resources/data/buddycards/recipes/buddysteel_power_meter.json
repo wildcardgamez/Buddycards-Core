@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "XYX",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:buddysteel_ingot"
+    },
+    "Y": {
+      "item": "minecraft:quartz"
+    }
+  },
+  "result": {
+    "item": "buddycards:buddysteel_power_meter"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:buddycard_pack_base",
+    "buddycards:buddycard_pack_nether",
+    "buddycards:buddycard_pack_end",
+    "buddycards:buddycard_pack_mystery"
+  ]
+}

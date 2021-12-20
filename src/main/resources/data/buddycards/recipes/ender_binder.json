@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:ender_eye"
+    },
+    {
+      "tag": "buddycards:buddycards"
+    },
+    {
+      "tag": "buddycards:buddycards"
+    },
+    {
+      "tag": "buddycards:buddycards"
+    }
+  ],
+  "result":
+  {
+    "item": "buddycards:ender_buddycard_binder",
+    "count": 1
+  }
+}

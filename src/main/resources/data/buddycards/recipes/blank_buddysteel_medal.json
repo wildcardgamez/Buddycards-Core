@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "XX",
+    "XX"
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:buddysteel_ingot"
+    },
+    "#": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "result": {
+    "item": "buddycards:blank_buddysteel_medal"
+  }
+}

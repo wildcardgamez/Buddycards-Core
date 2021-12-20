@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=east,layers=1": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_1",
+      "y": 90
+    },
+    "facing=north,layers=1": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_1"
+    },
+    "facing=south,layers=1": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_1",
+      "y": 180
+    },
+    "facing=west,layers=1": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_1",
+      "y": 270
+    },
+    "facing=east,layers=2": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_2",
+      "y": 90
+    },
+    "facing=north,layers=2": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_2"
+    },
+    "facing=south,layers=2": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_2",
+      "y": 180
+    },
+    "facing=west,layers=2": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_2",
+      "y": 270
+    },
+    "facing=east,layers=3": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_3",
+      "y": 90
+    },
+    "facing=north,layers=3": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_3"
+    },
+    "facing=south,layers=3": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_3",
+      "y": 180
+    },
+    "facing=west,layers=3": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_3",
+      "y": 270
+    },
+    "facing=east,layers=4": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_4",
+      "y": 90
+    },
+    "facing=north,layers=4": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_4"
+    },
+    "facing=south,layers=4": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_4",
+      "y": 180
+    },
+    "facing=west,layers=4": {
+      "model": "buddycards:block/buddycard_booster_box_mystery_4",
+      "y": 270
+    }
+  }
+}

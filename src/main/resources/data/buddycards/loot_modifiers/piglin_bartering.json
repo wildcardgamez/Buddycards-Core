@@ -1,0 +1,10 @@
+{
+  "type": "buddycards:loot_injection",
+  "injection": "buddycards:inject/piglin_bartering",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:gameplay/piglin_bartering"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "buddycards:block/dark_oak_card_display"
+    },
+    "facing=east": {
+      "model": "buddycards:block/dark_oak_card_display",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "buddycards:block/dark_oak_card_display",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "buddycards:block/dark_oak_card_display",
+      "y": 270
+    }
+  }
+}

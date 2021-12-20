@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "buddycards:buddycard_booster_box_nether"
+    }
+  ],
+  "result":
+  {
+    "item": "buddycards:buddycard_pack_nether",
+    "count": 6
+  }
+}

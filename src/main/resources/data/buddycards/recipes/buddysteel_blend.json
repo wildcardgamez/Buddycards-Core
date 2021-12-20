@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:lapis_block"
+    },
+    {
+      "item": "minecraft:iron_block"
+    },
+    {
+      "tag": "buddycards:buddycards"
+    },
+    {
+      "tag": "buddycards:buddycards"
+    },
+    {
+      "tag": "buddycards:buddycards"
+    }
+  ],
+  "result":
+  {
+    "item": "buddycards:buddysteel_blend",
+    "count": 1
+  }
+}
