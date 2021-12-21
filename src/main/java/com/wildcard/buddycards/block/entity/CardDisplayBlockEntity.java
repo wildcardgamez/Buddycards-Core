@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CardDisplayBlockEntity extends BlockEntity implements Clearable {
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(6, ItemStack.EMPTY);
-    private String player = "";
 
     public CardDisplayBlockEntity(BlockPos pos, BlockState state) {
         super(BuddycardsEntities.CARD_DISPLAY_TILE.get(), pos, state);
@@ -33,40 +32,6 @@ public class CardDisplayBlockEntity extends BlockEntity implements Clearable {
         return this.inventory.get(pos - 1);
     }
 
-    @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
-        ContainerHelper.saveAllItems(compound, this.inventory, true);
-        compound.putString("player", this.player);
-    }
-
-    @Override
-    public void load(CompoundTag nbt) {
-        super.load(nbt);
-        this.inventory.clear();
-        ContainerHelper.loadAllItems(nbt, this.inventory);
-        this.player = nbt.getString("player");
-    }
-
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(getLevel().getBlockEntity(worldPosition));
-    }
-
-    @Override
-    public CompoundTag getUpdateTag() {
-        return this.save(new CompoundTag());
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
-    }
-
-    public NonNullList<ItemStack> getInventory() {
-        return this.inventory;
-    }
-
     public int getCardsAmt() {
         int amt = 0;
         for (int i = 0; i < 6; i++) {
@@ -77,8 +42,34 @@ public class CardDisplayBlockEntity extends BlockEntity implements Clearable {
     }
 
     @Override
+    protected void saveAdditional(CompoundTag compound) {
+        CompoundTag nbt = new CompoundTag();
+        ContainerHelper.saveAllItems(nbt, this.inventory, true);
+        compound.put("cards", nbt);
+        super.saveAdditional(compound);
+    }
+
+    @Override
+    public void load(CompoundTag compound) {
+        super.load(compound);
+        this.inventory.clear();
+        ContainerHelper.loadAllItems(compound.getCompound("cards"), this.inventory);
+
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbt = new CompoundTag();
+        saveAdditional(nbt);
+        return nbt;
+    }
+
+    public NonNullList<ItemStack> getInventory() {
+        return this.inventory;
+    }
+
+    @Override
     public void clearContent() {
         this.inventory.clear();
     }
 }
-
