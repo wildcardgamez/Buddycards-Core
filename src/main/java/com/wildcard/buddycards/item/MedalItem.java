@@ -8,11 +8,11 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 public class MedalItem extends Item implements ICurioItem {
-    public MedalItem(MedalTypes type, Item.Properties properties) {
+    public MedalItem(IMedalTypes type, Item.Properties properties) {
         super(properties);
         this.TYPE = type;
     }
-    final MedalTypes TYPE;
+    final IMedalTypes TYPE;
 
     @Override
     public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag unused) {

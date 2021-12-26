@@ -21,7 +21,7 @@ import java.util.List;
 public class BuddysteelSetMedalItem extends MedalItem {
     public static final HashMap<String, BuddysteelSetMedalItem> MEDALS = new HashMap<>();
 
-    public BuddysteelSetMedalItem(BuddycardsItems.BuddycardRequirement shouldLoad, MedalTypes type, String set, Item.Properties properties) {
+    public BuddysteelSetMedalItem(BuddycardsItems.BuddycardRequirement shouldLoad, IMedalTypes type, String set, Item.Properties properties) {
         super(type, properties);
         this.REQUIREMENT = shouldLoad;
         this.SET = set;

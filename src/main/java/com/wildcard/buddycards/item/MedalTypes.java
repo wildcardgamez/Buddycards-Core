@@ -5,8 +5,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Rarity;
 
-public enum MedalTypes {
-    EMPTY((player, mod) -> {}),
+public enum MedalTypes implements IMedalTypes{
     BASE_SET((player, mod) -> {
         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 300, mod, true, false));
     }),
@@ -29,6 +28,7 @@ public enum MedalTypes {
     }
     private final MedalEffect effect;
 
+    @Override
     public void applyEffect(Player player, int mod) {
         effect.applyEffect(player, mod);
     }

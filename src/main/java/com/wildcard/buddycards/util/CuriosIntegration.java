@@ -2,6 +2,7 @@ package com.wildcard.buddycards.util;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.client.renderer.MedalRenderer;
+import com.wildcard.buddycards.item.IMedalTypes;
 import com.wildcard.buddycards.item.MedalTypes;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
@@ -33,7 +34,7 @@ public class CuriosIntegration {
                 .icon(new ResourceLocation(Buddycards.MOD_ID, "misc/medal")).build());
     }
 
-    public static ICapabilityProvider initCapabilities(MedalTypes type, ItemStack itemStack) {
+    public static ICapabilityProvider initCapabilities(IMedalTypes type, ItemStack itemStack) {
         ICurio curio = new ICurio() {
             @Override
             public boolean canRightClickEquip() {
