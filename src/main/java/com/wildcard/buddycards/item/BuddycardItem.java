@@ -39,7 +39,7 @@ public class BuddycardItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         //Show the cards joke/tooltip
-        tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard_" + SET + CARD_NUMBER + ".tooltip").withStyle(ChatFormatting.GRAY));
+        tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
         //Show the set, card number, and shiny symbol if applicable
         TranslatableComponent cn = new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
         cn.append("" + CARD_NUMBER);
