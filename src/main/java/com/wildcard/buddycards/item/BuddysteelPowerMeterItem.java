@@ -1,6 +1,5 @@
 package com.wildcard.buddycards.item;
 
-import com.ibm.icu.impl.Pair;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
 import net.minecraft.ChatFormatting;
@@ -32,18 +31,18 @@ public class BuddysteelPowerMeterItem extends Item {
         if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof BuddysteelPowerMeterItem) {
             if(player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
                 //Specific set
-                Pair<Integer, Integer> cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerSetCompletion(player.getUUID(), card.getSet());
+                BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerSetCompletion(player.getUUID(), card.getSet());
                 player.displayClientMessage(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.set_" + card.getSet())
                         .append(new TranslatableComponent("item.buddycards.buddysteel_power_meter.cards_collected"))
-                        .append(cardsCollected.first + "/" + cardsCollected.second), true);
+                        .append(cardsCollected.top + "/" + cardsCollected.bottom), true);
             }
             else {
                 //Nonspecific set
-                Pair<Integer, Integer> cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerTotalCompletion(player.getUUID());
+                BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerTotalCompletion(player.getUUID());
                 player.displayClientMessage(new TranslatableComponent("item.buddycards.buddysteel_power_meter.total_cards_collected")
-                        .append(cardsCollected.first + "/" + cardsCollected.second), true);
+                        .append(cardsCollected.top + "/" + cardsCollected.bottom), true);
                 CompoundTag nbt = stack.getOrCreateTag();
-                nbt.putInt("power", (int) (11 * (float) cardsCollected.first / cardsCollected.second));
+                nbt.putInt("power", (int) (11 * (float) cardsCollected.top / cardsCollected.bottom));
             }
         }
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);

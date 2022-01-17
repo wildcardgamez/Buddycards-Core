@@ -74,34 +74,24 @@ public class BuddycardCollectionSaveData extends SavedData {
     }
 
     public boolean checkPlayerSetCompleted(UUID uuid, String setName) {
-        return checkPlayerSetCompletionPercent(uuid, setName) >= 1;
+        return checkPlayerSetCompletion(uuid, setName).calc() >= 1;
     }
 
-    public float checkPlayerSetCompletionPercent(UUID uuid, String setName) {
-        Pair<Integer, Integer> pair = checkPlayerSetCompletion(uuid, setName);
-        return (float) pair.first / pair.second;
-    }
-
-    public float checkPlayerTotalCompletionPercent(UUID uuid) {
-        Pair<Integer, Integer> pair = checkPlayerTotalCompletion(uuid);
-        return (float) pair.first / pair.second;
-    }
-
-    public Pair<Integer, Integer> checkPlayerSetCompletion(UUID uuid, String setName) {
+    public Fraction checkPlayerSetCompletion(UUID uuid, String setName) {
         int foundCards = 0, totalCards = BuddycardItem.CARD_LIST.get(setName).size();
         if (CARD_LISTS.containsKey(uuid) && CARD_LISTS.get(uuid).containsKey(setName))
             foundCards += CARD_LISTS.get(uuid).get(setName).size();
-        return Pair.of(foundCards, totalCards);
+        return new Fraction(foundCards, totalCards);
     }
 
-    public Pair<Integer, Integer> checkPlayerTotalCompletion(UUID uuid) {
+    public Fraction checkPlayerTotalCompletion(UUID uuid) {
         int totalCards = 0, foundCards = 0;
         for (String setName: BuddycardItem.CARD_LIST.keySet()) {
             totalCards += BuddycardItem.CARD_LIST.get(setName).size();
             if(CARD_LISTS.containsKey(uuid) && CARD_LISTS.get(uuid).containsKey(setName))
                 foundCards += CARD_LISTS.get(uuid).get(setName).size();
         }
-        return Pair.of(foundCards, totalCards);
+        return new Fraction(foundCards, totalCards);
     }
 
     public void addPlayerCardFound(UUID uuid, String setName, int cardNumber) {
@@ -112,5 +102,19 @@ public class BuddycardCollectionSaveData extends SavedData {
         if(!CARD_LISTS.get(uuid).get(setName).contains(cardNumber))
             CARD_LISTS.get(uuid).get(setName).add(cardNumber);
         setDirty();
+    }
+
+    public static class Fraction {
+        public final int top;
+        public final int bottom;
+
+        Fraction (int i, int j) {
+            top = i;
+            bottom = j;
+        }
+
+        public float calc () {
+            return (float)top/bottom;
+        }
     }
 }
