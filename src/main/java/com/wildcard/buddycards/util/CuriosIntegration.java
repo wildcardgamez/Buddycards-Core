@@ -3,7 +3,6 @@ package com.wildcard.buddycards.util;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.client.renderer.MedalRenderer;
 import com.wildcard.buddycards.item.IMedalTypes;
-import com.wildcard.buddycards.item.MedalTypes;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import net.minecraft.core.Direction;
@@ -57,6 +56,7 @@ public class CuriosIntegration {
 
         return new ICapabilityProvider() {
             private final LazyOptional<ICurio> curioOpt = LazyOptional.of(() -> curio);
+
             @Nonnull
             @Override
             public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
@@ -72,8 +72,12 @@ public class CuriosIntegration {
     }
 
     public static void setupRenderers() {
-        CuriosRendererRegistry.register(BuddycardsItems.MEDAL_BASE.get(), () -> new MedalRenderer("buddysteel_medal_base"));
-        CuriosRendererRegistry.register(BuddycardsItems.MEDAL_NETHER.get(), () -> new MedalRenderer("buddysteel_medal_nether"));
-        CuriosRendererRegistry.register(BuddycardsItems.MEDAL_END.get(), () -> new MedalRenderer("buddysteel_medal_end"));
+        CuriosRendererRegistry.register(BuddycardsItems.MEDAL_BASE.get(), () -> new MedalRenderer(getDefaultMedalTexture("buddysteel_medal_base")));
+        CuriosRendererRegistry.register(BuddycardsItems.MEDAL_NETHER.get(), () -> new MedalRenderer(getDefaultMedalTexture("buddysteel_medal_nether")));
+        CuriosRendererRegistry.register(BuddycardsItems.MEDAL_END.get(), () -> new MedalRenderer(getDefaultMedalTexture("buddysteel_medal_end")));
+    }
+
+    protected static ResourceLocation getDefaultMedalTexture(String name) {
+        return new ResourceLocation(Buddycards.MOD_ID, "textures/models/medal/" + name + ".png");
     }
 }
