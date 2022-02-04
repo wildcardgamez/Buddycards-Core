@@ -33,10 +33,10 @@ public class BuddycardPackItem extends Item {
         FOIL_AMT = foils;
     }
 
-    private final String SET;
-    private final BuddycardsItems.BuddycardRequirement REQUIREMENT;
-    private final int CARD_AMT;
-    private final int FOIL_AMT;
+    protected final String SET;
+    protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
+    protected final int CARD_AMT;
+    protected final int FOIL_AMT;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {

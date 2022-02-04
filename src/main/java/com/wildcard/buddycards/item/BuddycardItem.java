@@ -31,10 +31,10 @@ public class BuddycardItem extends Item {
         CARDS.add(this);
     }
 
-    private final String SET;
-    private final int CARD_NUMBER;
-    private final Rarity RARITY;
-    private final BuddycardsItems.BuddycardRequirement REQUIREMENT;
+    protected final String SET;
+    protected final int CARD_NUMBER;
+    protected final Rarity RARITY;
+    protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {

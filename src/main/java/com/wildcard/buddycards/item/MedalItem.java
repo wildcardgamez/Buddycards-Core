@@ -12,7 +12,7 @@ public class MedalItem extends Item implements ICurioItem {
         super(properties);
         this.TYPE = type;
     }
-    final IMedalTypes TYPE;
+    protected final IMedalTypes TYPE;
 
     @Override
     public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag unused) {

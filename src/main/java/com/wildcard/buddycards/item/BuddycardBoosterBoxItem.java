@@ -19,7 +19,7 @@ public class BuddycardBoosterBoxItem extends BlockItem {
         SET = set;
     }
 
-    final String SET;
+    protected final String SET;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {

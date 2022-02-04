@@ -11,7 +11,7 @@ public class MysteryBuddycardPackItem extends BuddycardPackItem{
         INCLUDE_UNLOADED = includeUnloaded;
     }
 
-    final boolean INCLUDE_UNLOADED;
+    protected final boolean INCLUDE_UNLOADED;
 
     @Override
     public BuddycardItem rollCard(Random random) {

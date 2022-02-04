@@ -43,8 +43,8 @@ public class BuddysteelSetMedalItem extends MedalItem {
         }
     }
 
-    final BuddycardsItems.BuddycardRequirement REQUIREMENT;
-    final String SET;
+    protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
+    protected final String SET;
 
     @Override
     public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag unused) {
