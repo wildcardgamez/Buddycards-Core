@@ -2,6 +2,7 @@ package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.item.*;
+import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -48,12 +49,18 @@ public class BuddycardsItems {
     public static final Item.Properties DEFAULT_MEDAL_PROPERTIES = new Item.Properties().tab(Buddycards.TAB).stacksTo(1).rarity(Rarity.UNCOMMON);
     public static final Item.Properties BUDDYSTEEL_MEDAL_PROPERTIES = new Item.Properties().tab(Buddycards.TAB).stacksTo(1).rarity(Rarity.COMMON);
     public static final BuddycardRequirement DEFAULT_BUDDYCARD_REQUIREMENT = () -> true;
+    public static final SimpleWeightedRandomList<Rarity> DEFAULT_RARITY_WEIGHTS = SimpleWeightedRandomList.<Rarity>builder()
+            .add(Rarity.COMMON, 24)
+            .add(Rarity.UNCOMMON, 12)
+            .add(Rarity.RARE, 3)
+            .add(Rarity.EPIC, 1)
+            .build();
 
     //Packs
-    public static final RegistryObject<BuddycardPackItem> PACK_BASE = ITEMS.register("buddycard_pack_base", () -> new BuddycardPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, "base", 4, 1, DEFAULT_PACK_PROPERTIES));
-    public static final RegistryObject<BuddycardPackItem> PACK_NETHER = ITEMS.register("buddycard_pack_nether", () -> new BuddycardPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, "nether", 4, 1, DEFAULT_PACK_PROPERTIES));
-    public static final RegistryObject<BuddycardPackItem> PACK_END = ITEMS.register("buddycard_pack_end", () -> new BuddycardPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, "end", 4, 1, DEFAULT_PACK_PROPERTIES));
-    public static final RegistryObject<BuddycardPackItem> MYSTERY_PACK = ITEMS.register("buddycard_pack_mystery", () -> new MysteryBuddycardPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, 4, 1, false, RARE_PACK_PROPERTIES));
+    public static final RegistryObject<BuddycardPackItem> PACK_BASE = ITEMS.register("buddycard_pack_base", () -> new BuddycardPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, "base", 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
+    public static final RegistryObject<BuddycardPackItem> PACK_NETHER = ITEMS.register("buddycard_pack_nether", () -> new BuddycardPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, "nether", 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
+    public static final RegistryObject<BuddycardPackItem> PACK_END = ITEMS.register("buddycard_pack_end", () -> new BuddycardPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, "end", 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
+    public static final RegistryObject<BuddycardPackItem> MYSTERY_PACK = ITEMS.register("buddycard_pack_mystery", () -> new MysteryBuddycardPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, 4, 1, DEFAULT_RARITY_WEIGHTS, false, RARE_PACK_PROPERTIES));
     //Binders
     public static final RegistryObject<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES));
     public static final RegistryObject<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES));
@@ -71,9 +78,9 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_NETHER = ITEMS.register("buddysteel_medal_nether", () -> new BuddysteelSetMedalItem(DEFAULT_BUDDYCARD_REQUIREMENT, MedalTypes.NETHER_SET, "nether", DEFAULT_MEDAL_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_END = ITEMS.register("buddysteel_medal_end", () -> new BuddysteelSetMedalItem(DEFAULT_BUDDYCARD_REQUIREMENT, MedalTypes.END_SET, "end", DEFAULT_MEDAL_PROPERTIES));
     //Grading Sleeves
-    public static final RegistryObject<GradingSleeveItem> GRADING_SLEEVE = ITEMS.register("grading_sleeve", () -> new GradingSleeveItem(DEFAULT_PROPERTIES, new float[]{0.4f,0.3f,0.225f,0.073f}));
-    public static final RegistryObject<GradingSleeveItem> GOLDEN_GRADING_SLEEVE = ITEMS.register("golden_grading_sleeve", () -> new GradingSleeveItem(DEFAULT_UNCOMMON_PROPERTIES, new float[]{0.1f,0.4f,0.3f,0.195f}));
-    public static final RegistryObject<GradingSleeveItem> CREATIVE_GRADING_SLEEVE = ITEMS.register("creative_grading_sleeve", () -> new CreativeGradingSleeveItem(DEFAULT_EPIC_PROPERTIES, new float[]{0.1f,0.4f,0.3f,0.19f}));
+    public static final RegistryObject<GradingSleeveItem> GRADING_SLEEVE = ITEMS.register("grading_sleeve", () -> new GradingSleeveItem(DEFAULT_PROPERTIES, new float[]{0.4f, 0.3f, 0.225f, 0.073f}));
+    public static final RegistryObject<GradingSleeveItem> GOLDEN_GRADING_SLEEVE = ITEMS.register("golden_grading_sleeve", () -> new GradingSleeveItem(DEFAULT_UNCOMMON_PROPERTIES, new float[]{0.1f, 0.4f, 0.3f, 0.195f}));
+    public static final RegistryObject<GradingSleeveItem> CREATIVE_GRADING_SLEEVE = ITEMS.register("creative_grading_sleeve", () -> new CreativeGradingSleeveItem(DEFAULT_EPIC_PROPERTIES, new float[]{0.1f, 0.4f, 0.3f, 0.19f}));
     //Card Display Items
     public static final RegistryObject<BlockItem> OAK_CARD_DISPLAY_ITEM = ITEMS.register("oak_card_display", () -> new BlockItem(BuddycardsBlocks.OAK_CARD_DISPLAY.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<BlockItem> SPRUCE_CARD_DISPLAY_ITEM = ITEMS.register("spruce_card_display", () -> new BlockItem(BuddycardsBlocks.SPRUCE_CARD_DISPLAY.get(), DEFAULT_PROPERTIES));
@@ -91,7 +98,7 @@ public class BuddycardsItems {
 
     //Card registration
     public static void registerCards(String set, int startValue, int amount, Rarity rarity, Item.Properties properties, BuddycardRequirement requirement) {
-        for(int i = startValue; i < amount + startValue; i++) {
+        for (int i = startValue; i < amount + startValue; i++) {
             ITEMS.register("buddycard_" + set + i, new BuddycardItem(requirement, set, i, rarity, properties).delegate);
         }
     }
