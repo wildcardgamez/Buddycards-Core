@@ -37,7 +37,7 @@ public class BuddycardBoosterBoxBlock extends Block {
         REQUIREMENT = shouldLoad;
     }
 
-    final BuddycardsItems.BuddycardRequirement REQUIREMENT;
+    protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockReader, BlockPos pos, CollisionContext context) {

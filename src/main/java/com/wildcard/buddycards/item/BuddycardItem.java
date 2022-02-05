@@ -1,6 +1,8 @@
 package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.core.BuddycardsAPI;
+import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
@@ -16,25 +18,22 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BuddycardItem extends Item {
-    public static ArrayList<BuddycardItem> CARDS = new ArrayList<>();
-    public static HashMap<String, ArrayList<BuddycardItem>> CARD_LIST = new HashMap<>();
+//    public static HashMap<String, ArrayList<BuddycardItem>> CARD_LIST = new HashMap<>();
 
-    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, String set, int cardNumber, Rarity rarity, Item.Properties properties) {
+    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Item.Properties properties) {
         super(properties);
         SET = set;
         CARD_NUMBER = cardNumber;
         RARITY = rarity;
         REQUIREMENT = shouldLoad;
-        if(!CARD_LIST.containsKey(SET))
-            CARD_LIST.put(SET, new ArrayList<>());
-        CARD_LIST.get(SET).add(this);
-        CARDS.add(this);
+
+        BuddycardsAPI.registerCard(this);
     }
 
-    private final String SET;
-    private final int CARD_NUMBER;
-    private final Rarity RARITY;
-    private final BuddycardsItems.BuddycardRequirement REQUIREMENT;
+    protected final BuddycardSet SET;
+    protected final int CARD_NUMBER;
+    protected final Rarity RARITY;
+    protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
@@ -45,7 +44,7 @@ public class BuddycardItem extends Item {
         cn.append("" + CARD_NUMBER);
         if(isFoil(stack))
             cn.append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol"));
-        tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.set_" + SET).append(cn).withStyle(ChatFormatting.GRAY));
+        tooltip.add(new TranslatableComponent(SET.getDescriptionId()).append(cn).withStyle(ChatFormatting.GRAY));
         if(stack.hasTag() && stack.getTag().contains("grade")) {
             tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.grade." + stack.getTag().getInt("grade")).withStyle(ChatFormatting.GRAY));
         }
@@ -60,7 +59,7 @@ public class BuddycardItem extends Item {
         return RARITY;
     }
 
-    public String getSet() {
+    public BuddycardSet getSet() {
         return SET;
     }
 

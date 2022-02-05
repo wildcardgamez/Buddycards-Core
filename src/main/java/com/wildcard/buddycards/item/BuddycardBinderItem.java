@@ -25,7 +25,7 @@ public class BuddycardBinderItem extends Item {
         REQUIREMENT = shouldLoad;
     }
 
-    BuddycardsItems.BuddycardRequirement REQUIREMENT;
+    protected BuddycardsItems.BuddycardRequirement REQUIREMENT;
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {

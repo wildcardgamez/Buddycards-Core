@@ -16,8 +16,8 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 public class MedalRenderer implements ICurioRenderer {
-    public MedalRenderer(String name) {
-        texture = new ResourceLocation(Buddycards.MOD_ID, "textures/models/medal/" + name + ".png");
+    public MedalRenderer(ResourceLocation texture) {
+        this.texture = texture;
     }
 
     private final ResourceLocation texture;

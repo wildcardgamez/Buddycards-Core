@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.util.CuriosIntegration;
 import net.minecraft.ChatFormatting;
@@ -19,13 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BuddysteelSetMedalItem extends MedalItem {
-    public static final HashMap<String, BuddysteelSetMedalItem> MEDALS = new HashMap<>();
-
-    public BuddysteelSetMedalItem(BuddycardsItems.BuddycardRequirement shouldLoad, IMedalTypes type, String set, Item.Properties properties) {
+    public BuddysteelSetMedalItem(BuddycardsItems.BuddycardRequirement shouldLoad, IMedalTypes type, BuddycardSet set, Item.Properties properties) {
         super(type, properties);
         this.REQUIREMENT = shouldLoad;
         this.SET = set;
-        MEDALS.put(set, this);
+        this.SET.setMedal(() -> this);
     }
 
     @Override
@@ -38,13 +37,13 @@ public class BuddysteelSetMedalItem extends MedalItem {
                     .withStyle(ChatFormatting.GRAY));
             tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddysteel_medal.set")
                     .withStyle(ChatFormatting.GRAY));
-            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.set_" + SET)
+            tooltip.add(new TranslatableComponent(SET.getDescriptionId())
                     .withStyle(ChatFormatting.GRAY));
         }
     }
 
-    final BuddycardsItems.BuddycardRequirement REQUIREMENT;
-    final String SET;
+    protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
+    protected final BuddycardSet SET;
 
     @Override
     public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag unused) {
