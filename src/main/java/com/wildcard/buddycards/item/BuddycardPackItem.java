@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
 import net.minecraft.ChatFormatting;
@@ -21,10 +21,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-public class BuddycardPackItem extends Item {
-    public BuddycardPackItem(BuddycardsItems.BuddycardRequirement shouldLoad, String set, int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, Properties properties) {
+public abstract class BuddycardPackItem extends Item {
+    public BuddycardPackItem(BuddycardsItems.BuddycardRequirement shouldLoad, int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, Properties properties) {
         super(properties);
-        SET = set;
         REQUIREMENT = shouldLoad;
         CARD_AMT = amount;
         FOIL_AMT = foils;
@@ -35,16 +34,10 @@ public class BuddycardPackItem extends Item {
         }
     }
 
-    protected final String SET;
     protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
     protected final int CARD_AMT;
     protected final int FOIL_AMT;
     protected final SimpleWeightedRandomList<Rarity> rarityWeights;
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.set_" + SET).withStyle(ChatFormatting.GRAY));
-    }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -83,14 +76,8 @@ public class BuddycardPackItem extends Item {
         return optional
                 .map(this::getPossibleCards)
                 .map(cards -> cards.get(random.nextInt(cards.size())))
-                .orElseThrow(() -> new IllegalStateException("Cardset " + SET + " does not contain cards for rarity"));
+                .orElseThrow(() -> new IllegalStateException("Cardpack " + getRegistryName() + " does not contain cards for rarity"));
     }
 
-    protected List<BuddycardItem> getPossibleCards(Rarity rarity) {
-        return BuddycardItem.CARD_LIST
-                .get(SET)
-                .stream()
-                .filter(card -> card.getRarity() == rarity)
-                .toList();
-    }
+    public abstract List<BuddycardItem> getPossibleCards(Rarity rarity);
 }

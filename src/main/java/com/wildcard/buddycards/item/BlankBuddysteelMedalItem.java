@@ -34,10 +34,11 @@ public class BlankBuddysteelMedalItem extends Item {
         ItemStack stack = player.getItemInHand(hand);
         InteractionHand cardHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof BlankBuddysteelMedalItem && player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
-            if(BuddysteelSetMedalItem.MEDALS.containsKey(card.getSet()) && BuddysteelSetMedalItem.MEDALS.get(card.getSet()).REQUIREMENT.shouldLoad()) {
+            BuddysteelSetMedalItem medalItem = card.getSet().getMedal();
+            if(medalItem != null && medalItem.REQUIREMENT.shouldLoad()) {
                 if (BuddycardCollectionSaveData.get(serverLevel).checkPlayerSetCompleted(player.getUUID(), card.getSet())) {
-                    player.displayClientMessage(new TranslatableComponent("item.buddycards.blank_buddysteel_medal.success").append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.set_" + card.getSet())), true);
-                    ItemStack medal = new ItemStack(BuddysteelSetMedalItem.MEDALS.get(card.getSet()));
+                    player.displayClientMessage(new TranslatableComponent("item.buddycards.blank_buddysteel_medal.success").append(new TranslatableComponent(card.getSet().getDescriptionId())), true);
+                    ItemStack medal = new ItemStack(medalItem);
                     CompoundTag nbt = new CompoundTag();
                     nbt.putString("player", player.getName().getString());
                     nbt.putInt("day", (int)(level.getDayTime()/24000));

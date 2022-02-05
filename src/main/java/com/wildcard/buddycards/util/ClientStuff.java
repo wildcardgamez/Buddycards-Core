@@ -2,6 +2,8 @@ package com.wildcard.buddycards.util;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.client.renderer.CardDisplayBlockRenderer;
+import com.wildcard.buddycards.core.BuddycardSet;
+import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import com.wildcard.buddycards.registries.BuddycardsItems;
@@ -24,8 +26,8 @@ public class ClientStuff {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.BINDER_CONTAINER.get(), BinderScreen::new));
-        for (ArrayList<BuddycardItem> set : BuddycardItem.CARD_LIST.values()) {
-            for (BuddycardItem card : set) {
+        for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
+            for (BuddycardItem card : set.getCards()) {
                 event.enqueueWork(() -> ItemProperties.register(card, new ResourceLocation("grade"), (stack, world, entity, idk) -> {
                     if (stack.getTag() != null)
                         return stack.getTag().getInt("grade");

@@ -1,7 +1,6 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.core.BuddycardsAPI;
+import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -15,24 +14,23 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MysteryBuddycardPackItem extends BuddycardPackItem {
-    public MysteryBuddycardPackItem(BuddycardsItems.BuddycardRequirement shouldLoad, int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, boolean includeUnloaded, Properties properties) {
+public class BuddycardSetPackItem extends BuddycardPackItem {
+    public BuddycardSetPackItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, Properties properties) {
         super(shouldLoad, amount, foils, rarityWeights, properties);
-        INCLUDE_UNLOADED = includeUnloaded;
+        SET = set;
     }
 
-    protected final boolean INCLUDE_UNLOADED;
+    protected final BuddycardSet SET;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.set_mystery").withStyle(ChatFormatting.GRAY));
+        tooltip.add(new TranslatableComponent(SET.getDescriptionId()).withStyle(ChatFormatting.GRAY));
     }
 
-    @Override
     public List<BuddycardItem> getPossibleCards(Rarity rarity) {
-        return BuddycardsAPI.getAllCards()
+        return SET.getCards()
                 .stream()
-                .filter(card -> card.getRarity() == rarity && card.shouldBeInMysteryPacks())
+                .filter(card -> card.getRarity() == rarity)
                 .toList();
     }
 }

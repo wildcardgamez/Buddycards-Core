@@ -32,7 +32,7 @@ public class BuddysteelPowerMeterItem extends Item {
             if(player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
                 //Specific set
                 BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerSetCompletion(player.getUUID(), card.getSet());
-                player.displayClientMessage(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.set_" + card.getSet())
+                player.displayClientMessage(new TranslatableComponent(card.getSet().getDescriptionId())
                         .append(new TranslatableComponent("item.buddycards.buddysteel_power_meter.cards_collected"))
                         .append(cardsCollected.top + "/" + cardsCollected.bottom), true);
             }

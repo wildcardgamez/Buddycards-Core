@@ -1,6 +1,8 @@
 package com.wildcard.buddycards.datagen;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.core.BuddycardSet;
+import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -17,17 +19,18 @@ public class CardModelGen extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        for (BuddycardItem card: BuddycardItem.CARDS)
+        for (BuddycardItem card: BuddycardsAPI.getAllCards())
             genCardModel(card.getSet(), card.getCardNumber());
 
     }
 
     /**
      * Makes every model for a card, including all grades for normal and shiny cards
-     * @param setName set of card to generate models for
+     * @param set set of card to generate models for
      * @param cardNum card number of card to generate models for
      */
-    void genCardModel(String setName, int cardNum) {
+    void genCardModel(BuddycardSet set, int cardNum) {
+        String setName = set.getName();
         final ResourceLocation location = new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum);
         ItemModelBuilder card = factory.apply(location)
                 .parent(factory.apply(new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard")))

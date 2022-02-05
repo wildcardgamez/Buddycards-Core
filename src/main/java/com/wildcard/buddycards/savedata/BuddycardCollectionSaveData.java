@@ -2,6 +2,8 @@ package com.wildcard.buddycards.savedata;
 
 import com.ibm.icu.impl.Pair;
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.core.BuddycardSet;
+import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
@@ -73,28 +75,32 @@ public class BuddycardCollectionSaveData extends SavedData {
         return nbt;
     }
 
-    public boolean checkPlayerSetCompleted(UUID uuid, String setName) {
-        return checkPlayerSetCompletion(uuid, setName).calc() >= 1;
+    public boolean checkPlayerSetCompleted(UUID uuid, BuddycardSet set) {
+        return checkPlayerSetCompletion(uuid, set).calc() >= 1;
     }
 
-    public Fraction checkPlayerSetCompletion(UUID uuid, String setName) {
-        int foundCards = 0, totalCards = BuddycardItem.CARD_LIST.get(setName).size();
+    public Fraction checkPlayerSetCompletion(UUID uuid, BuddycardSet set) {
+        String setName = set.getName();
+        int foundCards = 0, totalCards = set.getCards().size();
         if (CARD_LISTS.containsKey(uuid) && CARD_LISTS.get(uuid).containsKey(setName))
             foundCards += CARD_LISTS.get(uuid).get(setName).size();
         return new Fraction(foundCards, totalCards);
     }
 
     public Fraction checkPlayerTotalCompletion(UUID uuid) {
-        int totalCards = 0, foundCards = 0;
-        for (String setName: BuddycardItem.CARD_LIST.keySet()) {
-            totalCards += BuddycardItem.CARD_LIST.get(setName).size();
-            if(CARD_LISTS.containsKey(uuid) && CARD_LISTS.get(uuid).containsKey(setName))
-                foundCards += CARD_LISTS.get(uuid).get(setName).size();
+        int totalCards = BuddycardsAPI.getAllCards().size();
+
+        var playerCollection = CARD_LISTS.get(uuid);
+        if(playerCollection != null) {
+            int foundCards = playerCollection.values().stream().flatMap(List::stream).toList().size();
+            return new Fraction(foundCards, totalCards);
         }
-        return new Fraction(foundCards, totalCards);
+
+        return new Fraction(0, totalCards);
     }
 
-    public void addPlayerCardFound(UUID uuid, String setName, int cardNumber) {
+    public void addPlayerCardFound(UUID uuid, BuddycardSet set, int cardNumber) {
+        String setName = set.getName();
         if(!CARD_LISTS.containsKey(uuid))
             CARD_LISTS.put(uuid, new HashMap<>());
         if(!CARD_LISTS.get(uuid).containsKey(setName))
