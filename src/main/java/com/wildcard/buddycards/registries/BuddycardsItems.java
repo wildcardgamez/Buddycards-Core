@@ -12,6 +12,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 public class BuddycardsItems {
@@ -36,6 +37,9 @@ public class BuddycardsItems {
         registerCards(END_SET, 13, 9, Rarity.UNCOMMON, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
         registerCards(END_SET, 22, 4, Rarity.RARE, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
         registerCards(END_SET, 26, 2, Rarity.EPIC, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
+        //Register seasonal set
+        registerCards(HOLIDAY_SET, 1, 3, Rarity.RARE, DEFAULT_CARD_PROPERTIES, HALLOWEEN_BUDDYCARD_REQUIREMENT);
+        registerCards(HOLIDAY_SET, 4, 3, Rarity.RARE, DEFAULT_CARD_PROPERTIES, CHRISTMAS_BUDDYCARD_REQUIREMENT);
 
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
@@ -43,6 +47,7 @@ public class BuddycardsItems {
     public static final BuddycardSet BASE_SET = new BuddycardSet("base");
     public static final BuddycardSet NETHER_SET = new BuddycardSet("nether");
     public static final BuddycardSet END_SET = new BuddycardSet("end");
+    public static final BuddycardSet HOLIDAY_SET = new BuddycardSet("holiday");
 
     //Default parameters
     public static final Item.Properties DEFAULT_PROPERTIES = new Item.Properties().tab(Buddycards.TAB);
@@ -55,7 +60,11 @@ public class BuddycardsItems {
     public static final Item.Properties DEFAULT_BINDER_PROPERTIES = new Item.Properties().tab(Buddycards.TAB).stacksTo(1).rarity(Rarity.UNCOMMON);
     public static final Item.Properties DEFAULT_MEDAL_PROPERTIES = new Item.Properties().tab(Buddycards.TAB).stacksTo(1).rarity(Rarity.UNCOMMON);
     public static final Item.Properties BUDDYSTEEL_MEDAL_PROPERTIES = new Item.Properties().tab(Buddycards.TAB).stacksTo(1).rarity(Rarity.COMMON);
+
     public static final BuddycardRequirement DEFAULT_BUDDYCARD_REQUIREMENT = () -> true;
+    public static final BuddycardRequirement HALLOWEEN_BUDDYCARD_REQUIREMENT = () -> Calendar.getInstance().get(Calendar.MONTH) == Calendar.OCTOBER && Calendar.getInstance().get(Calendar.DATE) >= 29;
+    public static final BuddycardRequirement CHRISTMAS_BUDDYCARD_REQUIREMENT = () -> Calendar.getInstance().get(Calendar.MONTH) == Calendar.DECEMBER && Calendar.getInstance().get(Calendar.DATE) >= 24 && Calendar.getInstance().get(Calendar.DATE) <= 26;
+
     public static final SimpleWeightedRandomList<Rarity> DEFAULT_RARITY_WEIGHTS = SimpleWeightedRandomList.<Rarity>builder()
             .add(Rarity.COMMON, 24)
             .add(Rarity.UNCOMMON, 12)
