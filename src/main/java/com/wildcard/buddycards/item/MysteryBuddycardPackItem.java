@@ -32,7 +32,7 @@ public class MysteryBuddycardPackItem extends BuddycardPackItem {
     public List<BuddycardItem> getPossibleCards(Rarity rarity) {
         return BuddycardsAPI.getAllCards()
                 .stream()
-                .filter(card -> card.getRarity() == rarity && card.shouldBeInMysteryPacks())
+                .filter(card -> card.getRarity() == rarity && card.shouldLoad())
                 .toList();
     }
 }

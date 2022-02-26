@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class BuddycardBoosterBoxItem extends BlockItem {
-
-
     public BuddycardBoosterBoxItem(Block block, Supplier<BuddycardPackItem> packSupplier, Properties properties) {
         super(block, properties);
         this.packSupplier = packSupplier;

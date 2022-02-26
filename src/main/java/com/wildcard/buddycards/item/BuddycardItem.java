@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BuddycardItem extends Item {
-//    public static HashMap<String, ArrayList<BuddycardItem>> CARD_LIST = new HashMap<>();
-
     public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Item.Properties properties) {
         super(properties);
         SET = set;
@@ -92,7 +90,7 @@ public class BuddycardItem extends Item {
         }
     }
 
-    public boolean shouldBeInMysteryPacks() {
+    public boolean shouldLoad() {
         return REQUIREMENT.shouldLoad();
     }
 }

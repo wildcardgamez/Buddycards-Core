@@ -88,15 +88,23 @@ public class BuddycardCollectionSaveData extends SavedData {
     }
 
     public Fraction checkPlayerTotalCompletion(UUID uuid) {
-        int totalCards = BuddycardsAPI.getAllCards().size();
-
         var playerCollection = CARD_LISTS.get(uuid);
         if(playerCollection != null) {
-            int foundCards = playerCollection.values().stream().flatMap(List::stream).toList().size();
+            int foundCards = 0;
+            int totalCards = 0;
+            for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
+                var playerSet = playerCollection.get(set.getName());
+                for(BuddycardItem card : set.getCards()) {
+                    if(card.shouldLoad()) {
+                        totalCards++;
+                        if(playerSet.contains(card.getCardNumber()))
+                            foundCards++;
+                    }
+                }
+            }
             return new Fraction(foundCards, totalCards);
         }
-
-        return new Fraction(0, totalCards);
+        return new Fraction(0, BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList().size());
     }
 
     public void addPlayerCardFound(UUID uuid, BuddycardSet set, int cardNumber) {
