@@ -6,10 +6,10 @@
   ],
   "key": {
     "X": {
-      "item": "buddycards:buddycard_pack_base"
+      "item": "buddycards:buddycard_pack_mystery"
     }
   },
   "result": {
-    "item": "buddycards:buddycard_booster_box_base"
+    "item": "buddycards:buddycard_booster_box_mystery"
   }
 }
