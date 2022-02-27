@@ -6,12 +6,14 @@ import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import com.wildcard.buddycards.util.ConfigManager;
 import com.wildcard.buddycards.util.CuriosIntegration;
+import com.wildcard.buddycards.util.MobDropHandler;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -25,6 +27,9 @@ public class Buddycards
 
     public Buddycards() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManager.config);
+
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+
         ConfigManager.loadConfig(FMLPaths.CONFIGDIR.get().resolve("buddycards-common.toml").toString());
 
         CuriosIntegration.imc();
@@ -52,4 +57,8 @@ public class Buddycards
             return new ItemStack(BuddycardsItems.PACK_BASE.get().rollCard(new Random()));
         }
     };
+
+    private void setup(final FMLCommonSetupEvent event) {
+        MinecraftForge.EVENT_BUS.register(new MobDropHandler());
+    }
 }
