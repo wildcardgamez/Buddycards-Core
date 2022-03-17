@@ -134,7 +134,7 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.2-5.0.6.3")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.18.2-5.0.6.3:api")
 
-    implementation fg.deobf("curse.maven:jei-238222:3574041")
+    implementation fg.deobf("curse.maven:jei-238222:3695636")
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency

@@ -116,7 +116,8 @@ public class BuddycardsItems {
     public static void registerCards(BuddycardSet set, int startValue, int amount, Rarity rarity, Item.Properties properties, BuddycardRequirement requirement) {
         Objects.requireNonNull(set);
         for (int i = startValue; i < amount + startValue; i++) {
-            ITEMS.register("buddycard_" + set.getName() + i, new BuddycardItem(requirement, set, i, rarity, properties).delegate);
+            int finalI = i;
+            ITEMS.register("buddycard_" + set.getName() + i, () -> new BuddycardItem(requirement, set, finalI, rarity, properties));
         }
     }
 
