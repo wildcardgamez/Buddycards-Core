@@ -16,7 +16,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class BuddycardsMisc {
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, Buddycards.MOD_ID);
     public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Buddycards.MOD_ID);
-    public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLMS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, Buddycards.MOD_ID);
+    public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLMS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, Buddycards.MOD_ID);
 
     public static void registerStuff() {
         ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
