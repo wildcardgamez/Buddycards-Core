@@ -1,6 +1,5 @@
 package com.wildcard.buddycards.util;
 
-import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
@@ -17,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.Collection;
 

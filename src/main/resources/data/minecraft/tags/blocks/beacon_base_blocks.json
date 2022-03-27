@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "buddycards:buddysteel_block"
+    "buddycards:buddysteel_block",
+    "buddycards:crimson_luminis_block",
+    "buddycards:zylex_block"
   ]
 }

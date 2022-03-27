@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:zylex"
+    }
+  },
+  "result": {
+    "item": "buddycards:zylex_block"
+  }
+}
