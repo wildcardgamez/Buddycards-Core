@@ -1,6 +1,8 @@
 package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
+import com.wildcard.buddycards.savedata.PerfectBuddycardCollectionSaveData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -35,7 +37,7 @@ public class GradingSleeveItem extends Item {
 
     public boolean tryGrade(ItemStack card, ItemStack sleeves, Player player, Level level) {
         CompoundTag nbt = card.getOrCreateTag().copy();
-        if(card.getItem() instanceof BuddycardItem && !nbt.contains("grade")) {
+        if(level instanceof ServerLevel serverLevel && card.getItem() instanceof BuddycardItem && !nbt.contains("grade")) {
             int grade;
             float rand = level.getRandom().nextFloat();
             for (grade = 1; grade < 5; grade++) {
@@ -49,8 +51,10 @@ public class GradingSleeveItem extends Item {
             sleeves.shrink(1);
             card.shrink(1);
             ItemHandlerHelper.giveItemToPlayer(player, newCard);
-            if(grade == 5)
+            if(grade == 5) {
                 player.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+                PerfectBuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), ((BuddycardItem) card.getItem()).getSet(), ((BuddycardItem) card.getItem()).getCardNumber());
+            }
             return true;
         }
         return false;

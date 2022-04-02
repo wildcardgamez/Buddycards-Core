@@ -6,14 +6,17 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public enum BuddycardsArmorMaterial implements ArmorMaterial {
-    BUDDYSTEEL(12, 36, new int[]{3, 8, 6, 3}, Ingredient.of(BuddycardsItems.BUDDYSTEEL_INGOT.get()), "buddysteel"),
-    LUMINIS(8, 18, new int[]{3, 8, 6, 3}, Ingredient.of(BuddycardsItems.CRIMSON_LUMINIS.get()), "luminis"),
-    ZYLEX(8, 18, new int[]{3, 8, 6, 3}, Ingredient.of(BuddycardsItems.ZYLEX.get()), "zylex");
+import java.util.function.Supplier;
 
-    BuddycardsArmorMaterial(int enchVal, int dura, int[] red, Ingredient mat, String nameIn) {
+public enum BuddycardsArmorMaterial implements ArmorMaterial {
+    BUDDYSTEEL(12, 36, new int[]{3, 8, 6, 3}, BuddycardsItems.BUDDYSTEEL_INGOT, "buddysteel"),
+    LUMINIS(8, 18, new int[]{3, 8, 6, 3}, BuddycardsItems.CRIMSON_LUMINIS, "luminis"),
+    ZYLEX(8, 18, new int[]{3, 8, 6, 3}, BuddycardsItems.ZYLEX, "zylex");
+
+    BuddycardsArmorMaterial(int enchVal, int dura, int[] red, Supplier<Item> mat, String nameIn) {
         ench = enchVal;
         duraMult = dura;
         material = mat;
@@ -22,7 +25,7 @@ public enum BuddycardsArmorMaterial implements ArmorMaterial {
     }
     int ench;
     int duraMult;
-    Ingredient material;
+    Supplier<Item> material;
     String name;
     int[] dam_red;
 
@@ -50,7 +53,7 @@ public enum BuddycardsArmorMaterial implements ArmorMaterial {
 
     @Override
     public Ingredient getRepairIngredient() {
-        return material;
+        return Ingredient.of(material.get());
     }
 
     @Override

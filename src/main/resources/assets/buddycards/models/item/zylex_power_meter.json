@@ -1,0 +1,74 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "buddycards:item/buddysteel_power_meter/z0"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "minecraft:power": 1
+      },
+      "model": "buddycards:item/zylex_power_meter/1"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 2
+      },
+      "model": "buddycards:item/zylex_power_meter/2"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 3
+      },
+      "model": "buddycards:item/zylex_power_meter/3"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 4
+      },
+      "model": "buddycards:item/zylex_power_meter/4"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 5
+      },
+      "model": "buddycards:item/zylex_power_meter/5"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 6
+      },
+      "model": "buddycards:item/zylex_power_meter/6"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 7
+      },
+      "model": "buddycards:item/zylex_power_meter/7"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 8
+      },
+      "model": "buddycards:item/zylex_power_meter/8"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 9
+      },
+      "model": "buddycards:item/zylex_power_meter/9"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 10
+      },
+      "model": "buddycards:item/zylex_power_meter/10"
+    },
+    {
+      "predicate": {
+        "minecraft:power": 11
+      },
+      "model": "buddycards:item/zylex_power_meter/11"
+    }
+  ]
+}
