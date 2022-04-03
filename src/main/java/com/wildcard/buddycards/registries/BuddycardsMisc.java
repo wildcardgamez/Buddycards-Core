@@ -4,6 +4,7 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.container.BinderContainer;
 import com.wildcard.buddycards.enchantment.EnchantmentBuddyBoost;
 import com.wildcard.buddycards.enchantment.EnchantmentExtraPage;
+import com.wildcard.buddycards.enchantment.EnchantmentRecovery;
 import com.wildcard.buddycards.util.LootInjection;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -27,6 +28,7 @@ public class BuddycardsMisc {
     //Enchantment
     public static final RegistryObject<Enchantment> EXTRA_PAGE = ENCHANTMENTS.register("extra_page", EnchantmentExtraPage::new);
     public static final RegistryObject<Enchantment> BUDDY_BOOST = ENCHANTMENTS.register("buddy_boost", EnchantmentBuddyBoost::new);
+    public static final RegistryObject<Enchantment> RECOVERY = ENCHANTMENTS.register("recovery", EnchantmentRecovery::new);
 
     //Containers
     public static final RegistryObject<MenuType<BinderContainer>> BINDER_CONTAINER = CONTAINERS.register("binder",

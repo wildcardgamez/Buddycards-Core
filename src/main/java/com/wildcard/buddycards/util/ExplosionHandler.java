@@ -12,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ExplosionHandler {
     @SubscribeEvent
-    public void explosion (ExplosionEvent.Detonate event) {
+    public void onBoom (ExplosionEvent.Detonate event) {
         int luminisBlocks = 0, crimsonLuminisBlocks = 0;
         for (int i = 0; i < event.getAffectedBlocks().size(); i++) {
             BlockPos blockPos = event.getAffectedBlocks().get(i);

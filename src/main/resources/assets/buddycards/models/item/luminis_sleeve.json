@@ -1,0 +1,6 @@
+{
+  "parent": "buddycards:item/buddycard",
+  "textures": {
+    "layer0": "buddycards:item/luminis_sleeve"
+  }
+}

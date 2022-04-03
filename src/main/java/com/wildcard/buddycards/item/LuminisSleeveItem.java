@@ -20,39 +20,24 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GradingSleeveItem extends Item {
-    public GradingSleeveItem(Properties properties, float[] odds) {
+public class LuminisSleeveItem extends Item {
+    public LuminisSleeveItem(Properties properties) {
         super(properties);
-        ODDS = odds;
     }
-
-    public final float[] ODDS;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(new TranslatableComponent(getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
     }
 
-    public boolean tryGrade(ItemStack card, ItemStack sleeves, Player player, Level level) {
+    public boolean tryFoil(ItemStack card, ItemStack sleeves, Player player, Level level) {
         CompoundTag nbt = card.getOrCreateTag().copy();
-        if(level instanceof ServerLevel serverLevel && card.getItem() instanceof BuddycardItem && !nbt.contains("grade")) {
-            int grade;
-            float rand = level.getRandom().nextFloat();
-            for (grade = 1; grade < 5; grade++) {
-                if(rand < ODDS[grade-1])
-                    break;
-                rand -= ODDS[grade-1];
-            }
-            nbt.putInt("grade", grade);
+        if(level instanceof ServerLevel && card.getItem() instanceof BuddycardItem && !nbt.contains("foil")) {
             ItemStack newCard = new ItemStack(card.getItem());
-            newCard.setTag(nbt);
+            BuddycardItem.setShiny(newCard);
             sleeves.shrink(1);
             card.shrink(1);
             ItemHandlerHelper.giveItemToPlayer(player, newCard);
-            if(grade == 5) {
-                player.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-                PerfectBuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), ((BuddycardItem) card.getItem()).getSet(), ((BuddycardItem) card.getItem()).getCardNumber());
-            }
             return true;
         }
         return false;
@@ -62,7 +47,7 @@ public class GradingSleeveItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         InteractionHand cardHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         if(level instanceof ServerLevel && player.getItemInHand(cardHand).getItem() instanceof BuddycardItem &&
-            tryGrade(player.getItemInHand(cardHand), player.getItemInHand(hand), player, level))
+                tryFoil(player.getItemInHand(cardHand), player.getItemInHand(hand), player, level))
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
         return super.use(level, player, hand);
     }

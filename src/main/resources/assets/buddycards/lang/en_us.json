@@ -258,5 +258,7 @@
   "enchantment.buddycards.extra_page.desc": "Signifigantly adds more slots to a binder.",
   "enchantment.buddycards.buddy_boost": "Buddy Boost",
   "enchantment.buddycards.buddy_boost.desc": "Upgrades the effects of a Buddysteel Medal",
+  "enchantment.buddycards.recovery": "Rapid Recovery",
+  "enchantment.buddycards.recovery.desc": "Makes cooldowns on gear effects shorter",
   "curios.identifier.medal": "Medal Slot"
 }

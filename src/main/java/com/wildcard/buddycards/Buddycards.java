@@ -4,10 +4,7 @@ import com.wildcard.buddycards.registries.BuddycardsBlocks;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
-import com.wildcard.buddycards.util.ConfigManager;
-import com.wildcard.buddycards.util.CuriosIntegration;
-import com.wildcard.buddycards.util.ExplosionHandler;
-import com.wildcard.buddycards.util.MobDropHandler;
+import com.wildcard.buddycards.util.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -62,5 +59,6 @@ public class Buddycards
     private void setup(final FMLCommonSetupEvent event) {
         MinecraftForge.EVENT_BUS.register(new MobDropHandler());
         MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
+        MinecraftForge.EVENT_BUS.register(new DamageEffectHandler());
     }
 }
