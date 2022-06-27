@@ -11,10 +11,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.ArrayList;
 
 public class CardDisplayBlockRenderer<T extends CardDisplayBlockRenderer> implements BlockEntityRenderer<CardDisplayBlockEntity> {
     final static double[][] NORTH_POSITIONS= {{0.1875, 0.75, 0.125}, {0.5, 0.75, 0.13}, {0.8125, 0.75, 0.125}, {0.1875, 0.25, 0.125}, {0.5, 0.25, 0.13}, {0.8125, 0.25, 0.125}};

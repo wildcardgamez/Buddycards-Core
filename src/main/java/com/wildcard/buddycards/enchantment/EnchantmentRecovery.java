@@ -24,5 +24,5 @@ public class EnchantmentRecovery extends Enchantment{
         return 2;
     }
 
-    static final EnchantmentCategory COOLDOWN_ITEMS = EnchantmentCategory.create("COOLDOWN_ITEMS", i -> (i.equals(BuddycardsItems.LUMINIS_HELMET.get()) || i.equals(BuddycardsItems.ZYLEX_BOOTS.get())));
+    static final EnchantmentCategory COOLDOWN_ITEMS = EnchantmentCategory.create("COOLDOWN_ITEMS", i -> false/*(i.equals(BuddycardsItems.LUMINIS_HELMET.get()) || i.equals(BuddycardsItems.ZYLEX_BOOTS.get()))*/);
 }

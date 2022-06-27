@@ -1,7 +1,6 @@
 package com.wildcard.buddycards.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.client.BuddycardsLayers;
 import com.wildcard.buddycards.client.model.MedalModel;
 import net.minecraft.client.model.EntityModel;
