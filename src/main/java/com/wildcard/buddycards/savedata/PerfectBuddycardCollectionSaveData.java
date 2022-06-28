@@ -94,7 +94,7 @@ public class PerfectBuddycardCollectionSaveData extends SavedData {
             int foundCards = 0;
             int totalCards = 0;
             for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
-                var playerSet = playerCollection.get(set.getName());
+                var playerSet = playerCollection.getOrDefault(set.getName(), new ArrayList<>());
                 for(BuddycardItem card : set.getCards()) {
                     if(card.shouldLoad()) {
                         totalCards++;

@@ -24,21 +24,13 @@ public class BuddycardsArmorItem extends ArmorItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
-    }
-
-    @Override
     public Rarity getRarity(ItemStack stack) {
         return material.equals(BuddycardsArmorMaterial.BUDDYSTEEL) ? Rarity.UNCOMMON : Rarity.EPIC;
     }
 
-    public static final Render renderStuff = new Render();
-
     @Override
     public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(renderStuff);
+        consumer.accept(new Render());
     }
 
     private static final class Render implements IItemRenderProperties {

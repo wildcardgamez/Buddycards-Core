@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Supplier;
 
 public enum BuddycardsToolTier implements Tier {
-    BUDDYSTEEL(2048, 9.0F, 3.0F, 3, 12, BuddycardsItems.BUDDYSTEEL_INGOT),
+    BUDDYSTEEL(2048, 9.0F, 2.5F, 3, 12, BuddycardsItems.BUDDYSTEEL_INGOT),
     LUMINIS(1256, 9.0F, 3.0F, 3, 9, BuddycardsItems.CRIMSON_LUMINIS),
     ZYLEX(1674, 9.0F, 3.0F, 3, 9, BuddycardsItems.ZYLEX);
     int uses;
