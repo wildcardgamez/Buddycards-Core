@@ -1,8 +1,12 @@
 package com.wildcard.buddycards.util;
 
+import com.wildcard.buddycards.block.KineticChamberBlock;
+import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
 import com.wildcard.buddycards.registries.BuddycardsBlocks;
+import com.wildcard.buddycards.registries.BuddycardsEntities;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -13,14 +17,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class ExplosionHandler {
     @SubscribeEvent
     public void onBoom (ExplosionEvent.Detonate event) {
-        int luminisBlocks = 0, crimsonLuminisBlocks = 0;
+        int luminisBlocks = 0;
         for (int i = 0; i < event.getAffectedBlocks().size(); i++) {
             BlockPos blockPos = event.getAffectedBlocks().get(i);
             BlockState targetBlock = event.getWorld().getBlockState(blockPos);
             //Count the block if it's crimson luminis
-            if (targetBlock.getBlock().equals(BuddycardsBlocks.CRIMSON_LUMINIS_BLOCK.get())) {
-                crimsonLuminisBlocks++;
-                event.getWorld().setBlock(blockPos, Blocks.AIR.defaultBlockState(), 11);
+            if (event.getWorld() instanceof ServerLevel server && targetBlock.getBlock().equals(BuddycardsBlocks.KINETIC_CHAMBER.get())) {
+                event.getWorld().getBlockEntity(blockPos, BuddycardsEntities.KINETIC_CHAMBER_TILE.get()).get().absorbExplosion(server);
             }
             //Or normal luminis
             else if (targetBlock.getBlock().equals(BuddycardsBlocks.LUMINIS_BLOCK.get())) {

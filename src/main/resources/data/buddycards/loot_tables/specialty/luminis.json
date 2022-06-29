@@ -1,0 +1,80 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 4,
+          "name": "buddycards:luminis_sleeve"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:luminis_sleeve",
+          "count": 2
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:luminis_sleeve",
+          "count": 3
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:luminis_pickaxe"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:luminis_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:luminis_pickaxe",
+          "functions": [
+            {
+              "type": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:efficiency",
+                "minecraft:fortune"
+              ]
+            },
+            {
+              "type": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:unbreaking",
+                "minecraft:mending"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:luminis_helmet",
+          "functions": [
+            {
+              "type": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:blast_protection",
+                "minecraft:protection",
+                "buddycards:recovery"
+              ]
+            },
+            {
+              "type": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:unbreaking",
+                "minecraft:mending"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

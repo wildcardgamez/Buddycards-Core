@@ -1,0 +1,86 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:zylex_grading_sleeve"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:zylex_grading_sleeve",
+          "count": 2
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:zylex_grading_sleeve",
+          "count": 3
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:zylex_power_meter"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:zylex_hoe"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:zylex_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:zylex_hoe",
+          "functions": [
+            {
+              "type": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:efficiency",
+                "minecraft:silk_touch"
+              ]
+            },
+            {
+              "type": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:unbreaking",
+                "minecraft:mending"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:zylex_boots",
+          "functions": [
+            {
+              "type": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:projectile_protection",
+                "minecraft:feather_falling",
+                "minecraft:protection"
+              ]
+            },
+            {
+              "type": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:unbreaking",
+                "minecraft:mending",
+                "buddycards:recovery"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

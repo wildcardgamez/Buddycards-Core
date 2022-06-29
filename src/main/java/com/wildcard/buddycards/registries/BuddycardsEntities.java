@@ -2,6 +2,7 @@ package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
+import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -26,4 +27,6 @@ public class BuddycardsEntities {
                 Block[] blocks = BuddycardsBlocks.DISPLAY_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
                 return BlockEntityType.Builder.of(CardDisplayBlockEntity::new, blocks).build(null);
             });
+    public static final RegistryObject<BlockEntityType<KineticChamberBlockEntity>> KINETIC_CHAMBER_TILE = TILE_ENTITIES.register("kinetic_chamber",
+            () -> BlockEntityType.Builder.of(KineticChamberBlockEntity::new, BuddycardsBlocks.KINETIC_CHAMBER.get()).build(null));
 }
