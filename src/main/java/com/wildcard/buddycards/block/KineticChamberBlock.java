@@ -37,10 +37,10 @@ public class KineticChamberBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity) {
             if(!player.getItemInHand(hand).isEmpty()) {
                 ItemStack item = player.getItemInHand(hand);
-                if (entity.insertItem(item))
-                    return InteractionResult.SUCCESS;
-                else
-                    return InteractionResult.FAIL;
+                if (entity.insertItem(item)) {
+                    item.shrink(1);
+                }
+                return InteractionResult.SUCCESS;
             }
             else {
                 ItemStack item = entity.takeItem();
@@ -51,7 +51,7 @@ public class KineticChamberBlock extends BaseEntityBlock {
                 }
             }
         }
-        return InteractionResult.PASS;
+        return InteractionResult.FAIL;
     }
 
     @Override

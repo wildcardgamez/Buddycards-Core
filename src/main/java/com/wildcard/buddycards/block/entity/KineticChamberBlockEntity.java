@@ -46,6 +46,7 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
 
     public boolean insertItem(ItemStack item) {
         if (itemSlot.isEmpty()) {
+            item.setCount(1);
             itemSlot = item;
             this.setChanged();
             return true;
@@ -79,7 +80,7 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
     @Override
     protected void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
-        compound.put("item", itemSlot.getTag());
+        compound.put("item", itemSlot.save(new CompoundTag()));
     }
 
     @Override
