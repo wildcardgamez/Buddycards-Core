@@ -34,32 +34,17 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
         itemSlot = ItemStack.EMPTY;
     }
 
-    public ItemStack takeItem() {
-        if (!itemSlot.isEmpty()) {
-            ItemStack item = itemSlot.copy();
-            itemSlot = ItemStack.EMPTY;
-            this.setChanged();
-            return item;
-        }
-        return ItemStack.EMPTY;
+    public ItemStack getItemSlot() {
+        return itemSlot;
     }
 
-    public boolean insertItem(ItemStack item) {
-        if (itemSlot.isEmpty()) {
-            item.setCount(1);
-            itemSlot = item;
-            this.setChanged();
-            return true;
-        }
-        return false;
-    }
-
-    public boolean hasItem() {
-        return !itemSlot.isEmpty();
+    public void setItemSlot(ItemStack stack) {
+        itemSlot = stack;
+        setChanged();
     }
 
     public void absorbExplosion(ServerLevel lvl) {
-        if(lvl.random.nextFloat() < .1) {
+        if(lvl.random.nextFloat() < .5) {
             if(itemSlot.getItem().equals(BuddycardsItems.CRIMSON_LUMINIS_BLOCK.get())) {
                 LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
                 LootTable table = lvl.getServer().getLootTables().get(specialtyLootTable);

@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.block;
 
 import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
+import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -35,29 +36,33 @@ public class KineticChamberBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity) {
-            if(!player.getItemInHand(hand).isEmpty()) {
-                ItemStack item = player.getItemInHand(hand);
-                if (entity.insertItem(item)) {
-                    item.shrink(1);
+            ItemStack stack = player.getItemInHand(hand);
+            if(!entity.getItemSlot().isEmpty()) {
+                ItemStack oldItem = entity.getItemSlot();
+                if (stack.getItem() instanceof BuddycardItem) {
+                    entity.setItemSlot(new ItemStack(stack.getItem()));
+                    stack.shrink(1);
                 }
-                return InteractionResult.SUCCESS;
+                else {
+                    entity.setItemSlot(ItemStack.EMPTY);
+                }
+                if(!player.addItem(oldItem))
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldItem);
             }
-            else {
-                ItemStack item = entity.takeItem();
-                if(!item.isEmpty()) {
-                    if(!player.addItem(item))
-                        Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), item);
-                    return InteractionResult.SUCCESS;
-                }
+            else if(!stack.isEmpty()) {
+                entity.setItemSlot(new ItemStack(stack.getItem()));
+                stack.shrink(1);
             }
         }
-        return InteractionResult.FAIL;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity)
-            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), entity.takeItem());
+        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity) {
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), entity.getItemSlot());
+            entity.setItemSlot(ItemStack.EMPTY);
+        }
         return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
 
@@ -68,7 +73,7 @@ public class KineticChamberBlock extends BaseEntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity && entity.hasItem()) {
+        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity && !entity.getItemSlot().isEmpty()) {
             return 10;
         }
         else
