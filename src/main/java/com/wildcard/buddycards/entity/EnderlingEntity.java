@@ -1,0 +1,133 @@
+package com.wildcard.buddycards.entity;
+
+import com.wildcard.buddycards.registries.BuddycardsItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.npc.Npc;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
+
+public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
+    public static final Ingredient TEMPTATION_ITEMS = Ingredient.of(BuddycardsItems.MYSTERY_PACK.get(), BuddycardsItems.PACK_END.get(), BuddycardsItems.ZYLEX.get());
+
+    public EnderlingEntity(EntityType<? extends PathfinderMob> type, Level lvl) {
+        super(type, lvl);
+        this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
+    }
+
+    public static AttributeSupplier.Builder setupAttributes() {
+        return Mob.createLivingAttributes()
+                .add(Attributes.MAX_HEALTH, 20.0D)
+                .add(Attributes.MOVEMENT_SPEED, .5D)
+                .add(Attributes.FOLLOW_RANGE, 6.0f);
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new PanicGoal(this, 1f));
+        this.goalSelector.addGoal(2, new TemptGoal(this, .75f, TEMPTATION_ITEMS, false));
+        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, .5f, 0.0f));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8.0f));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(6, new FollowMobGoal(this, 0.6f, 1.5f, 6.0f));
+    }
+
+    @Override
+    protected int getExperienceReward(Player player) {
+        return 1 + this.level.random.nextInt(3);
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ENDERMAN_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENDERMAN_DEATH;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return SoundEvents.ENDERMAN_HURT;
+    }
+
+    protected void customServerAiStep() {
+        if (this.level.isDay() && this.tickCount >= 600) {
+            float f = this.getBrightness();
+            if (f > 0.5F && this.level.canSeeSky(this.blockPosition()) && this.random.nextFloat() * 60.0F < (f - 0.4F) * 2.0F) {
+                this.teleport();
+            }
+        }
+        super.customServerAiStep();
+    }
+
+    protected boolean teleport() {
+        if (!this.level.isClientSide() && this.isAlive()) {
+            double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 32.0D;
+            double d1 = this.getY() + (double)(this.random.nextInt(32) - 32);
+            double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 32.0D;
+            return this.teleport(d0, d1, d2);
+        } else {
+            return false;
+        }
+    }
+
+    private boolean teleport(double p_70825_1_, double p_70825_3_, double p_70825_5_) {
+        BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(p_70825_1_, p_70825_3_, p_70825_5_);
+        while(blockpos$mutable.getY() > 0 && !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion()) {
+            blockpos$mutable.move(Direction.DOWN);
+        }
+        BlockState blockstate = this.level.getBlockState(blockpos$mutable);
+        if (blockstate.getMaterial().blocksMotion() && !blockstate.getFluidState().is(Fluids.WATER)) {
+            EntityTeleportEvent event = new EntityTeleportEvent(this, p_70825_1_, p_70825_3_, p_70825_5_);
+            if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return false;
+            boolean success = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
+            if (success && !this.isSilent()) {
+                this.level.playSound(null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
+                this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+            }
+            return success;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        if (this.level.isClientSide) {
+            for(int i = 0; i < 2; ++i) {
+                this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
+            }
+        }
+        super.aiStep();
+    }
+
+    public boolean isSensitiveToWater() {
+        return true;
+    }
+
+    @Override
+    public boolean isBaby() {
+        return true;
+    }
+}

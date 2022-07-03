@@ -1,7 +1,9 @@
 package com.wildcard.buddycards.util;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.CardDisplayBlockRenderer;
+import com.wildcard.buddycards.client.renderer.EnderlingRenderer;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.item.BuddycardItem;
@@ -10,6 +12,7 @@ import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import com.wildcard.buddycards.screen.BinderScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -48,8 +51,16 @@ public class ClientStuff {
         CuriosIntegration.setupRenderers();
     }
 
+    public static ModelLayerLocation ENDERLING_LAYER = new ModelLayerLocation(new ResourceLocation(Buddycards.MOD_ID, "enderling"), "enderling");
+
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(BuddycardsEntities.ENDERLING.get(), EnderlingRenderer::new);
         event.registerBlockEntityRenderer(BuddycardsEntities.CARD_DISPLAY_TILE.get(), CardDisplayBlockRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(ENDERLING_LAYER, EnderlingModel::createBodyLayer);
     }
 }
