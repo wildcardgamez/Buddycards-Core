@@ -27,23 +27,25 @@ public class ExplosionHandler {
             //Check if the block is a kinetic chamber
             if (event.getWorld() instanceof ServerLevel server && targetBlock.getBlock().equals(BuddycardsBlocks.KINETIC_CHAMBER.get()))
                 event.getWorld().getBlockEntity(blockPos, BuddycardsEntities.KINETIC_CHAMBER_TILE.get()).get().absorbExplosion(server);
-            //luminis
+            //Or luminis
             else if (targetBlock.getBlock().equals(BuddycardsBlocks.LUMINIS_BLOCK.get())) {
                 luminisBlocks++;
                 event.getWorld().setBlock(blockPos, Blocks.AIR.defaultBlockState(), 11);
                 replacedExplosion.add(blockPos);
             }
-            //or not
+            //Or another block
             else
                 replacedExplosion.add(blockPos);
         }
         //Replace with
         event.getExplosion().clearToBlow();
         event.getAffectedBlocks().addAll(replacedExplosion);
-        //Calculate rng, needs 2 blocks on average per crimson luminis
-        double rng = event.getWorld().getRandom().nextFloat();
-        if ((int) (luminisBlocks * rng) > 1)
+        //Calculate rng, on average 1
+        double rng = event.getWorld().getRandom().nextFloat() * 2;
+        //Calculate and give amt of crimson luminis
+        int amt = (int) (luminisBlocks * rng / ConfigManager.luminisToCrimsonAvg.get());
+        if (amt >= 1)
             event.getWorld().addFreshEntity(new ItemEntity(event.getWorld(), event.getExplosion().getPosition().x, event.getExplosion().getPosition().y, event.getExplosion().getPosition().z,
-                    new ItemStack(BuddycardsItems.CRIMSON_LUMINIS.get(), (int) (luminisBlocks * rng))));
+                    new ItemStack(BuddycardsItems.CRIMSON_LUMINIS.get(), amt)));
     }
 }

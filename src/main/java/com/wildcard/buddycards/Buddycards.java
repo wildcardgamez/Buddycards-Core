@@ -1,9 +1,6 @@
 package com.wildcard.buddycards;
 
-import com.wildcard.buddycards.registries.BuddycardsBlocks;
-import com.wildcard.buddycards.registries.BuddycardsEntities;
-import com.wildcard.buddycards.registries.BuddycardsItems;
-import com.wildcard.buddycards.registries.BuddycardsMisc;
+import com.wildcard.buddycards.registries.*;
 import com.wildcard.buddycards.util.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -36,6 +33,7 @@ public class Buddycards
         BuddycardsEntities.registerEntities();
         BuddycardsItems.registerItems();
         BuddycardsMisc.registerStuff();
+        BuddycardsFeatures.registerFeatures();
 
         MinecraftForge.EVENT_BUS.register(this);
 

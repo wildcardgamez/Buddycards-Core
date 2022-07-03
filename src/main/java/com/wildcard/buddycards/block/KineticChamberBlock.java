@@ -3,6 +3,7 @@ package com.wildcard.buddycards.block;
 import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
 import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -35,7 +36,7 @@ public class KineticChamberBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity) {
+        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity && level instanceof ServerLevel) {
             ItemStack stack = player.getItemInHand(hand);
             if(!entity.getItemSlot().isEmpty()) {
                 ItemStack oldItem = entity.getItemSlot();

@@ -3,6 +3,7 @@ package com.wildcard.buddycards.block.entity;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import com.wildcard.buddycards.registries.BuddycardsItems;
+import com.wildcard.buddycards.util.ConfigManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -16,10 +17,10 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
+import java.util.List;
+
 public class KineticChamberBlockEntity extends BlockEntity implements Clearable {
     private ItemStack itemSlot = ItemStack.EMPTY;
-
-    private static final ResourceLocation specialtyLootTable = new ResourceLocation(Buddycards.MOD_ID, "specialty/luminis");
 
     public KineticChamberBlockEntity(BlockPos pos, BlockState state) {
         super(BuddycardsEntities.KINETIC_CHAMBER_TILE.get(), pos, state);
@@ -44,13 +45,17 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
     }
 
     public void absorbExplosion(ServerLevel lvl) {
-        if(lvl.random.nextFloat() < .5) {
-            if(itemSlot.getItem().equals(BuddycardsItems.CRIMSON_LUMINIS_BLOCK.get())) {
+        if(lvl.random.nextFloat() < ConfigManager.kineticSuccessRate.get()) {
+            if(itemSlot.getItem().equals(BuddycardsItems.CRIMSON_LUMINIS_BLOCK.get()) && lvl.random.nextFloat() < ConfigManager.luminisKineticSpecialtyOdds.get()) {
                 LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
-                LootTable table = lvl.getServer().getLootTables().get(specialtyLootTable);
-                itemSlot = table.getRandomItems(builder.create(LootContextParamSets.EMPTY)).get(0);
+                LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/luminis"));
+                List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+                itemSlot = ItemStack.EMPTY;
+                for (ItemStack i: items)
+                    if (!i.isEmpty())
+                        itemSlot = i;
             }
-            else if(itemSlot.getItem().equals(BuddycardsItems.LUMINIS_BLOCK.get()) && lvl.random.nextFloat() < .75) {
+            else if(itemSlot.getItem().equals(BuddycardsItems.LUMINIS_BLOCK.get()) && lvl.random.nextFloat() < ConfigManager.luminisKineticCrimsonOdds.get()) {
                 itemSlot = new ItemStack(BuddycardsItems.CRIMSON_LUMINIS.get());
             }
             else {
