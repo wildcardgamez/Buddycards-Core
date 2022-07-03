@@ -22,6 +22,8 @@ public class BuddycardsFeatures {
 
     public static void registerFeatures() {
         FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        CONFIGURED_FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        PLACED_FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     //Features

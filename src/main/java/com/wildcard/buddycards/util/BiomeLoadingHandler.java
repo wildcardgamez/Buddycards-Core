@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class BiomeLoadingHandler {
     @SubscribeEvent
     public void onBiomeLoad(BiomeLoadingEvent event) {
-        if(BiomeDictionary.getTypes(ResourceKey.create(Registry.BIOME_REGISTRY, event.getName())).contains(BiomeDictionary.Type.HOT)) {
+        if(BiomeDictionary.getTypes(ResourceKey.create(Registry.BIOME_REGISTRY, event.getName())).contains(BiomeDictionary.Type.OVERWORLD)) {
             event.getGeneration().getFeatures(GenerationStep.Decoration.RAW_GENERATION).add(BuddycardsFeatures.PLACED_LUMINIS_VEIN.getHolder().get());
         }
     }

@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.wildcard.buddycards.registries.BuddycardsBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -18,40 +18,31 @@ public class LuminisVeinFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext context) {
-        BlockPos blockpos = context.origin();
-        WorldGenLevel worldgenlevel = context.level();
-        Random random = context.random();
-
-        for(; blockpos.getY() > worldgenlevel.getMinBuildHeight() + 3; blockpos = blockpos.below()) {
-            if (!worldgenlevel.isEmptyBlock(blockpos.below())) {
-                BlockState blockstate = worldgenlevel.getBlockState(blockpos.below());
-                if (isDirt(blockstate) || isStone(blockstate)) {
-                    break;
-                }
-            }
-        }
-
-        if (blockpos.getY() <= worldgenlevel.getMinBuildHeight() + 10) {
+        if(!(context.origin().getX() % 16 % 5 == 0) && !(context.origin().getZ() % 16 % 5 == 0))
             return false;
-        } else {
-            for(int l = 0; l < 7; ++l) {
-                int i = random.nextInt(8);
-                int j = random.nextInt(8);
-                int k = random.nextInt(8);
-                float f = (float)(i + j + k) * 0.333F + 0.5F;
-
-                for(BlockPos blockpos1 : BlockPos.betweenClosed(blockpos.offset(-i, -j, -k), blockpos.offset(i, j, k))) {
-                    if (blockpos1.distSqr(blockpos) <= (double)(f * f)) {
-                        if(blockpos1.getY() > 0)
-                            worldgenlevel.setBlock(blockpos1, BuddycardsBlocks.LUMINIS_ORE.get().defaultBlockState(), 4);
-                        else
-                            worldgenlevel.setBlock(blockpos1, BuddycardsBlocks.DEEPSLATE_LUMINIS_ORE.get().defaultBlockState(), 4);
+        Random rand = context.random();
+        BlockPos pos = context.origin().offset(rand.nextInt(16), rand.nextInt(5, 64), rand.nextInt(16));
+        WorldGenLevel lvl = context.level();
+        if(pos.getY() < 0 && pos.getY() > -60 && context.level().getBlockState(pos).getBlock().equals(Blocks.LAVA)) {
+            System.out.println(pos);
+            //2-4 branches
+            for(int i = rand.nextInt(2,4); i > 0; i--) {
+                //8-24 jumps
+                BlockPos pos1, pos2 = pos.offset(rand.nextInt(-4, 4), rand.nextInt(-1, 3), rand.nextInt(-4, 4));
+                for (int j = rand.nextInt(8, 24); j > 0; j--) {
+                    pos1 = pos2;
+                    pos2 = pos2.offset(rand.nextInt(-3, 3), rand.nextInt(-2, 2), rand.nextInt(-3, 3));
+                    if (pos2.getY() < -64)
+                        continue;
+                    for(BlockPos placePos : BlockPos.betweenClosed(pos1, pos2)) {
+                        if(isStone(lvl.getBlockState(placePos))) {
+                            lvl.setBlock(placePos, placePos.getY() < 0 ? BuddycardsBlocks.DEEPSLATE_LUMINIS_ORE.get().defaultBlockState() : BuddycardsBlocks.LUMINIS_ORE.get().defaultBlockState(), 4);
+                        }
                     }
                 }
-
-                blockpos = blockpos.offset(-1 + random.nextInt(2), -random.nextInt(2), -1 + random.nextInt(2));
             }
             return true;
         }
+        return false;
     }
 }

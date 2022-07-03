@@ -46,6 +46,18 @@ public class ConfigManager {
         witherMaxPacks = builder.comment("\nMaximum amount of packs dropped when a wither drops packs, default is 3")
                 .defineInRange("mobDrops.witherMaxPacks", 3, 1, 16);
 
+        luminisVeins = builder.comment("\nEnable Luminis vein generation, default is true")
+                .define("luminis.enableVeins", true);
+        luminisChunks = builder.comment("\nDistance between chunks that can spawn Luminis veins, under right conditions, default is 5")
+                .defineInRange("luminis.veinChunkDistance", 5, 1, 16);
+        luminisBranchMin = builder.comment("\nMinimum amount of branches in a Luminis vein, default is 2")
+                .defineInRange("luminis.veinBranchAmtMin", 2, 1, 16);
+        luminisBranchMax = builder.comment("\nMaximum amount of branches in a Luminis vein, default is 4")
+                .defineInRange("luminis.veinBranchAmtMax", 4, 1, 32);
+        luminisBranchLengthMin = builder.comment("\nMinimum length of branches in a Luminis vein, default is 8")
+                .defineInRange("luminis.veinBranchLengthMin", 8, 1, 16);
+        luminisBranchLengthMax = builder.comment("\nMaximum length of branches in a Luminis vein, default is 24")
+                .defineInRange("luminis.veinBranchLengthMax", 24, 1, 32);
         luminisToCrimsonAvg = builder.comment("\nAmount of Luminis blocks, on average, needed to make 1 Crimson Luminis in an explosion, default is 2")
                 .defineInRange("luminis.explodeCrimsonAvg", 2, 1, 16);
         kineticSuccessRate = builder.comment("\nOdds of an explosion triggering a Kinetic Chamber to activate, default is 50%")
@@ -67,6 +79,12 @@ public class ConfigManager {
     public static ForgeConfigSpec.DoubleValue witherChance;
     public static ForgeConfigSpec.IntValue witherMaxPacks;
 
+    public static ForgeConfigSpec.BooleanValue luminisVeins;
+    public static ForgeConfigSpec.IntValue luminisChunks;
+    public static ForgeConfigSpec.IntValue luminisBranchMin;
+    public static ForgeConfigSpec.IntValue luminisBranchMax;
+    public static ForgeConfigSpec.IntValue luminisBranchLengthMin;
+    public static ForgeConfigSpec.IntValue luminisBranchLengthMax;
     public static ForgeConfigSpec.IntValue luminisToCrimsonAvg;
     public static ForgeConfigSpec.DoubleValue kineticSuccessRate;
     public static ForgeConfigSpec.DoubleValue luminisKineticCrimsonOdds;

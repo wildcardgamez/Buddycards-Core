@@ -58,5 +58,6 @@ public class Buddycards
         MinecraftForge.EVENT_BUS.register(new MobDropHandler());
         MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
         MinecraftForge.EVENT_BUS.register(new DamageEffectHandler());
+        MinecraftForge.EVENT_BUS.register(new BiomeLoadingHandler());
     }
 }
