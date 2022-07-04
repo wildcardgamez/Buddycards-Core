@@ -1,5 +1,6 @@
 package com.wildcard.buddycards.item;
 
+import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.savedata.PerfectBuddycardCollectionSaveData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
 
@@ -38,6 +40,8 @@ public class GradingSleeveItem extends Item {
         if(level instanceof ServerLevel serverLevel && card.getItem() instanceof BuddycardItem && !nbt.contains("grade")) {
             int grade;
             float rand = level.getRandom().nextFloat();
+            if (CuriosApi.getCuriosHelper().findCurios(player, BuddycardsItems.ZYLEX_RING.get()).size() > 0)
+                rand = Math.max(rand, level.getRandom().nextFloat());
             for (grade = 1; grade < 5; grade++) {
                 if(rand < ODDS[grade-1])
                     break;
