@@ -1,9 +1,15 @@
 package com.wildcard.buddycards.entity;
 
+import com.mojang.datafixers.util.Pair;
+import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.core.BuddycardsAPI;
+import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsItems;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Nameable;
@@ -17,6 +23,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,8 +32,14 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
-    public static final Ingredient TEMPTATION_ITEMS = Ingredient.of(BuddycardsItems.MYSTERY_PACK.get(), BuddycardsItems.PACK_END.get(), BuddycardsItems.ZYLEX.get());
+    public static final Ingredient TEMPTATION_ITEMS = Ingredient.of(BuddycardsItems.ZYLEX_BLOCK.get(), BuddycardsItems.ZYLEX.get(), BuddycardsItems.VOID_ZYLEX_BLOCK.get(), BuddycardsItems.VOID_ZYLEX.get());
+
+    ArrayList<Pair<ItemStack, ItemStack>> goalCards = new ArrayList<>();
 
     public EnderlingEntity(EntityType<? extends PathfinderMob> type, Level lvl) {
         super(type, lvl);
@@ -129,5 +143,48 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     @Override
     public boolean isBaby() {
         return true;
+    }
+
+    public void setupGoalCards (Random rand) {
+        List<BuddycardItem> cards = BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList();
+        for (int i = 0; i < 6; i++) {
+            ItemStack card = new ItemStack(cards.get(rand.nextInt(cards.size())));
+            if (i % 3 == 0)
+                BuddycardItem.setShiny(card);
+            goalCards.add(new Pair<>(card, getCardSellValue(card, rand)));
+            if (i < 3) {
+                ItemStack card2 = card.copy();
+                card2.getOrCreateTag().putInt("grade", rand.nextInt(1,5));
+                goalCards.add(new Pair<>(card2, getCardSellValue(card2, rand)));
+            }
+        }
+    }
+
+    public ItemStack getCardSellValue(ItemStack card, Random rand) {
+        int value = rand.nextInt(2, 4);
+        boolean markVoid = false;
+        if (card.getRarity() == Rarity.EPIC)
+            value += 6;
+        if (card.hasFoil())
+            value += 3;
+        if(card.hasTag() && card.getTag().contains("grade")) {
+            int grade = card.getTag().getInt("grade");
+            if(grade == 1 || grade == 2)
+                value -= 2;
+            else if(grade == 3)
+                value *= 2;
+            else if (grade == 4)
+                value *= 4;
+            else if (grade == 5)
+                value *= 18;
+            if(grade >= 3 || card.getRarity() == Rarity.EPIC)
+                markVoid = true;
+        }
+        if (value == 9 || value >= 16) {
+            if (markVoid)
+                return new ItemStack(BuddycardsItems.VOID_ZYLEX.get(), value/9);
+            return new ItemStack(BuddycardsItems.ZYLEX.get(), (value+2)/9);
+        }
+        return new ItemStack(BuddycardsItems.ZYLEX_NUGGET.get(), value);
     }
 }

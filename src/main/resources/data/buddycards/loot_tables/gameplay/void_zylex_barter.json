@@ -5,14 +5,35 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "buddycards:zylex_grading_sleeve"
+          "weight": 3,
+          "name": "buddycards:zylex_grading_sleeve",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
-          "name": "buddycards:zylex_grading_sleeve",
-          "count": 2
+          "weight": 2,
+          "name": "buddycards:buddycard_pack_mystery",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
         },
         {
           "type": "minecraft:item",

@@ -36,6 +36,7 @@ public class BuddycardsBlocks {
     static BlockBehaviour.Properties CRYSTAL_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(1.5F, 3.0F).sound(SoundType.AMETHYST);
     static BlockBehaviour.Properties CRIMSON_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.CRIMSON_NYLIUM).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
     static BlockBehaviour.Properties ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_PURPLE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
+    static BlockBehaviour.Properties VOID_ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.WARPED_HYPHAE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
 
     //Basic Blocks
     public static final RegistryObject<Block> BUDDYSTEEL_BLOCK = BLOCKS.register("buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
@@ -47,6 +48,7 @@ public class BuddycardsBlocks {
     public static final RegistryObject<Block> KINETIC_CHAMBER = BLOCKS.register("kinetic_chamber", () -> new KineticChamberBlock(CRIMSON_LUMINIS_PROPERTIES));
     public static final RegistryObject<Block> LUMINIS_PANELS = BLOCKS.register("luminis_panels", () -> new Block(LUMINIS_PROPERTIES));
     public static final RegistryObject<Block> ZYLEX_BLOCK = BLOCKS.register("zylex_block", () -> new Block(ZYLEX_PROPERTIES));
+    public static final RegistryObject<Block> VOID_ZYLEX_BLOCK = BLOCKS.register("voidzylex_block", () -> new Block(VOID_ZYLEX_PROPERTIES));
     //Displays
     public static final RegistryObject<CardDisplayBlock> OAK_CARD_DISPLAY = registerDisplay("oak_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
     public static final RegistryObject<CardDisplayBlock> SPRUCE_CARD_DISPLAY = registerDisplay("spruce_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS)));
