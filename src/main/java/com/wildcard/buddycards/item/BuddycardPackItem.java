@@ -16,6 +16,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,10 +47,11 @@ public abstract class BuddycardPackItem extends Item {
             player.getItemInHand(hand).shrink(1);
             //Roll each card and throw it into a list
             NonNullList<ItemStack> cards = NonNullList.create();
+            int foilAmt = CuriosApi.getCuriosHelper().findCurios(player, BuddycardsItems.LUMINIS_RING.get()).size() > 0 ? FOIL_AMT + 1 : FOIL_AMT;
             for (int i = 0; i < CARD_AMT; i++) {
                 ItemStack card = new ItemStack(rollCard(level.getRandom()));
                 //If its one of the last ones that needs foil, make it foil
-                if (i >= CARD_AMT - FOIL_AMT)
+                if (i >= CARD_AMT - foilAmt)
                     BuddycardItem.setShiny(card);
                 cards.add(card);
             }

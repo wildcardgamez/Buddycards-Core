@@ -11,6 +11,11 @@
         {
           "type": "minecraft:item",
           "weight": 2,
+          "name": "buddycards:luminis_ring"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
           "name": "buddycards:luminis_pickaxe"
         },
         {

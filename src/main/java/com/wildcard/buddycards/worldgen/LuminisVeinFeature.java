@@ -2,6 +2,7 @@ package com.wildcard.buddycards.worldgen;
 
 import com.mojang.serialization.Codec;
 import com.wildcard.buddycards.registries.BuddycardsBlocks;
+import com.wildcard.buddycards.util.ConfigManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -18,7 +19,7 @@ public class LuminisVeinFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext context) {
-        if(!(context.origin().getX() % 16 % 5 == 0) && !(context.origin().getZ() % 16 % 5 == 0))
+        if(!((context.origin().getX() / 16) % ConfigManager.luminisChunks.get() == 0) && !((context.origin().getZ() / 16) % ConfigManager.luminisChunks.get() == 0))
             return false;
         Random rand = context.random();
         BlockPos pos = context.origin().offset(rand.nextInt(16), rand.nextInt(5, 64), rand.nextInt(16));
