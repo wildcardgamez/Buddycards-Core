@@ -2,38 +2,25 @@ package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.savedata.PerfectBuddycardCollectionSaveData;
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemHandlerHelper;
-import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
 
-import java.util.List;
-
-public class GradingSleeveItem extends Item {
+public class GradingSleeveItem extends DescriptionItem {
     public GradingSleeveItem(Properties properties, float[] odds) {
         super(properties);
         ODDS = odds;
     }
 
     public final float[] ODDS;
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
-    }
 
     public boolean tryGrade(ItemStack card, ItemStack sleeves, Player player, Level level) {
         CompoundTag nbt = card.getOrCreateTag().copy();

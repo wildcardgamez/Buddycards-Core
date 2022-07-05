@@ -3,17 +3,18 @@ package com.wildcard.buddycards.item;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class RingItem extends Item {
-    public RingItem(Properties properties) {
-        super(properties);
+public class DescriptionBlockItem extends BlockItem {
+    public DescriptionBlockItem(Block p_40565_, Properties p_40566_) {
+        super(p_40565_, p_40566_);
     }
 
     @Override

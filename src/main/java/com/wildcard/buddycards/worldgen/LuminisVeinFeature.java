@@ -19,26 +19,24 @@ public class LuminisVeinFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext context) {
-        if(!((context.origin().getX() / 16) % ConfigManager.luminisChunks.get() == 0) && !((context.origin().getZ() / 16) % ConfigManager.luminisChunks.get() == 0))
+        if(!ConfigManager.luminisVeins.get() || !((context.origin().getX() / 16) % ConfigManager.luminisChunks.get() == 0) && !((context.origin().getZ() / 16) % ConfigManager.luminisChunks.get() == 0))
             return false;
         Random rand = context.random();
         BlockPos pos = context.origin().offset(rand.nextInt(16), rand.nextInt(5, 64), rand.nextInt(16));
         WorldGenLevel lvl = context.level();
         if(pos.getY() < 0 && pos.getY() > -60 && context.level().getBlockState(pos).getBlock().equals(Blocks.LAVA)) {
-            System.out.println(pos);
             //2-4 branches
-            for(int i = rand.nextInt(2,4); i > 0; i--) {
+            for(int i = rand.nextInt(ConfigManager.luminisBranchMin.get(),ConfigManager.luminisBranchMax.get()); i > 0; i--) {
                 //8-24 jumps
                 BlockPos pos1, pos2 = pos.offset(rand.nextInt(-4, 4), rand.nextInt(-1, 3), rand.nextInt(-4, 4));
-                for (int j = rand.nextInt(8, 24); j > 0; j--) {
+                for (int j = rand.nextInt(ConfigManager.luminisBranchLengthMin.get(),ConfigManager.luminisBranchLengthMax.get()); j > 0; j--) {
                     pos1 = pos2;
                     pos2 = pos2.offset(rand.nextInt(-3, 3), rand.nextInt(-2, 2), rand.nextInt(-3, 3));
                     if (pos2.getY() < -64)
                         continue;
                     for(BlockPos placePos : BlockPos.betweenClosed(pos1, pos2)) {
-                        if(isStone(lvl.getBlockState(placePos))) {
+                        if(isStone(lvl.getBlockState(placePos)) && rand.nextFloat() < .5)
                             lvl.setBlock(placePos, placePos.getY() < 0 ? BuddycardsBlocks.DEEPSLATE_LUMINIS_ORE.get().defaultBlockState() : BuddycardsBlocks.LUMINIS_ORE.get().defaultBlockState(), 4);
-                        }
                     }
                 }
             }

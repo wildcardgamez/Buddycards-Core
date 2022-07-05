@@ -19,6 +19,7 @@
   "block.buddycards.luminis_panels": "Luminis Panels",
   "block.buddycards.crimson_luminis_block": "Block of Crimson Luminis",
   "block.buddycards.kinetic_chamber": "Kinetic Chamber",
+  "block.buddycards.kinetic_chamber.desc": "Uses nearby explosions as energy to forge items out of blocks of luminis and crimson luminis",
   "block.buddycards.zylex_block": "Block of Zylex",
   "block.buddycards.void_zylex_block": "Block of Void Zylex",
   "item.buddycards.buddycard_pack_base": "Buddycard Pack",

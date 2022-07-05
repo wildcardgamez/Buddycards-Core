@@ -1,25 +1,17 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class BuddysteelPowerMeterItem extends Item {
+public class BuddysteelPowerMeterItem extends DescriptionItem {
     public BuddysteelPowerMeterItem(Properties properties) {
         super(properties);
     }
@@ -46,10 +38,5 @@ public class BuddysteelPowerMeterItem extends Item {
             }
         }
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddysteel_power_meter.desc").withStyle(ChatFormatting.GRAY));
     }
 }

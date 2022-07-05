@@ -50,14 +50,14 @@ public class ConfigManager {
                 .define("luminis.enableVeins", true);
         luminisChunks = builder.comment("\nDistance between chunks that can spawn Luminis veins, under right conditions, default is 5")
                 .defineInRange("luminis.veinChunkDistance", 5, 1, 16);
-        luminisBranchMin = builder.comment("\nMinimum amount of branches in a Luminis vein, default is 2")
-                .defineInRange("luminis.veinBranchAmtMin", 2, 1, 16);
-        luminisBranchMax = builder.comment("\nMaximum amount of branches in a Luminis vein, default is 4")
-                .defineInRange("luminis.veinBranchAmtMax", 4, 1, 32);
+        luminisBranchMin = builder.comment("\nMinimum amount of branches in a Luminis vein, default is 3")
+                .defineInRange("luminis.veinBranchAmtMin", 3, 1, 16);
+        luminisBranchMax = builder.comment("\nMaximum amount of branches in a Luminis vein, default is 6")
+                .defineInRange("luminis.veinBranchAmtMax", 6, 1, 32);
         luminisBranchLengthMin = builder.comment("\nMinimum length of branches in a Luminis vein, default is 8")
-                .defineInRange("luminis.veinBranchLengthMin", 8, 1, 16);
-        luminisBranchLengthMax = builder.comment("\nMaximum length of branches in a Luminis vein, default is 24")
-                .defineInRange("luminis.veinBranchLengthMax", 24, 1, 32);
+                .defineInRange("luminis.veinBranchLengthMin", 8, 1, 32);
+        luminisBranchLengthMax = builder.comment("\nMaximum length of branches in a Luminis vein, default is 32")
+                .defineInRange("luminis.veinBranchLengthMax", 32, 1, 64);
         luminisToCrimsonAvg = builder.comment("\nAmount of Luminis blocks, on average, needed to make 1 Crimson Luminis in an explosion, default is 2")
                 .defineInRange("luminis.explodeCrimsonAvg", 2, 1, 16);
         kineticSuccessRate = builder.comment("\nOdds of an explosion triggering a Kinetic Chamber to activate, default is 50%")
