@@ -5,8 +5,9 @@
     "buddycards:luminis_block",
     "buddycards:luminis_crystal_block",
     "buddycards:crimson_luminis_block",
-    "buddycards:zylex_block",
+    "buddycards:kinetic_chamber",
     "buddycards:luminis_ore",
-    "buddycards:deepslate_luminis_ore"
+    "buddycards:deepslate_luminis_ore",
+    "buddycards:zylex_block"
   ]
 }

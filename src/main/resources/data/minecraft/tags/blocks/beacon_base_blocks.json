@@ -2,7 +2,9 @@
   "replace": false,
   "values": [
     "buddycards:buddysteel_block",
+    "buddycards:luminis_block",
+    "buddycards:zylex_block",
     "buddycards:crimson_luminis_block",
-    "buddycards:zylex_block"
+    "buddycards:void_zylex_block"
   ]
 }
