@@ -5,11 +5,11 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsItems;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Nameable;
@@ -30,6 +30,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 
 import java.util.ArrayList;
@@ -39,11 +42,16 @@ import java.util.Random;
 public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     public static final Ingredient TEMPTATION_ITEMS = Ingredient.of(BuddycardsItems.ZYLEX_BLOCK.get(), BuddycardsItems.ZYLEX.get(), BuddycardsItems.VOID_ZYLEX_BLOCK.get(), BuddycardsItems.VOID_ZYLEX.get());
 
-    ArrayList<Pair<ItemStack, ItemStack>> goalCards = new ArrayList<>();
+    final ArrayList<Pair<ItemStack, ItemStack>> goalTrades = new ArrayList<>();
+    boolean lookingAtItem = false;
+    final boolean cheap;
 
     public EnderlingEntity(EntityType<? extends PathfinderMob> type, Level lvl) {
         super(type, lvl);
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
+        cheap = lvl.getRandom().nextDouble() < .1;
+        if (lvl instanceof ServerLevel)
+            setupGoalItems((ServerLevel) lvl);
     }
 
     public static AttributeSupplier.Builder setupAttributes() {
@@ -145,22 +153,27 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         return true;
     }
 
-    public void setupGoalCards (Random rand) {
+    public void setupGoalItems(ServerLevel lvl) {
+        Random rand = lvl.getRandom();
         List<BuddycardItem> cards = BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList();
         for (int i = 0; i < 6; i++) {
             ItemStack card = new ItemStack(cards.get(rand.nextInt(cards.size())));
             if (i % 3 == 0)
                 BuddycardItem.setShiny(card);
-            goalCards.add(new Pair<>(card, getCardSellValue(card, rand)));
+            goalTrades.add(new Pair<>(card, getCardSellValue(card, rand, cheap)));
             if (i < 3) {
                 ItemStack card2 = card.copy();
                 card2.getOrCreateTag().putInt("grade", rand.nextInt(1,5));
-                goalCards.add(new Pair<>(card2, getCardSellValue(card2, rand)));
+                goalTrades.add(new Pair<>(card2, getCardSellValue(card2, rand, cheap)));
             }
         }
+        LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
+        LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/luminis_kinetic_chamber"));
+        List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+        goalTrades.add(new Pair(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), items.get(0)));
     }
 
-    public ItemStack getCardSellValue(ItemStack card, Random rand) {
+    public static ItemStack getCardSellValue(ItemStack card, Random rand, boolean cheap) {
         int value = rand.nextInt(2, 4);
         boolean markVoid = false;
         if (card.getRarity() == Rarity.EPIC)
@@ -180,11 +193,23 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
             if(grade >= 3 || card.getRarity() == Rarity.EPIC)
                 markVoid = true;
         }
+        if (cheap)
+            value /= 2;
+        value = Math.max(1, value);
         if (value == 9 || value >= 16) {
             if (markVoid)
                 return new ItemStack(BuddycardsItems.VOID_ZYLEX.get(), value/9);
             return new ItemStack(BuddycardsItems.ZYLEX.get(), (value+2)/9);
         }
         return new ItemStack(BuddycardsItems.ZYLEX_NUGGET.get(), value);
+    }
+
+    public boolean LookingAtItem() {
+        return lookingAtItem;
+    }
+
+    @Override
+    public boolean wantsToPickUp(ItemStack stack) {
+        return goalTrades.stream().filter((i) -> i.getFirst().getItem().equals(stack.getItem())).count() > 0;
     }
 }

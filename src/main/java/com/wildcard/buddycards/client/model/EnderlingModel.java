@@ -67,6 +67,12 @@ public class EnderlingModel<T extends EnderlingEntity> extends EntityModel<Ender
         this.ll.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         this.ra.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         this.la.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        if (entityIn.LookingAtItem()) {
+            this.head.xRot = 0.5F;
+            this.head.yRot = 0.0F;
+            this.ra.yRot = -0.5F;
+            this.ra.xRot = -0.9F;
+        }
     }
 
     @Override
@@ -78,4 +84,6 @@ public class EnderlingModel<T extends EnderlingEntity> extends EntityModel<Ender
         la.render(matrixStack, buffer, packedLight, packedOverlay);
         ra.render(matrixStack, buffer, packedLight, packedOverlay);
     }
+
+
 }

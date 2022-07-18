@@ -35,7 +35,6 @@ public class BuddycardSet {
         if (descriptionId == null) {
             descriptionId = "item." + Buddycards.MOD_ID + ".buddycard.set_" + getName();
         }
-
         return descriptionId;
     }
 
@@ -48,7 +47,6 @@ public class BuddycardSet {
         if (medalSupplier == null) {
             return null;
         }
-
         return medalSupplier.get();
     }
 

@@ -22,7 +22,6 @@ public class BuddycardsAPI {
                 throw new IllegalArgumentException("Set '" + set.getName() + "' already exists");
             }
         }
-
         CARD_SETS.add(set);
     }
 
