@@ -8,10 +8,15 @@ import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -40,11 +45,10 @@ import java.util.List;
 import java.util.Random;
 
 public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
-    public static final Ingredient TEMPTATION_ITEMS = Ingredient.of(BuddycardsItems.ZYLEX_BLOCK.get(), BuddycardsItems.ZYLEX.get(), BuddycardsItems.VOID_ZYLEX_BLOCK.get(), BuddycardsItems.VOID_ZYLEX.get());
-
     final ArrayList<Pair<ItemStack, ItemStack>> goalTrades = new ArrayList<>();
     boolean lookingAtItem = false;
-    final boolean cheap;
+    boolean cheap;
+    int timer = 0;
 
     public EnderlingEntity(EntityType<? extends PathfinderMob> type, Level lvl) {
         super(type, lvl);
@@ -52,13 +56,15 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         cheap = lvl.getRandom().nextDouble() < .1;
         if (lvl instanceof ServerLevel)
             setupGoalItems((ServerLevel) lvl);
+        this.goalSelector.addGoal(2, new TemptGoal(this, .75f, Ingredient.of(goalTrades.stream().map(Pair::getFirst)), false));
     }
 
-    public static AttributeSupplier.Builder setupAttributes() {
+    public static AttributeSupplier setupAttributes() {
         return Mob.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, .5D)
-                .add(Attributes.FOLLOW_RANGE, 6.0f);
+                .add(Attributes.FOLLOW_RANGE, 6.0f)
+                .build();
     }
 
     @Override
@@ -66,7 +72,6 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1f));
-        this.goalSelector.addGoal(2, new TemptGoal(this, .75f, TEMPTATION_ITEMS, false));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, .5f, 0.0f));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8.0f));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
@@ -93,11 +98,27 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         return SoundEvents.ENDERMAN_HURT;
     }
 
+    @Override
     protected void customServerAiStep() {
         if (this.level.isDay() && this.tickCount >= 600) {
             float f = this.getBrightness();
             if (f > 0.5F && this.level.canSeeSky(this.blockPosition()) && this.random.nextFloat() * 60.0F < (f - 0.4F) * 2.0F) {
                 this.teleport();
+            }
+        }
+        if (timer > 0 && getServer() != null) {
+            timer -= 1;
+            if (timer == 0) {
+                for (Pair<ItemStack, ItemStack> goalTrade : goalTrades)
+                    if (goalTrade.getFirst().getItem().equals(getMainHandItem().getItem())) {
+                        LootContext.Builder builder = (new LootContext.Builder((ServerLevel) level).withRandom(level.random));
+                        LootTable table = getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
+                        List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+                        setItemInHand(InteractionHand.MAIN_HAND, items.get(0));
+                        dropEquipment();
+                        lookingAtItem = false;
+                        break;
+                    }
             }
         }
         super.customServerAiStep();
@@ -109,16 +130,14 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
             double d1 = this.getY() + (double)(this.random.nextInt(32) - 32);
             double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 32.0D;
             return this.teleport(d0, d1, d2);
-        } else {
+        } else
             return false;
-        }
     }
 
     private boolean teleport(double p_70825_1_, double p_70825_3_, double p_70825_5_) {
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(p_70825_1_, p_70825_3_, p_70825_5_);
-        while(blockpos$mutable.getY() > 0 && !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion()) {
+        while(blockpos$mutable.getY() > 0 && !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion())
             blockpos$mutable.move(Direction.DOWN);
-        }
         BlockState blockstate = this.level.getBlockState(blockpos$mutable);
         if (blockstate.getMaterial().blocksMotion() && !blockstate.getFluidState().is(Fluids.WATER)) {
             EntityTeleportEvent event = new EntityTeleportEvent(this, p_70825_1_, p_70825_3_, p_70825_5_);
@@ -129,18 +148,15 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
                 this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
             }
             return success;
-        } else {
+        } else
             return false;
-        }
     }
 
     @Override
     public void aiStep() {
-        if (this.level.isClientSide) {
-            for(int i = 0; i < 2; ++i) {
+        if (this.level.isClientSide)
+            for(int i = 0; i < 2; ++i)
                 this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
-            }
-        }
         super.aiStep();
     }
 
@@ -148,15 +164,10 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         return true;
     }
 
-    @Override
-    public boolean isBaby() {
-        return true;
-    }
-
     public void setupGoalItems(ServerLevel lvl) {
         Random rand = lvl.getRandom();
         List<BuddycardItem> cards = BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 18; i++) {
             ItemStack card = new ItemStack(cards.get(rand.nextInt(cards.size())));
             if (i % 3 == 0)
                 BuddycardItem.setShiny(card);
@@ -170,7 +181,8 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
         LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/luminis_kinetic_chamber"));
         List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
-        goalTrades.add(new Pair(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), items.get(0)));
+        goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), items.get(0)));
+        System.out.println(goalTrades);
     }
 
     public static ItemStack getCardSellValue(ItemStack card, Random rand, boolean cheap) {
@@ -196,10 +208,10 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         if (cheap)
             value /= 2;
         value = Math.max(1, value);
-        if (value == 9 || value >= 16) {
+        if (value >= 9) {
             if (markVoid)
                 return new ItemStack(BuddycardsItems.VOID_ZYLEX.get(), value/9);
-            return new ItemStack(BuddycardsItems.ZYLEX.get(), (value+2)/9);
+            return new ItemStack(BuddycardsItems.ZYLEX.get(), value/9);
         }
         return new ItemStack(BuddycardsItems.ZYLEX_NUGGET.get(), value);
     }
@@ -209,7 +221,38 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     @Override
-    public boolean wantsToPickUp(ItemStack stack) {
-        return goalTrades.stream().filter((i) -> i.getFirst().getItem().equals(stack.getItem())).count() > 0;
+    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if(goalTrades.stream().anyMatch((i) -> player.getItemInHand(hand).getItem().equals(i.getFirst().getItem()))) {
+            setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(player.getItemInHand(hand).getItem(), 1));
+            timer = 50;
+            lookingAtItem = true;
+            player.getMainHandItem().shrink(1);
+        }
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        tag.putInt("timer", timer);
+        tag.putBoolean("cheap", cheap);
+        ListTag tradesTag = new ListTag();
+        for(Pair<ItemStack, ItemStack> trade : goalTrades) {
+            CompoundTag tradeTag = new CompoundTag();
+            tradeTag.put("goal", trade.getFirst().save(new CompoundTag()));
+            tradeTag.put("reward", trade.getSecond().save(new CompoundTag()));
+            tradesTag.add(tradeTag);
+        }
+        tag.put("trades", tradesTag);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        timer = tag.getInt("timer");
+        cheap = tag.getBoolean("cheap");
+        goalTrades.clear();
+        for(Tag tradeTag : tag.getList("trades", Tag.TAG_COMPOUND))
+            goalTrades.add(new Pair<>(ItemStack.of(((CompoundTag) tradeTag).getCompound("goal")), ItemStack.of(((CompoundTag) tradeTag).getCompound("reward"))));
     }
 }

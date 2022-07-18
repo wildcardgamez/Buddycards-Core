@@ -37,9 +37,4 @@ public class BuddycardsEntities {
 
     public static RegistryObject<EntityType<EnderlingEntity>> ENDERLING = ENTITIES.register("enderling",
             () -> EntityType.Builder.of(EnderlingEntity::new, MobCategory.CREATURE).sized(.6f, 1.8f).build(new ResourceLocation(Buddycards.MOD_ID, "enderling").toString()));
-
-    @SubscribeEvent
-    public static void setupAttributes(EntityAttributeCreationEvent event) {
-        event.put(ENDERLING.get(), EnderlingEntity.setupAttributes().build());
-    }
 }
