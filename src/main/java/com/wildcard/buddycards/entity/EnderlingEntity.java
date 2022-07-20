@@ -25,7 +25,10 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -38,10 +41,12 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
@@ -111,12 +116,18 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
             if (timer == 0) {
                 for (Pair<ItemStack, ItemStack> goalTrade : goalTrades)
                     if (goalTrade.getFirst().getItem().equals(getMainHandItem().getItem())) {
-                        LootContext.Builder builder = (new LootContext.Builder((ServerLevel) level).withRandom(level.random));
-                        LootTable table = getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
-                        List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
-                        setItemInHand(InteractionHand.MAIN_HAND, items.get(0));
-                        dropEquipment();
+                        Vec3 pos = position().add(0, 1, 0);
+                        Player player = level.getNearestPlayer(this, 5);
+                        if(player != null)
+                            pos.add(player.position());
+                        BehaviorUtils.throwItem(this, goalTrade.getSecond(), pos);
+                        setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+                        goalTrades.remove(goalTrade);
                         lookingAtItem = false;
+                        if(goalTrade.getFirst().getItem().equals(BuddycardsItems.ZYLEX.get()))
+                            goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level, false)));
+                        if(goalTrade.getFirst().getItem().equals(BuddycardsItems.VOID_ZYLEX.get()))
+                            goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level, true)));
                         break;
                     }
             }
@@ -167,27 +178,44 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     public void setupGoalItems(ServerLevel lvl) {
         Random rand = lvl.getRandom();
         List<BuddycardItem> cards = BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList();
-        for (int i = 0; i < 18; i++) {
+        for (int i = 0; i < 12; i++) {
             ItemStack card = new ItemStack(cards.get(rand.nextInt(cards.size())));
             if (i % 3 == 0)
                 BuddycardItem.setShiny(card);
             goalTrades.add(new Pair<>(card, getCardSellValue(card, rand, cheap)));
-            if (i < 3) {
+            if (i < 4) {
                 ItemStack card2 = card.copy();
                 card2.getOrCreateTag().putInt("grade", rand.nextInt(1,5));
                 goalTrades.add(new Pair<>(card2, getCardSellValue(card2, rand, cheap)));
             }
         }
-        LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
-        LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/luminis_kinetic_chamber"));
-        List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
-        goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), items.get(0)));
+        goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level, false)));
+        goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level, true)));
         System.out.println(goalTrades);
+    }
+
+    public static ItemStack getBarterResult(Level level, boolean voidZylex) {
+        if (level instanceof ServerLevel lvl) {
+            LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
+            if (voidZylex) {
+                LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
+                List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+                return items.get(0);
+            }
+            else {
+                LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/zylex_barter"));
+                List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+                return items.get(0);
+            }
+        }
+        return ItemStack.EMPTY;
     }
 
     public static ItemStack getCardSellValue(ItemStack card, Random rand, boolean cheap) {
         int value = rand.nextInt(2, 4);
         boolean markVoid = false;
+        if (card.getRarity() == Rarity.RARE)
+            value += 2;
         if (card.getRarity() == Rarity.EPIC)
             value += 6;
         if (card.hasFoil())
@@ -222,7 +250,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if(goalTrades.stream().anyMatch((i) -> player.getItemInHand(hand).getItem().equals(i.getFirst().getItem()))) {
+        if(!lookingAtItem && goalTrades.stream().anyMatch((i) -> player.getItemInHand(hand).getItem().equals(i.getFirst().getItem()))) {
             setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(player.getItemInHand(hand).getItem(), 1));
             timer = 50;
             lookingAtItem = true;
@@ -236,6 +264,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         super.readAdditionalSaveData(tag);
         tag.putInt("timer", timer);
         tag.putBoolean("cheap", cheap);
+        tag.putBoolean("lookingAtItem", lookingAtItem);
         ListTag tradesTag = new ListTag();
         for(Pair<ItemStack, ItemStack> trade : goalTrades) {
             CompoundTag tradeTag = new CompoundTag();
@@ -251,6 +280,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         super.readAdditionalSaveData(tag);
         timer = tag.getInt("timer");
         cheap = tag.getBoolean("cheap");
+        lookingAtItem = tag.getBoolean("lookingAtItem");
         goalTrades.clear();
         for(Tag tradeTag : tag.getList("trades", Tag.TAG_COMPOUND))
             goalTrades.add(new Pair<>(ItemStack.of(((CompoundTag) tradeTag).getCompound("goal")), ItemStack.of(((CompoundTag) tradeTag).getCompound("reward"))));

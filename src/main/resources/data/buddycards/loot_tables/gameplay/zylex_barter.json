@@ -64,7 +64,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:endstone",
+          "name": "minecraft:end_stone",
           "weight": 10
         },
         {
@@ -75,7 +75,7 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "buddycards:ender_binder"
+          "name": "buddycards:ender_buddycard_binder"
         },
         {
           "type": "minecraft:item",
