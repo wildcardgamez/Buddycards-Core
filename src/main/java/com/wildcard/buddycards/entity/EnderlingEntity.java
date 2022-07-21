@@ -27,7 +27,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
@@ -244,15 +243,11 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         return new ItemStack(BuddycardsItems.ZYLEX_NUGGET.get(), value);
     }
 
-    public boolean LookingAtItem() {
-        return timer != 0;
-    }
-
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if(timer == 0 && goalTrades.stream().anyMatch((i) -> cardsMatch(i.getFirst(), player.getItemInHand(hand)))) {
             setItemInHand(InteractionHand.MAIN_HAND, player.getMainHandItem().split(1));
-            timer = 50;
+            timer = 200;
         }
         return InteractionResult.PASS;
     }
@@ -293,7 +288,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
             this.onItemPickup(item);
             this.take(item, 1);
             setItemInHand(InteractionHand.MAIN_HAND, item.getItem().split(1));
-            timer = 50;
+            timer = 200;
         }
     }
 

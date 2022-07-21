@@ -57,11 +57,11 @@ public class EnderlingModel<T extends EnderlingEntity> extends HumanoidModel<End
         this.leftLeg.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         this.rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
         this.leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-        if (entityIn.LookingAtItem()) {
+        if (!entityIn.getMainHandItem().isEmpty()) {
             this.head.xRot = 0.5F;
             this.head.yRot = 0.0F;
-            this.rightArm.yRot = -0.5F;
-            this.rightArm.xRot = -0.9F;
+            this.rightArm.yRot = -0.4F;
+            this.rightArm.xRot = -0.8F;
         }
         else
             this.rightArm.yRot = 0;
@@ -77,8 +77,12 @@ public class EnderlingModel<T extends EnderlingEntity> extends HumanoidModel<End
         rightArm.render(matrixStack, buffer, packedLight, packedOverightLegay);
     }
 
-    @Override
-    public void translateToHand(HumanoidArm p_102854_, PoseStack p_102855_) {
-        super.translateToHand(p_102854_, p_102855_);
+    public void translateToHand(HumanoidArm arm, PoseStack stack) {
+        float f = arm == HumanoidArm.RIGHT ? 1.0F : -1.0F;
+        ModelPart modelpart = this.getArm(arm);
+        modelpart.x += f;
+        modelpart.translateAndRotate(stack);
+        modelpart.x -= f;
+        stack.translate(0, 0, 0.075F);
     }
 }
