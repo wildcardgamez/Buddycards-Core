@@ -5,12 +5,23 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "buddycards:luminis_sleeve"
+          "weight": 3,
+          "name": "buddycards:luminis_sleeve",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 3,
           "name": "buddycards:luminis_ring"
         },
         {

@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -17,6 +18,7 @@ public class EnderlingRenderer  extends MobRenderer<EnderlingEntity, EnderlingMo
     public EnderlingRenderer(EntityRendererProvider.Context context) {
         super(context, new EnderlingModel(context.bakeLayer(ClientStuff.ENDERLING_LAYER)), .6f);
         this.addLayer(new EnderlingEyesLayer(this));
+        this.addLayer(new ItemInHandLayer<>(this));
     }
 
     @Override

@@ -17,7 +17,7 @@
             }
           ],
           "name": "buddycards:buddysteel_nugget",
-          "weight": 10
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -33,7 +33,7 @@
             }
           ],
           "name": "buddycards:grading_sleeve",
-          "weight": 10
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -65,7 +65,7 @@
             }
           ],
           "name": "minecraft:end_stone",
-          "weight": 10
+          "weight": 7
         },
         {
           "type": "minecraft:item",
@@ -89,13 +89,18 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 4,
           "name": "buddycards:buddycard_pack_end"
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 2,
           "name": "buddycards:buddycard_pack_base"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:void_zylex"
         },
         {
           "type": "minecraft:item",

@@ -74,7 +74,17 @@ public class BuddycardItem extends Item {
     @Override
     public boolean isFoil(ItemStack stack) {
         //Make shiny cards have enchant glow
+        return hasFoil(stack);
+    }
+
+    public static boolean hasFoil(ItemStack stack) {
         return stack.hasTag() && stack.getTag().contains("foil") && stack.getTag().getBoolean("foil");
+    }
+
+    public static int getGrade(ItemStack stack) {
+        if(stack.hasTag() && stack.getTag().contains("grade"))
+            return stack.getTag().getInt("grade");
+        return 0;
     }
 
     @Override
