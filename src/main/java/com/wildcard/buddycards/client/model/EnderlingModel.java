@@ -60,11 +60,19 @@ public class EnderlingModel<T extends EnderlingEntity> extends HumanoidModel<End
         if (!entityIn.getMainHandItem().isEmpty()) {
             this.head.xRot = 0.5F;
             this.head.yRot = 0.0F;
-            this.rightArm.yRot = -0.4F;
-            this.rightArm.xRot = -0.8F;
+            if(entityIn.getMainArm().equals(HumanoidArm.RIGHT)) {
+                this.rightArm.yRot = -0.4F;
+                this.rightArm.xRot = -0.8F;
+            }
+            else {
+                this.leftArm.yRot = 0.4F;
+                this.leftArm.xRot = -0.8F;
+            }
         }
-        else
+        else {
             this.rightArm.yRot = 0;
+            this.leftArm.yRot = 0;
+        }
     }
 
     @Override
