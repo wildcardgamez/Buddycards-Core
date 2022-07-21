@@ -7,10 +7,10 @@
   ],
   "key": {
     "X": {
-      "item": "buddycards:zylex_nugget"
+      "item": "buddycards:void_zylex"
     }
   },
   "result": {
-    "item": "buddycards:zylex"
+    "item": "buddycards:void_zylex_block"
   }
 }

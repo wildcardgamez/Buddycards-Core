@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "buddycards:zylex"
+    }
+  ],
+  "result":
+  {
+    "item": "buddycards:zylex_nugget",
+    "count": 9
+  }
+}
