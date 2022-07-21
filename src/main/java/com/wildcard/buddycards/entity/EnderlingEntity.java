@@ -151,7 +151,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
                         Vec3 pos = position().add(0, 1, 0);
                         Player player = level.getNearestPlayer(this, 5);
                         if (player != null)
-                            pos.add(player.position());
+                            pos = player.position().add(0, 1, 0);
                         BehaviorUtils.throwItem(this, goalTrade.getSecond(), pos);
                         setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
                         goalTrades.remove(goalTrade);

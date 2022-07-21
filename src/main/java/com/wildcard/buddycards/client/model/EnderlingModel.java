@@ -83,6 +83,6 @@ public class EnderlingModel<T extends EnderlingEntity> extends HumanoidModel<End
         modelpart.x += f;
         modelpart.translateAndRotate(stack);
         modelpart.x -= f;
-        stack.translate(0, 0, 0.075F);
+        stack.translate(0, .1, 0.075F);
     }
 }

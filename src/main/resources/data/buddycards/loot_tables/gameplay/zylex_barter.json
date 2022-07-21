@@ -17,7 +17,7 @@
             }
           ],
           "name": "buddycards:buddysteel_nugget",
-          "weight": 8
+          "weight": 12
         },
         {
           "type": "minecraft:item",
@@ -33,7 +33,7 @@
             }
           ],
           "name": "buddycards:grading_sleeve",
-          "weight": 8
+          "weight": 12
         },
         {
           "type": "minecraft:item",
@@ -49,7 +49,7 @@
             }
           ],
           "name": "minecraft:ender_pearl",
-          "weight": 5
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -65,16 +65,16 @@
             }
           ],
           "name": "minecraft:end_stone",
-          "weight": 7
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 4,
           "name": "buddycards:buddysteel_power_meter"
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 2,
           "name": "buddycards:ender_buddycard_binder"
         },
         {
@@ -84,17 +84,17 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 2,
           "name": "minecraft:grass_block"
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
+          "weight": 6,
           "name": "buddycards:buddycard_pack_end"
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 3,
           "name": "buddycards:buddycard_pack_base"
         },
         {
@@ -104,7 +104,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 2,
           "name": "buddycards:buddycard_pack_end",
           "count": 2
         },
@@ -115,14 +115,30 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 32.0,
+                "max": 28.0,
                 "min": 8.0
               },
               "function": "minecraft:set_count"
             }
           ],
           "name": "buddycards:luminis_panel",
-          "weight": 5
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 28.0,
+                "min": 8.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:chorus_fruit",
+          "weight": 9
         }
       ]
     }
