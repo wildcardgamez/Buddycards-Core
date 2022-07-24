@@ -254,27 +254,27 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        tag.putInt("timer", timer);
-        tag.putBoolean("cheap", cheap);
+        super.addAdditionalSaveData(tag);
+        tag.putInt("TradeTimer", timer);
+        tag.putBoolean("Cheap", cheap);
         ListTag tradesTag = new ListTag();
         for(Pair<ItemStack, ItemStack> trade : goalTrades) {
             CompoundTag tradeTag = new CompoundTag();
-            tradeTag.put("goal", trade.getFirst().save(new CompoundTag()));
-            tradeTag.put("reward", trade.getSecond().save(new CompoundTag()));
+            tradeTag.put("Goal", trade.getFirst().save(new CompoundTag()));
+            tradeTag.put("Reward", trade.getSecond().save(new CompoundTag()));
             tradesTag.add(tradeTag);
         }
-        tag.put("trades", tradesTag);
+        tag.put("GoalTrades", tradesTag);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        timer = tag.getInt("timer");
-        cheap = tag.getBoolean("cheap");
+        timer = tag.getInt("TradeTimer");
+        cheap = tag.getBoolean("Cheap");
         goalTrades.clear();
-        for(Tag tradeTag : tag.getList("trades", Tag.TAG_COMPOUND))
-            goalTrades.add(new Pair<>(ItemStack.of(((CompoundTag) tradeTag).getCompound("goal")), ItemStack.of(((CompoundTag) tradeTag).getCompound("reward"))));
+        for(Tag tradeTag : tag.getList("GoalTrades", Tag.TAG_COMPOUND))
+            goalTrades.add(new Pair<>(ItemStack.of(((CompoundTag) tradeTag).getCompound("Goal")), ItemStack.of(((CompoundTag) tradeTag).getCompound("Reward"))));
     }
 
     @Override
