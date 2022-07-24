@@ -56,6 +56,7 @@ public class Buddycards
 
     private void setup(final FMLCommonSetupEvent event) {
         MinecraftForge.EVENT_BUS.register(new MobDropHandler());
+        MinecraftForge.EVENT_BUS.register(new SpawnHandler());
         MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
         MinecraftForge.EVENT_BUS.register(new DamageEffectHandler());
         MinecraftForge.EVENT_BUS.register(new BiomeLoadingHandler());

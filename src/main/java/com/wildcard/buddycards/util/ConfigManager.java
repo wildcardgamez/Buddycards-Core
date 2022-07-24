@@ -66,6 +66,13 @@ public class ConfigManager {
                 .defineInRange("luminis.kineticCrimsonOdds", .75f, 0, 1);
         luminisKineticSpecialtyOdds = builder.comment("\nOdds of a kinetic chamber properly converting Crimson Luminis blocks to specialty items, default is 85% \nWARNING: FAILURE WILL CONSUME")
                 .defineInRange("luminis.kineticSpecialtyOdds", .85f, 0, 1);
+
+        enderlingChanceEnd = builder.comment("\nOdds for an Enderling to spawn with an Enderman in the End, 0-1, default is 0.5%")
+                .defineInRange("enderling.endOdds", .005, 0, 1);
+        enderlingChanceNether = builder.comment("\nOdds for an Enderling to spawn with an Enderman in the Nether, 0-1, default is 0.5%")
+                .defineInRange("enderling.netherOdds", .005, 0, 1);
+        enderlingChanceOverworld = builder.comment("\nOdds for an Enderling to spawn with an Enderman in the Overworld, 0-1, default is 1.5%")
+                .defineInRange("enderling.overOdds", .015, 0, 1);
     }
 
     public static ForgeConfigSpec.DoubleValue zombieChance;
@@ -89,4 +96,8 @@ public class ConfigManager {
     public static ForgeConfigSpec.DoubleValue kineticSuccessRate;
     public static ForgeConfigSpec.DoubleValue luminisKineticCrimsonOdds;
     public static ForgeConfigSpec.DoubleValue luminisKineticSpecialtyOdds;
+
+    public static ForgeConfigSpec.DoubleValue enderlingChanceOverworld;
+    public static ForgeConfigSpec.DoubleValue enderlingChanceNether;
+    public static ForgeConfigSpec.DoubleValue enderlingChanceEnd;
 }
