@@ -186,7 +186,6 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         }
         goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level, false)));
         goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level, true)));
-        System.out.println(goalTrades);
     }
 
     public static ItemStack getBarterResult(Level level, boolean voidZylex) {

@@ -46,10 +46,10 @@ public class CardDisplayBlockEntity extends BlockEntity implements Clearable {
 
     @Override
     protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         CompoundTag nbt = new CompoundTag();
         ContainerHelper.saveAllItems(nbt, this.inventory, true);
         compound.put("cards", nbt);
-        super.saveAdditional(compound);
     }
 
     @Override
@@ -57,7 +57,6 @@ public class CardDisplayBlockEntity extends BlockEntity implements Clearable {
         super.load(compound);
         this.inventory.clear();
         ContainerHelper.loadAllItems(compound.getCompound("cards"), this.inventory);
-
     }
 
     @Override
