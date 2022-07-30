@@ -157,7 +157,7 @@ public class BuddycardsItems {
         Objects.requireNonNull(set);
         for (int i = startValue; i < amount + startValue; i++) {
             int finalI = i;
-            ITEMS.register("buddycard_" + set.getName() + i, () -> new BuddycardItem(requirement, set, finalI, rarity, properties));
+            ITEMS.register("buddycard_" + set.getName() + i, () -> new BuddycardItem(requirement, set, finalI, rarity, properties, 1, 2));
         }
     }
 
