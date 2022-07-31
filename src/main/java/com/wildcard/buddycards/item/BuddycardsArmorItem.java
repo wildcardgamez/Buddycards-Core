@@ -18,9 +18,11 @@ import net.minecraftforge.client.IItemRenderProperties;
 import java.util.List;
 import java.util.function.Consumer;
 
+import static com.wildcard.buddycards.registries.BuddycardsItems.UNCOMMON_TOOL_PROPERTIES;
+
 public class BuddycardsArmorItem extends ArmorItem {
     public BuddycardsArmorItem(ArmorMaterial materialIn, EquipmentSlot slot) {
-        super(materialIn, slot, new Item.Properties().tab(Buddycards.TAB));
+        super(materialIn, slot, UNCOMMON_TOOL_PROPERTIES);
     }
 
     @Override

@@ -54,6 +54,7 @@ public class BuddycardsItems {
     //Default parameters
     public static final Item.Properties DEFAULT_PROPERTIES = new Item.Properties().tab(Buddycards.TAB);
     public static final Item.Properties DEFAULT_UNCOMMON_PROPERTIES = new Item.Properties().tab(Buddycards.TAB).rarity(Rarity.UNCOMMON);
+    public static final Item.Properties UNCOMMON_TOOL_PROPERTIES = new Item.Properties().tab(Buddycards.TAB).rarity(Rarity.UNCOMMON);
     public static final Item.Properties DEFAULT_RARE_PROPERTIES = new Item.Properties().tab(Buddycards.TAB).rarity(Rarity.RARE);
     public static final Item.Properties DEFAULT_EPIC_PROPERTIES = new Item.Properties().tab(Buddycards.TAB).rarity(Rarity.EPIC);
     public static final Item.Properties DEFAULT_CARD_PROPERTIES = new Item.Properties().tab(Buddycards.CARDS_TAB);
@@ -94,11 +95,11 @@ public class BuddycardsItems {
     public static final RegistryObject<Item> BUDDYSTEEL_CHESTPLATE = ITEMS.register("buddysteel_chestplate", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.BUDDYSTEEL, EquipmentSlot.CHEST));
     public static final RegistryObject<Item> BUDDYSTEEL_LEGGINGS = ITEMS.register("buddysteel_leggings", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.BUDDYSTEEL, EquipmentSlot.LEGS));
     public static final RegistryObject<Item> BUDDYSTEEL_BOOTS = ITEMS.register("buddysteel_boots", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.BUDDYSTEEL, EquipmentSlot.FEET));
-    public static final RegistryObject<Item> BUDDYSTEEL_SWORD = ITEMS.register("buddysteel_sword", () -> new SwordItem(BuddycardsToolTier.BUDDYSTEEL,3, -2.4F, DEFAULT_UNCOMMON_PROPERTIES));
-    public static final RegistryObject<Item> BUDDYSTEEL_SHOVEL = ITEMS.register("buddysteel_shovel", () -> new ShovelItem(BuddycardsToolTier.BUDDYSTEEL,1.5F, -3F, DEFAULT_UNCOMMON_PROPERTIES));
-    public static final RegistryObject<Item> BUDDYSTEEL_PICKAXE = ITEMS.register("buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.BUDDYSTEEL,1, -2.8F, DEFAULT_UNCOMMON_PROPERTIES));
-    public static final RegistryObject<Item> BUDDYSTEEL_AXE = ITEMS.register("buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.BUDDYSTEEL,6, -3.1F, DEFAULT_UNCOMMON_PROPERTIES));
-    public static final RegistryObject<Item> BUDDYSTEEL_HOE = ITEMS.register("buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.BUDDYSTEEL,-2, -1F, DEFAULT_UNCOMMON_PROPERTIES));
+    public static final RegistryObject<Item> BUDDYSTEEL_SWORD = ITEMS.register("buddysteel_sword", () -> new SwordItem(BuddycardsToolTier.BUDDYSTEEL,3, -2.4F, UNCOMMON_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> BUDDYSTEEL_SHOVEL = ITEMS.register("buddysteel_shovel", () -> new ShovelItem(BuddycardsToolTier.BUDDYSTEEL,1.5F, -3F, UNCOMMON_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> BUDDYSTEEL_PICKAXE = ITEMS.register("buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.BUDDYSTEEL,1, -2.8F, UNCOMMON_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> BUDDYSTEEL_AXE = ITEMS.register("buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.BUDDYSTEEL,6, -3.1F, UNCOMMON_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> BUDDYSTEEL_HOE = ITEMS.register("buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.BUDDYSTEEL,-2, -1F, UNCOMMON_TOOL_PROPERTIES));
     //Luminis Items
     public static final RegistryObject<BlockItem> LUMINIS_ORE = ITEMS.register("luminis_ore", () -> new BlockItem(BuddycardsBlocks.LUMINIS_ORE.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<BlockItem> DEEPSLATE_LUMINIS_ORE = ITEMS.register("deepslate_luminis_ore", () -> new BlockItem(BuddycardsBlocks.DEEPSLATE_LUMINIS_ORE.get(), DEFAULT_PROPERTIES));
@@ -112,7 +113,7 @@ public class BuddycardsItems {
     public static final RegistryObject<BlockItem> CRIMSON_LUMINIS_BLOCK = ITEMS.register("crimson_luminis_block", () -> new BlockItem(BuddycardsBlocks.CRIMSON_LUMINIS_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<BlockItem> KINETIC_CHAMBER = ITEMS.register("kinetic_chamber", () -> new DescriptionBlockItem(BuddycardsBlocks.KINETIC_CHAMBER.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> LUMINIS_HELMET = ITEMS.register("luminis_helmet", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.LUMINIS, EquipmentSlot.HEAD));
-    public static final RegistryObject<Item> LUMINIS_PICKAXE = ITEMS.register("luminis_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.LUMINIS,1, -2.8F, DEFAULT_UNCOMMON_PROPERTIES));
+    public static final RegistryObject<Item> LUMINIS_PICKAXE = ITEMS.register("luminis_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.LUMINIS,1, -2.8F, UNCOMMON_TOOL_PROPERTIES));
     public static final RegistryObject<Item> LUMINIS_RING = ITEMS.register("luminis_ring", () -> new DescriptionItem(DEFAULT_CURIO_PROPERTIES));
     //Zylex Items
     public static final RegistryObject<Item> ZYLEX = ITEMS.register("zylex", () -> new Item(DEFAULT_PROPERTIES));
@@ -121,7 +122,7 @@ public class BuddycardsItems {
     public static final RegistryObject<Item> VOID_ZYLEX = ITEMS.register("void_zylex", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<BlockItem> VOID_ZYLEX_BLOCK = ITEMS.register("void_zylex_block", () -> new BlockItem(BuddycardsBlocks.VOID_ZYLEX_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> ZYLEX_BOOTS = ITEMS.register("zylex_boots", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.ZYLEX, EquipmentSlot.FEET));
-    public static final RegistryObject<Item> ZYLEX_HOE = ITEMS.register("zylex_hoe", () -> new HoeItem(BuddycardsToolTier.ZYLEX,-2, -1F, DEFAULT_UNCOMMON_PROPERTIES));
+    public static final RegistryObject<Item> ZYLEX_HOE = ITEMS.register("zylex_hoe", () -> new HoeItem(BuddycardsToolTier.ZYLEX,-2, -1F, UNCOMMON_TOOL_PROPERTIES));
     public static final RegistryObject<Item> ZYLEX_RING = ITEMS.register("zylex_ring", () -> new DescriptionItem(DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<ZylexPowerMeterItem> ZYLEX_POWER_METER = ITEMS.register("zylex_power_meter", () -> new ZylexPowerMeterItem(DEFAULT_RARE_PROPERTIES));
     //Medals
