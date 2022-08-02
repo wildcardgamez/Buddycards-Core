@@ -119,8 +119,8 @@
   "item.buddycards.buddycard_base15.tooltip": "让现金流动吧，我最壕的朋友！",
   "item.buddycards.buddycard_base16": "绿宝石",
   "item.buddycards.buddycard_base16.tooltip": "深受御宅村民喜爱。",
-  "item.buddycards.buddycard_base17": "星钻",
-  "item.buddycards.buddycard_base17.tooltip": "他牢不可破。",
+  "item.buddycards.buddycard_base17": "钻石",
+  "item.buddycards.buddycard_base17.tooltip": "他是不灭的。",
   "item.buddycards.buddycard_base18": "甜心",
   "item.buddycards.buddycard_base18.tooltip": "别吃她！她太宝贵了！",
   "item.buddycards.buddycard_base19": "小红",
@@ -296,8 +296,8 @@
   "enchantment.buddycards.extra_page": "额外页",
   "enchantment.buddycards.extra_page.desc": "向卡牌夹中添加大量卡槽",
   "enchantment.buddycards.buddy_boost": "巴迪提升",
-  "enchantment.buddycards.buddy_boost.desc": "提高巴迪钢勋章效果",
+  "enchantment.buddycards.buddy_boost.desc": "提高巴迪钢勋章的效果",
   "enchantment.buddycards.recovery": "快速重置",
-  "enchantment.buddycards.recovery.desc": "缩短装备效果冷却时间",
+  "enchantment.buddycards.recovery.desc": "缩短装备效果的冷却时间",
   "curios.identifier.medal": "勋章"
 }
