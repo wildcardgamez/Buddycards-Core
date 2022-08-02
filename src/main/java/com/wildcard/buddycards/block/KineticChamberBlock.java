@@ -1,7 +1,6 @@
 package com.wildcard.buddycards.block;
 
 import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
-import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
@@ -40,19 +39,12 @@ public class KineticChamberBlock extends BaseEntityBlock {
             ItemStack stack = player.getItemInHand(hand);
             if(!entity.getItemSlot().isEmpty()) {
                 ItemStack oldItem = entity.getItemSlot();
-                if (stack.getItem() instanceof BuddycardItem) {
-                    entity.setItemSlot(new ItemStack(stack.getItem()));
-                    stack.shrink(1);
-                }
-                else {
-                    entity.setItemSlot(ItemStack.EMPTY);
-                }
+                entity.setItemSlot(stack.split(1));
                 if(!player.addItem(oldItem))
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldItem);
             }
             else if(!stack.isEmpty()) {
-                entity.setItemSlot(new ItemStack(stack.getItem()));
-                stack.shrink(1);
+                entity.setItemSlot(stack.split(1));
             }
         }
         return InteractionResult.SUCCESS;
