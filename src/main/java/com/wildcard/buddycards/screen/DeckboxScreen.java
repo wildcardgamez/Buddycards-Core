@@ -18,7 +18,7 @@ public class DeckboxScreen extends AbstractContainerScreen<DeckboxContainer> {
         this.leftPos = 0;
         this.topPos = 0;
         this.imageWidth = 176;
-        this.imageHeight = 250;
+        this.imageHeight = 150;
     }
 
     @Override

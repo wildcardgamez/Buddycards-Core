@@ -1,40 +1,35 @@
 package com.wildcard.buddycards.inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.item.ItemStack;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
-public class BinderInventory extends SimpleContainer {
-    public BinderInventory(int slots, ItemStack binderIn) {
-        super(slots);
-        binder = binderIn;
+public class DeckboxInventory extends SimpleContainer {
+    public DeckboxInventory(ItemStack deck) {
+        super(18);
+        deckbox = deck;
     }
 
-    public BinderInventory(int slots, boolean isEnder) {
-        super(slots);
-        ender = isEnder;
-    }
-
-    public ItemStack binder;
-    public boolean ender;
+    public ItemStack deckbox;
 
     @Override
     public void startOpen(Player player)
     {
-        //Set all slots in the binder as empty by default
+        //Set all slots in the deckbox as empty by default
         for(int i = 0; i < this.getContainerSize(); i++) {
             setItem(i, ItemStack.EMPTY);
         }
 
-        if(binder.hasTag())
+        if(deckbox.hasTag())
         {
-            //If the binder has nbt data, turn it into items
-            CompoundTag nbt = binder.getTag();
+            //If the deckbox has nbt data, turn it into items
+            CompoundTag nbt = deckbox.getTag();
             ListTag list = nbt.getList("Items", CompoundTag.TAG_COMPOUND);
             for(int i = 0; i < list.size(); i++) {
                 CompoundTag compoundnbt = list.getCompound(i);
-                int k = compoundnbt.getByte("Slot") & 255;
+                int k = compoundnbt.getInt("Slot");
                 if (k < this.getContainerSize()) {
                     this.setItem(k, ItemStack.of(compoundnbt));
                 }
@@ -45,22 +40,22 @@ public class BinderInventory extends SimpleContainer {
     @Override
     public void stopOpen(Player player)
     {
-        if(!binder.isEmpty())
+        if(!deckbox.isEmpty())
         {
-            //When the binder has cards in it, turn them into nbt data and put them in the binder
-            CompoundTag nbt = binder.getOrCreateTag();
+            //When the deckbox has cards in it, turn them into nbt data and put them in the deckbox
+            CompoundTag nbt = deckbox.getOrCreateTag();
             ListTag list = new ListTag();
             for(int i = 0; i < this.getContainerSize(); i++) {
                 ItemStack itemstack = this.getItem(i);
                 if (!itemstack.isEmpty()) {
                     CompoundTag compoundnbt = new CompoundTag();
-                    compoundnbt.putByte("Slot", (byte)i);
+                    compoundnbt.putInt("Slot", i);
                     itemstack.save(compoundnbt);
                     list.add(compoundnbt);
                 }
             }
             nbt.put("Items", list);
-            binder.setTag(nbt);
+            deckbox.setTag(nbt);
         }
     }
 }
