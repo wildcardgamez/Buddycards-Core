@@ -2,6 +2,7 @@ package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.container.BinderContainer;
+import com.wildcard.buddycards.container.DeckboxContainer;
 import com.wildcard.buddycards.enchantment.EnchantmentBuddyBoost;
 import com.wildcard.buddycards.enchantment.EnchantmentExtraPage;
 import com.wildcard.buddycards.enchantment.EnchantmentRecovery;
@@ -33,6 +34,8 @@ public class BuddycardsMisc {
     //Containers
     public static final RegistryObject<MenuType<BinderContainer>> BINDER_CONTAINER = CONTAINERS.register("binder",
             () -> new MenuType<>((BinderContainer::new)));
+    public static final RegistryObject<MenuType<DeckboxContainer>> DECKBOX_CONTAINER = CONTAINERS.register("deckbox",
+            () -> new MenuType<>((DeckboxContainer::new)));
 
     //GLMs
     public static RegistryObject<GlobalLootModifierSerializer<LootInjection.LootInjectionModifier>> LOOT_INJECTION = GLMS.register("loot_injection", LootInjection.LootInjectionSerializer::new);

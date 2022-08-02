@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.block.BattleBoardBlock;
 import com.wildcard.buddycards.block.BuddycardBoosterBoxBlock;
 import com.wildcard.buddycards.block.CardDisplayBlock;
 import com.wildcard.buddycards.block.KineticChamberBlock;
@@ -23,6 +24,7 @@ import java.util.function.Supplier;
 
 public class BuddycardsBlocks {
     public static final List<Supplier<CardDisplayBlock>> DISPLAY_BLOCKS = new ArrayList<>();
+    public static final List<Supplier<BattleBoardBlock>> BOARD_BLOCKS = new ArrayList<>();
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Buddycards.MOD_ID);
 
@@ -30,13 +32,14 @@ public class BuddycardsBlocks {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final BlockBehaviour.Properties BOOSTER_BOX_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_GRAY).strength(0.8F).sound(SoundType.WOOL);
-    static BlockBehaviour.Properties BUDDYSTEEL_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
-    static BlockBehaviour.Properties LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 12).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
-    static BlockBehaviour.Properties CRYSTAL_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(1.5F, 3.0F).sound(SoundType.AMETHYST);
-    static BlockBehaviour.Properties CRIMSON_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.CRIMSON_NYLIUM).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
-    static BlockBehaviour.Properties ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_PURPLE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
-    static BlockBehaviour.Properties VOID_ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.WARPED_HYPHAE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
+    static final BlockBehaviour.Properties BUDDYSTEEL_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
+    static final BlockBehaviour.Properties LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 12).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
+    static final BlockBehaviour.Properties CRYSTAL_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(1.5F, 3.0F).sound(SoundType.AMETHYST);
+    static final BlockBehaviour.Properties CRIMSON_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.CRIMSON_NYLIUM).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
+    static final BlockBehaviour.Properties ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_PURPLE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
+    static final BlockBehaviour.Properties VOID_ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.WARPED_HYPHAE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
+    static final BlockBehaviour.Properties BOOSTER_BOX_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_GRAY).strength(0.8F).sound(SoundType.WOOL);
+    static final BlockBehaviour.Properties BATTLE_BOARD_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_LIGHT_BLUE).strength(0.8F).sound(SoundType.WOOL);
 
     //Basic Blocks
     public static final RegistryObject<Block> BUDDYSTEEL_BLOCK = BLOCKS.register("buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
@@ -63,10 +66,18 @@ public class BuddycardsBlocks {
     public static final RegistryObject<Block> BOOSTER_BOX_NETHER = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     public static final RegistryObject<Block> BOOSTER_BOX_END = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_end", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     public static final RegistryObject<Block> BOOSTER_BOX_MYSTERY = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_mystery", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
+    //Battle Boards
+    public static final RegistryObject<BattleBoardBlock> BATTLE_BOARD = registerBoard("battle_board", () -> new BattleBoardBlock(BATTLE_BOARD_PROPERTIES));
 
     public static RegistryObject<CardDisplayBlock> registerDisplay(String id, Supplier<CardDisplayBlock> supplier) {
         RegistryObject<CardDisplayBlock> display = BLOCKS.register(id, supplier);
         DISPLAY_BLOCKS.add(display);
         return display;
+    }
+
+    public static RegistryObject<BattleBoardBlock> registerBoard(String id, Supplier<BattleBoardBlock> supplier) {
+        RegistryObject<BattleBoardBlock> board = BLOCKS.register(id, supplier);
+        BOARD_BLOCKS.add(board);
+        return board;
     }
 }
