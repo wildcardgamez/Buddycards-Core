@@ -1,8 +1,8 @@
 package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.core.BuddycardSet;
+import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
@@ -13,17 +13,17 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class BuddycardItem extends Item {
-    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Item.Properties properties) {
+    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Properties properties, int cost, int power) {
         super(properties);
         SET = set;
         CARD_NUMBER = cardNumber;
         RARITY = rarity;
         REQUIREMENT = shouldLoad;
+        COST = cost;
+        POWER = power;
 
         BuddycardsAPI.registerCard(this);
     }
@@ -32,6 +32,9 @@ public class BuddycardItem extends Item {
     protected final int CARD_NUMBER;
     protected final Rarity RARITY;
     protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
+
+    protected final int COST;
+    protected final int POWER;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
@@ -102,5 +105,11 @@ public class BuddycardItem extends Item {
 
     public boolean shouldLoad() {
         return REQUIREMENT.shouldLoad();
+    }
+
+    public void setupOnBattlefield(ItemStack stack) {
+        CompoundTag nbt = stack.getOrCreateTag();
+        nbt.putInt("power", POWER);
+        stack.setTag(nbt);
     }
 }

@@ -11,6 +11,7 @@ import com.wildcard.buddycards.registries.BuddycardsEntities;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import com.wildcard.buddycards.screen.BinderScreen;
+import com.wildcard.buddycards.screen.DeckboxScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -21,14 +22,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Buddycards.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientStuff {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.BINDER_CONTAINER.get(), BinderScreen::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.DECKBOX_CONTAINER.get(), DeckboxScreen::new));
         for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
             for (BuddycardItem card : set.getCards()) {
                 event.enqueueWork(() -> ItemProperties.register(card, new ResourceLocation("grade"), (stack, world, entity, idk) -> {
@@ -56,7 +55,7 @@ public class ClientStuff {
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(BuddycardsEntities.ENDERLING.get(), EnderlingRenderer::new);
-        event.registerBlockEntityRenderer(BuddycardsEntities.CARD_DISPLAY_TILE.get(), CardDisplayBlockRenderer::new);
+        event.registerBlockEntityRenderer(BuddycardsEntities.CARD_DISPLAY_ENTITY.get(), CardDisplayBlockRenderer::new);
     }
 
     @SubscribeEvent

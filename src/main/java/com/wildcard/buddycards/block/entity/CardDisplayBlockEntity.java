@@ -16,7 +16,7 @@ public class CardDisplayBlockEntity extends BlockEntity implements Clearable {
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(6, ItemStack.EMPTY);
 
     public CardDisplayBlockEntity(BlockPos pos, BlockState state) {
-        super(BuddycardsEntities.CARD_DISPLAY_TILE.get(), pos, state);
+        super(BuddycardsEntities.CARD_DISPLAY_ENTITY.get(), pos, state);
     }
 
     public CardDisplayBlockEntity(BlockPos pos, BlockState state, BlockEntityType block) {

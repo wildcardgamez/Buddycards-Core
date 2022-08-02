@@ -85,6 +85,9 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES));
     public static final RegistryObject<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES));
     public static final RegistryObject<EnderBinderItem> ENDER_BINDER = ITEMS.register("ender_buddycard_binder", () -> new EnderBinderItem(DEFAULT_BINDER_PROPERTIES));
+    //Deckboxes
+    public static final RegistryObject<DeckboxItem> DECKBOX = ITEMS.register("deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
+    //Battle Boards
     //Buddysteel Items
     public static final RegistryObject<Item> BUDDYSTEEL_BLEND = ITEMS.register("buddysteel_blend", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_INGOT = ITEMS.register("buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
@@ -158,7 +161,7 @@ public class BuddycardsItems {
         Objects.requireNonNull(set);
         for (int i = startValue; i < amount + startValue; i++) {
             int finalI = i;
-            ITEMS.register("buddycard_" + set.getName() + i, () -> new BuddycardItem(requirement, set, finalI, rarity, properties));
+            ITEMS.register("buddycard_" + set.getName() + i, () -> new BuddycardItem(requirement, set, finalI, rarity, properties, 1, 2));
         }
     }
 
