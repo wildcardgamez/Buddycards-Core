@@ -61,11 +61,6 @@ public class DeckboxContainer extends AbstractContainerMenu {
         public int getMaxStackSize() {
             return 1;
         }
-
-        @Override
-        public int getMaxStackSize(ItemStack stack) {
-            return 1;
-        }
     }
     public class InvSlot extends Slot {
         public InvSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
