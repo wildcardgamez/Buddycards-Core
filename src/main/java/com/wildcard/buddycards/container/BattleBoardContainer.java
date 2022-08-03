@@ -8,12 +8,15 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 public class BattleBoardContainer extends AbstractContainerMenu {
 
     IItemHandler handler;
+    IItemHandler opponentHandler;
     BattleBoardBlockEntity entity;
+    BattleBoardBlockEntity opponentEntity;
 
     public BattleBoardContainer(int id, Inventory playerInv, BlockPos pos) {
         super(BuddycardsMisc.BATTLE_BOARD_CONTAINER.get(), id);
@@ -49,6 +52,18 @@ public class BattleBoardContainer extends AbstractContainerMenu {
         }
     }
 
+    public static class OpponentBattlefieldSlot extends BattlefieldSlot {
+        public OpponentBattlefieldSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
+            super(inventoryIn, index, xPosition, yPosition);
+        }
+
+        //You cannot play cards on the opponents battlefield
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return false;
+        }
+    }
+
     public static class DeckSlot extends Slot {
         public DeckSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
@@ -56,7 +71,7 @@ public class BattleBoardContainer extends AbstractContainerMenu {
 
         //You cannot move the deck
         @Override
-        public boolean mayPickup(Player p_40228_) {
+        public boolean mayPickup(Player player) {
             return false;
         }
     }

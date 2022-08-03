@@ -8,6 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -38,8 +39,15 @@ public class BuddycardItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(new TextComponent("" + COST).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.cost"))
+                .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
+                .append("" + POWER).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.power")));
+        tooltip.add(new TextComponent(""));
+        tooltip.add(new TranslatableComponent(getDescriptionId() + ".ability").withStyle(ChatFormatting.WHITE));
+        tooltip.add(new TranslatableComponent(getDescriptionId() + ".ability_desc").withStyle(ChatFormatting.GRAY));
+        tooltip.add(new TextComponent(""));
         //Show the cards joke/tooltip
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
+        tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         //Show the set, card number, and shiny symbol if applicable
         TranslatableComponent cn = new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
         cn.append("" + CARD_NUMBER);
