@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 public class BattleBoardContainer extends AbstractContainerMenu {
-
     IItemHandler handler;
     IItemHandler opponentHandler;
     BattleBoardBlockEntity entity;
