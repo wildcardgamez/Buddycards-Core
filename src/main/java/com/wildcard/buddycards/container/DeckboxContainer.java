@@ -24,8 +24,8 @@ public class DeckboxContainer extends AbstractContainerMenu {
 
         //Set up slots for deckbox
         for (int y = 0; y < 2; y++) {
-            for (int x = 0; x < 9; x++) {
-                this.addSlot(new DeckSlot(inventory, x + (y * 9), 8 + x * 18, 18 + y * 18));
+            for (int x = 0; x < 8; x++) {
+                this.addSlot(new DeckSlot(inventory, x + (y * 8), 8 + x * 18, 18 + y * 18));
             }
         }
         //Set up slots for inventory
@@ -38,6 +38,8 @@ public class DeckboxContainer extends AbstractContainerMenu {
         for (int x = 0; x < 9; x++) {
             this.addSlot(new InvSlot(playerInv, x, 8 + x * 18, 126));
         }
+
+        this.inventory.startOpen(playerInv.player);
     }
 
     @Override

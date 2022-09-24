@@ -22,11 +22,6 @@ public class BinderInventory extends SimpleContainer {
     @Override
     public void startOpen(Player player)
     {
-        //Set all slots in the binder as empty by default
-        for(int i = 0; i < this.getContainerSize(); i++) {
-            setItem(i, ItemStack.EMPTY);
-        }
-
         if(binder.hasTag())
         {
             //If the binder has nbt data, turn it into items
@@ -34,7 +29,7 @@ public class BinderInventory extends SimpleContainer {
             ListTag list = nbt.getList("Items", CompoundTag.TAG_COMPOUND);
             for(int i = 0; i < list.size(); i++) {
                 CompoundTag compoundnbt = list.getCompound(i);
-                int k = compoundnbt.getByte("Slot") & 255;
+                int k = compoundnbt.getInt("Slot");
                 if (k < this.getContainerSize()) {
                     this.setItem(k, ItemStack.of(compoundnbt));
                 }

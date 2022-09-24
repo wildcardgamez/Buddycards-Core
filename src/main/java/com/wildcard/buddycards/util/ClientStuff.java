@@ -15,6 +15,7 @@ import com.wildcard.buddycards.screen.DeckboxScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -45,6 +46,11 @@ public class ClientStuff {
         event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.ZYLEX_POWER_METER.get(), new ResourceLocation("power"), (stack, world, entity, idk) -> {
             if (stack.getTag() != null)
                 return stack.getTag().getInt("power");
+            return 0;
+        }));
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.DECKBOX.get(), new ResourceLocation("closed"), (stack, world, entity, idk) -> {
+            if(stack.hasTag() && stack.getTag().contains("Items") && stack.getTag().getList("Items", Tag.TAG_COMPOUND).size() == 16)
+                return 1;
             return 0;
         }));
         CuriosIntegration.setupRenderers();

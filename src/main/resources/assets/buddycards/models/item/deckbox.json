@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "buddycards:item/deckbox"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "minecraft:closed": 1
+      },
+      "model": "buddycards:item/deckbox_closed"
+    }
+  ]
+}
