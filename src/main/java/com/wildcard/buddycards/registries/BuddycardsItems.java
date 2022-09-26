@@ -87,7 +87,8 @@ public class BuddycardsItems {
     public static final RegistryObject<EnderBinderItem> ENDER_BINDER = ITEMS.register("ender_buddycard_binder", () -> new EnderBinderItem(DEFAULT_BINDER_PROPERTIES));
     //Deckboxes
     public static final RegistryObject<DeckboxItem> DECKBOX = ITEMS.register("deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
-    //Battle Boards
+    //Playmats
+    public static final RegistryObject<BlockItem> PLAYMAT = ITEMS.register("playmat_base", () -> new BlockItem(BuddycardsBlocks.PLAYMAT.get(), DEFAULT_PROPERTIES));
     //Buddysteel Items
     public static final RegistryObject<Item> BUDDYSTEEL_BLEND = ITEMS.register("buddysteel_blend", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_INGOT = ITEMS.register("buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));

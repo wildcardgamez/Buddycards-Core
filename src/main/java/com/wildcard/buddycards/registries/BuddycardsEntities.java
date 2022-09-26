@@ -1,7 +1,7 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.block.entity.BattleBoardBlockEntity;
+import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
 import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
 import com.wildcard.buddycards.entity.EnderlingEntity;
@@ -31,10 +31,10 @@ public class BuddycardsEntities {
                 Block[] blocks = BuddycardsBlocks.DISPLAY_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
                 return BlockEntityType.Builder.of(CardDisplayBlockEntity::new, blocks).build(null);
             });
-    public static final RegistryObject<BlockEntityType<BattleBoardBlockEntity>> BATTLE_BOARD_ENTITY = BLOCK_ENTITIES.register("battle_board",
+    public static final RegistryObject<BlockEntityType<PlaymatBlockEntity>> BATTLE_BOARD_ENTITY = BLOCK_ENTITIES.register("battle_board",
             () -> {
                 Block[] blocks = BuddycardsBlocks.BOARD_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
-                return BlockEntityType.Builder.of(BattleBoardBlockEntity::new, blocks).build(null);
+                return BlockEntityType.Builder.of(PlaymatBlockEntity::new, blocks).build(null);
             });
     public static final RegistryObject<BlockEntityType<KineticChamberBlockEntity>> KINETIC_CHAMBER_TILE = BLOCK_ENTITIES.register("kinetic_chamber",
             () -> BlockEntityType.Builder.of(KineticChamberBlockEntity::new, BuddycardsBlocks.KINETIC_CHAMBER.get()).build(null));

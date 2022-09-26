@@ -1,7 +1,7 @@
 package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.container.BattleBoardContainer;
+import com.wildcard.buddycards.container.PlaymatContainer;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -19,15 +19,15 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-public class BattleBoardBlockEntity extends BlockEntity implements MenuProvider {
+public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     private LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(7));
     private Component name;
 
-    public BattleBoardBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public PlaymatBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
-    public BattleBoardBlockEntity(BlockPos pos, BlockState state) {
+    public PlaymatBlockEntity(BlockPos pos, BlockState state) {
         super(BuddycardsEntities.BATTLE_BOARD_ENTITY.get(), pos, state);
     }
 
@@ -45,7 +45,7 @@ public class BattleBoardBlockEntity extends BlockEntity implements MenuProvider 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new BattleBoardContainer(i, inventory, this.worldPosition);
+        return new PlaymatContainer(i, inventory, this.worldPosition);
     }
 
     public IItemHandler getHandler() {

@@ -1,7 +1,7 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.container.BattleBoardContainer;
+import com.wildcard.buddycards.container.PlaymatContainer;
 import com.wildcard.buddycards.container.BinderContainer;
 import com.wildcard.buddycards.container.DeckboxContainer;
 import com.wildcard.buddycards.enchantment.EnchantmentBuddyBoost;
@@ -38,8 +38,8 @@ public class BuddycardsMisc {
             () -> new MenuType<>((BinderContainer::new)));
     public static final RegistryObject<MenuType<DeckboxContainer>> DECKBOX_CONTAINER = CONTAINERS.register("deckbox",
             () -> new MenuType<>((DeckboxContainer::new)));
-    public static final RegistryObject<MenuType<BattleBoardContainer>> BATTLE_BOARD_CONTAINER = CONTAINERS.register("battle_board",
-            () -> IForgeMenuType.create((id, inv, data) -> new BattleBoardContainer(id, inv, data.readBlockPos())));
+    public static final RegistryObject<MenuType<PlaymatContainer>> BATTLE_BOARD_CONTAINER = CONTAINERS.register("battle_board",
+            () -> IForgeMenuType.create((id, inv, data) -> new PlaymatContainer(id, inv, data.readBlockPos())));
 
     //GLMs
     public static RegistryObject<GlobalLootModifierSerializer<LootInjection.LootInjectionModifier>> LOOT_INJECTION = GLMS.register("loot_injection", LootInjection.LootInjectionSerializer::new);

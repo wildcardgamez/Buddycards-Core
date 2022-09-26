@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.container;
 
-import com.wildcard.buddycards.block.entity.BattleBoardBlockEntity;
+import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
@@ -11,15 +11,15 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-public class BattleBoardContainer extends AbstractContainerMenu {
+public class PlaymatContainer extends AbstractContainerMenu {
     IItemHandler handler;
     IItemHandler opponentHandler;
-    BattleBoardBlockEntity entity;
-    BattleBoardBlockEntity opponentEntity;
+    PlaymatBlockEntity entity;
+    PlaymatBlockEntity opponentEntity;
 
-    public BattleBoardContainer(int id, Inventory playerInv, BlockPos pos) {
+    public PlaymatContainer(int id, Inventory playerInv, BlockPos pos) {
         super(BuddycardsMisc.BATTLE_BOARD_CONTAINER.get(), id);
-        entity = (BattleBoardBlockEntity) playerInv.player.level.getBlockEntity(pos);
+        entity = (PlaymatBlockEntity) playerInv.player.level.getBlockEntity(pos);
     }
 
     @Override

@@ -1,29 +1,35 @@
 package com.wildcard.buddycards.block;
 
-import com.wildcard.buddycards.block.entity.BattleBoardBlockEntity;
+import com.google.common.collect.ImmutableMap;
+import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BattleBoardBlock extends BaseEntityBlock {
+public class PlaymatBlock extends BaseEntityBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
+    protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
-    public BattleBoardBlock(Properties properties) {
+    public PlaymatBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new BattleBoardBlockEntity(pos, state);
+        return new PlaymatBlockEntity(pos, state);
     }
 
     @Override
@@ -74,5 +80,15 @@ public class BattleBoardBlock extends BaseEntityBlock {
                 }
         }
         return state;
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 }
