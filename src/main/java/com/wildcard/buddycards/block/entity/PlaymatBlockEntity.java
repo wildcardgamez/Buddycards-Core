@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     private LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(7));
     private Component name;
+    private PlaymatBlockEntity opponent;
 
     public PlaymatBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -67,5 +68,13 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             this.name = Component.Serializer.fromJson(tag.getString("name"));
         CompoundTag invTag = tag.getCompound("inv");
         this.handler.ifPresent((stack) -> stack.deserializeNBT(invTag));
+    }
+
+    public PlaymatBlockEntity getOpponent() {
+        return opponent;
+    }
+
+    public void setOpponent(PlaymatBlockEntity opponent) {
+        this.opponent = opponent;
     }
 }
