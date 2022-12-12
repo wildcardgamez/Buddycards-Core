@@ -21,7 +21,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
         super(BuddycardsMisc.PLAYMAT_CONTAINER.get(), id);
         entity = (PlaymatBlockEntity) playerInv.player.level.getBlockEntity(pos);
 
-        this.addSlot(new DeckSlot(, 0, 143, 18));
+        //this.addSlot(new DeckSlot(, 0, 143, 18));
     }
 
     @Override

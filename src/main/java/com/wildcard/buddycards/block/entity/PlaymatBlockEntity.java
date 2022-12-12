@@ -1,11 +1,7 @@
 package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.Buddycards;
-<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/block/entity/BattleBoardBlockEntity.java
-import com.wildcard.buddycards.container.BattleBoardContainer;
-=======
 import com.wildcard.buddycards.menu.PlaymatMenu;
->>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/block/entity/PlaymatBlockEntity.java
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -23,15 +19,16 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
-public class BattleBoardBlockEntity extends BlockEntity implements MenuProvider {
+public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     private LazyOptional<ItemStackHandler> handler = LazyOptional.of(() -> new ItemStackHandler(7));
     private Component name;
+    private PlaymatBlockEntity opponent;
 
-    public BattleBoardBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public PlaymatBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
-    public BattleBoardBlockEntity(BlockPos pos, BlockState state) {
+    public PlaymatBlockEntity(BlockPos pos, BlockState state) {
         super(BuddycardsEntities.BATTLE_BOARD_ENTITY.get(), pos, state);
     }
 
@@ -49,13 +46,9 @@ public class BattleBoardBlockEntity extends BlockEntity implements MenuProvider 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/block/entity/BattleBoardBlockEntity.java
-        return new BattleBoardContainer(i, inventory, this.worldPosition);
-=======
         return new PlaymatMenu(i, inventory, this.worldPosition);
->>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/block/entity/PlaymatBlockEntity.java
     }
-
+        
     public IItemHandler getHandler() {
         return handler.orElse(new ItemStackHandler(7));
     }
@@ -75,5 +68,9 @@ public class BattleBoardBlockEntity extends BlockEntity implements MenuProvider 
             this.name = Component.Serializer.fromJson(tag.getString("name"));
         CompoundTag invTag = tag.getCompound("inv");
         this.handler.ifPresent((stack) -> stack.deserializeNBT(invTag));
+    }
+
+    public void setOpponent(PlaymatBlockEntity blockEntity) {
+        opponent = blockEntity;
     }
 }

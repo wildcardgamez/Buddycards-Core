@@ -2,9 +2,9 @@ package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
 <<<<<<< Updated upstream
-import com.wildcard.buddycards.container.BattleBoardContainer;
-import com.wildcard.buddycards.container.BinderContainer;
-import com.wildcard.buddycards.container.DeckboxContainer;
+import com.wildcard.buddycards.screens.BattleBoardContainer;
+import com.wildcard.buddycards.screens.BinderScreen;
+import com.wildcard.buddycards.screens.DeckboxScreen;
 =======
 import com.wildcard.buddycards.menu.DeckboxMenu;
 import com.wildcard.buddycards.menu.PlaymatMenu;
@@ -41,10 +41,10 @@ public class BuddycardsMisc {
 
     //Containers
 <<<<<<< Updated upstream
-    public static final RegistryObject<MenuType<BinderContainer>> BINDER_CONTAINER = CONTAINERS.register("binder",
-            () -> new MenuType<>((BinderContainer::new)));
-    public static final RegistryObject<MenuType<DeckboxContainer>> DECKBOX_CONTAINER = CONTAINERS.register("deckbox",
-            () -> new MenuType<>((DeckboxContainer::new)));
+    public static final RegistryObject<MenuType<BinderScreen>> BINDER_CONTAINER = CONTAINERS.register("binder",
+            () -> new MenuType<>((BinderScreen::new)));
+    public static final RegistryObject<MenuType<DeckboxScreen>> DECKBOX_CONTAINER = CONTAINERS.register("deckbox",
+            () -> new MenuType<>((DeckboxScreen::new)));
     public static final RegistryObject<MenuType<BattleBoardContainer>> BATTLE_BOARD_CONTAINER = CONTAINERS.register("battle_board",
             () -> IForgeMenuType.create((id, inv, data) -> new BattleBoardContainer(id, inv, data.readBlockPos())));
 =======

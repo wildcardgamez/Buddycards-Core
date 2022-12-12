@@ -1,39 +1,32 @@
 package com.wildcard.buddycards.block;
 
-<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/block/BattleBoardBlock.java
-import com.wildcard.buddycards.block.entity.BattleBoardBlockEntity;
-=======
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
->>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/block/PlaymatBlock.java
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
-<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/block/BattleBoardBlock.java
-=======
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
->>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/block/PlaymatBlock.java
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/block/BattleBoardBlock.java
-=======
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
->>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/block/PlaymatBlock.java
 
 public class BattleBoardBlock extends BaseEntityBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
 
     public BattleBoardBlock(Properties properties) {
         super(properties);
@@ -41,7 +34,7 @@ public class BattleBoardBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new BattleBoardBlockEntity(pos, state);
+        return new PlaymatBlockEntity(pos, state);
     }
 
     @Override
@@ -93,8 +86,6 @@ public class BattleBoardBlock extends BaseEntityBlock {
         }
         return state;
     }
-<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/block/BattleBoardBlock.java
-=======
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
@@ -122,5 +113,4 @@ public class BattleBoardBlock extends BaseEntityBlock {
         }
         return super.use(state, level, pos, player, hand, hitResult);
     }
->>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/block/PlaymatBlock.java
 }
