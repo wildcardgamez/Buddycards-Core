@@ -45,6 +45,7 @@ public class DeckboxInventory extends SimpleContainer {
         {
             //When the deckbox has cards in it, turn them into nbt data and put them in the deckbox
             CompoundTag nbt = deckbox.getOrCreateTag();
+            CompoundTag deck = new CompoundTag();
             ListTag list = new ListTag();
             for(int i = 0; i < this.getContainerSize(); i++) {
                 ItemStack itemstack = this.getItem(i);
@@ -53,9 +54,15 @@ public class DeckboxInventory extends SimpleContainer {
                     compoundnbt.putInt("Slot", i);
                     itemstack.save(compoundnbt);
                     list.add(compoundnbt);
+                    String name = itemstack.getDisplayName().getString();
+                    if(deck.contains(name))
+                        deck.putInt(name, deck.getInt(name) + 1);
+                    else
+                        deck.putInt(name, 1);
                 }
             }
             nbt.put("Items", list);
+            nbt.put("Deck", deck);
             deckbox.setTag(nbt);
         }
         DeckboxItem.updateFull(deckbox);
