@@ -10,7 +10,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
-
     private static final ResourceLocation TEXTURE1 = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/battlescreen.png");
 
     public PlaymatScreen(PlaymatMenu container, Inventory playerInventory, Component title) {
