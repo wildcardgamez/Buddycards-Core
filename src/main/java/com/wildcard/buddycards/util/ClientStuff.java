@@ -4,14 +4,15 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.CardDisplayBlockRenderer;
 import com.wildcard.buddycards.client.renderer.EnderlingRenderer;
+import com.wildcard.buddycards.container.DeckboxContainer;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
-import com.wildcard.buddycards.screen.BinderScreen;
-import com.wildcard.buddycards.screen.DeckboxScreen;
+import com.wildcard.buddycards.container.PlaymatContainer;
+import com.wildcard.buddycards.container.BinderContainer;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -26,8 +27,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientStuff {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.BINDER_CONTAINER.get(), BinderScreen::new));
-        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.DECKBOX_CONTAINER.get(), DeckboxScreen::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.BINDER_CONTAINER.get(), BinderContainer::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.DECKBOX_CONTAINER.get(), DeckboxContainer::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.PLAYMAT_CONTAINER.get(), PlaymatContainer::new));
         for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
             for (BuddycardItem card : set.getCards()) {
                 event.enqueueWork(() -> ItemProperties.register(card, new ResourceLocation("grade"), (stack, world, entity, idk) -> {

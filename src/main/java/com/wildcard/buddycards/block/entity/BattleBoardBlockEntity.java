@@ -1,7 +1,11 @@
 package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.Buddycards;
+<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/block/entity/BattleBoardBlockEntity.java
 import com.wildcard.buddycards.container.BattleBoardContainer;
+=======
+import com.wildcard.buddycards.menu.PlaymatMenu;
+>>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/block/entity/PlaymatBlockEntity.java
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -45,7 +49,11 @@ public class BattleBoardBlockEntity extends BlockEntity implements MenuProvider 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/block/entity/BattleBoardBlockEntity.java
         return new BattleBoardContainer(i, inventory, this.worldPosition);
+=======
+        return new PlaymatMenu(i, inventory, this.worldPosition);
+>>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/block/entity/PlaymatBlockEntity.java
     }
 
     public IItemHandler getHandler() {

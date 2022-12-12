@@ -1,9 +1,15 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
+<<<<<<< Updated upstream
 import com.wildcard.buddycards.container.BattleBoardContainer;
 import com.wildcard.buddycards.container.BinderContainer;
 import com.wildcard.buddycards.container.DeckboxContainer;
+=======
+import com.wildcard.buddycards.menu.DeckboxMenu;
+import com.wildcard.buddycards.menu.PlaymatMenu;
+import com.wildcard.buddycards.menu.BinderMenu;
+>>>>>>> Stashed changes
 import com.wildcard.buddycards.enchantment.EnchantmentBuddyBoost;
 import com.wildcard.buddycards.enchantment.EnchantmentExtraPage;
 import com.wildcard.buddycards.enchantment.EnchantmentRecovery;
@@ -34,12 +40,21 @@ public class BuddycardsMisc {
     public static final RegistryObject<Enchantment> RECOVERY = ENCHANTMENTS.register("recovery", EnchantmentRecovery::new);
 
     //Containers
+<<<<<<< Updated upstream
     public static final RegistryObject<MenuType<BinderContainer>> BINDER_CONTAINER = CONTAINERS.register("binder",
             () -> new MenuType<>((BinderContainer::new)));
     public static final RegistryObject<MenuType<DeckboxContainer>> DECKBOX_CONTAINER = CONTAINERS.register("deckbox",
             () -> new MenuType<>((DeckboxContainer::new)));
     public static final RegistryObject<MenuType<BattleBoardContainer>> BATTLE_BOARD_CONTAINER = CONTAINERS.register("battle_board",
             () -> IForgeMenuType.create((id, inv, data) -> new BattleBoardContainer(id, inv, data.readBlockPos())));
+=======
+    public static final RegistryObject<MenuType<BinderMenu>> BINDER_CONTAINER = CONTAINERS.register("binder",
+            () -> new MenuType<>((BinderMenu::new)));
+    public static final RegistryObject<MenuType<DeckboxMenu>> DECKBOX_CONTAINER = CONTAINERS.register("deckbox",
+            () -> new MenuType<>((DeckboxMenu::new)));
+    public static final RegistryObject<MenuType<PlaymatMenu>> PLAYMAT_CONTAINER = CONTAINERS.register("playmat",
+            () -> IForgeMenuType.create((id, inv, data) -> new PlaymatMenu(id, inv, data.readBlockPos())));
+>>>>>>> Stashed changes
 
     //GLMs
     public static RegistryObject<GlobalLootModifierSerializer<LootInjection.LootInjectionModifier>> LOOT_INJECTION = GLMS.register("loot_injection", LootInjection.LootInjectionSerializer::new);

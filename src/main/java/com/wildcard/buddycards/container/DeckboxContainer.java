@@ -1,18 +1,17 @@
 package com.wildcard.buddycards.container;
 
-import com.wildcard.buddycards.inventory.DeckboxInventory;
-import com.wildcard.buddycards.item.BuddycardItem;
-import com.wildcard.buddycards.registries.BuddycardsMisc;
-import net.minecraft.world.Container;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.menu.DeckboxMenu;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 
-public class DeckboxContainer extends AbstractContainerMenu {
-    private final DeckboxInventory inventory;
+public class DeckboxContainer extends AbstractContainerScreen<DeckboxMenu> {
 
+<<<<<<< Updated upstream
     public DeckboxContainer(int id, Inventory playerInv) {
         this(id, playerInv, new DeckboxInventory(playerInv.getSelected()));
     }
@@ -38,67 +37,36 @@ public class DeckboxContainer extends AbstractContainerMenu {
         for (int x = 0; x < 9; x++) {
             this.addSlot(new InvSlot(playerInv, x, 8 + x * 18, 126));
         }
+=======
+    private static final ResourceLocation TEXTURE1 = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/deckbox.png");
+
+    public DeckboxContainer(DeckboxMenu container, Inventory playerInventory, Component title) {
+        super(container, playerInventory, title);
+        this.leftPos = 0;
+        this.topPos = 0;
+        this.imageWidth = 176;
+        this.imageHeight = 150;
+>>>>>>> Stashed changes
     }
 
     @Override
-    public boolean stillValid(Player player) {
-        return true;
-    }
-
-    public static class DeckSlot extends Slot {
-        public DeckSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
-        }
-
-        //Only let cards go into card slots
-        @Override
-        public boolean mayPlace(ItemStack stack) {
-            return stack.getItem() instanceof BuddycardItem;
-        }
-
-        //Only 1 card per slot
-        @Override
-        public int getMaxStackSize() {
-            return 1;
-        }
-    }
-    public class InvSlot extends Slot {
-        public InvSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
-        }
-
-        //Only let the stack move if it isn't the open deckbox
-        @Override
-        public boolean mayPickup(Player player) {
-            return !(this.getItem().equals(inventory.deckbox));
-        }
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    public void removed(Player player) {
-        inventory.stopOpen(player);
-        super.removed(player);
+    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+        //Draw the name of the deck and the inventory titles
+        this.font.draw(matrixStack, title, 8.0f, 6.0f, 4210752);
+        this.font.draw(matrixStack, playerInventoryTitle,8.0f, 56.0f, 4210752);
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack stack = ItemStack.EMPTY;
-        Slot slot = slots.get(index);
-        if(slot.hasItem())
-        {
-            stack = slot.getItem().copy();
-            if (index < slots.size() - 36)
-            {
-                if(!this.moveItemStackTo(slot.getItem(), slots.size() - 36, slots.size(), true))
-                    return ItemStack.EMPTY;
-            }
-            else if(!this.moveItemStackTo(slot.getItem(), 0, slots.size() - 36, false))
-                return ItemStack.EMPTY;
-            if(slot.getItem().isEmpty())
-                slot.set(ItemStack.EMPTY);
-            else
-                slot.setChanged();
-        }
-        return stack;
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        //Place the texture for the gui
+        RenderSystem._setShaderTexture(0, TEXTURE1);
+        blit(matrixStack, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 }

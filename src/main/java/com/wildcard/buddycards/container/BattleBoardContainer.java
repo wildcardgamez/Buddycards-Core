@@ -1,16 +1,22 @@
 package com.wildcard.buddycards.container;
 
+<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/container/BattleBoardContainer.java
 import com.wildcard.buddycards.block.entity.BattleBoardBlockEntity;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
+=======
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.menu.PlaymatMenu;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+>>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/container/PlaymatContainer.java
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
 
+<<<<<<< Updated upstream:src/main/java/com/wildcard/buddycards/container/BattleBoardContainer.java
 public class BattleBoardContainer extends AbstractContainerMenu {
     IItemHandler handler;
     IItemHandler opponentHandler;
@@ -31,47 +37,37 @@ public class BattleBoardContainer extends AbstractContainerMenu {
         public CardSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
+=======
+public class PlaymatContainer extends AbstractContainerScreen<PlaymatMenu> {
 
-        //Only 1 card per slot
-        @Override
-        public int getMaxStackSize() {
-            return 1;
-        }
+    private static final ResourceLocation TEXTURE1 = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/battlescreen.png");
+>>>>>>> Stashed changes:src/main/java/com/wildcard/buddycards/container/PlaymatContainer.java
+
+    public PlaymatContainer(PlaymatMenu container, Inventory playerInventory, Component title) {
+        super(container, playerInventory, title);
+        this.leftPos = 0;
+        this.topPos = 0;
+        this.imageWidth = 176;
+        this.imageHeight = 88;
     }
 
-    public static class BattlefieldSlot extends CardSlot {
-        public BattlefieldSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
-        }
-
-        //Once a card enters the battlefield, you cant move it
-        @Override
-        public boolean mayPickup(Player player) {
-            return false;
-        }
+    @Override
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(matrixStack);
+        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
-    public static class OpponentBattlefieldSlot extends BattlefieldSlot {
-        public OpponentBattlefieldSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
-        }
-
-        //You cannot play cards on the opponents battlefield
-        @Override
-        public boolean mayPlace(ItemStack stack) {
-            return false;
-        }
+    @Override
+    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+        //Draw the name of the playmat and the inventory titles
+        this.font.draw(matrixStack, title, 8.0f, 6.0f, 4210752);
     }
 
-    public static class DeckSlot extends Slot {
-        public DeckSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
-        }
-
-        //You cannot move the deck
-        @Override
-        public boolean mayPickup(Player player) {
-            return false;
-        }
+    @Override
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+        //Place the texture for the gui
+        RenderSystem._setShaderTexture(0, TEXTURE1);
+        blit(matrixStack, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
     }
 }

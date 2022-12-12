@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.container.BinderContainer;
+import com.wildcard.buddycards.menu.BinderMenu;
 import com.wildcard.buddycards.savedata.EnderBinderSaveData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -22,7 +22,7 @@ public class EnderBinderItem extends Item {
         if(player instanceof ServerPlayer) {
             //Open the GUI on server side
             NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInventory, entity) -> new BinderContainer(id, player.getInventory(),
+                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(),
                             EnderBinderSaveData.get(((ServerPlayer) player).getLevel()).getOrMakeEnderBinder(player.getUUID()))
                     , player.getItemInHand(hand).getHoverName()));
         }
