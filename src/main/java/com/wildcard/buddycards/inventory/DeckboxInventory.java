@@ -1,5 +1,6 @@
 package com.wildcard.buddycards.inventory;
 
+import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.SimpleContainer;
@@ -57,5 +58,6 @@ public class DeckboxInventory extends SimpleContainer {
             nbt.put("Items", list);
             deckbox.setTag(nbt);
         }
+        DeckboxItem.updateFull(deckbox);
     }
 }

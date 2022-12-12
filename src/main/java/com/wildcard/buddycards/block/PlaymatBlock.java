@@ -24,11 +24,11 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class BattleBoardBlock extends BaseEntityBlock {
+public class PlaymatBlock extends BaseEntityBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
 
-    public BattleBoardBlock(Properties properties) {
+    public PlaymatBlock(Properties properties) {
         super(properties);
     }
 

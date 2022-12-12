@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "buddycards:block/playmat_base"
+    },
+    "facing=east": {
+      "model": "buddycards:block/playmat_base",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "buddycards:block/playmat_base",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "buddycards:block/playmat_base",
+      "y": 270
+    }
+  }
+}

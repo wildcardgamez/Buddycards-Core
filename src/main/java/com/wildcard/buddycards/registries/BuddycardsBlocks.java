@@ -1,7 +1,7 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.block.BattleBoardBlock;
+import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.block.BuddycardBoosterBoxBlock;
 import com.wildcard.buddycards.block.CardDisplayBlock;
 import com.wildcard.buddycards.block.KineticChamberBlock;
@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 
 public class BuddycardsBlocks {
     public static final List<Supplier<CardDisplayBlock>> DISPLAY_BLOCKS = new ArrayList<>();
-    public static final List<Supplier<BattleBoardBlock>> BOARD_BLOCKS = new ArrayList<>();
+    public static final List<Supplier<PlaymatBlock>> PLAYMAT_BLOCKS = new ArrayList<>();
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Buddycards.MOD_ID);
 
@@ -39,7 +39,7 @@ public class BuddycardsBlocks {
     static final BlockBehaviour.Properties ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_PURPLE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
     static final BlockBehaviour.Properties VOID_ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.WARPED_HYPHAE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
     static final BlockBehaviour.Properties BOOSTER_BOX_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_GRAY).strength(0.8F).sound(SoundType.WOOL);
-    static final BlockBehaviour.Properties BATTLE_BOARD_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_LIGHT_BLUE).strength(0.8F).sound(SoundType.WOOL);
+    static final BlockBehaviour.Properties PLAYMAT_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_LIGHT_BLUE).strength(0.8F).sound(SoundType.WOOL);
 
     //Basic Blocks
     public static final RegistryObject<Block> BUDDYSTEEL_BLOCK = BLOCKS.register("buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
@@ -67,7 +67,7 @@ public class BuddycardsBlocks {
     public static final RegistryObject<Block> BOOSTER_BOX_END = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_end", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     public static final RegistryObject<Block> BOOSTER_BOX_MYSTERY = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_mystery", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     //Battle Boards
-    public static final RegistryObject<BattleBoardBlock> BATTLE_BOARD = registerBoard("battle_board", () -> new BattleBoardBlock(BATTLE_BOARD_PROPERTIES));
+    public static final RegistryObject<PlaymatBlock> PLAYMAT_BASE = registerPlaymat("playmat_base", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
 
     public static RegistryObject<CardDisplayBlock> registerDisplay(String id, Supplier<CardDisplayBlock> supplier) {
         RegistryObject<CardDisplayBlock> display = BLOCKS.register(id, supplier);
@@ -75,9 +75,9 @@ public class BuddycardsBlocks {
         return display;
     }
 
-    public static RegistryObject<BattleBoardBlock> registerBoard(String id, Supplier<BattleBoardBlock> supplier) {
-        RegistryObject<BattleBoardBlock> board = BLOCKS.register(id, supplier);
-        BOARD_BLOCKS.add(board);
+    public static RegistryObject<PlaymatBlock> registerPlaymat(String id, Supplier<PlaymatBlock> supplier) {
+        RegistryObject<PlaymatBlock> board = BLOCKS.register(id, supplier);
+        PLAYMAT_BLOCKS.add(board);
         return board;
     }
 }

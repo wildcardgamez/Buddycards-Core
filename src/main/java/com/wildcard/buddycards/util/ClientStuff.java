@@ -49,6 +49,11 @@ public class ClientStuff {
                 return stack.getTag().getInt("power");
             return 0;
         }));
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.DECKBOX.get(), new ResourceLocation("full"), (stack, world, entity, idk) -> {
+            if (stack.getTag() != null)
+                return stack.getTag().getInt("full");
+            return 0;
+        }));
         CuriosIntegration.setupRenderers();
     }
 

@@ -45,9 +45,12 @@ public class DeckboxItem extends Item {
         }
     }
 
-    public boolean isFull(ItemStack stack) {
-        if(stack.hasTag() && stack.getTag().contains("Items"))
-            return stack.getTag().getList("Items", Tag.TAG_COMPOUND).size() == 16;
-        return false;
+    public static void updateFull(ItemStack stack) {
+        CompoundTag tag = stack.getOrCreateTag();
+        if(tag.contains("Items") && tag.getList("Items", Tag.TAG_COMPOUND).size() == 16)
+            tag.putInt("full", 1);
+        else
+            tag.putInt("full", 0);
+        stack.setTag(tag);
     }
 }

@@ -33,7 +33,7 @@ public class BuddycardsEntities {
             });
     public static final RegistryObject<BlockEntityType<PlaymatBlockEntity>> BATTLE_BOARD_ENTITY = BLOCK_ENTITIES.register("battle_board",
             () -> {
-                Block[] blocks = BuddycardsBlocks.BOARD_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
+                Block[] blocks = BuddycardsBlocks.PLAYMAT_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
                 return BlockEntityType.Builder.of(PlaymatBlockEntity::new, blocks).build(null);
             });
     public static final RegistryObject<BlockEntityType<KineticChamberBlockEntity>> KINETIC_CHAMBER_TILE = BLOCK_ENTITIES.register("kinetic_chamber",
