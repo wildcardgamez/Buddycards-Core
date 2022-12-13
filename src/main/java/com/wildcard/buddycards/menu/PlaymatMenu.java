@@ -9,19 +9,26 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
 
 public class PlaymatMenu extends AbstractContainerMenu {
-    IItemHandler handler;
-    IItemHandler opponentHandler;
     PlaymatBlockEntity entity;
-    PlaymatBlockEntity opponentEntity;
+    PlaymatBlockEntity opponent;
 
     public PlaymatMenu(int id, Inventory playerInv, BlockPos pos) {
         super(BuddycardsMisc.PLAYMAT_CONTAINER.get(), id);
         entity = (PlaymatBlockEntity) playerInv.player.level.getBlockEntity(pos);
-
-        //this.addSlot(new DeckSlot(, 0, 143, 18));
+        opponent = entity.getOpponent();
+        this.addSlot(new DeckSlot(opponent.getContainer(), 0, 143, 18));
+        this.addSlot(new DeckSlot(entity.getContainer(), 0, 143, 64));
+        for (int i = 0; i < 3; i++) {
+            this.addSlot(new CardSlot(entity.getContainer(), 1+i, 79 + (16 * i), 64));
+        }
+        for (int i = 0; i < 3; i++) {
+            this.addSlot(new BattlefieldSlot(entity.getContainer(), 4+i, 79 + (16 * i), 36));
+        }
+        for (int i = 0; i < 3; i++) {
+            this.addSlot(new OpponentBattlefieldSlot(opponent.getContainer(), 4+i, 79 + (16 * i), 18));
+        }
     }
 
     @Override

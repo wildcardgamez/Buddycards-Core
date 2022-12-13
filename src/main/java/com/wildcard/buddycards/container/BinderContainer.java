@@ -1,17 +1,17 @@
-package com.wildcard.buddycards.inventory;
+package com.wildcard.buddycards.container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 
-public class BinderInventory extends SimpleContainer {
-    public BinderInventory(int slots, ItemStack binderIn) {
+public class BinderContainer extends SimpleContainer {
+    public BinderContainer(int slots, ItemStack binderIn) {
         super(slots);
         binder = binderIn;
     }
 
-    public BinderInventory(int slots, boolean isEnder) {
+    public BinderContainer(int slots, boolean isEnder) {
         super(slots);
         ender = isEnder;
     }

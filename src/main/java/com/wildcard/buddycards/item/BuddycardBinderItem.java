@@ -3,7 +3,7 @@ package com.wildcard.buddycards.item;
 import com.wildcard.buddycards.menu.BinderMenu;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
-import com.wildcard.buddycards.inventory.BinderInventory;
+import com.wildcard.buddycards.container.BinderContainer;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,7 +42,7 @@ public class BuddycardBinderItem extends Item {
             }
             int finalSlots = slots;
             NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderInventory(finalSlots, binder))
+                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderContainer(finalSlots, binder))
                     , player.getItemInHand(hand).getHoverName()));
         }
         return InteractionResultHolder.success(player.getItemInHand(hand));

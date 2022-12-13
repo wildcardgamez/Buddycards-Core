@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.inventory.DeckboxInventory;
+import com.wildcard.buddycards.container.DeckboxContainer;
 import com.wildcard.buddycards.menu.DeckboxMenu;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -30,7 +30,7 @@ public class DeckboxItem extends Item {
         ItemStack deck = player.getItemInHand(hand);
         if (level instanceof ServerLevel) {
             NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInventory, entity) -> new DeckboxMenu(id, player.getInventory(), new DeckboxInventory(deck))
+                    (id, playerInventory, entity) -> new DeckboxMenu(id, player.getInventory(), new DeckboxContainer(deck))
                     , player.getItemInHand(hand).getHoverName()));
         }
         return InteractionResultHolder.success(player.getItemInHand(hand));

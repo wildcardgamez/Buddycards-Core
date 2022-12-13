@@ -1,7 +1,7 @@
 package com.wildcard.buddycards.menu;
 
 import com.wildcard.buddycards.registries.BuddycardsMisc;
-import com.wildcard.buddycards.inventory.BinderInventory;
+import com.wildcard.buddycards.container.BinderContainer;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.savedata.EnderBinderSaveData;
 import net.minecraft.world.Container;
@@ -14,14 +14,14 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class BinderMenu extends AbstractContainerMenu {
 
-    private final BinderInventory binderInv;
+    private final BinderContainer binderInv;
     private static final int[] slotsForLevel = {54, 72, 96, 120};
 
     public BinderMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new BinderInventory(slotsForLevel[EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected())], playerInv.getSelected()));
+        this(id, playerInv, new BinderContainer(slotsForLevel[EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected())], playerInv.getSelected()));
     }
 
-    public BinderMenu(int id, Inventory playerInv, BinderInventory binderInv) {
+    public BinderMenu(int id, Inventory playerInv, BinderContainer binderInv) {
         super(BuddycardsMisc.BINDER_CONTAINER.get(), id);
         checkContainerSize(binderInv, binderInv.getContainerSize());
         this.binderInv = binderInv;

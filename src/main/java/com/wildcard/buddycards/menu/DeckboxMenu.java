@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.menu;
 
-import com.wildcard.buddycards.inventory.DeckboxInventory;
+import com.wildcard.buddycards.container.DeckboxContainer;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import net.minecraft.world.Container;
@@ -11,13 +11,13 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class DeckboxMenu extends AbstractContainerMenu {
-    private final DeckboxInventory inventory;
+    private final DeckboxContainer inventory;
 
     public DeckboxMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new DeckboxInventory(playerInv.getSelected()));
+        this(id, playerInv, new DeckboxContainer(playerInv.getSelected()));
     }
 
-    public DeckboxMenu(int id, Inventory playerInv, DeckboxInventory inv) {
+    public DeckboxMenu(int id, Inventory playerInv, DeckboxContainer inv) {
         super(BuddycardsMisc.DECKBOX_CONTAINER.get(), id);
         checkContainerSize(inv, inv.getContainerSize());
         this.inventory = inv;

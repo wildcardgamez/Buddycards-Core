@@ -102,7 +102,6 @@ public class PlaymatBlock extends BaseEntityBlock {
         if(level.getBlockEntity(pos.relative(newState.getValue(DIR))) instanceof PlaymatBlockEntity opponent) {
             ((PlaymatBlockEntity) level.getBlockEntity(pos)).setOpponent(opponent);
             opponent.setOpponent((PlaymatBlockEntity) level.getBlockEntity(pos));
-            System.out.println("Opponent linked!");
         }
     }
 
