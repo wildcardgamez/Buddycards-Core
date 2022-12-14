@@ -13,15 +13,15 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
-    private PlaymatContainer container;
+    private final PlaymatContainer container = new PlaymatContainer();
     private Component name;
-    private PlaymatBlockEntity opponent;
 
     public PlaymatBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -45,7 +45,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new PlaymatMenu(i, inventory, this.worldPosition);
+        return new PlaymatMenu(i, inventory, container);
     }
 
     @Override
@@ -64,15 +64,14 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
         container.fromTag(tag.getList("inv", Tag.TAG_LIST));
     }
 
-    public void setOpponent(PlaymatBlockEntity blockEntity) {
-        opponent = blockEntity;
-    }
-
     public PlaymatContainer getContainer() {
         return container;
     }
 
-    public PlaymatBlockEntity getOpponent() {
-        return opponent;
+    public ItemStack swapDeck(ItemStack itemInHand) {
+        System.out.println("Swapping deck...");
+        ItemStack removedDeck = container.getItem(0);
+        container.setItem(0, itemInHand);
+        return removedDeck;
     }
 }

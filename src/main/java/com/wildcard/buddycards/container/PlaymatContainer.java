@@ -1,10 +1,16 @@
 package com.wildcard.buddycards.container;
 
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.item.ItemStack;
 
 public class PlaymatContainer extends SimpleContainer {
-    public PlaymatContainer(ItemStack deck) {
+    public PlaymatContainer() {
         super(7);
     }
+
+    public PlaymatContainer(PlaymatContainer opponent) {
+        super(7);
+        this.opponent = opponent;
+    }
+
+    public PlaymatContainer opponent;
 }

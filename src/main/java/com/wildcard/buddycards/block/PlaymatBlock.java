@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.block;
 
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
+import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -10,7 +11,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -98,17 +98,15 @@ public class PlaymatBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void onBlockStateChange(LevelReader level, BlockPos pos, BlockState oldState, BlockState newState) {
-        if(level.getBlockEntity(pos.relative(newState.getValue(DIR))) instanceof PlaymatBlockEntity opponent) {
-            ((PlaymatBlockEntity) level.getBlockEntity(pos)).setOpponent(opponent);
-            opponent.setOpponent((PlaymatBlockEntity) level.getBlockEntity(pos));
-        }
-    }
-
-    @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity) {
-            player.openMenu(entity);
+        if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity && level.getBlockEntity(pos.relative(state.getValue(DIR))) instanceof PlaymatBlockEntity opponent) {
+            if (player.getItemInHand(hand).getItem() instanceof DeckboxItem) {
+                player.setItemInHand(hand, entity.swapDeck(player.getItemInHand(hand)));
+            } else if (entity.getContainer().getItem(0).getItem() instanceof DeckboxItem && opponent.getContainer().getItem(0).getItem() instanceof DeckboxItem) {
+                entity.getContainer().opponent = opponent.getContainer();
+                opponent.getContainer().opponent = entity.getContainer();
+                player.openMenu(entity);
+            }
         }
         return super.use(state, level, pos, player, hand, hitResult);
     }
