@@ -17,7 +17,7 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
         this.leftPos = 0;
         this.topPos = 0;
         this.imageWidth = 176;
-        this.imageHeight = 88;
+        this.imageHeight = 132;
     }
 
     @Override
@@ -31,6 +31,7 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
     protected void renderLabels(PoseStack matrixStack, int x, int y) {
         //Draw the name of the playmat and the inventory titles
         this.font.draw(matrixStack, title, 8.0f, 6.0f, 4210752);
+        this.font.draw(matrixStack, getMenu().getBattleLog(), 8.0f, 89.0f, 4210752);
     }
 
     @Override

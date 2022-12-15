@@ -1,13 +1,17 @@
 package com.wildcard.buddycards.menu;
 
+import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.container.PlaymatContainer;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.ArrayList;
 
 public class PlaymatMenu extends AbstractContainerMenu {
     PlaymatContainer playerContainer;
@@ -85,5 +89,16 @@ public class PlaymatMenu extends AbstractContainerMenu {
         public boolean mayPickup(Player player) {
             return false;
         }
+    }
+
+    public TranslatableComponent getBattleLog() {
+        ArrayList<TranslatableComponent> battleLog = playerContainer.battleLog;
+        if(battleLog.isEmpty())
+            return new TranslatableComponent(Buddycards.MOD_ID + ".broken");
+        TranslatableComponent component = battleLog.get(battleLog.size());
+        for (int i = battleLog.size() - 1; i >= 0; i--) {
+            component.append(battleLog.get(i)).append("\n");
+        }
+        return component;
     }
 }

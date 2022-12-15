@@ -303,5 +303,11 @@
   "enchantment.buddycards.buddy_boost.desc": "Upgrades the effects of a Buddysteel Medal",
   "enchantment.buddycards.recovery": "Rapid Recovery",
   "enchantment.buddycards.recovery.desc": "Makes cooldowns on gear effects shorter",
-  "curios.identifier.medal": "Medal Slot"
+  "curios.identifier.medal": "Medal Slot",
+
+  "battlesLog.buddycards.go_first": "You will be going first",
+  "battlesLog.buddycards.go_first.other": "You will be going second",
+  "battlesLog.buddycards.starting_draw": "At the start of the battle, both players draw two cards",
+  "battlesLog.buddycards.turn_draw": "At the start of your turn, you draw one card",
+  "battlesLog.buddycards.turn_draw.other": "At the start of your opponent's turn, they draw one card"
 }

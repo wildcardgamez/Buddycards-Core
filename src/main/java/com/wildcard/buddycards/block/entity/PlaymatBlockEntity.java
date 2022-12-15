@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.battles.BuddycardBattle;
 import com.wildcard.buddycards.container.PlaymatContainer;
 import com.wildcard.buddycards.menu.PlaymatMenu;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     private final PlaymatContainer container = new PlaymatContainer();
     private Component name;
+    public BuddycardBattle battle;
 
     public PlaymatBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -71,7 +73,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     public ItemStack swapDeck(ItemStack itemInHand) {
         System.out.println("Swapping deck...");
         ItemStack removedDeck = container.getItem(0);
-        container.setItem(0, itemInHand);
+        container.setDeckbox(itemInHand);
         return removedDeck;
     }
 }

@@ -1,5 +1,6 @@
 package com.wildcard.buddycards.block;
 
+import com.wildcard.buddycards.battles.BuddycardBattle;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.core.BlockPos;
@@ -105,6 +106,9 @@ public class PlaymatBlock extends BaseEntityBlock {
             } else if (entity.getContainer().getItem(0).getItem() instanceof DeckboxItem && opponent.getContainer().getItem(0).getItem() instanceof DeckboxItem) {
                 entity.getContainer().opponent = opponent.getContainer();
                 opponent.getContainer().opponent = entity.getContainer();
+                BuddycardBattle battle = new BuddycardBattle(entity.getContainer(), opponent.getContainer());
+                entity.battle = battle;
+                opponent.battle = battle;
                 player.openMenu(entity);
             }
         }
