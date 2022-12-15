@@ -1,7 +1,7 @@
 package com.wildcard.buddycards.block;
 
-import com.wildcard.buddycards.battles.BuddycardBattle;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
+import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -101,14 +101,19 @@ public class PlaymatBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity && level.getBlockEntity(pos.relative(state.getValue(DIR))) instanceof PlaymatBlockEntity opponent) {
-            if (player.getItemInHand(hand).getItem() instanceof DeckboxItem) {
+            if (player.getItemInHand(hand).getItem() instanceof DeckboxItem && !entity.isPaired) {
+                if(entity.container == null && opponent.container == null) {
+                    entity.container = new BattleContainer();
+                    opponent.container = entity.container;
+                    entity.p1 = true;
+                    opponent.p1 = false;
+                }
                 player.setItemInHand(hand, entity.swapDeck(player.getItemInHand(hand)));
-            } else if (entity.getContainer().getItem(0).getItem() instanceof DeckboxItem && opponent.getContainer().getItem(0).getItem() instanceof DeckboxItem) {
-                entity.getContainer().opponent = opponent.getContainer();
-                opponent.getContainer().opponent = entity.getContainer();
-                BuddycardBattle battle = new BuddycardBattle(entity.getContainer(), opponent.getContainer());
-                entity.battle = battle;
-                opponent.battle = battle;
+            } else if (entity.getContainer().getItem(0).getItem() instanceof DeckboxItem && entity.getContainer().getItem(7).getItem() instanceof DeckboxItem) {
+                if(!entity.isPaired && opponent.isPaired) {
+                    entity.container.startGame();
+                }
+                entity.isPaired = true;
                 player.openMenu(entity);
             }
         }

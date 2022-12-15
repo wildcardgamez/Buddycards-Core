@@ -1,8 +1,10 @@
 package com.wildcard.buddycards.menu;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.container.PlaymatContainer;
+import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,18 +16,16 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 
 public class PlaymatMenu extends AbstractContainerMenu {
-    PlaymatContainer playerContainer;
-    PlaymatContainer opponentContainer;
+    BattleContainer playerContainer;
 
     public PlaymatMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new PlaymatContainer(new PlaymatContainer()));
+        this(id, playerInv, new BattleContainer());
     }
 
-    public PlaymatMenu(int id, Inventory playerInv, PlaymatContainer container) {
+    public PlaymatMenu(int id, Inventory playerInv, BattleContainer container) {
         super(BuddycardsMisc.PLAYMAT_CONTAINER.get(), id);
         this.playerContainer = container;
-        opponentContainer = playerContainer.opponent;
-        this.addSlot(new DeckSlot(opponentContainer, 0, 143, 18));
+        this.addSlot(new DeckSlot(this.playerContainer, 7, 143, 18));
         this.addSlot(new DeckSlot(this.playerContainer, 0, 143, 64));
         for (int i = 0; i < 3; i++) {
             this.addSlot(new CardSlot(this.playerContainer, 1+i, 80 + (18 * i), 64));
@@ -34,7 +34,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
             this.addSlot(new BattlefieldSlot(this.playerContainer, 4+i, 80 + (18 * i), 36));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new OpponentBattlefieldSlot(opponentContainer, 4+i, 80 + (18 * i), 18));
+            this.addSlot(new OpponentBattlefieldSlot(this.playerContainer, 11+i, 80 + (18 * i), 18));
         }
     }
 
@@ -91,11 +91,11 @@ public class PlaymatMenu extends AbstractContainerMenu {
         }
     }
 
-    public TranslatableComponent getBattleLog() {
-        ArrayList<TranslatableComponent> battleLog = playerContainer.battleLog;
+    public MutableComponent getBattleLog() {
+        ArrayList<MutableComponent> battleLog = playerContainer.battleLog;
         if(battleLog.isEmpty())
             return new TranslatableComponent(Buddycards.MOD_ID + ".broken");
-        TranslatableComponent component = battleLog.get(battleLog.size());
+        MutableComponent component = battleLog.get(battleLog.size());
         for (int i = battleLog.size() - 1; i >= 0; i--) {
             component.append(battleLog.get(i)).append("\n");
         }
