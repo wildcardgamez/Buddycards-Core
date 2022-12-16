@@ -2,7 +2,6 @@ package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.item.DeckboxItem;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
@@ -38,7 +37,6 @@ public class BattleContainer extends SimpleContainer {
         tryDrawCard(false);
         tryDrawCard(isPlayer1Turn);
         setChanged();
-        System.out.println("Game started");
     }
 
     public void reload() {

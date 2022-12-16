@@ -1,6 +1,5 @@
 package com.wildcard.buddycards.block.entity;
 
-import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.menu.PlaymatMenu;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
@@ -20,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
-    public BattleContainer container = new BattleContainer();
+    public BattleContainer container;
     public boolean isPaired;
     public boolean p1;
     private Component name;
@@ -64,13 +63,21 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbt = new CompoundTag();
+        saveAdditional(nbt);
+        return nbt;
+    }
+
+    @Override
     public void load(CompoundTag tag) {
         super.load(tag);
         if(tag.contains("name"))
             this.name = Component.Serializer.fromJson(tag.getString("name"));
         isPaired = tag.getBoolean("paired");
         p1 = tag.getBoolean("p1");
-        if(p1 && tag.contains("inv")) {
+        if(p1) {
+            container = new BattleContainer();
             container.fromTag(tag.getList("inv", Tag.TAG_LIST));
             container.reload();
             if (container.battleLog.isEmpty() && tag.contains("log")) {
@@ -80,12 +87,6 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
                 }
             }
         }
-        if (isPaired && level.getBlockEntity(getBlockPos().relative(level.getBlockState(getBlockPos()).getValue(PlaymatBlock.DIR))) instanceof PlaymatBlockEntity opponent) {
-            if (p1)
-                opponent.container = container;
-            else
-                container = opponent.getContainer();
-        }
     }
 
     public BattleContainer getContainer() {
@@ -93,7 +94,6 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public ItemStack swapDeck(ItemStack itemInHand) {
-        System.out.println("Swapping deck...");
         ItemStack removedDeck = container.getItem(p1 ? 0 : 7);
         container.setItem(p1 ? 0 : 7, itemInHand);
         name = itemInHand.getDisplayName();

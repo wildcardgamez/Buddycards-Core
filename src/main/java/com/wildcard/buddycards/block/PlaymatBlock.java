@@ -100,22 +100,46 @@ public class PlaymatBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        //If both playmats exist...
         if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity && level.getBlockEntity(pos.relative(state.getValue(DIR))) instanceof PlaymatBlockEntity opponent) {
-            if (player.getItemInHand(hand).getItem() instanceof DeckboxItem && !entity.isPaired) {
-                if(entity.container == null && opponent.container == null) {
-                    entity.container = new BattleContainer();
+            System.out.println(entity.container + " " + level.isClientSide() + entity.isPaired + opponent.isPaired);
+            //If both have no container, set them up
+            if (entity.container == null && opponent.container == null) {
+                entity.container = new BattleContainer();
+                opponent.container = entity.container;
+                entity.p1 = true;
+                opponent.p1 = false;
+                entity.setChanged();
+                opponent.setChanged();
+            }
+            //If one has a container, make them match
+            else if (entity.container == null || opponent.container == null) {
+                if(entity.p1) {
                     opponent.container = entity.container;
-                    entity.p1 = true;
-                    opponent.p1 = false;
+                    opponent.setChanged();
                 }
+                else {
+                    entity.container = opponent.container;
+                    entity.setChanged();
+                }
+            }
+            //If you are holding a deckbox, swap it out
+            if (player.getItemInHand(hand).getItem() instanceof DeckboxItem && !entity.isPaired) {
                 player.setItemInHand(hand, entity.swapDeck(player.getItemInHand(hand)));
-            } else if (entity.getContainer().getItem(0).getItem() instanceof DeckboxItem && entity.getContainer().getItem(7).getItem() instanceof DeckboxItem) {
+            }
+            //If there's a container and both decks
+            if (entity.container != null && entity.getContainer().getItem(0).getItem() instanceof DeckboxItem && entity.getContainer().getItem(7).getItem() instanceof DeckboxItem) {
+                //If a game isn't started and the other player is ready, start it
                 if(!entity.isPaired && opponent.isPaired) {
                     entity.container.startGame();
                 }
+                //Ready up
                 entity.isPaired = true;
+                entity.setChanged();
+                //Open the GUI
                 player.openMenu(entity);
             }
+            return InteractionResult.SUCCESS;
         }
         return super.use(state, level, pos, player, hand, hitResult);
     }
