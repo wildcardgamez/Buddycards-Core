@@ -2,6 +2,8 @@ package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.item.DeckboxItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
@@ -12,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 
 public class BattleContainer extends SimpleContainer {
-    static final String LOG = "battlesLog" + Buddycards.MOD_ID + ".";
+    static final String LOG = "battlesLog." + Buddycards.MOD_ID + ".";
     public boolean isPlayer1Turn = false;
     public DeckboxContainer deck1, deck2;
     public Component name1, name2;

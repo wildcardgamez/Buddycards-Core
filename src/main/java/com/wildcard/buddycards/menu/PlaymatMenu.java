@@ -19,22 +19,22 @@ public class PlaymatMenu extends AbstractContainerMenu {
     BattleContainer playerContainer;
 
     public PlaymatMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new BattleContainer());
+        this(id, playerInv, new BattleContainer(), true);
     }
 
-    public PlaymatMenu(int id, Inventory playerInv, BattleContainer container) {
+    public PlaymatMenu(int id, Inventory playerInv, BattleContainer container, boolean p1) {
         super(BuddycardsMisc.PLAYMAT_CONTAINER.get(), id);
         this.playerContainer = container;
-        this.addSlot(new DeckSlot(this.playerContainer, 7, 143, 18));
-        this.addSlot(new DeckSlot(this.playerContainer, 0, 143, 64));
+        this.addSlot(new DeckSlot(this.playerContainer, (p1 ? 7 : 0), 143, 18));
+        this.addSlot(new DeckSlot(this.playerContainer, (p1 ? 0 : 7), 143, 64));
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new CardSlot(this.playerContainer, 1+i, 80 + (18 * i), 64));
+            this.addSlot(new CardSlot(this.playerContainer, (p1 ? 1 : 8)+i, 80 + (18 * i), 64));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new BattlefieldSlot(this.playerContainer, 4+i, 80 + (18 * i), 36));
+            this.addSlot(new BattlefieldSlot(this.playerContainer, (p1 ? 4 : 11)+i, 80 + (18 * i), 36));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new OpponentBattlefieldSlot(this.playerContainer, 11+i, 80 + (18 * i), 18));
+            this.addSlot(new OpponentBattlefieldSlot(this.playerContainer, (p1 ? 11 : 4)+i, 80 + (18 * i), 18));
         }
     }
 

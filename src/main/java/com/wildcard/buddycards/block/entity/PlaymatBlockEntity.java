@@ -1,5 +1,6 @@
 package com.wildcard.buddycards.block.entity;
 
+import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.menu.PlaymatMenu;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     public BattleContainer container;
-    public boolean isPaired;
+    public boolean inGame;
     public boolean p1;
     private Component name;
 
@@ -42,7 +43,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new PlaymatMenu(i, inventory, container);
+        return new PlaymatMenu(i, inventory, container, p1);
     }
 
     @Override
@@ -50,15 +51,19 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
         super.saveAdditional(tag);
         if(name != null)
             tag.putString("name", Component.Serializer.toJson(name));
-        tag.putBoolean("paired", isPaired);
+        tag.putBoolean("game", inGame);
         tag.putBoolean("p1", p1);
         if(p1) {
             CompoundTag log = new CompoundTag();
             for (int i = 0; i < container.battleLog.size(); i++) {
                 log.putInt(Component.Serializer.toJson(container.battleLog.get(i)), i);
             }
+            CompoundTag inv = new CompoundTag();
+            for (int i = 0; i < 14; i++) {
+                inv.put("" + i, container.getItem(i).save(new CompoundTag()));
+            }
             tag.put("log", log);
-            tag.put("inv", this.container.createTag());
+            tag.put("inv", inv);
         }
     }
 
@@ -74,18 +79,29 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
         super.load(tag);
         if(tag.contains("name"))
             this.name = Component.Serializer.fromJson(tag.getString("name"));
-        isPaired = tag.getBoolean("paired");
+        inGame = tag.getBoolean("game");
         p1 = tag.getBoolean("p1");
         if(p1) {
-            container = new BattleContainer();
-            container.fromTag(tag.getList("inv", Tag.TAG_LIST));
+            if(container == null)
+                container = new BattleContainer();
+            CompoundTag inv = tag.getCompound("inv");
+            for (int i = 0; i < 14; i++) {
+                if(inv.contains("" + i))
+                    container.setItem(i, ItemStack.of(inv.getCompound("" + i)));
+            }
             container.reload();
             if (container.battleLog.isEmpty() && tag.contains("log")) {
-                CompoundTag log = (CompoundTag) tag.get("log");
+                CompoundTag log = tag.getCompound("log");
                 for (String i: log.getAllKeys()) {
                     container.battleLog.add(log.getInt(i), Component.Serializer.fromJson(i));
                 }
             }
+        }
+        if (inGame && level != null && level.getBlockState(getBlockPos()).getBlock() instanceof PlaymatBlock block && level.getBlockEntity(getBlockPos().relative(level.getBlockState(getBlockPos()).getValue(PlaymatBlock.DIR))) instanceof PlaymatBlockEntity opponent) {
+            if (p1)
+                opponent.container = container;
+            else
+                container = opponent.getContainer();
         }
     }
 

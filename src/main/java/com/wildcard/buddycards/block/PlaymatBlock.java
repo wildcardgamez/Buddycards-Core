@@ -102,7 +102,7 @@ public class PlaymatBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         //If both playmats exist...
         if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity && level.getBlockEntity(pos.relative(state.getValue(DIR))) instanceof PlaymatBlockEntity opponent) {
-            System.out.println(entity.container + " " + level.isClientSide() + entity.isPaired + opponent.isPaired);
+            System.out.println(entity.container + " " + level.isClientSide() + entity.inGame + opponent.inGame + entity.p1);
             //If both have no container, set them up
             if (entity.container == null && opponent.container == null) {
                 entity.container = new BattleContainer();
@@ -124,18 +124,19 @@ public class PlaymatBlock extends BaseEntityBlock {
                 }
             }
             //If you are holding a deckbox, swap it out
-            if (player.getItemInHand(hand).getItem() instanceof DeckboxItem && !entity.isPaired) {
+            if (player.getItemInHand(hand).getItem() instanceof DeckboxItem && !entity.inGame) {
                 player.setItemInHand(hand, entity.swapDeck(player.getItemInHand(hand)));
             }
             //If there's a container and both decks
             if (entity.container != null && entity.getContainer().getItem(0).getItem() instanceof DeckboxItem && entity.getContainer().getItem(7).getItem() instanceof DeckboxItem) {
-                //If a game isn't started and the other player is ready, start it
-                if(!entity.isPaired && opponent.isPaired) {
+                //If a game isn't started, start one
+                if(!entity.inGame) {
                     entity.container.startGame();
+                    entity.inGame = true;
+                    opponent.inGame = true;
+                    entity.setChanged();
+                    opponent.setChanged();
                 }
-                //Ready up
-                entity.isPaired = true;
-                entity.setChanged();
                 //Open the GUI
                 player.openMenu(entity);
             }
