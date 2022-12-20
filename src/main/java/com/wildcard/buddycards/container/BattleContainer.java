@@ -2,8 +2,6 @@ package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.item.DeckboxItem;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
@@ -27,25 +25,27 @@ public class BattleContainer extends SimpleContainer {
     public void startGame() {
         if(Math.random() < .5)
             isPlayer1Turn = true;
-        name1 = getItem(0).getDisplayName();
-        name2 = getItem(7).getDisplayName();
-        battleLogWithName("");
+        name1 = getItem(0).getDisplayName().plainCopy();
+        name2 = getItem(7).getDisplayName().plainCopy();
+        battleLogWithName("go_first");
         deck1 = new DeckboxContainer(getItem(0));
         deck2 = new DeckboxContainer(getItem(7));
+        deck1.startOpen();
+        deck2.startOpen();
         setChanged();
         tryDrawCard(true);
         tryDrawCard(true);
         tryDrawCard(false);
         tryDrawCard(false);
+        battleLog("starting_draw");
         tryDrawCard(isPlayer1Turn);
+        battleLogWithName("turn_draw");
         setChanged();
     }
 
     public void reload() {
         name1 = getItem(0).getDisplayName();
         name2 = getItem(7).getDisplayName();
-        deck1 = new DeckboxContainer(getItem(0));
-        deck2 = new DeckboxContainer(getItem(7));
     }
 
     public boolean tryDrawCard(boolean p1) {
@@ -53,7 +53,7 @@ public class BattleContainer extends SimpleContainer {
         if(!(getItem(p1 ? 0 : 7).getItem() instanceof DeckboxItem))
             return false;
         //If no cards are in the box, fail
-        if(p1 == deck1.isEmpty() || !p1 == deck2.isEmpty())
+        if((p1 && deck1.isEmpty()) || (!p1 && deck2.isEmpty()))
             return false;
         //Check the hand slots
         for (int i = p1 ? 1 : 8; i < (p1 ? 4 : 10); i++) {

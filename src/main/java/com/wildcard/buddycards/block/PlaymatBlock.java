@@ -102,7 +102,6 @@ public class PlaymatBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         //If both playmats exist...
         if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity && level.getBlockEntity(pos.relative(state.getValue(DIR))) instanceof PlaymatBlockEntity opponent) {
-            System.out.println(entity.container + " " + level.isClientSide() + entity.inGame + opponent.inGame + entity.p1);
             //If both have no container, set them up
             if (entity.container == null && opponent.container == null) {
                 entity.container = new BattleContainer();

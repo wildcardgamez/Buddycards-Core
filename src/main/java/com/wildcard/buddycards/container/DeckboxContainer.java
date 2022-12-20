@@ -38,6 +38,28 @@ public class DeckboxContainer extends SimpleContainer {
         }
     }
 
+    public void startOpen()
+    {
+        //Set all slots in the deckbox as empty by default
+        for(int i = 0; i < this.getContainerSize(); i++) {
+            setItem(i, ItemStack.EMPTY);
+        }
+
+        if(deckbox.hasTag())
+        {
+            //If the deckbox has nbt data, turn it into items
+            CompoundTag nbt = deckbox.getTag();
+            ListTag list = nbt.getList("Items", CompoundTag.TAG_COMPOUND);
+            for(int i = 0; i < list.size(); i++) {
+                CompoundTag compoundnbt = list.getCompound(i);
+                int k = compoundnbt.getInt("Slot");
+                if (k < this.getContainerSize()) {
+                    this.setItem(k, ItemStack.of(compoundnbt));
+                }
+            }
+        }
+    }
+
     @Override
     public void stopOpen(Player player)
     {

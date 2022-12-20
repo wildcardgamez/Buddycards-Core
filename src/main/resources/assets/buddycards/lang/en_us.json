@@ -307,5 +307,6 @@
 
   "battlesLog.buddycards.go_first": " will be going first",
   "battlesLog.buddycards.starting_draw": "Both players draw two cards",
-  "battlesLog.buddycards.turn_draw": "'s turn. They draw one card"
+  "battlesLog.buddycards.turn_draw": " draws one card and starts their turn",
+  "battlesLog.buddycards.turn_fail_draw": " starts their turn without drawing"
 }

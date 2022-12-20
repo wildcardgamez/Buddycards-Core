@@ -2,6 +2,7 @@ package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.container.BattleContainer;
+import com.wildcard.buddycards.container.DeckboxContainer;
 import com.wildcard.buddycards.menu.PlaymatMenu;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
@@ -58,12 +59,26 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             for (int i = 0; i < container.battleLog.size(); i++) {
                 log.putInt(Component.Serializer.toJson(container.battleLog.get(i)), i);
             }
+            tag.put("log", log);
             CompoundTag inv = new CompoundTag();
             for (int i = 0; i < 14; i++) {
                 inv.put("" + i, container.getItem(i).save(new CompoundTag()));
             }
-            tag.put("log", log);
             tag.put("inv", inv);
+            if(container.deck1 != null) {
+                CompoundTag deck1 = new CompoundTag();
+                for (int i = 0; i < 16; i++) {
+                    inv.put("" + i, container.deck1.getItem(i).save(new CompoundTag()));
+                }
+                tag.put("deck1", deck1);
+            }
+            if(container.deck2 != null) {
+                CompoundTag deck2 = new CompoundTag();
+                for (int i = 0; i < 16; i++) {
+                    inv.put("" + i, container.deck2.getItem(i).save(new CompoundTag()));
+                }
+                tag.put("deck2", deck2);
+            }
         }
     }
 
@@ -89,12 +104,28 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
                 if(inv.contains("" + i))
                     container.setItem(i, ItemStack.of(inv.getCompound("" + i)));
             }
+            if(tag.contains("deck1")) {
+                CompoundTag deck1 = tag.getCompound("deck1");
+                container.deck1 = new DeckboxContainer(container.getItem(0));
+                for (int i = 0; i < 14; i++) {
+                    if (inv.contains("" + i))
+                        container.setItem(i, ItemStack.of(deck1.getCompound("" + i)));
+                }
+            }
+            if(tag.contains("deck2")) {
+                CompoundTag deck2 = tag.getCompound("deck2");
+                container.deck1 = new DeckboxContainer(container.getItem(7));
+                for (int i = 0; i < 14; i++) {
+                    if (inv.contains("" + i))
+                        container.setItem(i, ItemStack.of(deck2.getCompound("" + i)));
+                }
+            }
             container.reload();
             if (container.battleLog.isEmpty() && tag.contains("log")) {
                 CompoundTag log = tag.getCompound("log");
-                for (String i: log.getAllKeys()) {
-                    container.battleLog.add(log.getInt(i), Component.Serializer.fromJson(i));
-                }
+                if(!log.isEmpty())
+                    for (String i : log.getAllKeys())
+                    container.battleLog.add(Component.Serializer.fromJson(i));
             }
         }
         if (inGame && level != null && level.getBlockState(getBlockPos()).getBlock() instanceof PlaymatBlock block && level.getBlockEntity(getBlockPos().relative(level.getBlockState(getBlockPos()).getValue(PlaymatBlock.DIR))) instanceof PlaymatBlockEntity opponent) {
