@@ -105,6 +105,7 @@ public class PlaymatBlock extends BaseEntityBlock {
             //If both have no container, set them up
             if (entity.container == null && opponent.container == null) {
                 entity.container = new BattleContainer();
+                entity.container.entity = entity;
                 opponent.container = entity.container;
                 entity.p1 = true;
                 opponent.p1 = false;

@@ -121,6 +121,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
                 }
             }
             container.reload();
+            container.entity = this;
             if (container.battleLog.isEmpty() && tag.contains("log")) {
                 CompoundTag log = tag.getCompound("log");
                 if(!log.isEmpty())

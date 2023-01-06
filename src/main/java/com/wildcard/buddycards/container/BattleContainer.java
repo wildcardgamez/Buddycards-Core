@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 public class BattleContainer extends SimpleContainer {
     static final String LOG = "battlesLog." + Buddycards.MOD_ID + ".";
     public boolean isPlayer1Turn = false;
+    public PlaymatBlockEntity entity;
     public DeckboxContainer deck1, deck2;
     public Component name1, name2;
     public final ArrayList<MutableComponent> battleLog = new ArrayList<>();
@@ -32,7 +34,6 @@ public class BattleContainer extends SimpleContainer {
         deck2 = new DeckboxContainer(getItem(7));
         deck1.startOpen();
         deck2.startOpen();
-        setChanged();
         tryDrawCard(true);
         tryDrawCard(true);
         tryDrawCard(false);
@@ -40,7 +41,7 @@ public class BattleContainer extends SimpleContainer {
         battleLog("starting_draw");
         tryDrawCard(isPlayer1Turn);
         battleLogWithName("turn_draw");
-        setChanged();
+        entity.setChanged();
     }
 
     public void reload() {
