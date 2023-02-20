@@ -5,6 +5,7 @@ import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.network.NetworkHooks;
 
 public class PlaymatBlock extends BaseEntityBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
@@ -138,7 +140,7 @@ public class PlaymatBlock extends BaseEntityBlock {
                     opponent.setChanged();
                 }
                 //Open the GUI
-                player.openMenu(entity);
+                if (player instanceof ServerPlayer serverPlayer) NetworkHooks.openGui(serverPlayer, entity, pos);
             }
             return InteractionResult.SUCCESS;
         }

@@ -10,6 +10,7 @@ import com.wildcard.buddycards.menu.PlaymatMenu;
 import com.wildcard.buddycards.util.LootInjection;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -38,7 +39,7 @@ public class BuddycardsMisc {
     public static final RegistryObject<MenuType<DeckboxMenu>> DECKBOX_CONTAINER = MENUS.register("deckbox",
             () -> new MenuType<>((DeckboxMenu::new)));
     public static final RegistryObject<MenuType<PlaymatMenu>> PLAYMAT_CONTAINER = MENUS.register("playmat",
-            () -> new MenuType<>((PlaymatMenu::new)));
+            () -> IForgeMenuType.create((PlaymatMenu::new)));
 
     //GLMs
     public static RegistryObject<GlobalLootModifierSerializer<LootInjection.LootInjectionModifier>> LOOT_INJECTION = GLMS.register("loot_injection", LootInjection.LootInjectionSerializer::new);

@@ -1,8 +1,12 @@
 package com.wildcard.buddycards.menu;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.Container;
@@ -11,14 +15,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-
+import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 
 public class PlaymatMenu extends AbstractContainerMenu {
     BattleContainer container;
 
-    public PlaymatMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new BattleContainer(), true);
+    public PlaymatMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
+        this(id, playerInv, decodeBlockEntity(playerInv.player.level, buf.readBlockPos()).container, true);
+    }
+
+    private static PlaymatBlockEntity decodeBlockEntity(Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity) return entity;
+        else throw new IllegalStateException("Block entity expected to be PlaymatBlockEntity!" + pos);
     }
 
     public PlaymatMenu(int id, Inventory playerInv, BattleContainer container, boolean p1) {
@@ -94,9 +103,9 @@ public class PlaymatMenu extends AbstractContainerMenu {
         ArrayList<MutableComponent> battleLog = container.battleLog;
         if(battleLog.isEmpty())
             return new TranslatableComponent(Buddycards.MOD_ID + ".broken");
-        MutableComponent component = battleLog.get(battleLog.size());
-        for (int i = battleLog.size() - 1; i >= 0; i--) {
-            component.append(battleLog.get(i)).append("\n");
+        MutableComponent component = battleLog.get(battleLog.size() - 1);
+        if (battleLog.size() > 1) for (int i = battleLog.size() - 2; i >= 0; i--) {
+            component.append("\n").append(battleLog.get(i));
         }
         return component;
     }
