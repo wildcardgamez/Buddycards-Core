@@ -19,10 +19,12 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 
 public class PlaymatMenu extends AbstractContainerMenu {
+    PlaymatBlockEntity entity;
     BattleContainer container;
+    final boolean p1;
 
     public PlaymatMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-        this(id, playerInv, decodeBlockEntity(playerInv.player.level, buf.readBlockPos()).container, true);
+        this(id, playerInv, decodeBlockEntity(playerInv.player.level, buf.readBlockPos()));
     }
 
     private static PlaymatBlockEntity decodeBlockEntity(Level level, BlockPos pos) {
@@ -30,9 +32,11 @@ public class PlaymatMenu extends AbstractContainerMenu {
         else throw new IllegalStateException("Block entity expected to be PlaymatBlockEntity!" + pos);
     }
 
-    public PlaymatMenu(int id, Inventory playerInv, BattleContainer container, boolean p1) {
+    public PlaymatMenu(int id, Inventory playerInv, PlaymatBlockEntity entity) {
         super(BuddycardsMisc.PLAYMAT_CONTAINER.get(), id);
-        this.container = container;
+        this.entity = entity;
+        this.container = entity.container;
+        this.p1 = entity.p1;
         this.addSlot(new DeckSlot(this.container, (p1 ? 7 : 0), 143, 18));
         this.addSlot(new DeckSlot(this.container, (p1 ? 0 : 7), 143, 64));
         for (int i = 0; i < 3; i++) {

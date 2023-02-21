@@ -44,7 +44,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new PlaymatMenu(i, inventory, container, p1);
+        return new PlaymatMenu(i, inventory, this);
     }
 
     @Override
