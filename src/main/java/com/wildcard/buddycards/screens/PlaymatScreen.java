@@ -4,6 +4,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.menu.PlaymatMenu;
+
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -14,10 +16,20 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
 
     public PlaymatScreen(PlaymatMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
-        this.leftPos = 0;
-        this.topPos = 0;
         this.imageWidth = 176;
         this.imageHeight = 132;
+    }
+    
+    @Override
+    protected void init() {
+        super.init();
+        this.addRenderableWidget(new ImageButton(leftPos + 141, topPos + 40, 20, 18, 176, 0, 18, TEXTURE1, btn -> {
+            this.sendButtonPress(PlaymatMenu.ButtonIds.END_TURN);
+        }));
+    }
+    
+    private void sendButtonPress(int buttonId) {
+        this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, buttonId);
     }
 
     @Override

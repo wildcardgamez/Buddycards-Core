@@ -51,6 +51,17 @@ public class PlaymatMenu extends AbstractContainerMenu {
         return true;
     }
 
+    public static final class ButtonIds {
+        public static final int END_TURN = 1;
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int buttonId) {
+        // menu click logic soon...
+        // if (buttonId == ButtonIds.END_TURN) or a switch or something
+        return false;
+    }
+
     public static class CardSlot extends Slot {
         public CardSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
