@@ -18,6 +18,8 @@ public class BattleContainer extends SimpleContainer {
     public PlaymatBlockEntity entity;
     public DeckboxContainer deck1, deck2;
     public Component name1, name2;
+    public int health1, health2;
+    public int energy1, energy2;
     public final ArrayList<MutableComponent> battleLog = new ArrayList<>();
 
     public BattleContainer() {
@@ -29,6 +31,8 @@ public class BattleContainer extends SimpleContainer {
             isPlayer1Turn = true;
         name1 = getItem(0).getDisplayName().plainCopy();
         name2 = getItem(7).getDisplayName().plainCopy();
+        health1 = health2 = 20;
+        energy1 = energy2 = 0;
         battleLogWithName("go_first");
         deck1 = new DeckboxContainer(getItem(0));
         deck2 = new DeckboxContainer(getItem(7));

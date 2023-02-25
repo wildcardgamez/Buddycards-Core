@@ -79,6 +79,10 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
                 }
                 tag.put("deck2", deck2);
             }
+            tag.putInt("energy1", container.energy1);
+            tag.putInt("energy2", container.energy2);
+            tag.putInt("health1", container.health1);
+            tag.putInt("health2", container.health2);
         }
     }
 
@@ -128,6 +132,10 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
                     for (String i : log.getAllKeys())
                     container.battleLog.add(Component.Serializer.fromJson(i));
             }
+            container.energy1 = tag.getInt("energy1");
+            container.energy2 = tag.getInt("energy2");
+            container.health1 = tag.getInt("health1");
+            container.health2 = tag.getInt("health2");
         }
         if (inGame && level != null && level.getBlockState(getBlockPos()).getBlock() instanceof PlaymatBlock block && level.getBlockEntity(getBlockPos().relative(level.getBlockState(getBlockPos()).getValue(PlaymatBlock.DIR))) instanceof PlaymatBlockEntity opponent) {
             if (p1)

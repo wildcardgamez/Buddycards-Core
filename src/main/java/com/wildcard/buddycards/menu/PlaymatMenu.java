@@ -13,6 +13,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,6 +23,10 @@ public class PlaymatMenu extends AbstractContainerMenu {
     PlaymatBlockEntity entity;
     BattleContainer container;
     final boolean p1;
+    public final DataSlot energy = DataSlot.standalone();
+    public final DataSlot health = DataSlot.standalone();
+    public final DataSlot opponentEnergy = DataSlot.standalone();
+    public final DataSlot opponentHealth = DataSlot.standalone();
 
     public PlaymatMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
         this(id, playerInv, decodeBlockEntity(playerInv.player.level, buf.readBlockPos()));
@@ -48,6 +53,11 @@ public class PlaymatMenu extends AbstractContainerMenu {
         for (int i = 0; i < 3; i++) {
             this.addSlot(new OpponentBattlefieldSlot(this.container, (p1 ? 11 : 4)+i, 80 + (18 * i), 18));
         }
+        this.addDataSlot(energy);
+        this.addDataSlot(health);
+        this.addDataSlot(opponentEnergy);
+        this.addDataSlot(opponentHealth);
+        this.updateDataSlots();
     }
 
     @Override
@@ -63,7 +73,31 @@ public class PlaymatMenu extends AbstractContainerMenu {
     public boolean clickMenuButton(Player player, int buttonId) {
         // menu click logic soon...
         // if (buttonId == ButtonIds.END_TURN) or a switch or something
-        return false;
+        
+        //example for modifying health and synchronizing data
+        //uncomment the next 4 lines to try it out
+//        if (this.p1) container.health2--;
+//        else container.health1--;
+//        updateDataSlots();
+//        return true;
+        
+        return false; //return true if data slots are updated
+    }
+
+    //Updates the values in the data slots. Does NOT synchronize them to clients!
+    //clickMenuButton does it if you return true or you can call broadcastChanges();
+    private void updateDataSlots() {
+        if (this.p1) {
+            this.energy.set(container.energy1);
+            this.opponentEnergy.set(container.energy2);
+            this.health.set(container.health1);
+            this.opponentHealth.set(container.health2);
+        } else {
+            this.energy.set(container.energy2);
+            this.opponentEnergy.set(container.energy1);
+            this.health.set(container.health2);
+            this.opponentHealth.set(container.health1);
+        }
     }
 
     public static class CardSlot extends Slot {
