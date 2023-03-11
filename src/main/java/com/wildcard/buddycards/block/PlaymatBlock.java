@@ -52,6 +52,7 @@ public class PlaymatBlock extends BaseEntityBlock {
 
     @Override
     public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation direction) {
+        //todo: use the OctahedralGroup helper
         switch(direction) {
             case CLOCKWISE_90:
                 switch(state.getValue(DIR)) {

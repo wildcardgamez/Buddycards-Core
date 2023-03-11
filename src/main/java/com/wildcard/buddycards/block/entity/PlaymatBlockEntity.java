@@ -1,5 +1,6 @@
 package com.wildcard.buddycards.block.entity;
 
+import com.wildcard.buddycards.battles.BattleComponent;
 import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.container.DeckboxContainer;
@@ -7,6 +8,8 @@ import com.wildcard.buddycards.menu.PlaymatMenu;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -55,11 +58,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
         tag.putBoolean("game", inGame);
         tag.putBoolean("p1", p1);
         if(p1) {
-            CompoundTag log = new CompoundTag();
-            for (int i = 0; i < container.battleLog.size(); i++) {
-                log.putInt(Component.Serializer.toJson(container.battleLog.get(i)), i);
-            }
-            tag.put("log", log);
+            tag.put("log", BattleComponent.LIST_CODEC.encodeStart(NbtOps.INSTANCE, container.battleLog).result().orElse(new ListTag()));
             CompoundTag inv = new CompoundTag();
             for (int i = 0; i < 14; i++) {
                 inv.put("" + i, container.getItem(i).save(new CompoundTag()));
@@ -127,17 +126,15 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             container.reload();
             container.entity = this;
             if (container.battleLog.isEmpty() && tag.contains("log")) {
-                CompoundTag log = tag.getCompound("log");
-                if(!log.isEmpty())
-                    for (String i : log.getAllKeys())
-                    container.battleLog.add(Component.Serializer.fromJson(i));
+                ListTag log = tag.getList("log", Tag.TAG_COMPOUND);
+                BattleComponent.LIST_CODEC.decode(NbtOps.INSTANCE, log).result().ifPresent(result -> container.battleLog.addAll(result.getFirst()));
             }
             container.energy1 = tag.getInt("energy1");
             container.energy2 = tag.getInt("energy2");
             container.health1 = tag.getInt("health1");
             container.health2 = tag.getInt("health2");
         }
-        if (inGame && level != null && level.getBlockState(getBlockPos()).getBlock() instanceof PlaymatBlock block && level.getBlockEntity(getBlockPos().relative(level.getBlockState(getBlockPos()).getValue(PlaymatBlock.DIR))) instanceof PlaymatBlockEntity opponent) {
+        if (inGame && level != null && level.getBlockState(getBlockPos()).getBlock() instanceof PlaymatBlock && level.getBlockEntity(getBlockPos().relative(level.getBlockState(getBlockPos()).getValue(PlaymatBlock.DIR))) instanceof PlaymatBlockEntity opponent) {
             if (p1)
                 opponent.container = container;
             else

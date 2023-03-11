@@ -1,16 +1,17 @@
 package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.battles.BattleComponent;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BattleContainer extends SimpleContainer {
     static final String LOG = "battlesLog." + Buddycards.MOD_ID + ".";
@@ -18,9 +19,10 @@ public class BattleContainer extends SimpleContainer {
     public PlaymatBlockEntity entity;
     public DeckboxContainer deck1, deck2;
     public Component name1, name2;
+
     public int health1, health2;
     public int energy1, energy2;
-    public final ArrayList<MutableComponent> battleLog = new ArrayList<>();
+    public final List<BattleComponent> battleLog = new ArrayList<>();
 
     public BattleContainer() {
         super(14);
@@ -31,9 +33,10 @@ public class BattleContainer extends SimpleContainer {
             isPlayer1Turn = true;
         name1 = getItem(0).getDisplayName().plainCopy();
         name2 = getItem(7).getDisplayName().plainCopy();
+
         health1 = health2 = 20;
         energy1 = energy2 = 0;
-        battleLogWithName("go_first");
+        addLogWithName("go_first");
         deck1 = new DeckboxContainer(getItem(0));
         deck2 = new DeckboxContainer(getItem(7));
         deck1.startOpen();
@@ -42,9 +45,9 @@ public class BattleContainer extends SimpleContainer {
         tryDrawCard(true);
         tryDrawCard(false);
         tryDrawCard(false);
-        battleLog("starting_draw");
+        addLog("starting_draw");
         tryDrawCard(isPlayer1Turn);
-        battleLogWithName("turn_draw");
+        addLogWithName("turn_draw");
         entity.setChanged();
     }
 
@@ -80,11 +83,10 @@ public class BattleContainer extends SimpleContainer {
         return false;
     }
 
-    public void battleLog(String name) {
-        battleLog.add(new TranslatableComponent(LOG + name));
+    public void addLog(String name) {
+        battleLog.add(new BattleComponent(new TranslatableComponent(LOG + name)));
     }
-
-    public void battleLogWithName(String name) {
-        battleLog.add(new TextComponent("").append(isPlayer1Turn ? name1 : name2).append(new TranslatableComponent(LOG + name)));
+    public void addLogWithName(String name) {
+        battleLog.add(new BattleComponent(new TextComponent("").append(isPlayer1Turn ? name1 : name2).append(new TranslatableComponent(LOG + name))));
     }
 }

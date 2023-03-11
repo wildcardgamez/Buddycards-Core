@@ -1,0 +1,13 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "buddycards:font/smallnumbers.png",
+      "height": 5,
+      "ascent": 5,
+      "chars": [
+        "\u0030\u0031\u0032\u0033\u0034\u0035\u0036\u0037\u0038\u0039"
+      ]
+    }
+  ]
+}

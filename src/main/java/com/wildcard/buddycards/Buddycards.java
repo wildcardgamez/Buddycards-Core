@@ -1,5 +1,6 @@
 package com.wildcard.buddycards;
 
+import com.wildcard.buddycards.battles.BuddycardsPackets;
 import com.wildcard.buddycards.registries.*;
 import com.wildcard.buddycards.util.*;
 import net.minecraft.world.item.CreativeModeTab;
@@ -36,11 +37,11 @@ public class Buddycards
         BuddycardsFeatures.registerFeatures();
 
         MinecraftForge.EVENT_BUS.register(this);
-
+        BuddycardsPackets.registerPackets();
         FMLJavaModLoadingContext.get().getModEventBus().register(CuriosIntegration.class);
     }
 
-    public static final CreativeModeTab TAB = new CreativeModeTab("buddycards") {
+    public static final CreativeModeTab TAB = new CreativeModeTab(MOD_ID) {
         @Override
         public ItemStack makeIcon() {
             return new ItemStack(BuddycardsItems.PACK_BASE.get());

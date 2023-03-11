@@ -1,14 +1,17 @@
 package com.wildcard.buddycards.menu;
 
-import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.battles.*;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +20,13 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.network.PacketDistributor;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class PlaymatMenu extends AbstractContainerMenu {
     PlaymatBlockEntity entity;
@@ -27,14 +36,17 @@ public class PlaymatMenu extends AbstractContainerMenu {
     public final DataSlot health = DataSlot.standalone();
     public final DataSlot opponentEnergy = DataSlot.standalone();
     public final DataSlot opponentHealth = DataSlot.standalone();
+    private final Inventory inventory;
+    private final List<SyncedData> syncedData = new ArrayList<>();
 
     public PlaymatMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
         this(id, playerInv, decodeBlockEntity(playerInv.player.level, buf.readBlockPos()));
     }
 
     private static PlaymatBlockEntity decodeBlockEntity(Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity) return entity;
-        else throw new IllegalStateException("Block entity expected to be PlaymatBlockEntity!" + pos);
+        if (level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity)
+            return entity;
+        throw new IllegalStateException("Block entity expected to be PlaymatBlockEntity!" + pos);
     }
 
     public PlaymatMenu(int id, Inventory playerInv, PlaymatBlockEntity entity) {
@@ -58,6 +70,23 @@ public class PlaymatMenu extends AbstractContainerMenu {
         this.addDataSlot(opponentEnergy);
         this.addDataSlot(opponentHealth);
         this.updateDataSlots();
+        this.inventory = playerInv;
+        syncedData.add(new SyncedData(
+                () -> {
+                    CompoundTag nbt = new CompoundTag();
+                    Tag tag = BattleComponent.LIST_CODEC.encodeStart(NbtOps.INSTANCE, getBattleLog()).result().orElse(new ListTag());
+                    nbt.put("data", tag);
+                    return nbt;
+                },
+                nbt -> {
+                    Tag data = nbt.get("data");
+
+                    BattleComponent.LIST_CODEC.decode(NbtOps.INSTANCE, data).result().ifPresent(result -> {
+                        container.battleLog.clear();
+                        container.battleLog.addAll(result.getFirst());
+                    });
+                }
+        ));
     }
 
     @Override
@@ -73,14 +102,14 @@ public class PlaymatMenu extends AbstractContainerMenu {
     public boolean clickMenuButton(Player player, int buttonId) {
         // menu click logic soon...
         // if (buttonId == ButtonIds.END_TURN) or a switch or something
-        
+
         //example for modifying health and synchronizing data
         //uncomment the next 4 lines to try it out
 //        if (this.p1) container.health2--;
 //        else container.health1--;
 //        updateDataSlots();
 //        return true;
-        
+
         return false; //return true if data slots are updated
     }
 
@@ -97,6 +126,44 @@ public class PlaymatMenu extends AbstractContainerMenu {
             this.opponentEnergy.set(container.energy1);
             this.health.set(container.health2);
             this.opponentHealth.set(container.health1);
+        }
+    }
+
+    @Override
+    public void broadcastChanges() {
+        super.broadcastChanges();
+        sync(false);
+    }
+
+    @Override
+    public void broadcastFullState() {
+        super.broadcastFullState();
+        sync(true);
+    }
+
+    private void sync(boolean fullSync) {
+        if (inventory.player instanceof ServerPlayer player) {
+            ListTag nbt = new ListTag();
+            for (int i = 0; i < syncedData.size(); i++) {
+                Optional<CompoundTag> optData = syncedData.get(i).getNBT(fullSync);
+                if (optData.isPresent()) {
+                    CompoundTag compoundTag = optData.get();
+                    compoundTag.putInt("dataid", i);
+                    nbt.add(compoundTag);
+                }
+            }
+            if (!nbt.isEmpty()) {
+                BuddycardsPackets.INSTANCE.send(PacketDistributor.PLAYER.with( () -> player), new BuddycardsSyncPacket(nbt));
+            }
+        }
+    }
+
+    public void consumeSync(ListTag nbt) {
+        for (Tag tag : nbt) {
+            if (tag instanceof CompoundTag cmpTag) {
+                int dataid = cmpTag.getInt("dataid");
+                syncedData.get(dataid).consumeNBT(cmpTag);
+            }
         }
     }
 
@@ -148,14 +215,31 @@ public class PlaymatMenu extends AbstractContainerMenu {
         }
     }
 
-    public MutableComponent getBattleLog() {
-        ArrayList<MutableComponent> battleLog = container.battleLog;
-        if(battleLog.isEmpty())
-            return new TranslatableComponent(Buddycards.MOD_ID + ".broken");
-        MutableComponent component = battleLog.get(battleLog.size() - 1);
-        if (battleLog.size() > 1) for (int i = battleLog.size() - 2; i >= 0; i--) {
-            component.append("\n").append(battleLog.get(i));
+    public static final class SyncedData {
+        private final Supplier<CompoundTag> nbtGetter;
+        private final Consumer<CompoundTag> nbtConsumer;
+        private CompoundTag clientNBTPrediction = new CompoundTag();
+
+        public SyncedData(Supplier<CompoundTag> nbtGetter, Consumer<CompoundTag> nbtConsumer) {
+            this.nbtGetter = nbtGetter;
+            this.nbtConsumer = nbtConsumer;
         }
-        return component;
+
+        public Optional<CompoundTag> getNBT(boolean fullSync) {
+            CompoundTag compoundTag = nbtGetter.get();
+            if (fullSync || !compoundTag.equals(clientNBTPrediction)) {
+                clientNBTPrediction = compoundTag;
+                return Optional.of(compoundTag);
+            }
+            return Optional.empty();
+        }
+
+        public void consumeNBT(CompoundTag tag) {
+            nbtConsumer.accept(tag);
+        }
+    }
+
+    public List<BattleComponent> getBattleLog() {
+        return container.battleLog;
     }
 }
