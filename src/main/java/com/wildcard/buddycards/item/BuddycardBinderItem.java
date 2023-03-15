@@ -45,7 +45,7 @@ public class BuddycardBinderItem extends Item {
                     (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderContainer(finalSlots, binder))
                     , player.getItemInHand(hand).getHoverName()));
         }
-        return InteractionResultHolder.success(player.getItemInHand(hand));
+        return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
     }
 
     @Override
@@ -56,10 +56,12 @@ public class BuddycardBinderItem extends Item {
         }
     }
 
+    @Override
     public boolean isEnchantable(ItemStack stack) {
         return stack.getCount() == 1;
     }
 
+    @Override
     public int getEnchantmentValue() {
         return 1;
     }

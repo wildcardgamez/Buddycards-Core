@@ -12,9 +12,11 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BattleContainer extends SimpleContainer {
     static final String LOG = "battlesLog." + Buddycards.MOD_ID + ".";
+    private static final Random random = new Random();
     public boolean isPlayer1Turn = false;
     public PlaymatBlockEntity entity;
     public DeckboxContainer deck1, deck2;
@@ -67,9 +69,9 @@ public class BattleContainer extends SimpleContainer {
         for (int i = p1 ? 1 : 8; i < (p1 ? 4 : 10); i++) {
             //Once it finds an empty one, draw a random card from the deckbox and return success
             if(getItem(i).isEmpty()) {
-                ItemStack card = p1 ? deck1.removeItem((int)(Math.random() * 16), 1) : deck2.removeItem((int)(Math.random() * 16), 1);
+                ItemStack card = p1 ? deck1.removeItem(random.nextInt(16), 1) : deck2.removeItem(random.nextInt(16), 1);
                 while(card.isEmpty())
-                    card = p1 ? deck1.removeItem((int)(Math.random() * 16), 1) : deck2.removeItem((int)(Math.random() * 16), 1);
+                    card = p1 ? deck1.removeItem(random.nextInt(16), 1) : deck2.removeItem(random.nextInt(16), 1);
                 setItem(i, card);
                 if(p1)
                     deck1.setChanged();

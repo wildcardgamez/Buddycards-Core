@@ -1,4 +1,5 @@
 package com.wildcard.buddycards.container;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +32,7 @@ public class BinderContainer extends SimpleContainer {
         {
             //If the binder has nbt data, turn it into items
             CompoundTag nbt = binder.getTag();
-            ListTag list = nbt.getList("Items", CompoundTag.TAG_COMPOUND);
+            ListTag list = nbt.getList("Items", Tag.TAG_COMPOUND);
             for(int i = 0; i < list.size(); i++) {
                 CompoundTag compoundnbt = list.getCompound(i);
                 int k = compoundnbt.getByte("Slot") & 255;

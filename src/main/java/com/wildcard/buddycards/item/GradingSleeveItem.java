@@ -1,7 +1,7 @@
 package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.registries.BuddycardsItems;
-import com.wildcard.buddycards.savedata.PerfectBuddycardCollectionSaveData;
+import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -24,10 +24,10 @@ public class GradingSleeveItem extends DescriptionItem {
 
     public boolean tryGrade(ItemStack card, ItemStack sleeves, Player player, Level level) {
         CompoundTag nbt = card.getOrCreateTag().copy();
-        if(level instanceof ServerLevel serverLevel && card.getItem() instanceof BuddycardItem && !nbt.contains("grade")) {
+        if(level instanceof ServerLevel serverLevel && card.getItem() instanceof BuddycardItem buddycardItem && !nbt.contains("grade")) {
             int grade;
             float rand = level.getRandom().nextFloat();
-            if (CuriosApi.getCuriosHelper().findCurios(player, BuddycardsItems.ZYLEX_RING.get()).size() > 0)
+            if (!CuriosApi.getCuriosHelper().findCurios(player, BuddycardsItems.ZYLEX_RING.get()).isEmpty())
                 rand = Math.max(rand, level.getRandom().nextFloat());
             for (grade = 1; grade < 5; grade++) {
                 if(rand < ODDS[grade-1])
@@ -40,9 +40,9 @@ public class GradingSleeveItem extends DescriptionItem {
             sleeves.shrink(1);
             card.shrink(1);
             ItemHandlerHelper.giveItemToPlayer(player, newCard);
-            if(grade == 5) {
+            if (grade == 5) {
                 player.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-                PerfectBuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), ((BuddycardItem) card.getItem()).getSet(), ((BuddycardItem) card.getItem()).getCardNumber());
+                BuddycardCollectionSaveData.getPerfect(serverLevel).addPlayerCardFound(player.getUUID(), buddycardItem);
             }
             return true;
         }

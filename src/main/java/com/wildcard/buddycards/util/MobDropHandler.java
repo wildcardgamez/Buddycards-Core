@@ -60,13 +60,13 @@ public class MobDropHandler {
             else if (entity instanceof EnderDragon) {
                 if (event.getEntityLiving().getRandom().nextFloat() < ConfigManager.dragonChance.get()) {
                     drops.add(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(BuddycardsItems.PACK_END.get(),
-                            (int) (event.getEntityLiving().getRandom().nextFloat() * ConfigManager.dragonMaxPacks.get()) + 1)));
+                            event.getEntityLiving().getRandom().nextInt(ConfigManager.dragonMaxPacks.get()) + 1)));
                 }
             }
             else if (entity instanceof WitherBoss) {
                 if (event.getEntityLiving().getRandom().nextFloat() < ConfigManager.witherChance.get()) {
                     drops.add(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(BuddycardsItems.PACK_NETHER.get(),
-                            (int) (event.getEntityLiving().getRandom().nextFloat() * ConfigManager.witherMaxPacks.get()) + 1)));
+                            event.getEntityLiving().getRandom().nextInt(ConfigManager.witherMaxPacks.get()) + 1)));
                 }
             }
         }

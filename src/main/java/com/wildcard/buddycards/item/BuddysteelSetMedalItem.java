@@ -56,10 +56,12 @@ public class BuddysteelSetMedalItem extends MedalItem {
             super.fillItemCategory(group, items);
     }
 
+    @Override
     public boolean isEnchantable(ItemStack stack) {
         return stack.getCount() == 1;
     }
 
+    @Override
     public int getEnchantmentValue() {
         return 1;
     }

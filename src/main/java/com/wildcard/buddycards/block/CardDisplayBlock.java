@@ -1,9 +1,12 @@
 package com.wildcard.buddycards.block;
 
+import com.google.common.collect.ImmutableMap;
 import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
 import com.wildcard.buddycards.item.BuddycardItem;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,8 +32,19 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CardDisplayBlock extends BaseEntityBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
+    private static final Map<Direction, VoxelShape> shapes = Util.make(() -> {
+        Map<Direction, VoxelShape> shape = new HashMap<>();
+        shape.put(Direction.NORTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 3.0D));
+        shape.put(Direction.EAST, Block.box(13.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D));
+        shape.put(Direction.SOUTH, Block.box(0.0D, 0.0D, 13.0D, 16.0D, 16.0D, 16.0D));
+        shape.put(Direction.WEST, Block.box(0.0D, 0.0D, 0.0D, 3.0D, 16.0D, 16.0D));
+        return ImmutableMap.copyOf(shape);
+    });
     protected static final VoxelShape NSHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 3.0D);
     protected static final VoxelShape ESHAPE = Block.box(13.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape SSHAPE = Block.box(0.0D, 0.0D, 13.0D, 16.0D, 16.0D, 16.0D);
@@ -43,8 +57,7 @@ public class CardDisplayBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         int slot = getSlot(state.getValue(DIR), hit.getLocation());
-        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity) {
-            CardDisplayBlockEntity displayTile = (CardDisplayBlockEntity) world.getBlockEntity(pos);
+        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayTile) {
             ItemStack stack = player.getItemInHand(hand);
             if(displayTile.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
                 ItemStack oldCard = displayTile.getCardInSlot(slot);
@@ -84,18 +97,7 @@ public class CardDisplayBlock extends BaseEntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
-        Direction direction = state.getValue(DIR);
-        switch(direction) {
-            case NORTH:
-            default:
-                return NSHAPE;
-            case EAST:
-                return ESHAPE;
-            case SOUTH:
-                return SSHAPE;
-            case WEST:
-                return WSHAPE;
-        }
+        return shapes.get(state.getValue(DIR));
     }
 
     @Override
@@ -110,42 +112,7 @@ public class CardDisplayBlock extends BaseEntityBlock {
 
     @Override
     public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation direction) {
-        switch(direction) {
-            case CLOCKWISE_90:
-                switch(state.getValue(DIR)) {
-                    case NORTH:
-                        return state.setValue(DIR, Direction.EAST);
-                    case EAST:
-                        return state.setValue(DIR, Direction.SOUTH);
-                    case SOUTH:
-                        return state.setValue(DIR, Direction.WEST);
-                    case WEST:
-                        return state.setValue(DIR, Direction.NORTH);
-                }
-            case CLOCKWISE_180:
-                switch(state.getValue(DIR)) {
-                    case NORTH:
-                        return state.setValue(DIR, Direction.SOUTH);
-                    case EAST:
-                        return state.setValue(DIR, Direction.WEST);
-                    case SOUTH:
-                        return state.setValue(DIR, Direction.NORTH);
-                    case WEST:
-                        return state.setValue(DIR, Direction.EAST);
-                }
-            case COUNTERCLOCKWISE_90:
-                switch(state.getValue(DIR)) {
-                    case NORTH:
-                        return state.setValue(DIR, Direction.WEST);
-                    case EAST:
-                        return state.setValue(DIR, Direction.NORTH);
-                    case SOUTH:
-                        return state.setValue(DIR, Direction.EAST);
-                    case WEST:
-                        return state.setValue(DIR, Direction.SOUTH);
-                }
-        }
-        return state;
+        return state.setValue(DIR, direction.rotate(state.getValue(DIR)));
     }
 
     private int getSlot(Direction dir, Vec3 hit) {
@@ -154,75 +121,15 @@ public class CardDisplayBlock extends BaseEntityBlock {
                 ((hit.y < 0) ? hit.y - Math.floor(hit.y) : hit.y) % 1,
                 ((hit.z < 0) ? hit.z - Math.floor(hit.z) : hit.z) % 1
         );
-        if(hit.y > .5) {
-            if(dir == Direction.NORTH) {
-                if (hit.x < 1/3f)
-                    return 1;
-                else if (hit.x < 2/3f)
-                    return 2;
-                else
-                    return 3;
-            }
-            if(dir == Direction.EAST) {
-                if (hit.z < 1/3f)
-                    return 1;
-                else if (hit.z < 2/3f)
-                    return 2;
-                else
-                    return 3;
-            }
-            if(dir == Direction.SOUTH) {
-                if (hit.x > 2/3f)
-                    return 1;
-                else if (hit.x > 1/3f)
-                    return 2;
-                else
-                    return 3;
-            }
-            if(dir == Direction.WEST) {
-                if (hit.z > 2/3f)
-                    return 1;
-                else if (hit.z > 1/3f)
-                    return 2;
-                else
-                    return 3;
-            }
+        int slotIndex = 0;
+        if (hit.y() <= 0.5)
+            slotIndex += 3;
+        double position = dir.getAxis() == Direction.Axis.X ? hit.z() : hit.x();
+        if (dir.getCounterClockWise().getAxisDirection() == Direction.AxisDirection.NEGATIVE) {
+            return slotIndex + Mth.clamp(Mth.floor(position*3), 0, 2) + 1;
+        } else {
+            return slotIndex + Mth.clamp(Mth.floor((1 - position)*3), 0, 2) + 1;
         }
-        else {
-            if(dir == Direction.NORTH) {
-                if (hit.x < 1/3f)
-                    return 4;
-                else if (hit.x < 2/3f)
-                    return 5;
-                else
-                    return 6;
-            }
-            if(dir == Direction.EAST) {
-                if (hit.z < 1/3f)
-                    return 4;
-                else if (hit.z < 2/3f)
-                    return 5;
-                else
-                    return 6;
-            }
-            if(dir == Direction.SOUTH) {
-                if (hit.x > 2/3f)
-                    return 4;
-                else if (hit.x > 1/3f)
-                    return 5;
-                else
-                    return 6;
-            }
-            if(dir == Direction.WEST) {
-                if (hit.z > 2/3f)
-                    return 4;
-                else if (hit.z > 1/3f)
-                    return 5;
-                else
-                    return 6;
-            }
-        }
-        return 1;
     }
 
     @Override
@@ -239,11 +146,9 @@ public class CardDisplayBlock extends BaseEntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
-        BlockEntity tileentity = world.getBlockEntity(pos);
-        if (tileentity instanceof CardDisplayBlockEntity) {
-            return ((CardDisplayBlockEntity) tileentity).getCardsAmt();
+        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity cardDisplay) {
+            return cardDisplay.getCardsAmt();
         }
-        else
-            return 0;
+        return 0;
     }
 }

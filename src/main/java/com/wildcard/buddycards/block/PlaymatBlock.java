@@ -4,7 +4,6 @@ import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -52,43 +51,8 @@ public class PlaymatBlock extends BaseEntityBlock {
 
     @Override
     public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation direction) {
-        //todo: use the OctahedralGroup helper
-        switch(direction) {
-            case CLOCKWISE_90:
-                switch(state.getValue(DIR)) {
-                    case NORTH:
-                        return state.setValue(DIR, Direction.EAST);
-                    case EAST:
-                        return state.setValue(DIR, Direction.SOUTH);
-                    case SOUTH:
-                        return state.setValue(DIR, Direction.WEST);
-                    case WEST:
-                        return state.setValue(DIR, Direction.NORTH);
-                }
-            case CLOCKWISE_180:
-                switch(state.getValue(DIR)) {
-                    case NORTH:
-                        return state.setValue(DIR, Direction.SOUTH);
-                    case EAST:
-                        return state.setValue(DIR, Direction.WEST);
-                    case SOUTH:
-                        return state.setValue(DIR, Direction.NORTH);
-                    case WEST:
-                        return state.setValue(DIR, Direction.EAST);
-                }
-            case COUNTERCLOCKWISE_90:
-                switch(state.getValue(DIR)) {
-                    case NORTH:
-                        return state.setValue(DIR, Direction.WEST);
-                    case EAST:
-                        return state.setValue(DIR, Direction.NORTH);
-                    case SOUTH:
-                        return state.setValue(DIR, Direction.EAST);
-                    case WEST:
-                        return state.setValue(DIR, Direction.SOUTH);
-                }
-        }
-        return state;
+
+        return state.setValue(DIR, direction.rotate(state.getValue(DIR)));
     }
 
     @Override

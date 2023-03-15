@@ -3,6 +3,7 @@ package com.wildcard.buddycards.container;
 import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +28,7 @@ public class DeckboxContainer extends SimpleContainer {
         {
             //If the deckbox has nbt data, turn it into items
             CompoundTag nbt = deckbox.getTag();
-            ListTag list = nbt.getList("Items", CompoundTag.TAG_COMPOUND);
+            ListTag list = nbt.getList("Items", Tag.TAG_COMPOUND);
             for(int i = 0; i < list.size(); i++) {
                 CompoundTag compoundnbt = list.getCompound(i);
                 int k = compoundnbt.getInt("Slot");
@@ -49,7 +50,7 @@ public class DeckboxContainer extends SimpleContainer {
         {
             //If the deckbox has nbt data, turn it into items
             CompoundTag nbt = deckbox.getTag();
-            ListTag list = nbt.getList("Items", CompoundTag.TAG_COMPOUND);
+            ListTag list = nbt.getList("Items", Tag.TAG_COMPOUND);
             for(int i = 0; i < list.size(); i++) {
                 CompoundTag compoundnbt = list.getCompound(i);
                 int k = compoundnbt.getInt("Slot");

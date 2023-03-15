@@ -19,7 +19,7 @@ public class LuminisVeinFeature extends Feature<NoneFeatureConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext context) {
-        if(!ConfigManager.luminisVeins.get() || !((context.origin().getX() / 16) % ConfigManager.luminisChunks.get() == 0) && !((context.origin().getZ() / 16) % ConfigManager.luminisChunks.get() == 0))
+        if(!ConfigManager.luminisVeins.get() || ((context.origin().getX() / 16) % ConfigManager.luminisChunks.get() != 0) && ((context.origin().getZ() / 16) % ConfigManager.luminisChunks.get() != 0))
             return false;
         Random rand = context.random();
         BlockPos pos = context.origin().offset(rand.nextInt(16), rand.nextInt(5, 64), rand.nextInt(16));

@@ -52,10 +52,10 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
         //Draw the name of the playmat and the inventory titles
         this.font.draw(matrixStack, title, 8.0f, 6.0f, 4210752);
 
-        this.font.draw(matrixStack, Integer.valueOf(this.menu.opponentEnergy.get()).toString(), 20.0f, 22.0f, 4210752);
-        this.font.draw(matrixStack, Integer.valueOf(this.menu.opponentHealth.get()).toString(), 51.0f, 22.0f, 4210752);
-        this.font.draw(matrixStack, Integer.valueOf(this.menu.energy.get()).toString(), 20.0f, 40.0f, 4210752);
-        this.font.draw(matrixStack, Integer.valueOf(this.menu.health.get()).toString(), 51.0f, 40.0f, 4210752);
+        this.font.draw(matrixStack, Integer.toString(this.menu.opponentEnergy.get()), 20.0f, 22.0f, 4210752);
+        this.font.draw(matrixStack, Integer.toString(this.menu.opponentHealth.get()), 51.0f, 22.0f, 4210752);
+        this.font.draw(matrixStack, Integer.toString(this.menu.energy.get()), 20.0f, 40.0f, 4210752);
+        this.font.draw(matrixStack, Integer.toString(this.menu.health.get()), 51.0f, 40.0f, 4210752);
         renderBattleLog(matrixStack, x, y);
     }
 

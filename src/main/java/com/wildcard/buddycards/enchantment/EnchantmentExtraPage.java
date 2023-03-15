@@ -10,10 +10,12 @@ public class EnchantmentExtraPage extends Enchantment {
         super(Rarity.RARE, BUDDY_BINDER, EquipmentSlot.values());
     }
 
+    @Override
     public int getMinCost(int par1) {
         return 15 * (par1 - 1);
     }
 
+    @Override
     public int getMaxCost(int par1) {
         return 20 + (par1 * 10);
     }
@@ -23,5 +25,5 @@ public class EnchantmentExtraPage extends Enchantment {
         return 3;
     }
 
-    static final EnchantmentCategory BUDDY_BINDER = EnchantmentCategory.create("BUDDY_BINDER", i -> (i instanceof BuddycardBinderItem));
+    static final EnchantmentCategory BUDDY_BINDER = EnchantmentCategory.create("BUDDY_BINDER", BuddycardBinderItem.class::isInstance);
 }

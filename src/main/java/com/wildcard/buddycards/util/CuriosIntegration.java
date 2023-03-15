@@ -49,9 +49,9 @@ public class CuriosIntegration {
 
             @Override
             public void curioTick(String identifier, int index, LivingEntity livingEntity) {
-                if (livingEntity instanceof Player) {
+                if (livingEntity instanceof Player player) {
                     int mod = EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.BUDDY_BOOST.get(), itemStack);
-                    type.applyEffect((Player) livingEntity, mod);
+                    type.applyEffect(player, mod);
                 }
             }
         };

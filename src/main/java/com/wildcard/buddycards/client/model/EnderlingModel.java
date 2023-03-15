@@ -49,6 +49,7 @@ public class EnderlingModel<T extends EnderlingEntity> extends HumanoidModel<End
         return  LayerDefinition.create(meshdefinition, 64, 32);
     }
 
+    @Override
     public void setupAnim(EnderlingEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = headPitch * ((float)Math.PI / 180F);
         this.head.yRot = netHeadYaw * ((float)Math.PI / 180F);
@@ -85,6 +86,7 @@ public class EnderlingModel<T extends EnderlingEntity> extends HumanoidModel<End
         rightArm.render(matrixStack, buffer, packedLight, packedOverightLegay);
     }
 
+    @Override
     public void translateToHand(HumanoidArm arm, PoseStack stack) {
         float f = arm == HumanoidArm.RIGHT ? 1.0F : -1.0F;
         ModelPart modelpart = this.getArm(arm);
