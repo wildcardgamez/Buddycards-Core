@@ -3,6 +3,7 @@ package com.wildcard.buddycards.menu;
 import com.wildcard.buddycards.battles.*;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.container.BattleContainer;
+import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 
 import net.minecraft.core.BlockPos;
@@ -57,13 +58,13 @@ public class PlaymatMenu extends AbstractContainerMenu {
         this.addSlot(new DeckSlot(this.container, (p1 ? 7 : 0), 143, 18));
         this.addSlot(new DeckSlot(this.container, (p1 ? 0 : 7), 143, 64));
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new CardSlot(this.container, (p1 ? 1 : 8) + i, 80 + (18 * i), 64));
+            this.addSlot(new HandSlot(this, p1, (p1 ? 1 : 8) + i, 80 + (18 * i), 64));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new BattlefieldSlot(this.container, (p1 ? 4 : 11)+i, 80 + (18 * i), 36));
+            this.addSlot(new BattlefieldSlot(this, p1, (p1 ? 4 : 11)+i, 80 + (18 * i), 36));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new OpponentBattlefieldSlot(this.container, (p1 ? 11 : 4)+i, 80 + (18 * i), 18));
+            this.addSlot(new OpponentBattlefieldSlot(this, p1, (p1 ? 11 : 4)+i, 80 + (18 * i), 18));
         }
         this.addDataSlot(energy);
         this.addDataSlot(health);
@@ -100,16 +101,12 @@ public class PlaymatMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int buttonId) {
-        // menu click logic soon...
-        // if (buttonId == ButtonIds.END_TURN) or a switch or something
-
-        //example for modifying health and synchronizing data
-        //uncomment the next 4 lines to try it out
-//        if (this.p1) container.health2--;
-//        else container.health1--;
-//        updateDataSlots();
-//        return true;
-
+        if (buttonId == ButtonIds.END_TURN && container.game.isP1() == p1) {
+            container.game.endTurn();
+            container.game.nextTurn();
+            return true;
+        }
+        
         return false; //return true if data slots are updated
     }
 
@@ -143,6 +140,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
 
     private void sync(boolean fullSync) {
         if (inventory.player instanceof ServerPlayer player) {
+            updateDataSlots();
             ListTag nbt = new ListTag();
             for (int i = 0; i < syncedData.size(); i++) {
                 Optional<CompoundTag> optData = syncedData.get(i).getNBT(fullSync);
@@ -167,9 +165,16 @@ public class PlaymatMenu extends AbstractContainerMenu {
         }
     }
 
-    public static class CardSlot extends Slot {
-        public CardSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
+    public static abstract class CardSlot extends Slot {
+        public final PlaymatMenu menu;
+        public final BattleContainer battleContainer;
+        public final boolean p1;
+        
+        public CardSlot(PlaymatMenu menu, boolean p1, int index, int xPosition, int yPosition) {
+            super(menu.container, index, xPosition, yPosition);
+            this.menu = menu;
+            this.battleContainer = menu.container;
+            this.p1 = p1;
         }
 
         //Only 1 card per slot
@@ -178,10 +183,27 @@ public class PlaymatMenu extends AbstractContainerMenu {
             return 1;
         }
     }
+    
+    public static class HandSlot extends CardSlot {
+        public HandSlot(PlaymatMenu menu, boolean p1, int index, int xPosition, int yPosition) {
+            super(menu, p1, index, xPosition, yPosition);
+        }
+        
+        @Override
+        public boolean mayPickup(Player player) {
+            ItemStack stack = this.getItem();
+            if (stack.getItem() instanceof BuddycardItem item) {
+                return battleContainer.game.canPlay(p1, item, stack);
+            } else {
+                //what
+                return false;
+            }
+        }
+    }
 
     public static class BattlefieldSlot extends CardSlot {
-        public BattlefieldSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
+        public BattlefieldSlot(PlaymatMenu menu, boolean p1, int index, int xPosition, int yPosition) {
+            super(menu, p1, index, xPosition, yPosition);
         }
 
         //Once a card enters the battlefield, you cant move it
@@ -189,11 +211,19 @@ public class PlaymatMenu extends AbstractContainerMenu {
         public boolean mayPickup(Player player) {
             return false;
         }
+        
+        //crude detection
+        @Override
+        public void set(ItemStack stack) {
+            battleContainer.game.playCard(battleContainer.game.translateTo(this.getSlotIndex()), stack, p1);
+            super.set(stack);
+            menu.broadcastChanges();
+        }
     }
 
     public static class OpponentBattlefieldSlot extends BattlefieldSlot {
-        public OpponentBattlefieldSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
+        public OpponentBattlefieldSlot(PlaymatMenu menu, boolean p1, int index, int xPosition, int yPosition) {
+            super(menu, p1, index, xPosition, yPosition);
         }
 
         //You cannot play cards on the opponents battlefield

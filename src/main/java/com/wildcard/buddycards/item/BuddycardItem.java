@@ -1,6 +1,9 @@
 package com.wildcard.buddycards.item;
 
+import com.google.common.collect.ImmutableMultimap;
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.battles.game.BattleAbility;
+import com.wildcard.buddycards.battles.game.BattleEvent;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.registries.BuddycardsItems;
@@ -96,6 +99,20 @@ public class BuddycardItem extends Item {
         if(stack.hasTag() && stack.getTag().contains("grade"))
             return stack.getTag().getInt("grade");
         return 0;
+    }
+    
+    public int getCost(ItemStack stack) {
+        return this.COST;
+    }
+    
+    public int getPower(ItemStack stack) {
+        return this.POWER;
+    }
+    
+    private static final ImmutableMultimap<BattleEvent, BattleAbility> NO_ABILITIES_YET = ImmutableMultimap.of();
+    
+    public ImmutableMultimap<BattleEvent, BattleAbility> getAbilities() {
+        return NO_ABILITIES_YET;
     }
 
     @Override

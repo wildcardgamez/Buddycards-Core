@@ -2,6 +2,7 @@ package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.battles.BattleComponent;
+import com.wildcard.buddycards.battles.game.BattleGame;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.network.chat.Component;
@@ -24,10 +25,15 @@ public class BattleContainer extends SimpleContainer {
 
     public int health1, health2;
     public int energy1, energy2;
+    public int turnEnergy;
+    public int turn;
+    public BattleGame game;
+    
     public final List<BattleComponent> battleLog = new ArrayList<>();
 
     public BattleContainer() {
         super(14);
+        game = new BattleGame(this);
     }
 
     public void startGame() {
@@ -36,17 +42,17 @@ public class BattleContainer extends SimpleContainer {
         name1 = getItem(0).getDisplayName().plainCopy();
         name2 = getItem(7).getDisplayName().plainCopy();
 
-        health1 = health2 = 20;
-        energy1 = energy2 = 0;
         addLogWithName("go_first");
         deck1 = new DeckboxContainer(getItem(0));
         deck2 = new DeckboxContainer(getItem(7));
         deck1.startOpen();
         deck2.startOpen();
-        tryDrawCard(true);
-        tryDrawCard(true);
-        tryDrawCard(false);
-        tryDrawCard(false);
+        health1 = health2 = 20;
+        energy1 = energy2 = 0;
+        turnEnergy = 1;
+        turn = 1;
+        game = new BattleGame(this);
+        game.beginGame();
         addLog("starting_draw");
         tryDrawCard(isPlayer1Turn);
         addLogWithName("turn_draw");
@@ -66,7 +72,7 @@ public class BattleContainer extends SimpleContainer {
         if((p1 && deck1.isEmpty()) || (!p1 && deck2.isEmpty()))
             return false;
         //Check the hand slots
-        for (int i = p1 ? 1 : 8; i < (p1 ? 4 : 10); i++) {
+        for (int i = p1 ? 1 : 8; i < (p1 ? 4 : 11); i++) {
             //Once it finds an empty one, draw a random card from the deckbox and return success
             if(getItem(i).isEmpty()) {
                 ItemStack card = p1 ? deck1.removeItem(random.nextInt(16), 1) : deck2.removeItem(random.nextInt(16), 1);
@@ -83,6 +89,29 @@ public class BattleContainer extends SimpleContainer {
         }
         //If the hand was full, return false
         return false;
+    }
+    
+    public boolean returnToDeck(boolean p1, int slot) {
+        ItemStack stack = removeItem(slot, 1);
+        if (p1) return deck1.addItem(stack).isEmpty();
+        else return deck2.addItem(stack).isEmpty();
+    }
+    
+    public void endGame(boolean p1Victory) {
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+    }
+    
+    public int energy(boolean p1) {
+        return p1 ? energy1 : energy2;
     }
 
     public void addLog(String name) {

@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.battles.BattleComponent;
+import com.wildcard.buddycards.battles.game.BattleCardState;
 import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.container.DeckboxContainer;
@@ -82,6 +83,15 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             tag.putInt("energy2", container.energy2);
             tag.putInt("health1", container.health1);
             tag.putInt("health2", container.health2);
+            tag.putInt("turn", container.turn);
+            tag.putInt("turnEnergy", container.turnEnergy);
+            ListTag gameState = new ListTag();
+            for (int i = 0; i < 6; i++) {
+                CompoundTag stateTag = new CompoundTag();
+                container.game.state[i].save(new CompoundTag());
+                gameState.add(stateTag);
+            }
+            tag.put("gameState", gameState);
         }
     }
 
@@ -133,6 +143,12 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             container.energy2 = tag.getInt("energy2");
             container.health1 = tag.getInt("health1");
             container.health2 = tag.getInt("health2");
+            container.turn = tag.getInt("turn");
+            container.turnEnergy = tag.getInt("turnEnergy");
+            ListTag gameState = tag.getList("gameState", Tag.TAG_COMPOUND);
+            for (int i = 0; i < 6; i++) {
+                container.game.state[i] = BattleCardState.load(gameState.getCompound(i));
+            }
         }
         if (inGame && level != null && level.getBlockState(getBlockPos()).getBlock() instanceof PlaymatBlock && level.getBlockEntity(getBlockPos().relative(level.getBlockState(getBlockPos()).getValue(PlaymatBlock.DIR))) instanceof PlaymatBlockEntity opponent) {
             if (p1)
