@@ -12,8 +12,8 @@ public class BattleEvent {
         this.name = name;
     }
     
-    public BattleAbility ability(BattleAbilityFunc func) {
-        return new BattleAbility(this, func);
+    public BattleAbility ability(String name, BattleAbilityFunc func) {
+        return new BattleAbility(this, name, func);
     }
     
     /** When a cad is played */
@@ -26,7 +26,7 @@ public class BattleEvent {
     public static final BattleEvent KILL = new BattleEvent("kill");
     /** When a card dies */
     public static final BattleEvent DEATH = new BattleEvent("death");
-    /** When a card is restone powered */
+    /** When a card is redstone powered */
     public static final BattleEvent POWERED = new BattleEvent("powered");
     
     

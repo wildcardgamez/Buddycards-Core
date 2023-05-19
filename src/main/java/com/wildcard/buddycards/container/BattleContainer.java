@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 public class BattleContainer extends SimpleContainer {
-    static final String LOG = "battlesLog." + Buddycards.MOD_ID + ".";
+    static final String LOG = "battles.log." + Buddycards.MOD_ID + ".";
     private static final Random random = new Random();
     public boolean isPlayer1Turn = false;
     public PlaymatBlockEntity entity;
@@ -98,16 +98,16 @@ public class BattleContainer extends SimpleContainer {
     }
     
     public void endGame(boolean p1Victory) {
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
-        System.out.println("Player " + game.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
     }
     
     public int energy(boolean p1) {

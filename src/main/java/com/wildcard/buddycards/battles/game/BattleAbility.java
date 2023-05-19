@@ -6,9 +6,11 @@ public class BattleAbility {
     
     public final BattleEvent event;
     public final BattleAbilityFunc ability;
+    public final String name;
     
-    public BattleAbility(BattleEvent event, BattleAbilityFunc ability) {
+    public BattleAbility(BattleEvent event, String name, BattleAbilityFunc ability) {
         this.event = event;
+        this.name = name;
         this.ability = ability;
     }
     

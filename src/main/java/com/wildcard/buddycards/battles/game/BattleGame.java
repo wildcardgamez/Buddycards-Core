@@ -162,8 +162,8 @@ public class BattleGame {
     /** performs an attack. please ensure ahead of time the source card is valid */
     public void attack(int target, int source) {
         if (items.get(target) == null) {
-            if (isP1()) container.health2 -= state[source].power;
-            else container.health1 -= state[source].power;
+            if (getOwner(target)) container.health1 -= state[source].power;
+            else container.health2 -= state[source].power;
             LOGGER.info(items.get(source) + " dealt " + state[source].power + " damage to Player " + player(!isP1()));
         } else {
             if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.COLUMN)) return;
@@ -278,7 +278,7 @@ public class BattleGame {
         return player(isP1());
     }
     
-    public char player(boolean p1) {
+    public static char player(boolean p1) {
         return p1 ? '1' : '2';
     }
     
@@ -288,20 +288,20 @@ public class BattleGame {
         return slot(slot, isP1());
     }
     
-    public int slot(int slot, boolean p1) {
+    static public int slot(int slot, boolean p1) {
         return p1 ? slot : slot + 3;
     }
     
-    public boolean isOpposite(int slot, int opposite) {
+    static public boolean isOpposite(int slot, int opposite) {
         return slot % 3 == opposite % 3;
     }
     
-    public int opposite(int slot) {
+    static public int opposite(int slot) {
         return slot < 3 ? slot + 3 : slot - 3;
     }
     
     /** Adjacent slots L->R */
-    public int[] adjacent(int slot) {
+    static public int[] adjacent(int slot) {
         return switch(slot) {
         default -> new int[] {-1};
         case 0 -> new int[] {1};  //X1____
@@ -314,7 +314,7 @@ public class BattleGame {
     }
     
     /** Opposite first, L->R adjacent next */
-    public int[] allAdjacent(int slot) {
+    static public int[] allAdjacent(int slot) {
         return switch(slot) {
         default -> new int[] {-1};
         case 0 -> new int[] {4,1};  //X1_4__
@@ -327,7 +327,7 @@ public class BattleGame {
     };
     
     /** true = p1, false = p2 */
-    public boolean getOwner(int slot) {
+    static public boolean getOwner(int slot) {
         return switch(slot) {
         default -> true;
         case 0,1,2 -> true;
@@ -335,7 +335,7 @@ public class BattleGame {
         };
     }
     
-    public int translateTo(int slot) {
+    static public int translateTo(int slot) {
         return switch(slot) {
         default -> debugError("Invalid slot translateTo: " + slot);
         case 4 -> 0;
@@ -347,7 +347,7 @@ public class BattleGame {
         };
     }
     
-    public int translateFrom(int slot) {
+    static public int translateFrom(int slot) {
         return switch(slot) {
         default -> debugError("Invalid slot translateFrom: " + slot);
         case 0 -> 4;
@@ -359,7 +359,7 @@ public class BattleGame {
         };
     }
     
-    private int debugError(String errmsg) {
+    static private int debugError(String errmsg) {
         LOGGER.debug(errmsg);
         return -1;
     }

@@ -49,11 +49,13 @@ public class BuddycardItem extends Item {
                 .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
                 .append("" + POWER).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.power")));
         tooltip.add(new TextComponent(""));
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".ability").withStyle(ChatFormatting.WHITE));
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".ability_desc").withStyle(ChatFormatting.GRAY));
-        tooltip.add(new TextComponent(""));
+        for (BattleAbility ability: ABILITIES.values()) {
+            tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name).withStyle(ChatFormatting.GRAY));
+            tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+            tooltip.add(new TextComponent(""));
+        }
         //Show the cards joke/tooltip
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         //Show the set, card number, and shiny symbol if applicable
         TranslatableComponent cn = new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
         cn.append("" + CARD_NUMBER);

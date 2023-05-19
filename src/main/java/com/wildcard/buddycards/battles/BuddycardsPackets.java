@@ -19,8 +19,6 @@ public class BuddycardsPackets {
             PROTOCOL_VERSION::equals
     );
 
-
-
     public static void registerPackets() {
         INSTANCE.registerMessage(id++, BuddycardsSyncPacket.class, BuddycardsSyncPacket::write, BuddycardsSyncPacket::read, BuddycardsSyncPacket::handle, Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
