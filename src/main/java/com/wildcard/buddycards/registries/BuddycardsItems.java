@@ -1,6 +1,10 @@
 package com.wildcard.buddycards.registries;
 
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.battles.game.BattleAbility;
+import com.wildcard.buddycards.battles.game.BattleEvent;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.gear.BuddycardsArmorMaterial;
 import com.wildcard.buddycards.gear.BuddycardsToolTier;
@@ -22,26 +26,108 @@ public class BuddycardsItems {
 
     public static void registerItems() {
         //Register base set
-        registerCards(BASE_SET, 1, 12, Rarity.COMMON, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(BASE_SET, 13, 9, Rarity.UNCOMMON, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(BASE_SET, 22, 4, Rarity.RARE, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(BASE_SET, 26, 2, Rarity.EPIC, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(BASE_SET, 28, 4, Rarity.COMMON, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(BASE_SET, 32, 3, Rarity.UNCOMMON, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(BASE_SET, 35, 2, Rarity.RARE, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
+        /*SAPS       */ registerCard(BASE_SET,  1, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*ROK        */ registerCard(BASE_SET,  2, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*OINKE      */ registerCard(BASE_SET,  3, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
+        /*COLE       */ registerCard(BASE_SET,  4, Rarity.COMMON,   2, 2, DEFAULT_NO_ABILITIES);
+        /*METALICO   */ registerCard(BASE_SET,  5, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
+        /*DR_LAZULI  */ registerCard(BASE_SET,  6, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
+        /*BETSY      */ registerCard(BASE_SET,  7, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
+        /*SNOWBELLE  */ registerCard(BASE_SET,  8, Rarity.COMMON,   1, 1, DEFAULT_NO_ABILITIES);
+        /*AQUA       */ registerCard(BASE_SET,  9, Rarity.COMMON,   2, 0, DEFAULT_NO_ABILITIES);
+        /*FORTUNA    */ registerCard(BASE_SET, 10, Rarity.COMMON,   1, 1, DEFAULT_NO_ABILITIES);
+        /*WEET       */ registerCard(BASE_SET, 11, Rarity.COMMON,   2, 0, DEFAULT_NO_ABILITIES);
+        /*GRASSLING  */ registerCard(BASE_SET, 12, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*YANG       */ registerCard(BASE_SET, 13, Rarity.UNCOMMON, 4, 3, DEFAULT_NO_ABILITIES);
+        /*YIN        */ registerCard(BASE_SET, 14, Rarity.UNCOMMON, 4, 2, DEFAULT_NO_ABILITIES);
+        /*BLING      */ registerCard(BASE_SET, 15, Rarity.UNCOMMON, 3, 1, DEFAULT_NO_ABILITIES);
+        /*EMERELDA   */ registerCard(BASE_SET, 16, Rarity.UNCOMMON, 3, 1, DEFAULT_NO_ABILITIES);
+        /*DIO        */ registerCard(BASE_SET, 17, Rarity.UNCOMMON, 6, 1, DEFAULT_NO_ABILITIES);
+        /*TREATSY    */ registerCard(BASE_SET, 18, Rarity.UNCOMMON, 4, 2, DEFAULT_NO_ABILITIES);
+        /*RED        */ registerCard(BASE_SET, 19, Rarity.UNCOMMON, 2, 2, DEFAULT_NO_ABILITIES);
+        /*MELONY     */ registerCard(BASE_SET, 20, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SPOOPY     */ registerCard(BASE_SET, 21, Rarity.UNCOMMON, 4, 1, DEFAULT_NO_ABILITIES);
+        /*KNALL_EDGY */ registerCard(BASE_SET, 22, Rarity.RARE,     6, 3, DEFAULT_NO_ABILITIES);
+        /*CASTER     */ registerCard(BASE_SET, 23, Rarity.RARE,     7, 5, DEFAULT_NO_ABILITIES);
+        /*PISTY      */ registerCard(BASE_SET, 24, Rarity.RARE,     6, 2, DEFAULT_NO_ABILITIES);
+        /*KNIGHT     */ registerCard(BASE_SET, 25, Rarity.RARE,     6, 4, DEFAULT_NO_ABILITIES);
+        /*CREATOR    */ registerCard(BASE_SET, 26, Rarity.EPIC,     8, 3, DEFAULT_NO_ABILITIES);
+        /*MELTOR     */ registerCard(BASE_SET, 27, Rarity.EPIC,     6, 3, DEFAULT_NO_ABILITIES);
+        /*ANGSTY_SAPS*/ registerCard(BASE_SET, 28, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
+        /*COPPOR     */ registerCard(BASE_SET, 29, Rarity.COMMON,   2, 2, DEFAULT_NO_ABILITIES);
+        /*AIMY       */ registerCard(BASE_SET, 30, Rarity.COMMON,   2, 0, DEFAULT_NO_ABILITIES);
+        /*DROPPER    */ registerCard(BASE_SET, 31, Rarity.COMMON,   1, 2, DEFAULT_NO_ABILITIES);
+        /*TICK       */ registerCard(BASE_SET, 32, Rarity.UNCOMMON, 3, 1, DEFAULT_NO_ABILITIES);
+        /*TOCK       */ registerCard(BASE_SET, 33, Rarity.UNCOMMON, 3, 0, DEFAULT_NO_ABILITIES);
+        /*WHARE      */ registerCard(BASE_SET, 34, Rarity.UNCOMMON, 3, 0, DEFAULT_NO_ABILITIES);
+        /*AMBYSTOMA  */ registerCard(BASE_SET, 35, Rarity.RARE,     4, 3, DEFAULT_NO_ABILITIES);
+        /*KART       */ registerCard(BASE_SET, 36, Rarity.RARE,     5, 3, DEFAULT_NO_ABILITIES);
+
         //Register nether set
-        registerCards(NETHER_SET, 1, 12, Rarity.COMMON, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(NETHER_SET, 13, 9, Rarity.UNCOMMON, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(NETHER_SET, 22, 4, Rarity.RARE, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(NETHER_SET, 26, 2, Rarity.EPIC, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
+        /*BRIK     */ registerCard(NETHER_SET,  1, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
+        /*OBBY     */ registerCard(NETHER_SET,  2, Rarity.COMMON,   6, 3, DEFAULT_NO_ABILITIES);
+        /*BRITE    */ registerCard(NETHER_SET,  3, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
+        /*SLINKY   */ registerCard(NETHER_SET,  4, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
+        /*BIG_PIG  */ registerCard(NETHER_SET,  5, Rarity.COMMON,   5, 3, DEFAULT_NO_ABILITIES);
+        /*SOL      */ registerCard(NETHER_SET,  6, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
+        /*BASISAL  */ registerCard(NETHER_SET,  7, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
+        /*VINNIE   */ registerCard(NETHER_SET,  8, Rarity.COMMON,   4, 3, DEFAULT_NO_ABILITIES);
+        /*SHROOM   */ registerCard(NETHER_SET,  9, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
+        /*WARP_NYE */ registerCard(NETHER_SET, 10, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*FYA      */ registerCard(NETHER_SET, 11, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*MAGMA    */ registerCard(NETHER_SET, 12, Rarity.COMMON,   6, 1, DEFAULT_NO_ABILITIES);
+        /*SKULLY   */ registerCard(NETHER_SET, 13, Rarity.UNCOMMON, 5, 2, DEFAULT_NO_ABILITIES);
+        /*BLAZT    */ registerCard(NETHER_SET, 14, Rarity.UNCOMMON, 6, 2, DEFAULT_NO_ABILITIES);
+        /*QUAZI    */ registerCard(NETHER_SET, 15, Rarity.UNCOMMON, 4, 2, DEFAULT_NO_ABILITIES);
+        /*HOT_POT  */ registerCard(NETHER_SET, 16, Rarity.UNCOMMON, 3, 2, DEFAULT_NO_ABILITIES);
+        /*CRYBABY  */ registerCard(NETHER_SET, 17, Rarity.UNCOMMON, 6, 4, DEFAULT_NO_ABILITIES);
+        /*FYO      */ registerCard(NETHER_SET, 18, Rarity.UNCOMMON, 4, 1, DEFAULT_NO_ABILITIES);
+        /*LAMP     */ registerCard(NETHER_SET, 19, Rarity.UNCOMMON, 5, 2, DEFAULT_NO_ABILITIES);
+        /*GHOST    */ registerCard(NETHER_SET, 20, Rarity.UNCOMMON, 8, 2, DEFAULT_NO_ABILITIES);
+        /*STRIDE   */ registerCard(NETHER_SET, 21, Rarity.UNCOMMON, 5, 3, DEFAULT_NO_ABILITIES);
+        /*BARTENDER*/ registerCard(NETHER_SET, 22, Rarity.RARE,     6, 3, DEFAULT_NO_ABILITIES);
+        /*PORT     */ registerCard(NETHER_SET, 23, Rarity.RARE,     10,6, DEFAULT_NO_ABILITIES);
+        /*TRIPLE   */ registerCard(NETHER_SET, 24, Rarity.RARE,     10,4, DEFAULT_NO_ABILITIES);
+        /*ANKER    */ registerCard(NETHER_SET, 25, Rarity.RARE,     7, 4, DEFAULT_NO_ABILITIES);
+        /*BEAKER   */ registerCard(NETHER_SET, 26, Rarity.EPIC,     10,5, DEFAULT_NO_ABILITIES);
+        /*N_RITE   */ registerCard(NETHER_SET, 27, Rarity.EPIC,     9, 4, DEFAULT_NO_ABILITIES);
+
         //Register end set
-        registerCards(END_SET, 1, 12, Rarity.COMMON, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(END_SET, 13, 9, Rarity.UNCOMMON, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(END_SET, 22, 4, Rarity.RARE, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
-        registerCards(END_SET, 26, 2, Rarity.EPIC, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT);
+        /*ENROK    */ registerCard(END_SET,  1, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*CHESTER  */ registerCard(END_SET,  2, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*SCALES   */ registerCard(END_SET,  3, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*VWOOP    */ registerCard(END_SET,  4, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*SILVER   */ registerCard(END_SET,  5, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*LIBRARIA */ registerCard(END_SET,  6, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*AIROW    */ registerCard(END_SET,  7, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*WEBSTER  */ registerCard(END_SET,  8, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*PERL     */ registerCard(END_SET,  9, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*FROOTY   */ registerCard(END_SET, 10, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*ROD      */ registerCard(END_SET, 11, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*ROKIT    */ registerCard(END_SET, 12, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*WALLY    */ registerCard(END_SET, 13, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*FLOUER   */ registerCard(END_SET, 14, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*LINGERER */ registerCard(END_SET, 15, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*CHORUS   */ registerCard(END_SET, 16, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SHULK    */ registerCard(END_SET, 17, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*MENACE   */ registerCard(END_SET, 18, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*VISIONARY*/ registerCard(END_SET, 19, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SLEEPER  */ registerCard(END_SET, 20, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SPECTRE  */ registerCard(END_SET, 21, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*PACKAGE  */ registerCard(END_SET, 22, Rarity.RARE,     2, 1, DEFAULT_NO_ABILITIES);
+        /*BROK     */ registerCard(END_SET, 23, Rarity.RARE,     2, 1, DEFAULT_NO_ABILITIES);
+        /*PORTZ    */ registerCard(END_SET, 24, Rarity.RARE,     2, 1, DEFAULT_NO_ABILITIES);
+        /*CRYSTAL  */ registerCard(END_SET, 25, Rarity.RARE,     2, 1, DEFAULT_NO_ABILITIES);
+        /*GLIDER   */ registerCard(END_SET, 26, Rarity.EPIC,     2, 1, DEFAULT_NO_ABILITIES);
+        /*ENDER    */ registerCard(END_SET, 27, Rarity.EPIC,     2, 1, DEFAULT_NO_ABILITIES);
+
         //Register seasonal set
-        registerCards(HOLIDAY_SET, 1, 3, Rarity.RARE, DEFAULT_CARD_PROPERTIES, HALLOWEEN_BUDDYCARD_REQUIREMENT);
-        registerCards(HOLIDAY_SET, 4, 3, Rarity.RARE, DEFAULT_CARD_PROPERTIES, CHRISTMAS_BUDDYCARD_REQUIREMENT);
+        /*HALLOWEEN_YIN    */ registerCard(HOLIDAY_SET, 1, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
+        /*HALLOWEEN_SPOOPY */ registerCard(HOLIDAY_SET, 2, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
+        /*HALLOWEEN_VWOOP  */ registerCard(HOLIDAY_SET, 3, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
+        /*CHRISTMAS_COLE   */ registerCard(HOLIDAY_SET, 4, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
+        /*CHRISTMAS_CHESTER*/ registerCard(HOLIDAY_SET, 5, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
+        /*CHRISTMAS_CHOCO  */ registerCard(HOLIDAY_SET, 6, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
 
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
@@ -74,6 +160,9 @@ public class BuddycardsItems {
             .add(Rarity.RARE, 3)
             .add(Rarity.EPIC, 1)
             .build();
+
+    //Lack of abilities
+    public static final ImmutableListMultimap<BattleEvent, BattleAbility> DEFAULT_NO_ABILITIES = ImmutableListMultimap.of();
 
     //Packs
     public static final RegistryObject<BuddycardPackItem> PACK_BASE = ITEMS.register("buddycard_pack_base", () -> new BuddycardSetPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, BASE_SET, 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
@@ -157,13 +246,15 @@ public class BuddycardsItems {
 
     public static final  RegistryObject<ForgeSpawnEggItem> ENDERLING_SPAWN_EGG = ITEMS.register("spawn_egg_enderling", () -> new ForgeSpawnEggItem(BuddycardsEntities.ENDERLING, 0x2E2744, 0x9A72CC, DEFAULT_PROPERTIES));
 
-    //Card registration
-    public static void registerCards(BuddycardSet set, int startValue, int amount, Rarity rarity, Item.Properties properties, BuddycardRequirement requirement) {
+    public static RegistryObject<BuddycardItem> registerCard(BuddycardSet set, int cardNumber, Rarity rarity, Item.Properties properties, BuddycardRequirement requirement, int cost, int power, ListMultimap<BattleEvent, BattleAbility> abilities) {
         Objects.requireNonNull(set);
-        for (int i = startValue; i < amount + startValue; i++) {
-            int finalI = i;
-            ITEMS.register("buddycard_" + set.getName() + i, () -> new BuddycardItem(requirement, set, finalI, rarity, properties, 1, 2));
-        }
+        return ITEMS.register("buddycard_" + set.getName() + cardNumber, () -> new BuddycardItem(requirement, set, cardNumber, rarity, properties, cost, power, abilities));
+    }
+    public static RegistryObject<BuddycardItem> registerCard(BuddycardSet set, int cardNumber, Rarity rarity, BuddycardRequirement requirement, int cost, int power, ListMultimap<BattleEvent, BattleAbility> abilities) {
+        return registerCard(set, cardNumber, rarity, DEFAULT_CARD_PROPERTIES, requirement, cost, power, abilities);
+    }
+    public static RegistryObject<BuddycardItem> registerCard(BuddycardSet set, int cardNumber, Rarity rarity, int cost, int power, ListMultimap<BattleEvent, BattleAbility> abilities) {
+        return registerCard(set, cardNumber, rarity, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT, cost, power, abilities);
     }
 
     public interface BuddycardRequirement {

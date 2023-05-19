@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.item;
 
-import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.battles.game.BattleAbility;
 import com.wildcard.buddycards.battles.game.BattleEvent;
@@ -20,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class BuddycardItem extends Item {
-    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Properties properties, int cost, int power) {
+    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Properties properties, int cost, int power, ListMultimap<BattleEvent, BattleAbility> abilities) {
         super(properties);
         SET = set;
         CARD_NUMBER = cardNumber;
@@ -28,6 +29,7 @@ public class BuddycardItem extends Item {
         REQUIREMENT = shouldLoad;
         COST = cost;
         POWER = power;
+        ABILITIES = ImmutableListMultimap.copyOf(abilities);
 
         BuddycardsAPI.registerCard(this);
     }
@@ -39,6 +41,7 @@ public class BuddycardItem extends Item {
 
     protected final int COST;
     protected final int POWER;
+    protected final ImmutableListMultimap<BattleEvent, BattleAbility> ABILITIES;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
@@ -109,10 +112,8 @@ public class BuddycardItem extends Item {
         return this.POWER;
     }
     
-    private static final ImmutableMultimap<BattleEvent, BattleAbility> NO_ABILITIES_YET = ImmutableMultimap.of();
-    
-    public ImmutableMultimap<BattleEvent, BattleAbility> getAbilities() {
-        return NO_ABILITIES_YET;
+    public ListMultimap<BattleEvent, BattleAbility> getAbilities() {
+        return this.ABILITIES;
     }
 
     @Override

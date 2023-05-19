@@ -1,5 +1,7 @@
 package com.wildcard.buddycards.battles.game;
 
+import com.google.common.collect.ImmutableListMultimap;
+
 public class BattleAbility {
     
     public final BattleEvent event;
@@ -8,6 +10,10 @@ public class BattleAbility {
     public BattleAbility(BattleEvent event, BattleAbilityFunc ability) {
         this.event = event;
         this.ability = ability;
+    }
+    
+    public ImmutableListMultimap<BattleEvent, BattleAbility> single() {
+        return new Builder().add(this).build();
     }
     
     /**
@@ -21,6 +27,23 @@ public class BattleAbility {
     @FunctionalInterface
     public static interface BattleAbilityFunc {
         public boolean trigger(BattleGame game, int slot, int target, int source);
+    }
+    
+    public static class Builder {
+        
+        private ImmutableListMultimap.Builder<BattleEvent, BattleAbility> abilityMap = ImmutableListMultimap.builder();
+        
+        public Builder() {}
+        
+        public Builder add(BattleAbility ability) {
+            abilityMap.put(ability.event, ability);
+            return this;
+        }
+        
+        public ImmutableListMultimap<BattleEvent, BattleAbility> build() {
+            return abilityMap.build();
+        }
+        
     }
     
 }
