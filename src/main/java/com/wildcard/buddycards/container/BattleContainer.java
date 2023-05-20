@@ -95,11 +95,8 @@ public class BattleContainer extends SimpleContainer {
         for (int i = p1 ? 1 : 8; i < (p1 ? 4 : 11); i++) {
             if(getItem(i).isEmpty()) {
                 setItem(i, card);
-                if(p1)
-                    deck1.setChanged();
-                else
-                    deck2.setChanged();
                 setChanged();
+                System.out.println("CARD PUT IN HAND");
                 return true;
             }
         }

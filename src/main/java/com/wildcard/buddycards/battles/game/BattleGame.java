@@ -50,8 +50,8 @@ public class BattleGame {
     public void startTurn() {
         LOGGER.info("Player " + player() + "'s turn!");
         //allocate energy
-        if (isP1()) container.energy1 += container.turnEnergy;
-        else container.energy2 += container.turnEnergy;
+        if (isP1()) container.energy1 = Math.min(container.energy1 + container.turnEnergy, 10);
+        else container.energy2 = Math.min(container.energy2 + container.turnEnergy, 10);
         LOGGER.info("Player " + player() + " gained " + container.turnEnergy + " energy!");
         LOGGER.debug("                         (" + ((isP1() ? container.energy1 : container.energy2) - container.turnEnergy) + "->" + (isP1() ? container.energy1 : container.energy2) + ")");
         container.tryDrawCard(isP1());
@@ -151,8 +151,8 @@ public class BattleGame {
     public void nextTurn() {
         //switch turns
         container.isPlayer1Turn = !container.isPlayer1Turn;
-        //increase energy per turn (max 9)
-        if (container.turnEnergy < 9) ++container.turnEnergy;
+        //increase energy per turn (max 5)
+        if (container.turnEnergy < 5) ++container.turnEnergy;
         //increase regular turn
         ++container.turn;
         //start the next turn
@@ -167,8 +167,25 @@ public class BattleGame {
             LOGGER.info(items.get(source) + " dealt " + state[source].power + " damage to Player " + player(!isP1()));
         } else {
             if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.COLUMN)) return;
+            if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.COLUMN)) return;
             turnPower[target] -= state[source].power;
             LOGGER.info(items.get(source) + " dealt " + state[source].power + " damage to " + items.get(target));
+            savedAttacks.add(new BattleAttack(target, source));
+        }
+        return;
+    }
+
+    /** performs an attack dealing a specific amount of damage */
+    public void directAttack(int target, int source, int amount) {
+        if (items.get(target) == null) {
+            if (getOwner(target)) container.health1 -= amount;
+            else container.health2 -= amount;
+            LOGGER.info(items.get(source) + " dealt " + amount + " damage to Player " + player(!isP1()));
+        } else {
+            if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.COLUMN)) return;
+            if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.COLUMN)) return;
+            turnPower[target] -= amount;
+            LOGGER.info(items.get(source) + " dealt " + amount + " damage to " + items.get(target));
             savedAttacks.add(new BattleAttack(target, source));
         }
         return;

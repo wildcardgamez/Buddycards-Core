@@ -26,6 +26,8 @@ public class BattleEvent {
     public static final BattleEvent KILL = new BattleEvent("kill");
     /** When a card dies */
     public static final BattleEvent DEATH = new BattleEvent("death");
+    /** When a card loses power */
+    public static final BattleEvent DAMAGED = new BattleEvent("damaged");
     /** When a card is redstone powered */
     public static final BattleEvent POWERED = new BattleEvent("powered");
     

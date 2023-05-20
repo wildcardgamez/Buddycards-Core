@@ -48,11 +48,9 @@ public class BuddycardItem extends Item {
         tooltip.add(new TextComponent("" + COST).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.cost"))
                 .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
                 .append("" + POWER).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.power")));
-        tooltip.add(new TextComponent(""));
         for (BattleAbility ability: ABILITIES.values()) {
             tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name).withStyle(ChatFormatting.GRAY));
             tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name + ".desc").withStyle(ChatFormatting.DARK_GRAY));
-            tooltip.add(new TextComponent(""));
         }
         //Show the cards joke/tooltip
         tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
