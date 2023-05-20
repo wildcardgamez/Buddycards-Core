@@ -10,6 +10,7 @@ import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.gear.BuddycardsArmorMaterial;
 import com.wildcard.buddycards.gear.BuddycardsToolTier;
 import com.wildcard.buddycards.item.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
@@ -28,7 +29,7 @@ public class BuddycardsItems {
     public static void registerItems() {
         //Register base set
         /*SAPS       */ registerCard(BASE_SET,  1, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.TURN.ability("growing_up", (game, slot, target, source) -> {
-            game.turnPower[slot]++;
+            game.state[slot].power++;
             return true;
         })).build());
         /*ROK        */ registerCard(BASE_SET,  2, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("stone_toss", (game, slot, target, source) -> {
@@ -42,12 +43,26 @@ public class BuddycardsItems {
                 game.container.health2+=2;
             return true;
         })).build());
-        /*COLE       */ registerCard(BASE_SET,  4, Rarity.COMMON,   2, 2, DEFAULT_NO_ABILITIES);
+        /*COLE       */ registerCard(BASE_SET,  4, Rarity.COMMON,   3, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("stoke_flames", (game, slot, target, source) -> {
+            for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
+                if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FIRE)) {
+                    game.turnPower[i]++;
+                }
+            }
+            return true;
+        })).build());
         /*METALICO   */ registerCard(BASE_SET,  5, Rarity.COMMON,   3, 2, new BattleAbility.Builder().add(BattleEvent.KILL.ability("iron_temper", (game, slot, target, source) -> {
             game.turnPower[slot]++;
             return true;
         })).build());
-        /*DR_LAZULI  */ registerCard(BASE_SET,  6, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
+        /*DR_LAZULI  */ registerCard(BASE_SET,  6, Rarity.COMMON,   4, 2, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("simple_enchant", (game, slot, target, source) -> {
+            for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
+                if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_ENCHANTABLE)) {
+                    game.turnPower[i]++;
+                }
+            }
+            return true;
+        })).build());
         /*BETSY      */ registerCard(BASE_SET,  7, Rarity.COMMON,   5, 2, new BattleAbility.Builder().add(BattleEvent.TURN.ability("milk_maid", (game, slot, target, source) -> {
             if(BattleGame.getOwner(slot))
                 game.container.health1++;
@@ -62,7 +77,14 @@ public class BuddycardsItems {
                 game.container.health2--;
             return true;
         })).build());
-        /*AQUA       */ registerCard(BASE_SET,  9, Rarity.COMMON,   2, 0, DEFAULT_NO_ABILITIES);
+        /*AQUA       */ registerCard(BASE_SET,  9, Rarity.COMMON,   2, 0, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("wash_out", (game, slot, target, source) -> {
+            for (int i: BattleEvent.Distribution.ALL_ENEMY.apply(slot, game)) {
+                if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FIRE)) {
+                    //KILL
+                }
+            }
+            return true;
+        })).build());
         /*FORTUNA    */ registerCard(BASE_SET, 10, Rarity.COMMON,   1, 1, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("tasty_treat", (game, slot, target, source) -> {
             if(BattleGame.getOwner(slot))
                 game.container.health1++;
@@ -112,7 +134,7 @@ public class BuddycardsItems {
         /*KNALL_EDGY */ registerCard(BASE_SET, 22, Rarity.RARE,     6, 3, DEFAULT_NO_ABILITIES);
         /*CASTER     */ registerCard(BASE_SET, 23, Rarity.RARE,     7, 5, DEFAULT_NO_ABILITIES);
         /*PISTY      */ registerCard(BASE_SET, 24, Rarity.RARE,     6, 2, DEFAULT_NO_ABILITIES);
-        /*KNIGHT     */ registerCard(BASE_SET, 25, Rarity.RARE,     6, 4, DEFAULT_NO_ABILITIES);
+        /*KNIGHT     */ registerCard(BASE_SET, 25, Rarity.RARE,     7, 4, DEFAULT_NO_ABILITIES);
         /*CREATOR    */ registerCard(BASE_SET, 26, Rarity.EPIC,     8, 3, DEFAULT_NO_ABILITIES);
         /*MELTOR     */ registerCard(BASE_SET, 27, Rarity.EPIC,     6, 3, DEFAULT_NO_ABILITIES);
         /*ANGSTY_SAPS*/ registerCard(BASE_SET, 28, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);

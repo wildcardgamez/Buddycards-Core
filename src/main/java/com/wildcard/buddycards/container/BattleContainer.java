@@ -90,6 +90,21 @@ public class BattleContainer extends SimpleContainer {
         //If the hand was full, return false
         return false;
     }
+
+    public boolean tryPutInHand(boolean p1, ItemStack card) {
+        for (int i = p1 ? 1 : 8; i < (p1 ? 4 : 11); i++) {
+            if(getItem(i).isEmpty()) {
+                setItem(i, card);
+                if(p1)
+                    deck1.setChanged();
+                else
+                    deck2.setChanged();
+                setChanged();
+                return true;
+            }
+        }
+        return false;
+    }
     
     public boolean returnToDeck(boolean p1, int slot) {
         ItemStack stack = removeItem(slot, 1);

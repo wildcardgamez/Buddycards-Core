@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:buddycard_base10",
+    "buddycards:buddycard_base11",
+    "buddycards:buddycard_base18",
+    "buddycards:buddycard_base20",
+    "buddycards:buddycard_nether16",
+    "buddycards:buddycard_end15"
+  ]
+}

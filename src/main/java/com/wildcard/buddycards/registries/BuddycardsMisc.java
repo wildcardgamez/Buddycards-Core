@@ -8,7 +8,12 @@ import com.wildcard.buddycards.menu.BinderMenu;
 import com.wildcard.buddycards.menu.DeckboxMenu;
 import com.wildcard.buddycards.menu.PlaymatMenu;
 import com.wildcard.buddycards.util.LootInjection;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -43,4 +48,13 @@ public class BuddycardsMisc {
 
     //GLMs
     public static RegistryObject<GlobalLootModifierSerializer<LootInjection.LootInjectionModifier>> LOOT_INJECTION = GLMS.register("loot_injection", LootInjection.LootInjectionSerializer::new);
+
+    //Tags
+    public static final TagKey<Item> BCB_ANIMAL = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/animal"));
+    public static final TagKey<Item> BCB_ENCHANTABLE = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/enchantable"));
+    public static final TagKey<Item> BCB_FIRE = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/fire"));
+    public static final TagKey<Item> BCB_FOOD = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/food"));
+    public static final TagKey<Item> BCB_METAL = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/metal"));
+    public static final TagKey<Item> BCB_MONSTER = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/monster"));
+    public static final TagKey<Item> BCB_REDSTONE = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/redstone"));
 }
