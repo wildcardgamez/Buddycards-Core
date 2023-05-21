@@ -66,8 +66,10 @@ public class BuddycardsBlocks {
     public static final RegistryObject<Block> BOOSTER_BOX_NETHER = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     public static final RegistryObject<Block> BOOSTER_BOX_END = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_end", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     public static final RegistryObject<Block> BOOSTER_BOX_MYSTERY = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_mystery", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
-    //Battle Boards
+    //Playmats
     public static final RegistryObject<PlaymatBlock> PLAYMAT_BASE = registerPlaymat("playmat_base", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
+    public static final RegistryObject<PlaymatBlock> PLAYMAT_NETHER = registerPlaymat("playmat_nether", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
+    public static final RegistryObject<PlaymatBlock> PLAYMAT_END = registerPlaymat("playmat_end", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
 
     public static RegistryObject<CardDisplayBlock> registerDisplay(String id, Supplier<CardDisplayBlock> supplier) {
         RegistryObject<CardDisplayBlock> display = BLOCKS.register(id, supplier);
@@ -76,8 +78,8 @@ public class BuddycardsBlocks {
     }
 
     public static RegistryObject<PlaymatBlock> registerPlaymat(String id, Supplier<PlaymatBlock> supplier) {
-        RegistryObject<PlaymatBlock> board = BLOCKS.register(id, supplier);
-        PLAYMAT_BLOCKS.add(board);
-        return board;
+        RegistryObject<PlaymatBlock> playmat = BLOCKS.register(id, supplier);
+        PLAYMAT_BLOCKS.add(playmat);
+        return playmat;
     }
 }

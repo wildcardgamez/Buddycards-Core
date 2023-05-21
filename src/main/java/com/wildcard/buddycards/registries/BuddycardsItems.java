@@ -333,6 +333,8 @@ public class BuddycardsItems {
     public static final RegistryObject<DeckboxItem> DECKBOX = ITEMS.register("deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
     //Playmats
     public static final RegistryObject<BlockItem> PLAYMAT_BASE = ITEMS.register("playmat_base", () -> new BlockItem(BuddycardsBlocks.PLAYMAT_BASE.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<BlockItem> PLAYMAT_NETHER = ITEMS.register("playmat_nether", () -> new BlockItem(BuddycardsBlocks.PLAYMAT_NETHER.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<BlockItem> PLAYMAT_END = ITEMS.register("playmat_end", () -> new BlockItem(BuddycardsBlocks.PLAYMAT_END.get(), DEFAULT_PROPERTIES));
     //Buddysteel Items
     public static final RegistryObject<Item> BUDDYSTEEL_BLEND = ITEMS.register("buddysteel_blend", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_INGOT = ITEMS.register("buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
