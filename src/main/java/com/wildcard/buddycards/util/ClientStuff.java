@@ -4,6 +4,7 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.CardDisplayBlockRenderer;
 import com.wildcard.buddycards.client.renderer.EnderlingRenderer;
+import com.wildcard.buddycards.client.renderer.PlaymatBlockRenderer;
 import com.wildcard.buddycards.screens.DeckboxScreen;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
@@ -63,6 +64,7 @@ public class ClientStuff {
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(BuddycardsEntities.ENDERLING.get(), EnderlingRenderer::new);
         event.registerBlockEntityRenderer(BuddycardsEntities.CARD_DISPLAY_ENTITY.get(), CardDisplayBlockRenderer::new);
+        event.registerBlockEntityRenderer(BuddycardsEntities.PLAYMAT_ENTITY.get(), PlaymatBlockRenderer::new);
     }
 
     @SubscribeEvent

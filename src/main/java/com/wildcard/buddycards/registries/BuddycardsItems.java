@@ -159,7 +159,7 @@ public class BuddycardsItems {
         })).build());
         /*SPOOPY     */ registerCard(BASE_SET, 21, Rarity.UNCOMMON, 4, 1, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("spook_em", (game, slot, target, source) -> {
             if(game.getCard(target) != null)
-                game.directAttack(BattleGame.opposite(slot), slot, 1);
+                game.directAttack(target, slot, 1, false, true);
             return true;
         })).build());
         /*KNALL_EDGY */ registerCard(BASE_SET, 22, Rarity.RARE,     8, 3, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("premium_enchant", (game, slot, target, source) -> {

@@ -31,7 +31,7 @@ public class BuddycardsEntities {
                 Block[] blocks = BuddycardsBlocks.DISPLAY_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
                 return BlockEntityType.Builder.of(CardDisplayBlockEntity::new, blocks).build(null);
             });
-    public static final RegistryObject<BlockEntityType<PlaymatBlockEntity>> BATTLE_BOARD_ENTITY = BLOCK_ENTITIES.register("battle_board",
+    public static final RegistryObject<BlockEntityType<PlaymatBlockEntity>> PLAYMAT_ENTITY = BLOCK_ENTITIES.register("battle_board",
             () -> {
                 Block[] blocks = BuddycardsBlocks.PLAYMAT_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
                 return BlockEntityType.Builder.of(PlaymatBlockEntity::new, blocks).build(null);

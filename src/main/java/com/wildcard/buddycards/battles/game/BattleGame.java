@@ -175,15 +175,19 @@ public class BattleGame {
         return;
     }
 
-    /** performs an attack dealing a specific amount of damage */
     public void directAttack(int target, int source, int amount) {
+        directAttack(target, source, amount, true, true);
+    }
+
+    /** performs an attack dealing a specific amount of damage */
+    public void directAttack(int target, int source, int amount, boolean doAttackTrigger, boolean doDamageTrigger) {
         if (items.get(target) == null) {
             if (getOwner(target)) container.health1 -= amount;
             else container.health2 -= amount;
             LOGGER.info(items.get(source) + " dealt " + amount + " damage to Player " + player(!isP1()));
         } else {
-            if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.COLUMN)) return;
-            if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.COLUMN)) return;
+            if(doAttackTrigger) if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.COLUMN)) return;
+            if(doDamageTrigger) if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.COLUMN)) return;
             turnPower[target] -= amount;
             LOGGER.info(items.get(source) + " dealt " + amount + " damage to " + items.get(target));
             savedAttacks.add(new BattleAttack(target, source));

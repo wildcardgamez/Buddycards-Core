@@ -35,7 +35,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     public PlaymatBlockEntity(BlockPos pos, BlockState state) {
-        super(BuddycardsEntities.BATTLE_BOARD_ENTITY.get(), pos, state);
+        super(BuddycardsEntities.PLAYMAT_ENTITY.get(), pos, state);
     }
 
     @Override

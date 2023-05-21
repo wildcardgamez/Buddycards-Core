@@ -1,12 +1,14 @@
 package com.wildcard.buddycards.menu;
 
 import com.wildcard.buddycards.battles.*;
+import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
@@ -57,14 +59,15 @@ public class PlaymatMenu extends AbstractContainerMenu {
         this.p1 = entity.p1;
         this.addSlot(new DeckSlot(this.container, (p1 ? 7 : 0), 143, 18));
         this.addSlot(new DeckSlot(this.container, (p1 ? 0 : 7), 143, 64));
+        Direction dir = entity.getBlockState().getValue(PlaymatBlock.DIR);
         for (int i = 0; i < 3; i++) {
             this.addSlot(new HandSlot(this, p1, (p1 ? 1 : 8) + i, 80 + (18 * i), 64));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new BattlefieldSlot(this, p1, (p1 ? 4 : 11)+i, 80 + (18 * i), 36));
+            this.addSlot(new BattlefieldSlot(this, p1, (p1 ? 4 : 11)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 36));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new OpponentBattlefieldSlot(this, p1, (p1 ? 11 : 4)+i, 80 + (18 * i), 18));
+            this.addSlot(new OpponentBattlefieldSlot(this, p1, (p1 ? 11 : 4)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 18));
         }
         this.addDataSlot(energy);
         this.addDataSlot(health);
