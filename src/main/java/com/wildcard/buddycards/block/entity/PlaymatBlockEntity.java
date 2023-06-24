@@ -68,14 +68,14 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             if(container.deck1 != null) {
                 CompoundTag deck1 = new CompoundTag();
                 for (int i = 0; i < 16; i++) {
-                    inv.put("" + i, container.deck1.getItem(i).save(new CompoundTag()));
+                    deck1.put("" + i, container.deck1.getItem(i).save(new CompoundTag()));
                 }
                 tag.put("deck1", deck1);
             }
             if(container.deck2 != null) {
                 CompoundTag deck2 = new CompoundTag();
                 for (int i = 0; i < 16; i++) {
-                    inv.put("" + i, container.deck2.getItem(i).save(new CompoundTag()));
+                    deck2.put("" + i, container.deck2.getItem(i).save(new CompoundTag()));
                 }
                 tag.put("deck2", deck2);
             }
@@ -121,16 +121,16 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
                 CompoundTag deck1 = tag.getCompound("deck1");
                 container.deck1 = new DeckboxContainer(container.getItem(0));
                 for (int i = 0; i < 14; i++) {
-                    if (inv.contains("" + i))
-                        container.setItem(i, ItemStack.of(deck1.getCompound("" + i)));
+                    if (deck1.contains("" + i))
+                        container.deck1.setItem(i, ItemStack.of(deck1.getCompound("" + i)));
                 }
             }
             if(tag.contains("deck2")) {
                 CompoundTag deck2 = tag.getCompound("deck2");
-                container.deck1 = new DeckboxContainer(container.getItem(7));
+                container.deck2 = new DeckboxContainer(container.getItem(7));
                 for (int i = 0; i < 14; i++) {
-                    if (inv.contains("" + i))
-                        container.setItem(i, ItemStack.of(deck2.getCompound("" + i)));
+                    if (deck2.contains("" + i))
+                        container.deck2.setItem(i, ItemStack.of(deck2.getCompound("" + i)));
                 }
             }
             container.reload();
