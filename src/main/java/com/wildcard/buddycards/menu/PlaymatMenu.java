@@ -128,6 +128,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
                 if (selSlot != SLOT_CLICKED_OUTSIDE && container.getItem(slotNum).isEmpty()) {
                     if (container.game.playCard(BattleGame.translateTo(slotNum), container.getItem(selSlot), p1)) {
                         container.setItem(selSlot, ItemStack.EMPTY);
+                        this.broadcastChanges();
                     }
                     selectedSlot.set(SLOT_CLICKED_OUTSIDE);
                 }
