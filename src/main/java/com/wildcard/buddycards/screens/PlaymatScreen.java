@@ -16,6 +16,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
@@ -44,6 +46,22 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
+        int selectedSlot = this.menu.selectedSlot.get();
+        if (selectedSlot != AbstractContainerMenu.SLOT_CLICKED_OUTSIDE) {
+            ItemStack stack = this.menu.container.getItem(selectedSlot);
+            if (!stack.isEmpty()) {
+                PoseStack posestack = RenderSystem.getModelViewStack();
+                posestack.pushPose();
+                posestack.translate(0.0D, 0.0D, 32.0D);
+                RenderSystem.applyModelViewMatrix();
+                this.setBlitOffset(200);
+                this.itemRenderer.blitOffset = 200.0F;
+                this.itemRenderer.renderAndDecorateItem(stack, mouseX - 8, mouseY - 8);
+                this.setBlitOffset(0);
+                this.itemRenderer.blitOffset = 0.0F;
+                posestack.popPose();
+            }
+        }
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 

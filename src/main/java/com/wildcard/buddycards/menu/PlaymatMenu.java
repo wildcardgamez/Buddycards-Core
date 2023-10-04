@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.menu;
 
 import com.wildcard.buddycards.battles.*;
+import com.wildcard.buddycards.battles.game.BattleGame;
 import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.container.BattleContainer;
@@ -19,6 +20,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -32,13 +34,14 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class PlaymatMenu extends AbstractContainerMenu {
-    PlaymatBlockEntity entity;
-    BattleContainer container;
+    public PlaymatBlockEntity entity;
+    public BattleContainer container;
     final boolean p1;
     public final DataSlot energy = DataSlot.standalone();
     public final DataSlot health = DataSlot.standalone();
     public final DataSlot opponentEnergy = DataSlot.standalone();
     public final DataSlot opponentHealth = DataSlot.standalone();
+    public final DataSlot selectedSlot = DataSlot.standalone();
     private final Inventory inventory;
     private final List<SyncedData> syncedData = new ArrayList<>();
 
@@ -61,18 +64,20 @@ public class PlaymatMenu extends AbstractContainerMenu {
         this.addSlot(new DeckSlot(this.container, (p1 ? 0 : 7), 143, 64));
         Direction dir = entity.getBlockState().getValue(PlaymatBlock.DIR);
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new HandSlot(this, p1, (p1 ? 1 : 8) + i, 80 + (18 * i), 64));
+            this.addSlot(new HandSlot(this, (p1 ? 1 : 8) + i, 80 + (18 * i), 64));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new BattlefieldSlot(this, p1, (p1 ? 4 : 11)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 36));
+            this.addSlot(new BattlefieldSlot(this, (p1 ? 4 : 11)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 36));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new OpponentBattlefieldSlot(this, p1, (p1 ? 11 : 4)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 18));
+            this.addSlot(new OpponentBattlefieldSlot(this, (p1 ? 11 : 4)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 18));
         }
         this.addDataSlot(energy);
         this.addDataSlot(health);
         this.addDataSlot(opponentEnergy);
         this.addDataSlot(opponentHealth);
+        this.addDataSlot(selectedSlot);
+        this.selectedSlot.set(SLOT_CLICKED_OUTSIDE);
         this.updateDataSlots();
         this.inventory = playerInv;
         syncedData.add(new SyncedData(
@@ -96,6 +101,39 @@ public class PlaymatMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player player) {
         return true;
+    }
+
+    //click handling for card selection and playing
+    @Override //no events or anything to hook into, just overriding this and calling the original
+    public void clicked(int slotIndex, int button, ClickType clickType, Player player) {
+        if (slotIndex == SLOT_CLICKED_OUTSIDE) {
+            selectedSlot.set(SLOT_CLICKED_OUTSIDE);
+        } else if (this.getSlot(slotIndex) instanceof CardSlot slot) {
+            int slotNum = slot.getSlotIndex(); //confusing name, but this is slot.slot (container slot) while slotIndex is slot.index (menu slot) :/
+            if (slot instanceof HandSlot) {
+                //hand slots
+                ItemStack stack = container.getItem(slotNum);
+                if (stack.getItem() instanceof BuddycardItem item && container.game.canPlay(p1, item, stack)) {
+                    selectedSlot.set(slotNum);
+                } else {
+                    if (selectedSlot.get() != SLOT_CLICKED_OUTSIDE && stack.isEmpty()) {
+                        ItemStack selectedItem = container.getItem(selectedSlot.get());
+                        container.setItem(slotNum, selectedItem.split(1));
+                    }
+                    selectedSlot.set(SLOT_CLICKED_OUTSIDE);
+                }
+            } else if (slot instanceof BattlefieldSlot) {
+                //battlefield slots
+                int selSlot = selectedSlot.get();
+                if (selSlot != SLOT_CLICKED_OUTSIDE && container.getItem(slotNum).isEmpty()) {
+                    if (container.game.playCard(BattleGame.translateTo(slotNum), container.getItem(selSlot), p1)) {
+                        container.setItem(selSlot, ItemStack.EMPTY);
+                    }
+                    selectedSlot.set(SLOT_CLICKED_OUTSIDE);
+                }
+            }
+        }
+        super.clicked(slotIndex, button, clickType, player);
     }
 
     public static final class ButtonIds {
@@ -169,15 +207,9 @@ public class PlaymatMenu extends AbstractContainerMenu {
     }
 
     public static abstract class CardSlot extends Slot {
-        public final PlaymatMenu menu;
-        public final BattleContainer battleContainer;
-        public final boolean p1;
         
-        public CardSlot(PlaymatMenu menu, boolean p1, int index, int xPosition, int yPosition) {
+        public CardSlot(PlaymatMenu menu, int index, int xPosition, int yPosition) {
             super(menu.container, index, xPosition, yPosition);
-            this.menu = menu;
-            this.battleContainer = menu.container;
-            this.p1 = p1;
         }
 
         //Only 1 card per slot
@@ -185,54 +217,34 @@ public class PlaymatMenu extends AbstractContainerMenu {
         public int getMaxStackSize() {
             return 1;
         }
-    }
-    
-    public static class HandSlot extends CardSlot {
-        public HandSlot(PlaymatMenu menu, boolean p1, int index, int xPosition, int yPosition) {
-            super(menu, p1, index, xPosition, yPosition);
+        
+        //using custom movement system, disallow placing and pickup
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return false;
         }
         
         @Override
         public boolean mayPickup(Player player) {
-            ItemStack stack = this.getItem();
-            if (stack.getItem() instanceof BuddycardItem item) {
-                return battleContainer.game.canPlay(p1, item, stack);
-            } else {
-                //what
-                return false;
-            }
+            return false;
+        }
+    }
+    
+    public static class HandSlot extends CardSlot {
+        public HandSlot(PlaymatMenu menu, int index, int xPosition, int yPosition) {
+            super(menu, index, xPosition, yPosition);
         }
     }
 
     public static class BattlefieldSlot extends CardSlot {
-        public BattlefieldSlot(PlaymatMenu menu, boolean p1, int index, int xPosition, int yPosition) {
-            super(menu, p1, index, xPosition, yPosition);
-        }
-
-        //Once a card enters the battlefield, you cant move it
-        @Override
-        public boolean mayPickup(Player player) {
-            return false;
-        }
-        
-        //crude detection
-        @Override
-        public void set(ItemStack stack) {
-            battleContainer.game.playCard(battleContainer.game.translateTo(this.getSlotIndex()), stack, p1);
-            super.set(stack);
-            menu.broadcastChanges();
+        public BattlefieldSlot(PlaymatMenu menu, int index, int xPosition, int yPosition) {
+            super(menu, index, xPosition, yPosition);
         }
     }
 
-    public static class OpponentBattlefieldSlot extends BattlefieldSlot {
-        public OpponentBattlefieldSlot(PlaymatMenu menu, boolean p1, int index, int xPosition, int yPosition) {
-            super(menu, p1, index, xPosition, yPosition);
-        }
-
-        //You cannot play cards on the opponents battlefield
-        @Override
-        public boolean mayPlace(ItemStack stack) {
-            return false;
+    public static class OpponentBattlefieldSlot extends CardSlot {
+        public OpponentBattlefieldSlot(PlaymatMenu menu, int index, int xPosition, int yPosition) {
+            super(menu, index, xPosition, yPosition);
         }
     }
 

@@ -249,7 +249,7 @@ public class BattleGame {
     public boolean addCard(int slot, ItemStack stack, BuddycardItem item) {
         if (items.get(slot) != null) return false;
         //triggers when cards are manually placed anyways
-        // container.setItem(translateFrom(slot), stack);
+        container.setItem(translateFrom(slot), stack);
         items.set(slot, item);
         state[slot] = new BattleCardState(item.getPower(stack));
         turnPower[slot] = item.getPower(stack);
