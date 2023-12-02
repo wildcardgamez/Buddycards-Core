@@ -62,9 +62,9 @@ public class BattleGame {
         LOGGER.info("Player " + player() + " gained " + container.turnEnergy + " energy!");
         LOGGER.debug("                         (" + ((isP1() ? container.energy1 : container.energy2) - container.turnEnergy) + "->" + (isP1() ? container.energy1 : container.energy2) + ")");
         if(container.tryDrawCard(isP1()))
-            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_draw")), List.of(TextureBattleIcon.playIcon, TextureBattleIcon.drawIcon)));
+            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_draw")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.spacerIcon)));
         else
-            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_fail_draw")), List.of(TextureBattleIcon.playIcon)));
+            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_fail_draw")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.playIcon, TextureBattleIcon.spacerIcon)));
         container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_energy1")).append("" + container.turnEnergy).append(new TranslatableComponent("battles.log.buddycards.turn_energy2")), List.of(TextureBattleIcon.energyIcon(container.turnEnergy))));
         //copy power values to turn power (must be done here before events have a chance to fire)
         for (int i = 0; i < 6; i++) turnPower[i] = state[i].power;
@@ -76,7 +76,7 @@ public class BattleGame {
     
     /** ends a turn */
     public boolean endTurn() {
-        container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_attack")), List.of(TextureBattleIcon.startAttackIcon)));
+        container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_attack")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.startAttackIcon, TextureBattleIcon.spacerIcon)));
         //have all your cards attack
         for (int i = slot(0); i < slot(3); i++) {
             if (items.get(i) != null) {

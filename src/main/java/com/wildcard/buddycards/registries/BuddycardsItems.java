@@ -160,7 +160,7 @@ public class BuddycardsItems {
             return true;
         })).build());
         /*YIN        */ registerCard(BASE_SET, 14, Rarity.UNCOMMON, 4, 2, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("lazy_cat", (game, slot, target, source) -> {
-            if(game.turnPower[slot] < 2) {
+            if(game.turnPower[slot] < 2 && game.isP1() == BattleGame.getOwner(slot)) {
                 game.turnPower[slot] += 2;
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.lazy_cat.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(2))));
                 return false;

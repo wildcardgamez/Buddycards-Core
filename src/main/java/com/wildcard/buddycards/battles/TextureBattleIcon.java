@@ -18,11 +18,13 @@ public record TextureBattleIcon(int texturePosX, int texturePosY, ResourceLocati
     ).apply(instance, TextureBattleIcon::new));
 
     public static IBattleIcon dividerIcon = new TextureBattleIcon(0,232, PlaymatScreen.TEXTURE1, 6, List.of());
+    public static IBattleIcon spacerIcon = new TextureBattleIcon(0,220, PlaymatScreen.TEXTURE1, 41, List.of());
     public static IBattleIcon playIcon = new TextureBattleIcon(0,244, PlaymatScreen.TEXTURE1, 12, List.of());
     public static IBattleIcon drawIcon = new TextureBattleIcon(12,244, PlaymatScreen.TEXTURE1, 12, List.of());
     public static IBattleIcon deathIcon = new TextureBattleIcon(48,244, PlaymatScreen.TEXTURE1, 12, List.of());
     public static IBattleIcon startAttackIcon = new TextureBattleIcon(96,244, PlaymatScreen.TEXTURE1, 12, List.of());
-    public static IBattleIcon powerIcon = new TextureBattleIcon(118,244, PlaymatScreen.TEXTURE1, 12, List.of());
+    public static IBattleIcon powerIcon = new TextureBattleIcon(108,244, PlaymatScreen.TEXTURE1, 12, List.of());
+    public static IBattleIcon winIcon = new TextureBattleIcon(120,244, PlaymatScreen.TEXTURE1, 12, List.of());
 
     public static IBattleIcon energyIcon(int amt) {
         return new TextureBattleIcon(24, 244, PlaymatScreen.TEXTURE1, 12, List.of(new BattleInfo(amt, 12, 0, 0xFFffff89, false)));
