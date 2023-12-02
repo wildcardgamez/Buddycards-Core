@@ -148,7 +148,7 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
                 color = ChatFormatting.YELLOW;
             }
             MutableComponent text = new TextComponent(power + "").withStyle(style -> style.withFont(smallFont).withColor(color));
-            this.font.draw(poseStack, text, slot.x + 13, slot.y, Objects.requireNonNull(color.getColor()));
+            this.font.draw(poseStack, text, slot.x + 13, slot.y + (i < 3 ? 8 : -1), Objects.requireNonNull(color.getColor()));
         }
     }
 
