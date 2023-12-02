@@ -26,6 +26,7 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -137,6 +138,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
             }
         }
         super.clicked(slotIndex, button, clickType, player);
+        setPlaymatsChanged();
     }
 
     public static final class ButtonIds {
@@ -148,10 +150,21 @@ public class PlaymatMenu extends AbstractContainerMenu {
         if (buttonId == ButtonIds.END_TURN && container.game.isP1() == p1) {
             container.game.endTurn();
             container.game.nextTurn();
+            setPlaymatsChanged();
             return true;
         }
         
         return false; //return true if data slots are updated
+    }
+
+    private void setPlaymatsChanged() {
+        entity.setChanged();
+        BlockState blockState = entity.getBlockState();
+        if (blockState.getBlock() instanceof PlaymatBlock) {
+            if (entity.getLevel().getBlockEntity(entity.getBlockPos().relative(blockState.getValue(PlaymatBlock.DIR))) instanceof PlaymatBlockEntity opponent) {
+                opponent.setChanged();
+            }
+        }
     }
 
     //Updates the values in the data slots. Does NOT synchronize them to clients!
@@ -209,7 +222,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
         }
     }
 
-    public static abstract class CardSlot extends Slot {
+    public abstract static class CardSlot extends Slot {
         
         public CardSlot(PlaymatMenu menu, int index, int xPosition, int yPosition) {
             super(menu.container, index, xPosition, yPosition);
