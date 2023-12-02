@@ -116,7 +116,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
                 //hand slots
                 ItemStack stack = container.getItem(slotNum);
                 if (stack.getItem() instanceof BuddycardItem item && container.game.canPlay(p1, item, stack)) {
-                    selectedSlot.set(slotNum);
+                    selectedSlot.set(slotNum == selectedSlot.get() ? SLOT_CLICKED_OUTSIDE : slotNum);
                 } else {
                     if (selectedSlot.get() != SLOT_CLICKED_OUTSIDE && stack.isEmpty()) {
                         ItemStack selectedItem = container.getItem(selectedSlot.get());
