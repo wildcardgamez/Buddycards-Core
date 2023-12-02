@@ -50,7 +50,7 @@ public class BuddycardsItems {
             return true;
         })).build());
         /*OINKE      */ registerCard(BASE_SET,  3, Rarity.COMMON,   3, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("tasty_bacon", (game, slot, target, source) -> {
-            game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.tasty_bacon")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.healIcon(1))));
+            game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.tasty_bacon.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.healIcon(1))));
             if(BattleGame.getOwner(slot))
                 game.container.health1+=2;
             else

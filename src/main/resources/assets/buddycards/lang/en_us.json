@@ -314,9 +314,11 @@
   "battles.log.buddycards.turn_energy1": " is allocated ",
   "battles.log.buddycards.turn_energy2": " energy",
   "battles.log.buddycards.turn_attack": " readies their buddies to attack",
+  "battles.log.buddycards.card_play": " plays ",
   "battles.log.buddycards.death": " was defeated",
   "battles.log.buddycards.attack1": " deals ",
   "battles.log.buddycards.attack2": " damage to ",
+  "battles.log.buddycards.victory": " wins!!!",
 
   "battles.ability.buddycards.growing_up": "Growing Up",
   "battles.ability.buddycards.growing_up.desc": "At the start of your turn, Saps gains 1 power.",

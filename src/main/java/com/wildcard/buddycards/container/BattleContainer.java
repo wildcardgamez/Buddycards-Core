@@ -53,9 +53,6 @@ public class BattleContainer extends SimpleContainer {
         turn = 1;
         game = new BattleGame(this);
         game.beginGame();
-        addLog(new BattleComponent(new TranslatableComponent("battles.log.buddycards.starting_draw"), List.of(TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon)));
-        tryDrawCard(isPlayer1Turn);
-        addLog(new BattleComponent(new TextComponent("").append(isPlayer1Turn ? name1 : name2).append(new TranslatableComponent("battles.log.buddycards.turn_draw")), List.of(TextureBattleIcon.playIcon, TextureBattleIcon.drawIcon)));
         entity.setChanged();
     }
 
@@ -120,6 +117,7 @@ public class BattleContainer extends SimpleContainer {
         System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
         System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
         System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
+        addLog(new BattleComponent(new TextComponent("").append(p1Victory ? name1 : name2).append(new TranslatableComponent("battles.log.buddycards.victory"))));
     }
     
     public int energy(boolean p1) {

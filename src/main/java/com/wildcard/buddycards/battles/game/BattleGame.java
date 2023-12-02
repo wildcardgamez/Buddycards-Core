@@ -48,6 +48,7 @@ public class BattleGame {
         container.tryDrawCard(true);
         container.tryDrawCard(false);
         container.tryDrawCard(false);
+        container.addLog(new BattleComponent(new TranslatableComponent("battles.log.buddycards.starting_draw"), List.of(TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon)));
         for (int i = 0; i < 6; i++) state[i] = new BattleCardState(0);
         startTurn(); //do not use nextTurn(), turn 1 player already chosen
     }
@@ -95,10 +96,10 @@ public class BattleGame {
             int target = attack.target;
             int source = attack.source;
             if (state[target].power < 0) {
-                if (!trigger(BattleEvent.KILL, source, target, source)) continue;
-                if (!trigger(BattleEvent.DEATH, target, target, source)) continue;
                 LOGGER.info(items.get(source) + " killed " + items.get(target));
                 container.addLog(new BattleComponent(new TranslatableComponent(getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
+                if (!trigger(BattleEvent.KILL, source, target, source)) continue;
+                if (!trigger(BattleEvent.DEATH, target, target, source)) continue;
                 removeCard(target);
             } else if (target == opposite(source) && state[target].power == 0 && state[source].power == 0) {
                 //if two cards attacking each other hit 0 power, they should count as killing each other
@@ -131,12 +132,12 @@ public class BattleGame {
                 //java execution rules means this only executes if killSource is true, this is intended.
                 killSource = killSource && trigger(BattleEvent.DEATH, source, source, target);
                 
-                if (killTarget) {
+                if (killTarget && items.get(target) != null) {
                     LOGGER.info(items.get(source) + " killed " + items.get(target));
                     container.addLog(new BattleComponent(new TranslatableComponent(getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
                     removeCard(target);
                 }
-                if (killSource) {
+                if (killSource && items.get(source) != null) {
                     LOGGER.info(items.get(target) + " killed " + items.get(source));
                     container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.deathIcon)));
                     removeCard(source);
@@ -269,7 +270,7 @@ public class BattleGame {
         items.set(slot, item);
         state[slot] = new BattleCardState(item.getPower(stack));
         turnPower[slot] = item.getPower(stack);
-        trigger(BattleEvent.PLAYED, slot);
+        container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.card_play")).append(new TranslatableComponent(item.getDescriptionId())), List.of(BuddycardBattleIcon.create(item) ,TextureBattleIcon.playIcon)));
         return true;
     }
     
