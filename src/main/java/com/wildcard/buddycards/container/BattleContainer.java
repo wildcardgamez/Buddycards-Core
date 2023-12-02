@@ -2,6 +2,7 @@ package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.battles.BattleComponent;
+import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.game.BattleGame;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.item.DeckboxItem;
@@ -41,8 +42,7 @@ public class BattleContainer extends SimpleContainer {
             isPlayer1Turn = true;
         name1 = getItem(0).getDisplayName().plainCopy();
         name2 = getItem(7).getDisplayName().plainCopy();
-
-        addLogWithName("go_first");
+        addLog(new BattleComponent(new TextComponent("").append(isPlayer1Turn ? name1 : name2).append(new TranslatableComponent("battles.log.buddycards.go_first")), List.of(TextureBattleIcon.playIcon)));
         deck1 = new DeckboxContainer(getItem(0));
         deck2 = new DeckboxContainer(getItem(7));
         deck1.startOpen();
@@ -53,9 +53,9 @@ public class BattleContainer extends SimpleContainer {
         turn = 1;
         game = new BattleGame(this);
         game.beginGame();
-        addLog("starting_draw");
+        addLog(new BattleComponent(new TranslatableComponent("battles.log.buddycards.starting_draw"), List.of(TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon)));
         tryDrawCard(isPlayer1Turn);
-        addLogWithName("turn_draw");
+        addLog(new BattleComponent(new TextComponent("").append(isPlayer1Turn ? name1 : name2).append(new TranslatableComponent("battles.log.buddycards.turn_draw")), List.of(TextureBattleIcon.playIcon, TextureBattleIcon.drawIcon)));
         entity.setChanged();
     }
 
@@ -126,10 +126,7 @@ public class BattleContainer extends SimpleContainer {
         return p1 ? energy1 : energy2;
     }
 
-    public void addLog(String name) {
-        battleLog.add(new BattleComponent(new TranslatableComponent(LOG + name)));
-    }
-    public void addLogWithName(String name) {
-        battleLog.add(new BattleComponent(new TextComponent("").append(isPlayer1Turn ? name1 : name2).append(new TranslatableComponent(LOG + name))));
+    public void addLog(BattleComponent log) {
+        battleLog.add(0, log);
     }
 }

@@ -11,6 +11,7 @@ import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.BuddycardItem;
 
 import com.wildcard.buddycards.screens.PlaymatScreen;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 
@@ -59,7 +60,11 @@ public class BattleGame {
         else container.energy2 = Math.min(container.energy2 + container.turnEnergy, 10);
         LOGGER.info("Player " + player() + " gained " + container.turnEnergy + " energy!");
         LOGGER.debug("                         (" + ((isP1() ? container.energy1 : container.energy2) - container.turnEnergy) + "->" + (isP1() ? container.energy1 : container.energy2) + ")");
-        container.tryDrawCard(isP1());
+        if(container.tryDrawCard(isP1()))
+            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_draw")), List.of(TextureBattleIcon.playIcon, TextureBattleIcon.drawIcon)));
+        else
+            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_fail_draw")), List.of(TextureBattleIcon.playIcon, TextureBattleIcon.drawIcon)));
+        container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_energy1")).append("" + container.turnEnergy).append(new TranslatableComponent("battles.log.buddycards.turn_energy2")), List.of(TextureBattleIcon.energyIcon(container.turnEnergy))));
         //copy power values to turn power (must be done here before events have a chance to fire)
         for (int i = 0; i < 6; i++) turnPower[i] = state[i].power;
         //send turn event to all your cards
@@ -70,6 +75,7 @@ public class BattleGame {
     
     /** ends a turn */
     public boolean endTurn() {
+        container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_attack")), List.of(TextureBattleIcon.startAttackIcon)));
         //have all your cards attack
         for (int i = slot(0); i < slot(3); i++) {
             if (items.get(i) != null) {
@@ -92,6 +98,7 @@ public class BattleGame {
                 if (!trigger(BattleEvent.KILL, source, target, source)) continue;
                 if (!trigger(BattleEvent.DEATH, target, target, source)) continue;
                 LOGGER.info(items.get(source) + " killed " + items.get(target));
+                container.addLog(new BattleComponent(new TranslatableComponent(getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
                 removeCard(target);
             } else if (target == opposite(source) && state[target].power == 0 && state[source].power == 0) {
                 //if two cards attacking each other hit 0 power, they should count as killing each other
@@ -126,12 +133,12 @@ public class BattleGame {
                 
                 if (killTarget) {
                     LOGGER.info(items.get(source) + " killed " + items.get(target));
-                    container.battleLog.add(new BattleComponent(new TranslatableComponent(getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
+                    container.addLog(new BattleComponent(new TranslatableComponent(getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
                     removeCard(target);
                 }
                 if (killSource) {
                     LOGGER.info(items.get(target) + " killed " + items.get(source));
-                    container.battleLog.add(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.deathIcon)));
+                    container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.deathIcon)));
                     removeCard(source);
                 }
             }
@@ -168,15 +175,18 @@ public class BattleGame {
     
     /** performs an attack. please ensure ahead of time the source card is valid */
     public void attack(int target, int source) {
+        int damage = state[source].power;
         if (items.get(target) == null) {
-            if (getOwner(target)) container.health1 -= state[source].power;
-            else container.health2 -= state[source].power;
-            LOGGER.info(items.get(source) + " dealt " + state[source].power + " damage to Player " + player(!isP1()));
+            if (getOwner(target)) container.health1 -= damage;
+            else container.health2 -= damage;
+            LOGGER.info(items.get(source) + " dealt " + damage + " damage to Player " + player(!isP1()));
+            container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.attack1")).append("" + damage).append(new TranslatableComponent("battles.log.buddycards.attack2")).append(getOwner(target) ? container.name1 : container.name2), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage))));
         } else {
             if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.COLUMN)) return;
             if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.COLUMN)) return;
-            turnPower[target] -= state[source].power;
-            LOGGER.info(items.get(source) + " dealt " + state[source].power + " damage to " + items.get(target));
+            turnPower[target] -= damage;
+            LOGGER.info(items.get(source) + " dealt " + damage + " damage to " + items.get(target));
+            container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.attack1")).append("" + damage).append(new TranslatableComponent("battles.log.buddycards.attack2")).append(new TranslatableComponent(getCard(target).getDescriptionId())), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage), BuddycardBattleIcon.create(getCard(target)))));
             savedAttacks.add(new BattleAttack(target, source));
         }
         return;
@@ -192,7 +202,7 @@ public class BattleGame {
             if (getOwner(target)) container.health1 -= amount;
             else container.health2 -= amount;
             LOGGER.info(items.get(source) + " dealt " + amount + " damage to Player " + player(!isP1()));
-        } else {
+            } else {
             if(doAttackTrigger) if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.COLUMN)) return;
             if(doDamageTrigger) if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.COLUMN)) return;
             turnPower[target] -= amount;

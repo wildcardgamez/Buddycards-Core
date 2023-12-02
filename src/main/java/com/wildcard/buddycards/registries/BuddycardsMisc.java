@@ -10,7 +10,6 @@ import com.wildcard.buddycards.menu.PlaymatMenu;
 import com.wildcard.buddycards.util.LootInjection;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;

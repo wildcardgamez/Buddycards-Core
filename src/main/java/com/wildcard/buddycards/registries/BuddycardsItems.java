@@ -14,6 +14,7 @@ import com.wildcard.buddycards.gear.BuddycardsArmorMaterial;
 import com.wildcard.buddycards.gear.BuddycardsToolTier;
 import com.wildcard.buddycards.item.*;
 import com.wildcard.buddycards.screens.PlaymatScreen;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -35,15 +36,21 @@ public class BuddycardsItems {
     public static void registerItems() {
         //Register base set
         /*SAPS       */ registerCard(BASE_SET,  1, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.TURN.ability("growing_up", (game, slot, target, source) -> {
+            game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.growing_up.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
             game.turnPower[slot]++;
-            game.container.battleLog.add(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.growing_up.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
             return true;
         })).build());
         /*ROK        */ registerCard(BASE_SET,  2, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("stone_toss", (game, slot, target, source) -> {
-            game.directAttack(BattleGame.opposite(slot), slot, 1);
+            int opp = BattleGame.opposite(slot);
+            if(game.getCard(opp) != null)
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.stone_toss.log1").append(new TranslatableComponent(game.getCard(opp).getDescriptionId())).append(new TranslatableComponent("battles.ability.buddycards.stone_toss.log2")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(1), BuddycardBattleIcon.create(game.getCard(opp)))));
+            else
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.stone_toss.log1").append(BattleGame.getOwner(slot) ? game.container.name2 : game.container.name1).append(new TranslatableComponent("battles.ability.buddycards.stone_toss.log2")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(1))));
+            game.directAttack(opp, slot, 1);
             return true;
         })).build());
         /*OINKE      */ registerCard(BASE_SET,  3, Rarity.COMMON,   3, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("tasty_bacon", (game, slot, target, source) -> {
+            game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.tasty_bacon")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.healIcon(1))));
             if(BattleGame.getOwner(slot))
                 game.container.health1+=2;
             else
@@ -186,7 +193,7 @@ public class BuddycardsItems {
         })).build());
         /*CASTER     */ registerCard(BASE_SET, 23, Rarity.RARE,     9, 4, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("anvil_drop", (game, slot, target, source) -> {
             if(game.getCard(target) != null)
-                game.directAttack(BattleGame.opposite(slot), slot, 2);
+                game.directAttack(BattleGame.opposite(slot), slot, 4);
             return true;
         })).add(BattleEvent.TURN.ability("reforge", (game, slot, target, source) -> {
             for (int i: BattleEvent.Distribution.ADJACENT.apply(slot, game)) {
