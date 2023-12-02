@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import com.wildcard.buddycards.battles.BattleComponent;
+import com.wildcard.buddycards.battles.BuddycardBattleIcon;
+import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.BuddycardItem;
 
+import com.wildcard.buddycards.screens.PlaymatScreen;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 
 //IMPORTANT - This is the ONLY class in battles.game that will use classes outside the battles.game package.
@@ -121,10 +126,12 @@ public class BattleGame {
                 
                 if (killTarget) {
                     LOGGER.info(items.get(source) + " killed " + items.get(target));
+                    container.battleLog.add(new BattleComponent(new TranslatableComponent(getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
                     removeCard(target);
                 }
                 if (killSource) {
                     LOGGER.info(items.get(target) + " killed " + items.get(source));
+                    container.battleLog.add(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.deathIcon)));
                     removeCard(source);
                 }
             }

@@ -3,6 +3,9 @@ package com.wildcard.buddycards.registries;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.battles.BattleComponent;
+import com.wildcard.buddycards.battles.BuddycardBattleIcon;
+import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.game.BattleAbility;
 import com.wildcard.buddycards.battles.game.BattleEvent;
 import com.wildcard.buddycards.battles.game.BattleGame;
@@ -10,6 +13,8 @@ import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.gear.BuddycardsArmorMaterial;
 import com.wildcard.buddycards.gear.BuddycardsToolTier;
 import com.wildcard.buddycards.item.*;
+import com.wildcard.buddycards.screens.PlaymatScreen;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,6 +26,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
 public class BuddycardsItems {
@@ -29,7 +35,8 @@ public class BuddycardsItems {
     public static void registerItems() {
         //Register base set
         /*SAPS       */ registerCard(BASE_SET,  1, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.TURN.ability("growing_up", (game, slot, target, source) -> {
-            game.state[slot].power++;
+            game.turnPower[slot]++;
+            game.container.battleLog.add(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.growing_up.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
             return true;
         })).build());
         /*ROK        */ registerCard(BASE_SET,  2, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("stone_toss", (game, slot, target, source) -> {
@@ -202,7 +209,16 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*KNIGHT     */ registerCard(BASE_SET, 25, Rarity.RARE,     7, 4, DEFAULT_NO_ABILITIES);
+        /*KNIGHT     */ registerCard(BASE_SET, 25, Rarity.RARE,     7, 4, new BattleAbility.Builder().add(BattleEvent.DAMAGED.ability("prismarine_spines", (game, slot, target, source) -> {
+            if(game.getCard(source) != null) {
+                game.directAttack(target, slot, 1, false, true);
+            }
+            return true;
+        })).add(BattleEvent.TURN.ability("laser_gaze", (game, slot, target, source) -> {
+            if(game.getCard(target) != null && game.container.turn % 2 == 1)
+                game.directAttack(BattleGame.opposite(slot), slot, 2);
+            return true;
+        })).build());
         /*CREATOR    */ registerCard(BASE_SET, 26, Rarity.EPIC,     8, 3, DEFAULT_NO_ABILITIES);
         /*MELTOR     */ registerCard(BASE_SET, 27, Rarity.EPIC,     6, 3, DEFAULT_NO_ABILITIES);
         /*ANGSTY_SAPS*/ registerCard(BASE_SET, 28, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
