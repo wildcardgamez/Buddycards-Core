@@ -7,19 +7,25 @@ import com.wildcard.buddycards.battles.BattleComponent;
 import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.BuddycardBattleIcon;
 import com.wildcard.buddycards.battles.IBattleIcon;
+import com.wildcard.buddycards.battles.game.BattleGame;
+import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.menu.PlaymatMenu;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
+import java.util.Objects;
 
 public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
     public static final ResourceLocation TEXTURE1 = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/playmat.png");
@@ -75,6 +81,7 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
         this.font.draw(matrixStack, Integer.toString(this.menu.energy.get()), 20.0f, 40.0f, 4210752);
         this.font.draw(matrixStack, Integer.toString(this.menu.health.get()), 51.0f, 40.0f, 4210752);
         renderBattleLog(matrixStack, x, y);
+        renderCardPower(matrixStack);
     }
 
     private void renderBattleLog(PoseStack poseStack, int mouseX, int mouseY) {
@@ -115,6 +122,33 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
             if (mouseX > leftPos - 103 && mouseX < leftPos) {
                 renderTooltip(poseStack, battleLog.get(tooltipRow).getHoverText(), xMouseScreen, yMouseScreen);
             }
+        }
+    }
+
+    private void renderCardPower(PoseStack poseStack) {
+        BattleGame game = getMenu().container.game;
+        for (int i = 0; i < 6; i++) {
+            Slot slot = getMenu().getSlot( i + 5);
+            ItemStack itemStack = slot.getItem();
+            if (!(itemStack.getItem() instanceof BuddycardItem card)) {
+                continue;
+            }
+
+            int powerIndex = i;
+            if (!menu.entity.p1) {
+                powerIndex = BattleGame.opposite(i);
+            }
+            int power = game.state[powerIndex].power;
+            ChatFormatting color;
+            if (power == 0) {
+                color = ChatFormatting.RED;
+            } else if (power >= card.getPower(itemStack)) {
+                color = ChatFormatting.GREEN;
+            } else {
+                color = ChatFormatting.YELLOW;
+            }
+            MutableComponent text = new TextComponent(power + "").withStyle(style -> style.withFont(smallFont).withColor(color));
+            this.font.draw(poseStack, text, slot.x + 13, slot.y, Objects.requireNonNull(color.getColor()));
         }
     }
 

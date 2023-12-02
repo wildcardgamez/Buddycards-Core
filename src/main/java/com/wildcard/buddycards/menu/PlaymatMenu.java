@@ -11,10 +11,7 @@ import com.wildcard.buddycards.registries.BuddycardsMisc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -98,6 +95,14 @@ public class PlaymatMenu extends AbstractContainerMenu {
                     });
                 }
         ));
+        for (int i = 0; i < 6; i++) {
+            int finalI = i;
+            syncedData.add(new SyncedData(() -> {
+                CompoundTag nbt = new CompoundTag();
+                nbt.putInt("power", container.game.state[finalI].power);
+                return nbt;
+            }, nbt -> container.game.state[finalI].power = nbt.getInt("power")));
+        }
     }
 
     @Override
