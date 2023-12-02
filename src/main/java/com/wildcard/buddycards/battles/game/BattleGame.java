@@ -64,7 +64,7 @@ public class BattleGame {
         if(container.tryDrawCard(isP1()))
             container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_draw")), List.of(TextureBattleIcon.playIcon, TextureBattleIcon.drawIcon)));
         else
-            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_fail_draw")), List.of(TextureBattleIcon.playIcon, TextureBattleIcon.drawIcon)));
+            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_fail_draw")), List.of(TextureBattleIcon.playIcon)));
         container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_energy1")).append("" + container.turnEnergy).append(new TranslatableComponent("battles.log.buddycards.turn_energy2")), List.of(TextureBattleIcon.energyIcon(container.turnEnergy))));
         //copy power values to turn power (must be done here before events have a chance to fire)
         for (int i = 0; i < 6; i++) turnPower[i] = state[i].power;
