@@ -94,11 +94,12 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
                         }
                         blit(poseStack, leftShift, height, t.texturePosX(), t.texturePosY(), battleIcon.width(), 12);
                         poseStack.pushPose();
-                        poseStack.translate(0, 0, 1000);
+                        RenderSystem.disableDepthTest();
                         for (TextureBattleIcon.BattleInfo battleInfo : t.info()) {
                             MutableComponent text = new TextComponent(battleInfo.display() + "").withStyle(style -> style.withFont(smallFont));
                             this.font.draw(poseStack, text, leftShift + battleInfo.x() - (battleInfo.isLeftAligned() ? 0 : this.font.width(text)), height + battleInfo.y(), battleInfo.color());
                         }
+                        RenderSystem.enableDepthTest();
                         poseStack.popPose();
                     }
                 }
