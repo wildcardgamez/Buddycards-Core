@@ -382,7 +382,7 @@ public class BuddycardsItems {
             List<Integer> cards = new ArrayList<>();
             int power = 0;
             for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
-                if(slot != i && game.getCard(i) != null) {
+                if(slot != i && game.getCard(i) != null && !game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_METAL)) {
                     cards.add(i);
                     power+=2;
                     icons.add(BuddycardBattleIcon.create(game.getCard(i)));
@@ -410,11 +410,12 @@ public class BuddycardsItems {
                     game.turnPower[i]+= 2;
                     icons.add(BuddycardBattleIcon.create(game.getCard(i)));
                     icons.add(TextureBattleIcon.addIcon(2));
+                    game.updatePower(i);
                 }
             }
             if(icons.size() > 2) {
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.flaming_forge.log"), icons));
-                game.updatePower();
+                game.updatePower(slot);
             }
             return true;
         })).build());

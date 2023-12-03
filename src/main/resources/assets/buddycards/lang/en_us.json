@@ -420,7 +420,7 @@
   "battles.ability.buddycards.craft_together.log1": "Cards are combined with Creator to increase its power by ",
   "battles.ability.buddycards.craft_together.log2": " from Craft Together",
   "battles.ability.buddycards.smeltdown": "Smeltdown",
-  "battles.ability.buddycards.smeltdown.desc": "When you play Meltor, destroy all of your other buddies. For each buddy destroyed, Meltor gains 2 power.",
+  "battles.ability.buddycards.smeltdown.desc": "When you play Meltor, destroy all of your other non-metal buddies. For each buddy destroyed, Meltor gains 2 power.",
   "battles.ability.buddycards.smeltdown.log1": "Buddies are destroyed and Meltor gains ",
   "battles.ability.buddycards.smeltdown.log2": " from Smeltdown",
   "battles.ability.buddycards.flaming_forge": "Flaming Forge",
