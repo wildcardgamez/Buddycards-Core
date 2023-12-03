@@ -8,7 +8,7 @@
       "predicate": {
         "minecraft:full": 1
       },
-      "model": "buddycards:item/luminis_deckbox"
+      "model": "buddycards:item/luminis_deckbox_closed"
     }
   ]
 }

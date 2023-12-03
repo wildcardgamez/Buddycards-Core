@@ -8,7 +8,7 @@
       "predicate": {
         "minecraft:full": 1
       },
-      "model": "buddycards:item/zylex_deckbox"
+      "model": "buddycards:item/zylex_deckbox_closed"
     }
   ]
 }
