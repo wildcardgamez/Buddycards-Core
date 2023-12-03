@@ -88,7 +88,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             ListTag gameState = new ListTag();
             for (int i = 0; i < 6; i++) {
                 CompoundTag stateTag = new CompoundTag();
-                container.game.state[i].save(new CompoundTag());
+                container.game.state[i].save(stateTag);
                 gameState.add(stateTag);
             }
             tag.put("gameState", gameState);
