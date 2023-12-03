@@ -6,31 +6,31 @@
   "overrides": [
     {
       "predicate": {
-        "minecraft:grade": 1.0
+        "buddycards:grade": 1.0
       },
       "model": "buddycards:item/buddycard_base24_g1"
     },
     {
       "predicate": {
-        "minecraft:grade": 2.0
+        "buddycards:grade": 2.0
       },
       "model": "buddycards:item/buddycard_base24_g2"
     },
     {
       "predicate": {
-        "minecraft:grade": 3.0
+        "buddycards:grade": 3.0
       },
       "model": "buddycards:item/buddycard_base24_g3"
     },
     {
       "predicate": {
-        "minecraft:grade": 4.0
+        "buddycards:grade": 4.0
       },
       "model": "buddycards:item/buddycard_base24_g4"
     },
     {
       "predicate": {
-        "minecraft:grade": 5.0
+        "buddycards:grade": 5.0
       },
       "model": "buddycards:item/buddycard_base24_g5"
     }

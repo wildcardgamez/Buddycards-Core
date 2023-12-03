@@ -33,34 +33,34 @@ public class ClientStuff {
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.PLAYMAT_CONTAINER.get(), PlaymatScreen::new));
         for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
             for (BuddycardItem card : set.getCards()) {
-                event.enqueueWork(() -> ItemProperties.register(card, new ResourceLocation("grade"), (stack, world, entity, idk) -> {
+                event.enqueueWork(() -> ItemProperties.register(card, new ResourceLocation(Buddycards.MOD_ID, "grade"), (stack, world, entity, idk) -> {
                     if (stack.getTag() != null)
                         return stack.getTag().getInt("grade");
                     return 0;
                 }));
             }
         }
-        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.BUDDYSTEEL_POWER_METER.get(), new ResourceLocation("power"), (stack, world, entity, idk) -> {
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.BUDDYSTEEL_POWER_METER.get(), new ResourceLocation(Buddycards.MOD_ID, "power"), (stack, world, entity, idk) -> {
             if (stack.getTag() != null)
                 return stack.getTag().getInt("power");
             return 0;
         }));
-        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.ZYLEX_POWER_METER.get(), new ResourceLocation("power"), (stack, world, entity, idk) -> {
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.ZYLEX_POWER_METER.get(), new ResourceLocation(Buddycards.MOD_ID, "power"), (stack, world, entity, idk) -> {
             if (stack.getTag() != null)
                 return stack.getTag().getInt("power");
             return 0;
         }));
-        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.BUDDYSTEEL_DECKBOX.get(), new ResourceLocation("full"), (stack, world, entity, idk) -> {
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.BUDDYSTEEL_DECKBOX.get(), new ResourceLocation(Buddycards.MOD_ID, "full"), (stack, world, entity, idk) -> {
             if (stack.getTag() != null)
                 return stack.getTag().getInt("full");
             return 0;
         }));
-        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.LUMINIS_DECKBOX.get(), new ResourceLocation("full"), (stack, world, entity, idk) -> {
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.LUMINIS_DECKBOX.get(), new ResourceLocation(Buddycards.MOD_ID,"full"), (stack, world, entity, idk) -> {
             if (stack.getTag() != null)
                 return stack.getTag().getInt("full");
             return 0;
         }));
-        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.ZYLEX_DECKBOX.get(), new ResourceLocation("full"), (stack, world, entity, idk) -> {
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.ZYLEX_DECKBOX.get(), new ResourceLocation(Buddycards.MOD_ID,"full"), (stack, world, entity, idk) -> {
             if (stack.getTag() != null)
                 return stack.getTag().getInt("full");
             return 0;

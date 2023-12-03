@@ -6,7 +6,7 @@
   "overrides": [
     {
       "predicate": {
-        "minecraft:full": 1
+        "buddycards:full": 1
       },
       "model": "buddycards:item/buddysteel_deckbox_closed"
     }

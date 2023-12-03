@@ -35,7 +35,7 @@ public class CardModelGen extends ItemModelProvider {
                 .parent(factory.apply(new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard")))
                 .texture("layer0", new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum));
         for (int i = 1; i <= 5; i++) {
-            card.override().predicate(new ResourceLocation("grade"), i).model(genGradedCardModel(setName, cardNum, i));
+            card.override().predicate(new ResourceLocation(Buddycards.MOD_ID, "grade"), i).model(genGradedCardModel(setName, cardNum, i));
         }
     }
 
