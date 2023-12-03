@@ -377,7 +377,47 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*MELTOR     */ registerCard(BASE_SET, 27, Rarity.EPIC,     6, 3, DEFAULT_NO_ABILITIES);
+        /*MELTOR     */ registerCard(BASE_SET, 27, Rarity.EPIC,     6, 3, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("smeltdown", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            List<Integer> cards = new ArrayList<>();
+            int power = 0;
+            for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
+                if(slot != i && game.getCard(i) != null) {
+                    cards.add(i);
+                    power+=2;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.deathIcon);
+                }
+            }
+            if(cards.size() > 0) {
+                icons.add(BuddycardBattleIcon.create(game.getCard(slot)));
+                icons.add(TextureBattleIcon.addIcon(power));
+                game.turnPower[slot] += power;
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.smeltdown.log1").append("" + power).append(new TranslatableComponent("battles.ability.buddycards.smeltdown.log2")), icons));
+                game.updatePower();
+                for (int i : cards) {
+                    if(game.trigger(BattleEvent.DEATH, i))
+                        game.removeCard(i);
+                }
+            }
+            return true;
+        })).add(BattleEvent.OBSERVE_DEATH.ability("flaming_forge", (game, slot, target, source) -> {
+            if(!game.container.getItem(BattleGame.translateFrom(target)).m_204117_(BuddycardsMisc.BCB_FIRE))
+                return true;
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
+                if(i == slot || game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_METAL)) {
+                    game.turnPower[i]+= 2;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.addIcon(2));
+                }
+            }
+            if(icons.size() > 2) {
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.flaming_forge.log"), icons));
+                game.updatePower();
+            }
+            return true;
+        })).build());
         /*ANGSTY_SAPS*/ registerCard(BASE_SET, 28, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
         /*COPPOR     */ registerCard(BASE_SET, 29, Rarity.COMMON,   2, 2, DEFAULT_NO_ABILITIES);
         /*AIMY       */ registerCard(BASE_SET, 30, Rarity.COMMON,   2, 0, DEFAULT_NO_ABILITIES);
