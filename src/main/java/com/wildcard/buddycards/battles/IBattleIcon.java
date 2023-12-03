@@ -29,5 +29,4 @@ public sealed interface IBattleIcon permits TextureBattleIcon, BuddycardBattleIc
        }
        throw new RuntimeException("icon is " + icon.getClass().getName() + " however, only BuddycardBattleIcon and TextureBattleIcon are permitted by the seal on IBattleIcon");
     }
-    ResourceLocation NO_RENDER = new ResourceLocation(Buddycards.MOD_ID, "no_render");
 }
