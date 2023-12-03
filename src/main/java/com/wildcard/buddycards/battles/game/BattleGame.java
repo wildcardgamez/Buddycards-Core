@@ -178,17 +178,18 @@ public class BattleGame {
     public void attack(int target, int source) {
         int damage = state[source].power;
         if (items.get(target) == null) {
+            if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.THIS)) return;
             if (getOwner(target)) container.health1 -= damage;
             else container.health2 -= damage;
             LOGGER.info(items.get(source) + " dealt " + damage + " damage to Player " + player(!isP1()));
             container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.attack1")).append("" + damage).append(new TranslatableComponent("battles.log.buddycards.attack2")).append(getOwner(target) ? container.name1 : container.name2), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage))));
         } else {
-            if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.COLUMN)) return;
-            if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.COLUMN)) return;
+            if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.THIS)) return;
             turnPower[target] -= damage;
             LOGGER.info(items.get(source) + " dealt " + damage + " damage to " + items.get(target));
             container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.attack1")).append("" + damage).append(new TranslatableComponent("battles.log.buddycards.attack2")).append(new TranslatableComponent(getCard(target).getDescriptionId())), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage), BuddycardBattleIcon.create(getCard(target)))));
             savedAttacks.add(new BattleAttack(target, source));
+            if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.THIS)) return;
         }
         return;
     }
@@ -200,15 +201,16 @@ public class BattleGame {
     /** performs an attack dealing a specific amount of damage */
     public void directAttack(int target, int source, int amount, boolean doAttackTrigger, boolean doDamageTrigger) {
         if (items.get(target) == null) {
+            if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.THIS)) return;
             if (getOwner(target)) container.health1 -= amount;
             else container.health2 -= amount;
             LOGGER.info(items.get(source) + " dealt " + amount + " damage to Player " + player(!isP1()));
             } else {
-            if(doAttackTrigger) if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.COLUMN)) return;
-            if(doDamageTrigger) if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.COLUMN)) return;
+            if(doAttackTrigger) if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.THIS)) return;
             turnPower[target] -= amount;
             LOGGER.info(items.get(source) + " dealt " + amount + " damage to " + items.get(target));
             savedAttacks.add(new BattleAttack(target, source));
+            if(doDamageTrigger) if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.THIS)) return;
         }
         return;
     }

@@ -2,6 +2,7 @@ package com.wildcard.buddycards.registries;
 
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
+import com.ibm.icu.impl.Pair;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.battles.BattleComponent;
 import com.wildcard.buddycards.battles.BuddycardBattleIcon;
@@ -10,6 +11,7 @@ import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.game.BattleAbility;
 import com.wildcard.buddycards.battles.game.BattleEvent;
 import com.wildcard.buddycards.battles.game.BattleGame;
+import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.gear.BuddycardsArmorMaterial;
 import com.wildcard.buddycards.gear.BuddycardsToolTier;
@@ -69,7 +71,7 @@ public class BuddycardsItems {
                     icons.add(TextureBattleIcon.addIcon(1));
                 }
             }
-            if(icons.size() > 1)
+            if(icons.size() > 2)
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.stoke_flames.log"), icons));
             return true;
         })).build());
@@ -87,7 +89,7 @@ public class BuddycardsItems {
                     icons.add(TextureBattleIcon.addIcon(1));
                 }
             }
-            if(icons.size() > 1)
+            if(icons.size() > 2)
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.simple_enchant.log"), icons));
             return true;
         })).build());
@@ -99,7 +101,7 @@ public class BuddycardsItems {
             game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.milk_maid.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.healIcon(1))));
             return true;
         })).build());
-        /*SNOWBELLE  */ registerCard(BASE_SET,  8, Rarity.COMMON,   1, 1, new BattleAbility.Builder().add(BattleEvent.TURN.ability("snowball_fight", (game, slot, target, source) -> {
+        /*SNOWBELLE  */ registerCard(BASE_SET,  8, Rarity.COMMON,   1, 1, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("snowball_fight", (game, slot, target, source) -> {
             if(BattleGame.getOwner(slot))
                 game.container.health2--;
             else
@@ -116,7 +118,7 @@ public class BuddycardsItems {
                     icons.add(TextureBattleIcon.subtractIcon(5));
                 }
             }
-            if(icons.size() > 1)
+            if(icons.size() > 2)
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.wash_out.log"), icons));
             return true;
         })).build());
@@ -137,7 +139,7 @@ public class BuddycardsItems {
                     icons.add(TextureBattleIcon.addIcon(2));
                 }
             }
-            if(icons.size() > 1)
+            if(icons.size() > 2)
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.fresh_harvest.log"), icons));
             return true;
         })).build());
@@ -150,13 +152,13 @@ public class BuddycardsItems {
                     icons.add(TextureBattleIcon.addIcon(1));
                 }
             }
-            if(icons.size() > 1)
+            if(icons.size() > 2)
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.feeding_time.log"), icons));
             return true;
         })).build());
         /*YANG       */ registerCard(BASE_SET, 13, Rarity.UNCOMMON, 4, 3, new BattleAbility.Builder().add(BattleEvent.KILL.ability("play_fetch", (game, slot, target, source) -> {
             if(game.container.tryDrawCard(BattleGame.getOwner(slot)))
-                game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.play_fetch.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.drawIcon)));
+                game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.play_fetch.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.drawIcon)));
             return true;
         })).build());
         /*YIN        */ registerCard(BASE_SET, 14, Rarity.UNCOMMON, 4, 2, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("lazy_cat", (game, slot, target, source) -> {
@@ -176,7 +178,7 @@ public class BuddycardsItems {
                     icons.add(TextureBattleIcon.addIcon(1));
                 }
             }
-            if(icons.size() > 1)
+            if(icons.size() > 2)
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.gilded_gift.log"), icons));
             return true;
         })).build());
@@ -184,7 +186,7 @@ public class BuddycardsItems {
             List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
             while (game.container.tryDrawCard(BattleGame.getOwner(slot)))
                 icons.add(TextureBattleIcon.drawIcon);
-            if(icons.size() > 1)
+            if(icons.size() > 2)
                 game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.rich_trade.log")), icons));
             return true;
         })).build());
@@ -210,7 +212,7 @@ public class BuddycardsItems {
                     icons.add(TextureBattleIcon.powerIcon);
                 }
             }
-            if(icons.size() > 1)
+            if(icons.size() > 2)
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.energize.log"), icons));
             return true;
         })).build());
@@ -223,63 +225,130 @@ public class BuddycardsItems {
             return true;
         })).build());
         /*SPOOPY     */ registerCard(BASE_SET, 21, Rarity.UNCOMMON, 4, 1, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("spook_em", (game, slot, target, source) -> {
-            if(game.getCard(target) != null) {
+            if(target != slot && game.getCard(target) != null && game.isP1() == BattleGame.getOwner(slot)) {
                 game.directAttack(target, slot, 1, false, false);
-                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spook_em")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(target)), TextureBattleIcon.subtractIcon(1))));
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spook_em.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(target)), TextureBattleIcon.subtractIcon(1))));
             }
             return true;
         })).build());
         /*KNALL_EDGY */ registerCard(BASE_SET, 22, Rarity.RARE,     8, 3, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("premium_enchant", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
             for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
                 if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_ENCHANTABLE)) {
-                    game.turnPower[i]+=2;
+                    game.turnPower[i] += 2;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.addIcon(2));
                 }
             }
+            if(icons.size() > 2)
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.premium_enchant.log"), icons));
             return true;
         })).add(BattleEvent.KILL.ability("xp_farm", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
             for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
                 if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_ENCHANTABLE)) {
                     game.turnPower[i]++;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.addIcon(1));
                 }
             }
+            if(icons.size() > 2)
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.premium_enchant.log"), icons));
             return true;
         })).build());
         /*CASTER     */ registerCard(BASE_SET, 23, Rarity.RARE,     9, 4, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("anvil_drop", (game, slot, target, source) -> {
-            if(game.getCard(target) != null)
-                game.directAttack(BattleGame.opposite(slot), slot, 4);
+            int opp = BattleGame.opposite(slot);
+            if(game.getCard(opp) != null) {
+                game.directAttack(opp, slot, 4);
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.anvil_drop.log1").append(new TranslatableComponent(game.getCard(opp).getDescriptionId())).append(new TranslatableComponent("battles.ability.buddycards.anvil_drop.log2")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(4), BuddycardBattleIcon.create(game.getCard(opp)))));
+            }
             return true;
         })).add(BattleEvent.TURN.ability("reforge", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
             for (int i: BattleEvent.Distribution.ADJACENT.apply(slot, game)) {
                 if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_METAL)) {
                     game.turnPower[i]++;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.addIcon(1));
                 }
             }
+            if(icons.size() > 2)
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.reforge.log"), icons));
             return true;
         })).build());
         /*PISTY      */ registerCard(BASE_SET, 24, Rarity.RARE,     6, 2, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("push_back", (game, slot, target, source) -> {
-            if(game.getCard(target) != null) {
-                if(game.container.tryPutInHand(!BattleGame.getOwner(slot), game.container.getItem(BattleGame.translateFrom(BattleGame.opposite(slot)))))
-                    game.removeCard(BattleGame.opposite(slot));
+            int opp = BattleGame.opposite(slot);
+            if(game.getCard(opp) != null) {
+                if(game.container.tryPutInHand(BattleGame.getOwner(opp), game.container.getItem(BattleGame.translateFrom(opp)))) {
+                    game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.push_back.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.returnIcon)));
+                    game.removeCard(opp);
+                }
             }
             return true;
         })).add(BattleEvent.POWERED.ability("empowered_push", (game, slot, target, source) -> {
-            if(game.getCard(target) != null) {
-                if(game.container.tryPutInHand(!BattleGame.getOwner(slot), game.container.getItem(BattleGame.translateFrom(BattleGame.opposite(slot)))))
-                    game.removeCard(BattleGame.opposite(slot));
+            int opp = BattleGame.opposite(slot);
+            if(game.getCard(slot) != null) {
+                if(game.container.tryPutInHand(BattleGame.getOwner(opp), game.container.getItem(BattleGame.translateFrom(opp)))) {
+                    game.removeCard(opp);
+                    game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.empowered_push.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.returnIcon)));
+                }
             }
             return true;
         })).build());
         /*KNIGHT     */ registerCard(BASE_SET, 25, Rarity.RARE,     7, 4, new BattleAbility.Builder().add(BattleEvent.DAMAGED.ability("prismarine_spines", (game, slot, target, source) -> {
             if(game.getCard(source) != null) {
-                game.directAttack(target, slot, 1, false, true);
+                game.directAttack(source, slot, 1, false, false);
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.prismarine_spines.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.subtractIcon(1))));
             }
             return true;
         })).add(BattleEvent.TURN.ability("laser_gaze", (game, slot, target, source) -> {
-            if(game.getCard(target) != null && game.container.turn % 2 == 1)
-                game.directAttack(BattleGame.opposite(slot), slot, 2);
+            int opp = BattleGame.opposite(slot);
+            if(game.getCard(opp) != null && (game.container.turn / 2) % 2 == 1) {
+                game.directAttack(opp, slot, 2);
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.laser_gaze.log1").append(new TranslatableComponent(game.getCard(opp).getDescriptionId())).append(new TranslatableComponent("battles.ability.buddycards.laser_gaze.log2")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(2), BuddycardBattleIcon.create(game.getCard(opp)))));
+            }
             return true;
         })).build());
-        /*CREATOR    */ registerCard(BASE_SET, 26, Rarity.EPIC,     8, 3, DEFAULT_NO_ABILITIES);
+        /*CREATOR    */ registerCard(BASE_SET, 26, Rarity.EPIC,     8, 3, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("grand_creation", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            List<Pair<Integer, ItemStack>> cards = new ArrayList<>();
+            for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
+                if(game.getCard(i) == null) {
+                    ItemStack card = BattleGame.getOwner(slot) ? game.container.deck1.removeItem(BattleContainer.random.nextInt(16), 1) : game.container.deck2.removeItem(BattleContainer.random.nextInt(16), 1);
+                    while(card.isEmpty())
+                        card = BattleGame.getOwner(slot) ? game.container.deck1.removeItem(BattleContainer.random.nextInt(16), 1) : game.container.deck2.removeItem(BattleContainer.random.nextInt(16), 1);
+                    cards.add(Pair.of(i, card));
+                    icons.add(BuddycardBattleIcon.create((BuddycardItem) card.getItem()));
+                    icons.add(TextureBattleIcon.playIcon);
+                }
+            }
+            if(icons.size() > 2) {
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.grand_creation.log"), icons));
+                for (Pair<Integer, ItemStack> p : cards) {
+                    game.addCard(p.first, p.second, (BuddycardItem) p.second.getItem());
+                }
+            }
+            return true;
+        })).add(BattleEvent.DEATH.ability("craft_together", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            int power = 0;
+            for (int i: BattleEvent.Distribution.ADJACENT.apply(slot, game)) {
+                if(game.getCard(i) != null) {
+                    power += game.turnPower[i];
+                    game.removeCard(i);
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.xIcon);
+                }
+            }
+            if(power > 0) {
+                game.turnPower[slot] += power;
+                icons.add(BuddycardBattleIcon.create(game.getCard(slot)));
+                icons.add(TextureBattleIcon.addIcon(power));
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.craft_together.log1").append("" + power).append(new TranslatableComponent("battles.ability.buddycards.craft_together.log2")), icons));
+                return false;
+            }
+            return true;
+        })).build());
         /*MELTOR     */ registerCard(BASE_SET, 27, Rarity.EPIC,     6, 3, DEFAULT_NO_ABILITIES);
         /*ANGSTY_SAPS*/ registerCard(BASE_SET, 28, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
         /*COPPOR     */ registerCard(BASE_SET, 29, Rarity.COMMON,   2, 2, DEFAULT_NO_ABILITIES);

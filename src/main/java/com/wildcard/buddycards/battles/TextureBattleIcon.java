@@ -25,6 +25,8 @@ public record TextureBattleIcon(int texturePosX, int texturePosY, ResourceLocati
     public static IBattleIcon startAttackIcon = new TextureBattleIcon(96,244, PlaymatScreen.TEXTURE1, 12, List.of());
     public static IBattleIcon powerIcon = new TextureBattleIcon(108,244, PlaymatScreen.TEXTURE1, 12, List.of());
     public static IBattleIcon winIcon = new TextureBattleIcon(120,244, PlaymatScreen.TEXTURE1, 12, List.of());
+    public static IBattleIcon returnIcon = new TextureBattleIcon(132,244, PlaymatScreen.TEXTURE1, 12, List.of());
+    public static IBattleIcon xIcon = new TextureBattleIcon(144,244, PlaymatScreen.TEXTURE1, 12, List.of());
 
     public static IBattleIcon energyIcon(int amt) {
         return new TextureBattleIcon(24, 244, PlaymatScreen.TEXTURE1, 12, List.of(new BattleInfo(amt, 12, 0, 0xFFffff89, false)));

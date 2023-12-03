@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class BattleContainer extends SimpleContainer {
     static final String LOG = "battles.log." + Buddycards.MOD_ID + ".";
-    private static final Random random = new Random();
+    public static final Random random = new Random();
     public boolean isPlayer1Turn = false;
     public PlaymatBlockEntity entity;
     public DeckboxContainer deck1, deck2;
