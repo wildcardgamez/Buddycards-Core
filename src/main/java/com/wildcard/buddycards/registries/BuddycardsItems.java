@@ -362,9 +362,9 @@ public class BuddycardsItems {
             for (int i: BattleEvent.Distribution.ADJACENT.apply(slot, game)) {
                 if(game.getCard(i) != null) {
                     power += game.turnPower[i];
-                    game.removeCard(i);
                     icons.add(BuddycardBattleIcon.create(game.getCard(i)));
                     icons.add(TextureBattleIcon.xIcon);
+                    game.removeCard(i);
                 }
             }
             if(power > 0) {
@@ -450,10 +450,39 @@ public class BuddycardsItems {
         /*ENDER    */ registerCard(END_SET, 27, Rarity.EPIC,     2, 1, DEFAULT_NO_ABILITIES);
 
         //Register seasonal set
-        /*HALLOWEEN_YIN    */ registerCard(HOLIDAY_SET, 1, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
-        /*HALLOWEEN_SPOOPY */ registerCard(HOLIDAY_SET, 2, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
+        /*HALLOWEEN_YIN    */ registerCard(HOLIDAY_SET, 1, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("lazy_cat", (game, slot, target, source) -> {
+            if(game.turnPower[slot] < 2 && game.isP1() == BattleGame.getOwner(slot)) {
+                game.turnPower[slot] += 2;
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.lazy_cat.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(2))));
+                game.updatePower(slot);
+                return false;
+            }
+            return true;
+        })).build());
+        /*HALLOWEEN_SPOOPY */ registerCard(HOLIDAY_SET, 2, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("spook_em", (game, slot, target, source) -> {
+            if(target != slot && game.getCard(target) != null && game.isP1() == BattleGame.getOwner(slot)) {
+                game.directAttack(target, slot, 1, false, false);
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spook_em.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(target)), TextureBattleIcon.subtractIcon(1))));
+                game.updatePower(target);
+            }
+            return true;
+        })).build());
         /*HALLOWEEN_VWOOP  */ registerCard(HOLIDAY_SET, 3, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
-        /*CHRISTMAS_COLE   */ registerCard(HOLIDAY_SET, 4, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
+        /*CHRISTMAS_COLE   */ registerCard(HOLIDAY_SET, 4, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 3, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("stoke_flames", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
+                if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FIRE)) {
+                    game.turnPower[i]++;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.addIcon(1));
+                }
+            }
+            if(icons.size() > 2) {
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.stoke_flames.log"), icons));
+                game.updatePower();
+            }
+            return true;
+        })).build());
         /*CHRISTMAS_CHESTER*/ registerCard(HOLIDAY_SET, 5, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
         /*CHRISTMAS_CHOCO  */ registerCard(HOLIDAY_SET, 6, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
 
