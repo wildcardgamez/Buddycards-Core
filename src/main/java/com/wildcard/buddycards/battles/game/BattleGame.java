@@ -168,6 +168,7 @@ public class BattleGame {
             state[i].power = turnPower[i];
             if(state[i].power < 0 && trigger(BattleEvent.KILL, i, i, i)) {
                 container.addLog(new BattleComponent(new TranslatableComponent(getCard(i).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(i)), TextureBattleIcon.deathIcon)));
+                trigger(BattleEvent.DEATH, i, i, i);
                 removeCard(i);
             }
         }
@@ -178,6 +179,7 @@ public class BattleGame {
         state[i].power = turnPower[i];
         if (state[i].power < 0 && trigger(BattleEvent.KILL, i, i, i)) {
             container.addLog(new BattleComponent(new TranslatableComponent(getCard(i).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(i)), TextureBattleIcon.deathIcon)));
+            trigger(BattleEvent.DEATH, i, i, i);
             removeCard(i);
         }
     }

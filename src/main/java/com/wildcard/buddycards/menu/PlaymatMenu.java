@@ -152,9 +152,10 @@ public class PlaymatMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int buttonId) {
-        if (buttonId == ButtonIds.END_TURN && container.game.isP1() == p1) {
-            container.game.endTurn();
-            container.game.nextTurn();
+        if (buttonId == ButtonIds.END_TURN && container.game.isP1() == p1 && !container.game.hasGameEnded()) {
+            if(container.game.endTurn()) {
+                container.game.nextTurn();
+            }
             setPlaymatsChanged();
             return true;
         }

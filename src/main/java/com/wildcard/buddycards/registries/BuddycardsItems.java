@@ -372,6 +372,7 @@ public class BuddycardsItems {
                 icons.add(BuddycardBattleIcon.create(game.getCard(slot)));
                 icons.add(TextureBattleIcon.addIcon(power));
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.craft_together.log1").append("" + power).append(new TranslatableComponent("battles.ability.buddycards.craft_together.log2")), icons));
+                game.updatePower();
                 return false;
             }
             return true;
