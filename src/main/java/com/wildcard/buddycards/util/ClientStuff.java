@@ -50,7 +50,17 @@ public class ClientStuff {
                 return stack.getTag().getInt("power");
             return 0;
         }));
-        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.DECKBOX.get(), new ResourceLocation("full"), (stack, world, entity, idk) -> {
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.BUDDYSTEEL_DECKBOX.get(), new ResourceLocation("full"), (stack, world, entity, idk) -> {
+            if (stack.getTag() != null)
+                return stack.getTag().getInt("full");
+            return 0;
+        }));
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.LUMINIS_DECKBOX.get(), new ResourceLocation("full"), (stack, world, entity, idk) -> {
+            if (stack.getTag() != null)
+                return stack.getTag().getInt("full");
+            return 0;
+        }));
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.ZYLEX_DECKBOX.get(), new ResourceLocation("full"), (stack, world, entity, idk) -> {
             if (stack.getTag() != null)
                 return stack.getTag().getInt("full");
             return 0;

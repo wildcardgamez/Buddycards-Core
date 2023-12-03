@@ -502,7 +502,9 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES));
     public static final RegistryObject<EnderBinderItem> ENDER_BINDER = ITEMS.register("ender_buddycard_binder", () -> new EnderBinderItem(DEFAULT_BINDER_PROPERTIES));
     //Deckboxes
-    public static final RegistryObject<DeckboxItem> DECKBOX = ITEMS.register("deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
+    public static final RegistryObject<DeckboxItem> BUDDYSTEEL_DECKBOX = ITEMS.register("buddysteel_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
+    public static final RegistryObject<DeckboxItem> LUMINIS_DECKBOX = ITEMS.register("luminis_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
+    public static final RegistryObject<DeckboxItem> ZYLEX_DECKBOX = ITEMS.register("zylex_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
     //Playmats
     public static final RegistryObject<BlockItem> PLAYMAT_BASE = ITEMS.register("playmat_base", () -> new BlockItem(BuddycardsBlocks.PLAYMAT_BASE.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<BlockItem> PLAYMAT_NETHER = ITEMS.register("playmat_nether", () -> new BlockItem(BuddycardsBlocks.PLAYMAT_NETHER.get(), DEFAULT_PROPERTIES));
