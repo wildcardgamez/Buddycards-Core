@@ -317,6 +317,17 @@ public class BattleGame {
         return null;
     }
     
+    /** returns a card to your hand, if possible. */
+    public BuddycardItem returnCard(int target) {
+        if (items.get(target) != null && this.container.tryPutInHand(getOwner(target), this.container.getItem(translateFrom(target)))) {
+            this.container.removeItemNoUpdate(translateFrom(target));
+            turnPower[target] = 0;
+            state[target].power = 0;
+            return items.set(target, null);
+        }
+        return null;
+    }
+    
     public BuddycardItem getCard(int slot) {
         return items.get(slot);
     }

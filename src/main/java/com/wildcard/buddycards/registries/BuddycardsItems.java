@@ -302,11 +302,9 @@ public class BuddycardsItems {
         })).build());
         /*PISTY      */ registerCard(BASE_SET, 24, Rarity.RARE,     6, 2, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("push_back", (game, slot, target, source) -> {
             int opp = BattleGame.opposite(slot);
-            if(game.getCard(opp) != null) {
-                if(game.container.tryPutInHand(BattleGame.getOwner(opp), game.container.getItem(BattleGame.translateFrom(opp)))) {
-                    game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.push_back.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.returnIcon)));
-                    game.removeCard(opp);
-                }
+            BuddycardItem returnedCard = game.returnCard(opp);
+            if (returnedCard != null) {
+                game.container.addLog(new BattleComponent(new TranslatableComponent(returnedCard.getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.push_back.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(returnedCard), TextureBattleIcon.returnIcon)));
             }
             return true;
         })).add(BattleEvent.POWERED.ability("empowered_push", (game, slot, target, source) -> {
