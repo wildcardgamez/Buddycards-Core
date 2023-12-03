@@ -115,7 +115,7 @@ public class BattleGame {
                 int source = marked[i] == 1 ? i : i + 3;
                 //debug thing to print who hits first
 //                System.out.println("Player " + player(marked[i] == 1 ? getOwner(i) : getOwner(i + 3)) + " hit first");
-                
+
                 //post kill event for source (source -> target)
                 boolean killTarget = trigger(BattleEvent.KILL, source, target, source);
                 //dont kill target if it lives
@@ -123,7 +123,7 @@ public class BattleGame {
                 //post death event for target (source -> target)
                 //java execution rules means this only executes if killTarget is true, this is intended.
                 killTarget = killTarget && trigger(BattleEvent.DEATH, target, target, source);
-                
+
                 //post kill event for target (target -> source)
                 boolean killSource = trigger(BattleEvent.KILL, target, source, target);
                 //dont kill target if it lives
@@ -131,7 +131,7 @@ public class BattleGame {
                 //post death event for source (target -> source)
                 //java execution rules means this only executes if killSource is true, this is intended.
                 killSource = killSource && trigger(BattleEvent.DEATH, source, source, target);
-                
+
                 if (killTarget && items.get(target) != null) {
                     LOGGER.info(items.get(source) + " killed " + items.get(target));
                     container.addLog(new BattleComponent(new TranslatableComponent(getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
@@ -161,6 +161,26 @@ public class BattleGame {
         //game continues, return true
         return true;
     }
+
+    /** updates the power of all cards **/
+    public void updatePower() {
+        for (int i = 0; i < 6; i++) {
+            state[i].power = turnPower[i];
+            if(state[i].power < 0 && trigger(BattleEvent.KILL, i, i, i)) {
+                container.addLog(new BattleComponent(new TranslatableComponent(getCard(i).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(i)), TextureBattleIcon.deathIcon)));
+                removeCard(i);
+            }
+        }
+    }
+
+    /** updates the power of a specific card **/
+    public void updatePower(int i) {
+        state[i].power = turnPower[i];
+        if (state[i].power < 0 && trigger(BattleEvent.KILL, i, i, i)) {
+            container.addLog(new BattleComponent(new TranslatableComponent(getCard(i).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(i)), TextureBattleIcon.deathIcon)));
+            removeCard(i);
+        }
+    }
     
     /** initiates a turn switch and starts the next turn */
     public void nextTurn() {
@@ -188,10 +208,9 @@ public class BattleGame {
             turnPower[target] -= damage;
             LOGGER.info(items.get(source) + " dealt " + damage + " damage to " + items.get(target));
             container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.attack1")).append("" + damage).append(new TranslatableComponent("battles.log.buddycards.attack2")).append(new TranslatableComponent(getCard(target).getDescriptionId())), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage), BuddycardBattleIcon.create(getCard(target)))));
-            savedAttacks.add(new BattleAttack(target, source));
             if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.THIS)) return;
+            savedAttacks.add(new BattleAttack(target, source));
         }
-        return;
     }
 
     public void directAttack(int target, int source, int amount) {
@@ -209,10 +228,9 @@ public class BattleGame {
             if(doAttackTrigger) if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.THIS)) return;
             turnPower[target] -= amount;
             LOGGER.info(items.get(source) + " dealt " + amount + " damage to " + items.get(target));
-            savedAttacks.add(new BattleAttack(target, source));
             if(doDamageTrigger) if (!trigger(BattleEvent.DAMAGED, target, target, source, BattleEvent.Distribution.THIS)) return;
+            state[target].power = turnPower[target];
         }
-        return;
     }
     
     /*
