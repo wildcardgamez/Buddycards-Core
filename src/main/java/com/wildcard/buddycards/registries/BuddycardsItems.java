@@ -530,7 +530,6 @@ public class BuddycardsItems {
                     BuddycardItem b = game.moveCard(slot, i);
                     game.turnPower[i] += 2;
                     game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.railway.log"), List.of(BuddycardBattleIcon.create(b), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(b), TextureBattleIcon.returnIcon, TextureBattleIcon.addIcon((2)))));
-                    game.updatePower(slot);
                     game.updatePower(i);
                     break;
                 }
@@ -681,18 +680,18 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddycardPackItem> PACK_END = ITEMS.register("buddycard_pack_end", () -> new BuddycardSetPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, END_SET, 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
     public static final RegistryObject<BuddycardPackItem> MYSTERY_PACK = ITEMS.register("buddycard_pack_mystery", () -> new MysteryBuddycardPackItem(DEFAULT_BUDDYCARD_REQUIREMENT, 4, 1, DEFAULT_RARITY_WEIGHTS, false, RARE_PACK_PROPERTIES));
     //Binders
-    public static final RegistryObject<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES));
-    public static final RegistryObject<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES));
-    public static final RegistryObject<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES));
+    public static final RegistryObject<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES, BASE_SET));
+    public static final RegistryObject<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES, NETHER_SET));
+    public static final RegistryObject<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BUDDYCARD_REQUIREMENT, DEFAULT_BINDER_PROPERTIES, END_SET));
     public static final RegistryObject<EnderBinderItem> ENDER_BINDER = ITEMS.register("ender_buddycard_binder", () -> new EnderBinderItem(DEFAULT_BINDER_PROPERTIES));
     //Deckboxes
     public static final RegistryObject<DeckboxItem> BUDDYSTEEL_DECKBOX = ITEMS.register("buddysteel_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
     public static final RegistryObject<DeckboxItem> LUMINIS_DECKBOX = ITEMS.register("luminis_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
     public static final RegistryObject<DeckboxItem> ZYLEX_DECKBOX = ITEMS.register("zylex_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
     //Playmats
-    public static final RegistryObject<BlockItem> PLAYMAT_BASE = ITEMS.register("playmat_base", () -> new BlockItem(BuddycardsBlocks.PLAYMAT_BASE.get(), DEFAULT_PROPERTIES));
-    public static final RegistryObject<BlockItem> PLAYMAT_NETHER = ITEMS.register("playmat_nether", () -> new BlockItem(BuddycardsBlocks.PLAYMAT_NETHER.get(), DEFAULT_PROPERTIES));
-    public static final RegistryObject<BlockItem> PLAYMAT_END = ITEMS.register("playmat_end", () -> new BlockItem(BuddycardsBlocks.PLAYMAT_END.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<BlockItem> PLAYMAT_BASE = ITEMS.register("playmat_base", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_BASE.get(), DEFAULT_PROPERTIES, BASE_SET));
+    public static final RegistryObject<BlockItem> PLAYMAT_NETHER = ITEMS.register("playmat_nether", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_NETHER.get(), DEFAULT_PROPERTIES, NETHER_SET));
+    public static final RegistryObject<BlockItem> PLAYMAT_END = ITEMS.register("playmat_end", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_END.get(), DEFAULT_PROPERTIES, END_SET));
     //Buddysteel Items
     public static final RegistryObject<Item> BUDDYSTEEL_BLEND = ITEMS.register("buddysteel_blend", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_INGOT = ITEMS.register("buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));

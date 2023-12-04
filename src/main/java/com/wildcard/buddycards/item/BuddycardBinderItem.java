@@ -1,10 +1,14 @@
 package com.wildcard.buddycards.item;
 
+import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.menu.BinderMenu;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import com.wildcard.buddycards.container.BinderContainer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -14,17 +18,28 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class BuddycardBinderItem extends Item {
-    public BuddycardBinderItem(BuddycardsItems.BuddycardRequirement shouldLoad, Properties properties) {
+    public BuddycardBinderItem(BuddycardsItems.BuddycardRequirement shouldLoad, Properties properties, BuddycardSet set) {
         super(properties);
         REQUIREMENT = shouldLoad;
+        SET = set;
     }
 
     protected BuddycardsItems.BuddycardRequirement REQUIREMENT;
+    protected BuddycardSet SET;
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(new TranslatableComponent(SET.getDescriptionId()).withStyle(ChatFormatting.GRAY));
+    }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
