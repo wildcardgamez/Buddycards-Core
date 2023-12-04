@@ -175,6 +175,7 @@ public class BattleGame {
         if (state[i].power < 0 && trigger(BattleEvent.KILL, i, i, i) && trigger(BattleEvent.OBSERVE_DEATH, i, i, i, BattleEvent.Distribution.ALL)) {
             container.addLog(new BattleComponent(new TranslatableComponent(getCard(i).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(i)), TextureBattleIcon.deathIcon)));
             trigger(BattleEvent.DEATH, i, i, i);
+            trigger(BattleEvent.OBSERVE_DEATH, i, i, i, BattleEvent.Distribution.ALL);
             removeCard(i);
         }
     }
