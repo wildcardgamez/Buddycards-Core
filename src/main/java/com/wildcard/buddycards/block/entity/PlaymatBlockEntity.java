@@ -165,7 +165,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     public ItemStack swapDeck(ItemStack itemInHand) {
         ItemStack removedDeck = container.getItem(p1 ? 0 : 7);
         container.setItem(p1 ? 0 : 7, itemInHand);
-        name = itemInHand.getDisplayName();
+        name = itemInHand.getHoverName();
         setChanged();
         return removedDeck;
     }
