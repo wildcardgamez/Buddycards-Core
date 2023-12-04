@@ -108,15 +108,6 @@ public class BattleContainer extends SimpleContainer {
     
     public void endGame(boolean p1Victory) {
         System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
         addLog(new BattleComponent(new TextComponent("").append(p1Victory ? name1 : name2).append(new TranslatableComponent("battles.log.buddycards.victory")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.winIcon, TextureBattleIcon.spacerIcon)));
     }
     

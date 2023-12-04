@@ -60,8 +60,19 @@ public class BuddycardItem extends Item {
         if(isFoil(stack))
             cn.append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol"));
         tooltip.add(new TranslatableComponent(SET.getDescriptionId()).append(cn).withStyle(ChatFormatting.GRAY));
+        //Show grade
         if(stack.hasTag() && stack.getTag().contains("grade")) {
-            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.grade." + stack.getTag().getInt("grade")).withStyle(ChatFormatting.GRAY));
+            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.grade." + stack.getTag().getInt("grade")).withStyle(ChatFormatting.LIGHT_PURPLE));
+        }
+        //Show battle stats
+        if(stack.hasTag() && stack.getTag().contains("wins")) {
+            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.stats")
+                    .append("" + stack.getTag().getInt("wins"))
+                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.power"))
+                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
+                    .append("" + stack.getTag().getInt("loss"))
+                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.skull"))
+                    .withStyle(ChatFormatting.BLUE));
         }
     }
 
