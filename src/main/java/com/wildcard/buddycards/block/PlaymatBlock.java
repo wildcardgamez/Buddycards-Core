@@ -3,10 +3,13 @@ package com.wildcard.buddycards.block;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.DeckboxItem;
+import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -26,6 +29,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 
+import java.util.Optional;
+
 public class PlaymatBlock extends BaseEntityBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
@@ -44,6 +49,25 @@ public class PlaymatBlock extends BaseEntityBlock {
         return this.defaultBlockState().setValue(DIR, context.getHorizontalDirection());
     }
 
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean notMoveByPiston) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof PlaymatBlockEntity playmat) {
+            Optional<PlaymatBlockEntity> blockEntity = level.getBlockEntity(pos.relative(state.getValue(DIR)), BuddycardsEntities.PLAYMAT_ENTITY.get());
+            playmat.inGame = false;
+            dropPlayMat(playmat, pos, level);
+            blockEntity.ifPresent(be -> dropPlayMat(be, pos, level));
+        }
+        super.onRemove(state, level, pos, newState, notMoveByPiston);
+    }
+
+    private static void dropPlayMat(PlaymatBlockEntity playmat, BlockPos pos, Level level) {
+
+        if (playmat.container != null) {
+            Containers.dropContents(level, pos, new SimpleContainer(playmat.container.deck1.deckbox));
+            Containers.dropContents(level, pos, new SimpleContainer(playmat.container.deck2.deckbox));
+            playmat.container = null;
+        }
+    }
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(DIR);

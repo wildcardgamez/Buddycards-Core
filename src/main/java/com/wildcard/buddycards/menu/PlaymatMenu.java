@@ -107,7 +107,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return true;
+        return container.deck1 != null && container.deck2 != null && !entity.isRemoved() && entity.inGame && player.distanceToSqr(entity.getBlockPos().getX() + 0.5D, entity.getBlockPos().getY() + 0.5D, entity.getBlockPos().getZ() + 0.5D) <= 64.0D;
     }
 
     //click handling for card selection and playing
