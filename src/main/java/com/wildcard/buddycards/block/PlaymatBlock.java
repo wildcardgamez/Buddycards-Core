@@ -92,44 +92,48 @@ public class PlaymatBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         //If both playmats exist...
-        if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity entity && level.getBlockEntity(pos.relative(state.getValue(DIR))) instanceof PlaymatBlockEntity opponent) {
+        if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity self
+                && level.getBlockEntity(pos.relative(state.getValue(DIR))) instanceof PlaymatBlockEntity opponent
+                && opponent.getBlockState().hasProperty(DIR)
+                && opponent.getBlockState().getValue(DIR).getOpposite() == state.getValue(DIR)) {
+
             //If both have no container, set them up
-            if (entity.container == null && opponent.container == null) {
-                entity.container = new BattleContainer();
-                entity.container.entity = entity;
-                opponent.container = entity.container;
-                entity.p1 = true;
+            if (self.container == null && opponent.container == null) {
+                self.container = new BattleContainer();
+                self.container.entity = self;
+                opponent.container = self.container;
+                self.p1 = true;
                 opponent.p1 = false;
-                entity.setChanged();
+                self.setChanged();
                 opponent.setChanged();
             }
             //If one has a container, make them match
-            else if (entity.container == null || opponent.container == null) {
-                if(entity.p1) {
-                    opponent.container = entity.container;
+            else if (self.container == null || opponent.container == null) {
+                if(self.p1) {
+                    opponent.container = self.container;
                     opponent.setChanged();
                 }
                 else {
-                    entity.container = opponent.container;
-                    entity.setChanged();
+                    self.container = opponent.container;
+                    self.setChanged();
                 }
             }
             //If you are holding a deckbox, swap it out
-            if (player.getItemInHand(hand).getItem() instanceof DeckboxItem && !entity.inGame) {
-                player.setItemInHand(hand, entity.swapDeck(player.getItemInHand(hand)));
+            if (player.getItemInHand(hand).getItem() instanceof DeckboxItem && !self.inGame) {
+                player.setItemInHand(hand, self.swapDeck(player.getItemInHand(hand)));
             }
             //If there's a container and both decks
-            if (entity.container != null && entity.getContainer().getItem(0).getItem() instanceof DeckboxItem && entity.getContainer().getItem(7).getItem() instanceof DeckboxItem) {
+            if (self.container != null && self.getContainer().getItem(0).getItem() instanceof DeckboxItem && self.getContainer().getItem(7).getItem() instanceof DeckboxItem) {
                 //If a game isn't started, start one
-                if(!entity.inGame) {
-                    entity.container.startGame();
-                    entity.inGame = true;
+                if(!self.inGame) {
+                    self.container.startGame();
+                    self.inGame = true;
                     opponent.inGame = true;
-                    entity.setChanged();
+                    self.setChanged();
                     opponent.setChanged();
                 }
                 //Open the GUI
-                if (player instanceof ServerPlayer serverPlayer) NetworkHooks.openGui(serverPlayer, entity, pos);
+                if (player instanceof ServerPlayer serverPlayer) NetworkHooks.openGui(serverPlayer, self, pos);
             }
             return InteractionResult.SUCCESS;
         }
