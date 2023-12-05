@@ -2,6 +2,7 @@ package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.battles.BattleComponent;
 import com.wildcard.buddycards.battles.game.BattleCardState;
+import com.wildcard.buddycards.battles.game.BattleGame;
 import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.container.DeckboxContainer;
@@ -104,11 +105,13 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public void setLevel(Level p_155231_) {
-        super.setLevel(p_155231_);
-        if (level.isClientSide && container == null) {
+    public void setLevel(Level setLevel) {
+        super.setLevel(setLevel);
+        if (setLevel.isClientSide && container == null) {
             container = new BattleContainer();
             container.entity = this;
+            container.game = new BattleGame(container);
+            for (int i = 0; i < 6; i++) container.game.state[i] = new BattleCardState(0);
         }
     }
 
