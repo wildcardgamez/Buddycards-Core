@@ -23,7 +23,6 @@ public class DeckboxContainer extends SimpleContainer {
         for(int i = 0; i < this.getContainerSize(); i++) {
             setItem(i, ItemStack.EMPTY);
         }
-
         if(deckbox.hasTag())
         {
             //If the deckbox has nbt data, turn it into items
@@ -45,7 +44,6 @@ public class DeckboxContainer extends SimpleContainer {
         for(int i = 0; i < this.getContainerSize(); i++) {
             setItem(i, ItemStack.EMPTY);
         }
-
         if(deckbox.hasTag())
         {
             //If the deckbox has nbt data, turn it into items
@@ -89,5 +87,27 @@ public class DeckboxContainer extends SimpleContainer {
             deckbox.setTag(nbt);
         }
         DeckboxItem.updateFull(deckbox);
+    }
+
+    public void saveStats(boolean win) {
+        CompoundTag nbt = deckbox.getTag();
+        ListTag list = nbt.getList("Items", Tag.TAG_COMPOUND);
+        for(int i = 0; i < list.size(); i++) {
+            ItemStack card = ItemStack.of(list.getCompound(i));
+            if(card.hasTag() && card.getTag().contains("wins")) {
+                CompoundTag cardNbt = card.getTag();
+                if(win)
+                    cardNbt.putInt("wins", 1 + cardNbt.getInt("wins"));
+                else
+                    cardNbt.putInt("loss", 1 + cardNbt.getInt("loss"));
+                card.setTag(cardNbt);
+                CompoundTag compoundnbt = new CompoundTag();
+                compoundnbt.putInt("Slot", i);
+                card.save(compoundnbt);
+                list.set(i, compoundnbt);
+            }
+        }
+        nbt.put("Items", list);
+        deckbox.setTag(nbt);
     }
 }

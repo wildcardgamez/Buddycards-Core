@@ -6,19 +6,25 @@
       {
         "type": "item",
         "name": "buddycards:buddycard_pack_base",
-        "weight": 7,
+        "weight": 6,
         "functions": [{ "function": "set_count", "count": { "min": 1, "max": 2 } }]
       },
       {
         "type": "item",
         "name": "buddycards:grading_sleeve",
-        "weight": 5,
+        "weight": 3,
         "functions": [{ "function": "set_count", "count": { "min": 1, "max": 6 } }]
       },
       {
         "type": "item",
         "name": "buddycards:buddysteel_deckbox",
         "weight": 1
+      },
+      {
+        "type": "item",
+        "name": "buddycards:battle_sleeve",
+        "weight": 2,
+        "functions": [{ "function": "set_count", "count": { "min": 1, "max": 6 } }]
       },
       {
         "type": "empty",
