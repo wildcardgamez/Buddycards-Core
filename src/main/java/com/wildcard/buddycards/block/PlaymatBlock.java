@@ -63,9 +63,11 @@ public class PlaymatBlock extends BaseEntityBlock {
     private static void dropPlayMat(PlaymatBlockEntity playmat, BlockPos pos, Level level) {
 
         if (playmat.container != null) {
-            Containers.dropContents(level, pos, new SimpleContainer(playmat.container.deck1.deckbox));
-            Containers.dropContents(level, pos, new SimpleContainer(playmat.container.deck2.deckbox));
+            Containers.dropContents(level, pos, new SimpleContainer(playmat.container.getItem(0)));
+            Containers.dropContents(level, pos, new SimpleContainer(playmat.container.getItem(7)));
             playmat.container = null;
+            playmat.inGame = false;
+            playmat.p1 = false;
         }
     }
     @Override
@@ -135,7 +137,7 @@ public class PlaymatBlock extends BaseEntityBlock {
                 //Open the GUI
                 if (player instanceof ServerPlayer serverPlayer) NetworkHooks.openGui(serverPlayer, self, pos);
             }
-            return InteractionResult.SUCCESS;
+            return InteractionResult.sidedSuccess(level.isClientSide());
         }
         return super.use(state, level, pos, player, hand, hitResult);
     }
