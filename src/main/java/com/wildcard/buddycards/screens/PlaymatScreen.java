@@ -148,7 +148,7 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
             ChatFormatting color;
             if (power == 0) {
                 color = ChatFormatting.RED;
-            } else if (power >= card.getPower(itemStack)) {
+            } else if (power >= card.getPower()) {
                 color = ChatFormatting.GREEN;
             } else {
                 color = ChatFormatting.YELLOW;

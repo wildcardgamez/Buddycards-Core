@@ -2,6 +2,7 @@ package com.wildcard.buddycards.menu;
 
 import com.wildcard.buddycards.container.DeckboxContainer;
 import com.wildcard.buddycards.item.BuddycardItem;
+import com.wildcard.buddycards.item.BuddycardReprintItem;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 
 public class DeckboxMenu extends AbstractContainerMenu {
     private final DeckboxContainer inventory;
@@ -52,10 +54,21 @@ public class DeckboxMenu extends AbstractContainerMenu {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
-        //Only let cards go into card slots
+        //Only let cards go into card slots if allowed in deck
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return stack.getItem() instanceof BuddycardItem;
+            if((stack.getItem() instanceof BuddycardItem item)) {
+                item = item.getOriginal();
+                Rarity r = item.getRarity();
+                //Each rarity has a limit on how many can be in the deck
+                int max = r.equals(Rarity.COMMON) ? 4 : r.equals(Rarity.UNCOMMON) ? 3 : r.equals(Rarity.RARE) ? 2 : 1;
+                for (int i = 0; i < 16; i++)
+                    if (!container.getItem(i).isEmpty() && item.equals(((BuddycardItem)container.getItem(i).getItem()).getOriginal())) {
+                        if (--max <= 0) return false;
+                    }
+                return true;
+            }
+            return false;
         }
 
         //Only 1 card per slot

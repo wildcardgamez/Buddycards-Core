@@ -274,7 +274,7 @@ public class BattleGame {
     
     public boolean playCard(int slot, ItemStack stack, boolean p1) {
         if (!(stack.getItem() instanceof BuddycardItem item)) return false;
-        int cost = item.getCost(stack);
+        int cost = item.getCost();
         if (container.energy(p1) < cost) return false;
         if (p1) container.energy1 -= cost;
         else container.energy2 -= cost;
@@ -286,8 +286,8 @@ public class BattleGame {
         if (items.get(slot) != null) return false;
         container.setItem(translateFrom(slot), stack);
         items.set(slot, item);
-        state[slot] = new BattleCardState(item.getPower(stack));
-        turnPower[slot] = item.getPower(stack);
+        state[slot] = new BattleCardState(item.getPower());
+        turnPower[slot] = item.getPower();
         container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.card_play")).append(new TranslatableComponent(item.getDescriptionId())), List.of(BuddycardBattleIcon.create(item) ,TextureBattleIcon.playIcon)));
         return true;
     }
@@ -333,8 +333,8 @@ public class BattleGame {
         return items.get(slot);
     }
     
-    public boolean canPlay(boolean p1, BuddycardItem card, ItemStack stack) {
-        return p1 == isP1() && container.energy(p1) >= card.getCost(stack);
+    public boolean canPlay(boolean p1, BuddycardItem card) {
+        return p1 == isP1() && container.energy(p1) >= card.getCost();
     }
     
     public boolean isP1() {

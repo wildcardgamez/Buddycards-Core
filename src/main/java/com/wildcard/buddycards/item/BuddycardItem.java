@@ -18,6 +18,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuddycardItem extends Item {
@@ -115,11 +116,11 @@ public class BuddycardItem extends Item {
         return 0;
     }
     
-    public int getCost(ItemStack stack) {
+    public int getCost() {
         return this.COST;
     }
     
-    public int getPower(ItemStack stack) {
+    public int getPower() {
         return this.POWER;
     }
     
@@ -144,9 +145,7 @@ public class BuddycardItem extends Item {
         return REQUIREMENT.shouldLoad();
     }
 
-    public void setupOnBattlefield(ItemStack stack) {
-        CompoundTag nbt = stack.getOrCreateTag();
-        nbt.putInt("power", POWER);
-        stack.setTag(nbt);
+    public BuddycardItem getOriginal() {
+        return this;
     }
 }

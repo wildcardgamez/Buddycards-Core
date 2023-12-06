@@ -13,6 +13,7 @@ import com.wildcard.buddycards.battles.game.BattleEvent;
 import com.wildcard.buddycards.battles.game.BattleGame;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.core.BuddycardSet;
+import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.gear.BuddycardsArmorMaterial;
 import com.wildcard.buddycards.gear.BuddycardsToolTier;
 import com.wildcard.buddycards.item.*;
@@ -603,7 +604,7 @@ public class BuddycardsItems {
         /*ENDER    */ registerCard(END_SET, 27, Rarity.EPIC,     2, 1, DEFAULT_NO_ABILITIES);
 
         //Register seasonal set
-        /*HALLOWEEN_YIN    */ registerCard(HOLIDAY_SET, 1, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("lazy_cat", (game, slot, target, source) -> {
+        /*HALLOWEEN_YIN    */ registerReprintCard(HOLIDAY_SET, 1, Rarity.UNCOMMON, HALLOWEEN_BUDDYCARD_REQUIREMENT,4, 2, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("lazy_cat", (game, slot, target, source) -> {
             if(game.turnPower[slot] < 2 && game.isP1() == BattleGame.getOwner(slot)) {
                 game.turnPower[slot] += 2;
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.lazy_cat.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(2))));
@@ -611,17 +612,17 @@ public class BuddycardsItems {
                 return false;
             }
             return true;
-        })).build());
-        /*HALLOWEEN_SPOOPY */ registerCard(HOLIDAY_SET, 2, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("spook_em", (game, slot, target, source) -> {
+        })).build(), BASE_SET, 14);
+        /*HALLOWEEN_SPOOPY */ registerReprintCard(HOLIDAY_SET, 2, Rarity.UNCOMMON, HALLOWEEN_BUDDYCARD_REQUIREMENT,4, 1, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("spook_em", (game, slot, target, source) -> {
             if(target != slot && game.getCard(target) != null && game.isP1() == BattleGame.getOwner(slot)) {
                 game.directAttack(target, slot, 1, false, false);
                 game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spook_em.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(target)), TextureBattleIcon.subtractIcon(1))));
                 game.updatePower(target);
             }
             return true;
-        })).build());
-        /*HALLOWEEN_VWOOP  */ registerCard(HOLIDAY_SET, 3, Rarity.RARE, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
-        /*CHRISTMAS_COLE   */ registerCard(HOLIDAY_SET, 4, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 3, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("stoke_flames", (game, slot, target, source) -> {
+        })).build(), BASE_SET, 21);
+        /*HALLOWEEN_VWOOP  */ registerReprintCard(HOLIDAY_SET, 3, Rarity.COMMON, HALLOWEEN_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES, END_SET, 4);
+        /*CHRISTMAS_COLE   */ registerReprintCard(HOLIDAY_SET, 4, Rarity.COMMON, CHRISTMAS_BUDDYCARD_REQUIREMENT, 3, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("stoke_flames", (game, slot, target, source) -> {
             List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
             for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
                 if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FIRE)) {
@@ -635,9 +636,9 @@ public class BuddycardsItems {
                 game.updatePower();
             }
             return true;
-        })).build());
-        /*CHRISTMAS_CHESTER*/ registerCard(HOLIDAY_SET, 5, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
-        /*CHRISTMAS_CHOCO  */ registerCard(HOLIDAY_SET, 6, Rarity.RARE, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
+        })).build(), BASE_SET, 4);
+        /*CHRISTMAS_CHESTER*/ registerReprintCard(HOLIDAY_SET, 5, Rarity.COMMON, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES, END_SET, 2);
+        /*CHRISTMAS_CHOKO  */ registerCard(HOLIDAY_SET, 6, Rarity.UNCOMMON, CHRISTMAS_BUDDYCARD_REQUIREMENT, 2, 1, DEFAULT_NO_ABILITIES);
 
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
@@ -770,6 +771,14 @@ public class BuddycardsItems {
     }
     public static RegistryObject<BuddycardItem> registerCard(BuddycardSet set, int cardNumber, Rarity rarity, int cost, int power, ListMultimap<BattleEvent, BattleAbility> abilities) {
         return registerCard(set, cardNumber, rarity, DEFAULT_CARD_PROPERTIES, DEFAULT_BUDDYCARD_REQUIREMENT, cost, power, abilities);
+    }
+
+    public static RegistryObject<BuddycardItem> registerReprintCard(BuddycardSet set, int cardNumber, Rarity rarity, Item.Properties properties, BuddycardRequirement requirement, int cost, int power, ListMultimap<BattleEvent, BattleAbility> abilities, BuddycardSet originalSet, int originalCardNum) {
+        Objects.requireNonNull(set);
+        return ITEMS.register("buddycard_" + set.getName() + cardNumber, () -> new BuddycardReprintItem(requirement, set, cardNumber, rarity, properties, cost, power, abilities, originalSet, originalCardNum));
+    }
+    public static RegistryObject<BuddycardItem> registerReprintCard(BuddycardSet set, int cardNumber, Rarity rarity, BuddycardRequirement requirement, int cost, int power, ListMultimap<BattleEvent, BattleAbility> abilities, BuddycardSet originalSet, int originalCardNum) {
+        return registerReprintCard(set, cardNumber, rarity, DEFAULT_CARD_PROPERTIES, requirement, cost, power, abilities, originalSet, originalCardNum);
     }
 
     public interface BuddycardRequirement {
