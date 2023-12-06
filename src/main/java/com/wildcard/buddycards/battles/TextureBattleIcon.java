@@ -28,6 +28,7 @@ public record TextureBattleIcon(int texturePosX, int texturePosY, ResourceLocati
     public static IBattleIcon returnIcon = new TextureBattleIcon(132,244, PlaymatScreen.TEXTURE1, 12, List.of());
     public static IBattleIcon xIcon = new TextureBattleIcon(144,244, PlaymatScreen.TEXTURE1, 12, List.of());
     public static IBattleIcon doublePowerIcon = new TextureBattleIcon(156,244, PlaymatScreen.TEXTURE1, 12, List.of());
+    public static IBattleIcon questionIcon = new TextureBattleIcon(168,244, PlaymatScreen.TEXTURE1, 12, List.of());
 
     public static IBattleIcon energyIcon(int amt) {
         return new TextureBattleIcon(24, 244, PlaymatScreen.TEXTURE1, 12, List.of(new BattleInfo(amt, 12, 0, 0xFFffff89, false)));
@@ -47,6 +48,10 @@ public record TextureBattleIcon(int texturePosX, int texturePosY, ResourceLocati
 
     public static IBattleIcon healIcon(int amt) {
         return new TextureBattleIcon(84, 244, PlaymatScreen.TEXTURE1, 12, List.of(new BattleInfo(amt, 12, 0, 0xFFffff89, false)));
+    }
+
+    public static IBattleIcon statusIcon(int status) {
+        return new TextureBattleIcon(180, 244, PlaymatScreen.TEXTURE1, 12, List.of(new BattleInfo(status, 12, 0, 0xFFffff89, false)));
     }
 
     public record BattleInfo(int display, int x, int y, int color, boolean isLeftAligned) {

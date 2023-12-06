@@ -334,6 +334,9 @@
   "battles.log.buddycards.attack2": " damage to ",
   "battles.log.buddycards.victory": " wins!!!",
 
+  "battles.ability.buddycards.status.fire.log1": " loses Fire",
+  "battles.ability.buddycards.status.fire.log2": " loses 1 power from Fire",
+  "battles.ability.buddycards.status.sleep.log": " doesn't attack and loses Sleep",
   "battles.ability.buddycards.growing_up": "Growing Up",
   "battles.ability.buddycards.growing_up.desc": "At the start of your turn, Saps gains 1 power.",
   "battles.ability.buddycards.growing_up.log": "Saps gained 1 power from Growing up",
@@ -477,6 +480,9 @@
   "battles.ability.buddycards.mine_crash.log2": "from Mine Crash",
   "battles.ability.buddycards.brick_toss": "Brick Toss",
   "battles.ability.buddycards.brick_toss.desc": "When you play Brik, they attack for 2 damage.",
+  "battles.ability.buddycards.spicy_flames": "Spicy Flames",
+  "battles.ability.buddycards.spicy_flames.desc": "When Fya is damaged by a buddy, that buddy is set on fire (each turn it will have an equal chance to lose 1 power or be put out.)",
+  "battles.ability.buddycards.spicy_flames.log": " is set on fire by Spicy Flames",
   "battles.ability.buddycards.cheese_toss": "Cheese Toss",
   "battles.ability.buddycards.cheese_toss.desc": "When you play Enrok, they have a 50% chance to attack."
 }

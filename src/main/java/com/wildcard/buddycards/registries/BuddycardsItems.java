@@ -11,6 +11,7 @@ import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.game.BattleAbility;
 import com.wildcard.buddycards.battles.game.BattleEvent;
 import com.wildcard.buddycards.battles.game.BattleGame;
+import com.wildcard.buddycards.battles.game.BattleStatusEffect;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
@@ -556,7 +557,13 @@ public class BuddycardsItems {
         /*VINNIE   */ registerCard(NETHER_SET,  8, Rarity.COMMON,   4, 3, DEFAULT_NO_ABILITIES);
         /*SHROOM   */ registerCard(NETHER_SET,  9, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
         /*WARP_NYE */ registerCard(NETHER_SET, 10, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
-        /*FYA      */ registerCard(NETHER_SET, 11, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*FYA      */ registerCard(NETHER_SET, 11, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.DAMAGED.ability("spicy_flames", (game, slot, target, source) -> {
+            if(source != slot && game.getCard(source) != null) {
+                game.state[source].status = BattleStatusEffect.FIRE.getId();
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spicy_flames.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE.getId()))));
+            }
+            return true;
+        })).build());
         /*MAGMA    */ registerCard(NETHER_SET, 12, Rarity.COMMON,   6, 1, DEFAULT_NO_ABILITIES);
         /*SKULLY   */ registerCard(NETHER_SET, 13, Rarity.UNCOMMON, 5, 2, DEFAULT_NO_ABILITIES);
         /*BLAZT    */ registerCard(NETHER_SET, 14, Rarity.UNCOMMON, 6, 2, DEFAULT_NO_ABILITIES);
