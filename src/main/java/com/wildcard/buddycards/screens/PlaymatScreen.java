@@ -204,6 +204,17 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
         return super.mouseDragged(x, y, mouse, x2, y2);
     }
 
+    @Override
+    public boolean mouseScrolled(double x, double y, double amount) {
+        ScrollerData data = ScrollerData.fromScreen(this);
+        if (data.needsScroller() && x >= leftPos - 123 && x < leftPos && y >= topPos && y <= height) {
+            float scrollRatio = (data.scrollerPosMax - data.scrollerPosMin) / ((data.requiredHeight - data.availableHeight) * .065f);
+            scrollPosition = Mth.clamp(scrollPosition - (float) amount * scrollRatio, 0, data.scrollerPosMax - data.scrollerPosMin);
+            return true;
+        }
+        return super.mouseScrolled(x, y, amount);
+    }
+
     private boolean updateScrollPosition(double x, double y, int mouse) {
         ScrollerData data = ScrollerData.fromScreen(this);
         if (mouse == InputConstants.MOUSE_BUTTON_LEFT && data.needsScroller()) {
