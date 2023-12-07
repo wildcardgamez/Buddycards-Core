@@ -109,7 +109,7 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
                     poseStack.pushPose();
                     RenderSystem.disableDepthTest();
                     for (TextureBattleIcon.BattleInfo battleInfo : t.info()) {
-                        MutableComponent text = new TextComponent(battleInfo.display() + "").withStyle(style -> style.withFont(smallFont));
+                        MutableComponent text = new TextComponent(battleInfo.display()).withStyle(style -> style.withFont(smallFont));
                         this.font.draw(poseStack, text, leftShift + battleInfo.x() - (battleInfo.isLeftAligned() ? 0 : this.font.width(text)), height + battleInfo.y() - data.scrollerOffset(scrollPosition), battleInfo.color());
                     }
                     RenderSystem.enableDepthTest();

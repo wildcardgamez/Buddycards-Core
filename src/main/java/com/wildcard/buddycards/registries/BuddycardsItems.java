@@ -14,15 +14,11 @@ import com.wildcard.buddycards.battles.game.BattleGame;
 import com.wildcard.buddycards.battles.game.BattleStatusEffect;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.core.BuddycardSet;
-import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.gear.BuddycardsArmorMaterial;
 import com.wildcard.buddycards.gear.BuddycardsToolTier;
 import com.wildcard.buddycards.item.*;
-import com.wildcard.buddycards.screens.PlaymatScreen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
@@ -559,8 +555,8 @@ public class BuddycardsItems {
         /*WARP_NYE */ registerCard(NETHER_SET, 10, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
         /*FYA      */ registerCard(NETHER_SET, 11, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.DAMAGED.ability("spicy_flames", (game, slot, target, source) -> {
             if(source != slot && game.getCard(source) != null) {
-                game.state[source].status = BattleStatusEffect.FIRE.getId();
-                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spicy_flames.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE.getId()))));
+                game.state[source].status = BattleStatusEffect.FIRE;
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spicy_flames.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE))));
             }
             return true;
         })).build());

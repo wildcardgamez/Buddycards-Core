@@ -49,7 +49,7 @@ public class BattleGame {
         container.tryDrawCard(false);
         container.tryDrawCard(false);
         container.addLog(new BattleComponent(new TranslatableComponent("battles.log.buddycards.starting_draw"), List.of(TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon)));
-        for (int i = 0; i < 6; i++) state[i] = new BattleCardState(0, 0);
+        for (int i = 0; i < 6; i++) state[i] = new BattleCardState(0, BattleStatusEffect.EMPTY);
         startTurn(); //do not use nextTurn(), turn 1 player already chosen
     }
     
@@ -260,7 +260,7 @@ public class BattleGame {
     
     public boolean trigger(BattleEvent event, int slot, int target, int source) {
         BuddycardItem card = items.get(slot);
-        if(state[slot].status != 0) {
+        if(state[slot].status != BattleStatusEffect.EMPTY) {
             BattleAbility effect = state[slot].getStatusEffect();
             if (effect != null && effect.event.equals(event))
                 if (!effect.ability.trigger(this, slot, target, source)) return false;
@@ -291,7 +291,7 @@ public class BattleGame {
         if (items.get(slot) != null) return false;
         container.setItem(translateFrom(slot), stack);
         items.set(slot, item);
-        state[slot] = new BattleCardState(item.getPower(), 0);
+        state[slot] = new BattleCardState(item.getPower(), BattleStatusEffect.EMPTY);
         turnPower[slot] = item.getPower();
         container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.card_play")).append(new TranslatableComponent(item.getDescriptionId())), List.of(BuddycardBattleIcon.create(item) ,TextureBattleIcon.playIcon)));
         return true;
@@ -304,7 +304,7 @@ public class BattleGame {
             if (item != null) {
                 items.set(destination, item);
                 state[destination] = state[target];
-                state[target] = new BattleCardState(0, 0);
+                state[target] = new BattleCardState(0, BattleStatusEffect.EMPTY);
                 container.setItem(translateFrom(destination), container.removeItem(translateFrom(target), 1));
             }
             return item;
