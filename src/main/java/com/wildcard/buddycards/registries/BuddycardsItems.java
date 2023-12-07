@@ -120,16 +120,25 @@ public class BuddycardsItems {
         })).build());
         /*AQUA       */ registerCard(BASE_SET,  9, Rarity.COMMON,   2, 0, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("wash_out", (game, slot, target, source) -> {
             List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
-            for (int i: BattleEvent.Distribution.ALL_ENEMY.apply(slot, game)) {
-                if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FIRE)) {
-                    game.directAttack(BattleGame.opposite(slot), slot, 5, false, false);
+            List<Integer> changedCards = new ArrayList<>();
+            for (int i: BattleEvent.Distribution.ALL.apply(slot, game)) {
+                boolean a = game.state[i].status == (BattleStatusEffect.FIRE.getId()), b = game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FIRE);
+                if(a || b)
                     icons.add(BuddycardBattleIcon.create(game.getCard(i)));
-                    icons.add(TextureBattleIcon.subtractIcon(5));
+                if(a) {
+                    game.state[i].status = 0;
+                    icons.add(TextureBattleIcon.statusIcon(0));
+                }
+                if(b) {
+                    game.directAttack(BattleGame.opposite(slot), slot, 1, false, false);
+                    icons.add(TextureBattleIcon.subtractIcon(1));
+                    changedCards.add(i);
                 }
             }
             if(icons.size() > 2) {
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.wash_out.log"), icons));
-                game.updatePower();
+                for(int i : changedCards)
+                    game.updatePower(i);
             }
             return true;
         })).build());
@@ -548,8 +557,30 @@ public class BuddycardsItems {
             game.directAttack(BattleGame.opposite(slot), slot, 2);
             return true;
         })).build());
-        /*OBBY     */ registerCard(NETHER_SET,  2, Rarity.COMMON,   6, 3, DEFAULT_NO_ABILITIES);
-        /*BRITE    */ registerCard(NETHER_SET,  3, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
+        /*OBBY     */ registerCard(NETHER_SET,  2, Rarity.COMMON,   6, 3, new BattleAbility.Builder().add(BattleEvent.TURN.ability("tough_stuff", (game, slot, target, source) -> {
+            int power = 3 - game.turnPower[slot];
+            if(power > 0) {
+                game.turnPower[slot] += power;
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.tough_stuff.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(power))));
+                game.updatePower();
+            }
+            return true;
+        })).build());
+        /*BRITE    */ registerCard(NETHER_SET,  3, Rarity.COMMON,   4, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("radiant_glow", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            for (int i: BattleEvent.Distribution.ALL_ENEMY.apply(slot, game)) {
+                if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_MONSTER)) {
+                    game.directAttack(BattleGame.opposite(slot), slot, 1, false, false);
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.subtractIcon(1));
+                }
+            }
+            if(icons.size() > 2) {
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.radiant_glow.log"), icons));
+                game.updatePower();
+            }
+            return true;
+        })).build());
         /*SLINKY   */ registerCard(NETHER_SET,  4, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
         /*BIG_PIG  */ registerCard(NETHER_SET,  5, Rarity.COMMON,   5, 3, DEFAULT_NO_ABILITIES);
         /*SOL      */ registerCard(NETHER_SET,  6, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
