@@ -118,12 +118,12 @@ public class BuddycardsItems {
             List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
             List<Integer> changedCards = new ArrayList<>();
             for (int i: BattleEvent.Distribution.ALL.apply(slot, game)) {
-                boolean a = game.state[i].status == (BattleStatusEffect.FIRE.getId()), b = game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FIRE);
+                boolean a = game.state[i].status == (BattleStatusEffect.FIRE), b = game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FIRE);
                 if(a || b)
                     icons.add(BuddycardBattleIcon.create(game.getCard(i)));
                 if(a) {
-                    game.state[i].status = 0;
-                    icons.add(TextureBattleIcon.statusIcon(0));
+                    game.state[i].status = BattleStatusEffect.EMPTY;
+                    icons.add(TextureBattleIcon.statusIcon(BattleStatusEffect.EMPTY));
                 }
                 if(b) {
                     game.directAttack(BattleGame.opposite(slot), slot, 1, false, false);
@@ -577,9 +577,23 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*SLINKY   */ registerCard(NETHER_SET,  4, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
+        /*SLINKY   */ registerCard(NETHER_SET,  4, Rarity.COMMON,   4, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("bounce_back", (game, slot, target, source) -> {
+            BuddycardItem returnedCard = game.returnCard(slot);
+            if (returnedCard != null) {
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.bounce_back"), List.of(BuddycardBattleIcon.create(returnedCard), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(returnedCard), TextureBattleIcon.returnIcon)));
+                return false;
+            }
+            return true;
+        })).build());
         /*BIG_PIG  */ registerCard(NETHER_SET,  5, Rarity.COMMON,   5, 3, DEFAULT_NO_ABILITIES);
-        /*SOL      */ registerCard(NETHER_SET,  6, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
+        /*SOL      */ registerCard(NETHER_SET,  6, Rarity.COMMON,   3, 2, new BattleAbility.Builder().add(BattleEvent.KILL.ability("soul_steal", (game, slot, target, source) -> {
+            if(BattleGame.getOwner(slot))
+                game.container.health1++;
+            else
+                game.container.health2++;
+            game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.soul_steal.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.healIcon(1))));
+            return true;
+        })).build());
         /*BASISAL  */ registerCard(NETHER_SET,  7, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
         /*VINNIE   */ registerCard(NETHER_SET,  8, Rarity.COMMON,   4, 3, DEFAULT_NO_ABILITIES);
         /*SHROOM   */ registerCard(NETHER_SET,  9, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
@@ -594,11 +608,39 @@ public class BuddycardsItems {
         /*MAGMA    */ registerCard(NETHER_SET, 12, Rarity.COMMON,   6, 1, DEFAULT_NO_ABILITIES);
         /*SKULLY   */ registerCard(NETHER_SET, 13, Rarity.UNCOMMON, 5, 2, DEFAULT_NO_ABILITIES);
         /*BLAZT    */ registerCard(NETHER_SET, 14, Rarity.UNCOMMON, 6, 2, DEFAULT_NO_ABILITIES);
-        /*QUAZI    */ registerCard(NETHER_SET, 15, Rarity.UNCOMMON, 4, 2, DEFAULT_NO_ABILITIES);
+        /*QUAZI    */ registerCard(NETHER_SET, 15, Rarity.UNCOMMON, 4, 2, new BattleAbility.Builder().add(BattleEvent.POWERED.ability("subtraction", (game, slot, target, source) -> {
+            if(target != slot && game.getCard(target) != null && game.isP1() == BattleGame.getOwner(slot)) {
+                game.directAttack(target, slot, 1, false, false);
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.subtraction.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(target)), TextureBattleIcon.subtractIcon(1))));
+                game.updatePower(target);
+            }
+            return true;
+        })).build());
         /*HOT_POT  */ registerCard(NETHER_SET, 16, Rarity.UNCOMMON, 3, 2, DEFAULT_NO_ABILITIES);
         /*CRYBABY  */ registerCard(NETHER_SET, 17, Rarity.UNCOMMON, 6, 4, DEFAULT_NO_ABILITIES);
-        /*FYO      */ registerCard(NETHER_SET, 18, Rarity.UNCOMMON, 4, 1, DEFAULT_NO_ABILITIES);
-        /*LAMP     */ registerCard(NETHER_SET, 19, Rarity.UNCOMMON, 5, 2, DEFAULT_NO_ABILITIES);
+        /*FYO      */ registerCard(NETHER_SET, 18, Rarity.UNCOMMON, 4, 1, new BattleAbility.Builder().add(BattleEvent.DAMAGED.ability("spirit_flames", (game, slot, target, source) -> {
+            if(source != slot && game.getCard(source) != null) {
+                game.state[source].status = BattleStatusEffect.FIRE;
+                game.turnPower[source] -= 1;
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spirit_flames.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(1))));
+            }
+            return true;
+        })).build());
+        /*LAMP     */ registerCard(NETHER_SET, 19, Rarity.UNCOMMON, 5, 2, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("soul_light", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            for (int i: BattleEvent.Distribution.ALL_ENEMY.apply(slot, game)) {
+                if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_MONSTER)) {
+                    game.directAttack(BattleGame.opposite(slot), slot, 2, false, false);
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.subtractIcon(2));
+                }
+            }
+            if(icons.size() > 2) {
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.soul_light.log"), icons));
+                game.updatePower();
+            }
+            return true;
+        })).build());
         /*GHOST    */ registerCard(NETHER_SET, 20, Rarity.UNCOMMON, 8, 2, DEFAULT_NO_ABILITIES);
         /*STRIDE   */ registerCard(NETHER_SET, 21, Rarity.UNCOMMON, 5, 3, DEFAULT_NO_ABILITIES);
         /*BARTENDER*/ registerCard(NETHER_SET, 22, Rarity.RARE,     6, 3, DEFAULT_NO_ABILITIES);
