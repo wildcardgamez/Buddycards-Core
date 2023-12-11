@@ -500,9 +500,15 @@
   "battles.ability.buddycards.spicy_flames": "Spicy Flames",
   "battles.ability.buddycards.spicy_flames.desc": "When Fya is damaged by a buddy, that buddy is set on fire.",
   "battles.ability.buddycards.spicy_flames.log": " is set on fire by Spicy Flames",
+  "battles.ability.buddycards.meltdown": "Meltdown",
+  "battles.ability.buddycards.meltdown.desc": "When you play Magma, all non-fire buddies are set on fire.",
+  "battles.ability.buddycards.meltdown.log": "Non-fire buddies are set on fire by Meltdown",
   "battles.ability.buddycards.subtraction": "Subtraction",
   "battles.ability.buddycards.subtraction.desc": "When Quazi is powered, an opposing buddy loses 1 power.",
   "battles.ability.buddycards.subtraction.log": " loses 1 power from Subtraction",
+  "battles.ability.buddycards.fire_resistance": "Subtraction",
+  "battles.ability.buddycards.fire_resistance.desc": "When Hot Pot dies, adjacent buddies on fire are put out and gain 2 power.",
+  "battles.ability.buddycards.fire_resistance.log": "Buddies on fire are put out and gain 2 power",
   "battles.ability.buddycards.spirit_flames": "Spirit Flames",
   "battles.ability.buddycards.spirit_flames.desc": "When Fyo is damaged by a buddy, that buddy is set on fire and loses 1 power.",
   "battles.ability.buddycards.spirit_flames.log": " is set on fire and loses 1 power from Spicy Flames",
@@ -510,5 +516,7 @@
   "battles.ability.buddycards.soul_light.desc": "When played, monster buddies lose 2 power.",
   "battles.ability.buddycards.soul_light.log": "Monster buddies lose 2 power from Soul Light",
   "battles.ability.buddycards.cheese_toss": "Cheese Toss",
-  "battles.ability.buddycards.cheese_toss.desc": "When you play Enrok, they have a 50% chance to attack."
+  "battles.ability.buddycards.cheese_toss.desc": "When you play Enrok, they have a 50% chance to attack.",
+  "battles.ability.buddycards.cheese_toss.log1": "Enrok deals 2 damage to ",
+  "battles.ability.buddycards.cheese_toss.log2": " from Cheese Toss"
 }
