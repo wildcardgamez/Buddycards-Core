@@ -9,6 +9,7 @@ import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.BuddycardBattleIcon;
 import com.wildcard.buddycards.battles.IBattleIcon;
 import com.wildcard.buddycards.battles.game.BattleGame;
+import com.wildcard.buddycards.battles.game.BattleStatusEffect;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.menu.PlaymatMenu;
 
@@ -139,12 +140,8 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
             if (!(itemStack.getItem() instanceof BuddycardItem card)) {
                 continue;
             }
-
-            int powerIndex = i;
-            if (!menu.entity.p1) {
-                powerIndex = BattleGame.opposite(i);
-            }
-            int power = game.state[powerIndex].power;
+            int position = !menu.entity.p1 ? i : BattleGame.opposite(i);
+            int power = game.state[position].power;
             ChatFormatting color;
             if (power == 0) {
                 color = ChatFormatting.RED;
@@ -153,8 +150,13 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
             } else {
                 color = ChatFormatting.YELLOW;
             }
-            MutableComponent text = new TextComponent(power + "").withStyle(style -> style.withFont(smallFont).withColor(color));
+            MutableComponent text = new TextComponent(power + "").withStyle(style -> style.withFont(smallFont));
             this.font.draw(poseStack, text, slot.x + 13, slot.y + (i < 3 ? 8 : -1), Objects.requireNonNull(color.getColor()));
+            if(!game.state[position].status.equals(BattleStatusEffect.EMPTY)) {
+                BattleStatusEffect status = game.state[position].status;
+                text = new TextComponent(Character.toString('\u0ED0' + status.ordinal())).withStyle(style -> style.withFont(smallFont));
+                this.font.draw(poseStack, text, slot.x + 13, slot.y + (i < 3 ? 2 : 5), status.getColor());
+            }
         }
     }
 

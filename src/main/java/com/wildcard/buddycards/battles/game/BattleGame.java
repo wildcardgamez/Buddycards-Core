@@ -318,6 +318,7 @@ public class BattleGame {
             container.returnToDeck(getOwner(target), translateFrom(target));
             turnPower[target] = 0;
             state[target].power = 0;
+            state[target].status = BattleStatusEffect.EMPTY;
             return items.set(target, null);
         }
         return null;
@@ -329,6 +330,7 @@ public class BattleGame {
             this.container.removeItemNoUpdate(translateFrom(target));
             turnPower[target] = 0;
             state[target].power = 0;
+            state[target].status = BattleStatusEffect.EMPTY;
             return items.set(target, null);
         }
         return null;
