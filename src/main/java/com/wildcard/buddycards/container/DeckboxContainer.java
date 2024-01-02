@@ -1,106 +1,113 @@
 package com.wildcard.buddycards.container;
 
-import com.wildcard.buddycards.inventory.DeckboxInventory;
-import com.wildcard.buddycards.item.BuddycardItem;
-import com.wildcard.buddycards.registries.BuddycardsMisc;
-import net.minecraft.world.Container;
-import net.minecraft.world.entity.player.Inventory;
+import com.wildcard.buddycards.item.DeckboxItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class DeckboxContainer extends AbstractContainerMenu {
-    private final DeckboxInventory inventory;
-
-    public DeckboxContainer(int id, Inventory playerInv) {
-        this(id, playerInv, new DeckboxInventory(playerInv.getSelected()));
+public class DeckboxContainer extends SimpleContainer {
+    public DeckboxContainer(ItemStack deck) {
+        super(18);
+        deckbox = deck;
     }
 
-    public DeckboxContainer(int id, Inventory playerInv, DeckboxInventory inv) {
-        super(BuddycardsMisc.DECKBOX_CONTAINER.get(), id);
-        checkContainerSize(inv, inv.getContainerSize());
-        this.inventory = inv;
-
-        //Set up slots for deckbox
-        for (int y = 0; y < 2; y++) {
-            for (int x = 0; x < 8; x++) {
-                this.addSlot(new DeckSlot(inventory, x + (y * 8), 8 + x * 18, 18 + y * 18));
-            }
-        }
-        //Set up slots for inventory
-        for (int y = 0; y < 3; y++) {
-            for (int x = 0; x < 9; x++) {
-                this.addSlot(new InvSlot(playerInv, x + (y * 9) + 9, 8 + x * 18, 68 + y * 18));
-            }
-        }
-        //Set up slots for hotbar
-        for (int x = 0; x < 9; x++) {
-            this.addSlot(new InvSlot(playerInv, x, 8 + x * 18, 126));
-        }
-
-        this.inventory.startOpen(playerInv.player);
-    }
+    public ItemStack deckbox;
 
     @Override
-    public boolean stillValid(Player player) {
-        return true;
-    }
-
-    public static class DeckSlot extends Slot {
-        public DeckSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
+    public void startOpen(Player player)
+    {
+        //Set all slots in the deckbox as empty by default
+        for(int i = 0; i < this.getContainerSize(); i++) {
+            setItem(i, ItemStack.EMPTY);
         }
-
-        //Only let cards go into card slots
-        @Override
-        public boolean mayPlace(ItemStack stack) {
-            return stack.getItem() instanceof BuddycardItem;
-        }
-
-        //Only 1 card per slot
-        @Override
-        public int getMaxStackSize() {
-            return 1;
-        }
-    }
-    public class InvSlot extends Slot {
-        public InvSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-            super(inventoryIn, index, xPosition, yPosition);
-        }
-
-        //Only let the stack move if it isn't the open deckbox
-        @Override
-        public boolean mayPickup(Player player) {
-            return !(this.getItem().equals(inventory.deckbox));
-        }
-    }
-
-    @Override
-    public void removed(Player player) {
-        inventory.stopOpen(player);
-        super.removed(player);
-    }
-
-    @Override
-    public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack stack = ItemStack.EMPTY;
-        Slot slot = slots.get(index);
-        if(slot.hasItem())
+        if(deckbox.hasTag())
         {
-            stack = slot.getItem().copy();
-            if (index < slots.size() - 36)
-            {
-                if(!this.moveItemStackTo(slot.getItem(), slots.size() - 36, slots.size(), true))
-                    return ItemStack.EMPTY;
+            //If the deckbox has nbt data, turn it into items
+            CompoundTag nbt = deckbox.getTag();
+            ListTag list = nbt.getList("Items", Tag.TAG_COMPOUND);
+            for(int i = 0; i < list.size(); i++) {
+                CompoundTag compoundnbt = list.getCompound(i);
+                int k = compoundnbt.getInt("Slot");
+                if (k < this.getContainerSize()) {
+                    this.setItem(k, ItemStack.of(compoundnbt));
+                }
             }
-            else if(!this.moveItemStackTo(slot.getItem(), 0, slots.size() - 36, false))
-                return ItemStack.EMPTY;
-            if(slot.getItem().isEmpty())
-                slot.set(ItemStack.EMPTY);
-            else
-                slot.setChanged();
         }
-        return stack;
+    }
+
+    public void startOpen()
+    {
+        //Set all slots in the deckbox as empty by default
+        for(int i = 0; i < this.getContainerSize(); i++) {
+            setItem(i, ItemStack.EMPTY);
+        }
+        if(deckbox.hasTag())
+        {
+            //If the deckbox has nbt data, turn it into items
+            CompoundTag nbt = deckbox.getTag();
+            ListTag list = nbt.getList("Items", Tag.TAG_COMPOUND);
+            for(int i = 0; i < list.size(); i++) {
+                CompoundTag compoundnbt = list.getCompound(i);
+                int k = compoundnbt.getInt("Slot");
+                if (k < this.getContainerSize()) {
+                    this.setItem(k, ItemStack.of(compoundnbt));
+                }
+            }
+        }
+    }
+
+    @Override
+    public void stopOpen(Player player)
+    {
+        if(!deckbox.isEmpty())
+        {
+            //When the deckbox has cards in it, turn them into nbt data and put them in the deckbox
+            CompoundTag nbt = deckbox.getOrCreateTag();
+            CompoundTag deck = new CompoundTag();
+            ListTag list = new ListTag();
+            for(int i = 0; i < this.getContainerSize(); i++) {
+                ItemStack itemstack = this.getItem(i);
+                if (!itemstack.isEmpty()) {
+                    CompoundTag compoundnbt = new CompoundTag();
+                    compoundnbt.putInt("Slot", i);
+                    itemstack.save(compoundnbt);
+                    list.add(compoundnbt);
+                    String name = itemstack.getDisplayName().getString();
+                    if(deck.contains(name))
+                        deck.putInt(name, deck.getInt(name) + 1);
+                    else
+                        deck.putInt(name, 1);
+                }
+            }
+            nbt.put("Items", list);
+            nbt.put("Deck", deck);
+            deckbox.setTag(nbt);
+        }
+        DeckboxItem.updateFull(deckbox);
+    }
+
+    public void saveStats(boolean win) {
+        CompoundTag nbt = deckbox.getTag();
+        ListTag list = nbt.getList("Items", Tag.TAG_COMPOUND);
+        for(int i = 0; i < list.size(); i++) {
+            ItemStack card = ItemStack.of(list.getCompound(i));
+            if(card.hasTag() && card.getTag().contains("wins")) {
+                CompoundTag cardNbt = card.getTag();
+                if(win)
+                    cardNbt.putInt("wins", 1 + cardNbt.getInt("wins"));
+                else
+                    cardNbt.putInt("loss", 1 + cardNbt.getInt("loss"));
+                card.setTag(cardNbt);
+                CompoundTag compoundnbt = new CompoundTag();
+                compoundnbt.putInt("Slot", i);
+                card.save(compoundnbt);
+                list.set(i, compoundnbt);
+            }
+        }
+        nbt.put("Items", list);
+        deckbox.setTag(nbt);
     }
 }

@@ -73,6 +73,15 @@ public class ConfigManager {
                 .defineInRange("enderling.netherOdds", .005, 0, 1);
         enderlingChanceOverworld = builder.comment("\nOdds for an Enderling to spawn with an Enderman in the Overworld, 0-1, default is 1.5%")
                 .defineInRange("enderling.overOdds", .015, 0, 1);
+
+        deckLimitCommon = builder.comment("\nMax duplicates of a common card for a Buddycards deck, 0-16, default is 4")
+                .defineInRange("deckBuilding.commonDupeLimit", 4, 1, 16);
+        deckLimitUncommon = builder.comment("\nMax duplicates of an uncommon card for a Buddycards deck, 0-16, default is 3")
+                .defineInRange("deckBuilding.uncommonDupeLimit", 3, 1, 16);
+        deckLimitRare = builder.comment("\nMax duplicates of a rare card for a Buddycards deck, 0-16, default is 2")
+                .defineInRange("deckBuilding.rareDupeLimit", 2, 1, 16);
+        deckLimitEpic = builder.comment("\nMax duplicates of an epic card for a Buddycards deck, 0-16, default is 1")
+                .defineInRange("deckBuilding.epicDupeLimit", 1, 1, 16);
     }
 
     public static ForgeConfigSpec.DoubleValue zombieChance;
@@ -100,4 +109,9 @@ public class ConfigManager {
     public static ForgeConfigSpec.DoubleValue enderlingChanceOverworld;
     public static ForgeConfigSpec.DoubleValue enderlingChanceNether;
     public static ForgeConfigSpec.DoubleValue enderlingChanceEnd;
+
+    public static ForgeConfigSpec.IntValue deckLimitCommon;
+    public static ForgeConfigSpec.IntValue deckLimitUncommon;
+    public static ForgeConfigSpec.IntValue deckLimitRare;
+    public static ForgeConfigSpec.IntValue deckLimitEpic;
 }

@@ -3,7 +3,6 @@ package com.wildcard.buddycards.item;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Rarity;
 
 public enum MedalTypes implements IMedalTypes{
     BASE_SET((player, mod) -> {

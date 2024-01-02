@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XYX",
+    "YXY",
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:blue_stained_glass_pane"
+    },
+    "Y": {
+      "item": "buddycards:buddysteel_nugget"
+    }
+  },
+  "result": {
+    "item": "buddycards:battle_sleeve",
+    "count": 5
+  }
+}

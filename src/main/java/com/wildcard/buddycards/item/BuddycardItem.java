@@ -1,6 +1,10 @@
 package com.wildcard.buddycards.item;
 
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.battles.game.BattleAbility;
+import com.wildcard.buddycards.battles.game.BattleEvent;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.registries.BuddycardsItems;
@@ -14,10 +18,11 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuddycardItem extends Item {
-    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Properties properties, int cost, int power) {
+    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Properties properties, int cost, int power, ListMultimap<BattleEvent, BattleAbility> abilities) {
         super(properties);
         SET = set;
         CARD_NUMBER = cardNumber;
@@ -25,6 +30,7 @@ public class BuddycardItem extends Item {
         REQUIREMENT = shouldLoad;
         COST = cost;
         POWER = power;
+        ABILITIES = ImmutableListMultimap.copyOf(abilities);
 
         BuddycardsAPI.registerCard(this);
     }
@@ -36,26 +42,38 @@ public class BuddycardItem extends Item {
 
     protected final int COST;
     protected final int POWER;
+    protected final ImmutableListMultimap<BattleEvent, BattleAbility> ABILITIES;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(new TextComponent("" + COST).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.cost"))
                 .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
                 .append("" + POWER).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.power")));
-        tooltip.add(new TextComponent(""));
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".ability").withStyle(ChatFormatting.WHITE));
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".ability_desc").withStyle(ChatFormatting.GRAY));
-        tooltip.add(new TextComponent(""));
+        for (BattleAbility ability: ABILITIES.values()) {
+            tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name).withStyle(ChatFormatting.GRAY));
+            tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+        }
         //Show the cards joke/tooltip
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
         //Show the set, card number, and shiny symbol if applicable
         TranslatableComponent cn = new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
         cn.append("" + CARD_NUMBER);
         if(isFoil(stack))
             cn.append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol"));
         tooltip.add(new TranslatableComponent(SET.getDescriptionId()).append(cn).withStyle(ChatFormatting.GRAY));
+        //Show grade
         if(stack.hasTag() && stack.getTag().contains("grade")) {
-            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.grade." + stack.getTag().getInt("grade")).withStyle(ChatFormatting.GRAY));
+            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.grade." + stack.getTag().getInt("grade")).withStyle(ChatFormatting.LIGHT_PURPLE));
+        }
+        //Show battle stats
+        if(stack.hasTag() && stack.getTag().contains("wins")) {
+            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.stats")
+                    .append("" + stack.getTag().getInt("wins"))
+                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.power"))
+                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
+                    .append("" + stack.getTag().getInt("loss"))
+                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.skull"))
+                    .withStyle(ChatFormatting.BLUE));
         }
     }
 
@@ -97,6 +115,18 @@ public class BuddycardItem extends Item {
             return stack.getTag().getInt("grade");
         return 0;
     }
+    
+    public int getCost() {
+        return this.COST;
+    }
+    
+    public int getPower() {
+        return this.POWER;
+    }
+    
+    public ListMultimap<BattleEvent, BattleAbility> getAbilities() {
+        return this.ABILITIES;
+    }
 
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
@@ -115,9 +145,7 @@ public class BuddycardItem extends Item {
         return REQUIREMENT.shouldLoad();
     }
 
-    public void setupOnBattlefield(ItemStack stack) {
-        CompoundTag nbt = stack.getOrCreateTag();
-        nbt.putInt("power", POWER);
-        stack.setTag(nbt);
+    public BuddycardItem getOriginal() {
+        return this;
     }
 }

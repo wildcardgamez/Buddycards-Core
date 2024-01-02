@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "XYX",
+    " X "
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:buddysteel_nugget"
+    },
+    "Y": {
+      "item": "buddycards:buddysteel_ingot"
+    }
+  },
+  "result": {
+    "item": "buddycards:buddysteel_deckbox"
+  }
+}

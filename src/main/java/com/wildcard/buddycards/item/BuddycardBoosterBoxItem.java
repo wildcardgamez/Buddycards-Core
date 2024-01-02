@@ -1,10 +1,6 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.core.BuddycardSet;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;

@@ -43,14 +43,17 @@ public class BuddycardBoosterBoxBlock extends Block {
         return SHAPE_BY_LAYER[state.getValue(LAYERS)];
     }
 
+    @Override
     public boolean useShapeForLightOcclusion(BlockState state) {
         return true;
     }
 
+    @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState blockState, LevelAccessor world, BlockPos pos, BlockPos pos1) {
         return !state.canSurvive(world, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, direction, blockState, world, pos, pos1);
     }
 
+    @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
         int i = state.getValue(LAYERS);
         if (context.getItemInHand().getItem() == this.asItem() && i < 4) {
@@ -65,6 +68,7 @@ public class BuddycardBoosterBoxBlock extends Block {
     }
 
     @Nullable
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState blockstate = context.getLevel().getBlockState(context.getClickedPos());
         if (blockstate.is(this)) {
@@ -75,6 +79,7 @@ public class BuddycardBoosterBoxBlock extends Block {
         }
     }
 
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(LAYERS);
         builder.add(DIR);

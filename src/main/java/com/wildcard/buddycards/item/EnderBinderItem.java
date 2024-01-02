@@ -1,7 +1,8 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.container.BinderContainer;
+import com.wildcard.buddycards.menu.BinderMenu;
 import com.wildcard.buddycards.savedata.EnderBinderSaveData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -19,13 +20,13 @@ public class EnderBinderItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-        if(player instanceof ServerPlayer) {
+        if(player instanceof ServerPlayer serverPlayer && world instanceof ServerLevel serverLevel) {
             //Open the GUI on server side
-            NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInventory, entity) -> new BinderContainer(id, player.getInventory(),
-                            EnderBinderSaveData.get(((ServerPlayer) player).getLevel()).getOrMakeEnderBinder(player.getUUID()))
+            NetworkHooks.openGui(serverPlayer, new SimpleMenuProvider(
+                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(),
+                            EnderBinderSaveData.get(serverLevel).getOrMakeEnderBinder(player.getUUID()))
                     , player.getItemInHand(hand).getHoverName()));
         }
-        return InteractionResultHolder.success(player.getItemInHand(hand));
+        return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), world.isClientSide());
     }
 }

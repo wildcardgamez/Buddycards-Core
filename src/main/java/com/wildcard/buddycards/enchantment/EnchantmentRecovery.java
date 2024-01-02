@@ -11,10 +11,12 @@ public class EnchantmentRecovery extends Enchantment{
         super(Enchantment.Rarity.RARE, COOLDOWN_ITEMS, EquipmentSlot.values());
     }
 
+    @Override
     public int getMinCost(int par1) {
         return 15 * (par1 - 1);
     }
 
+    @Override
     public int getMaxCost(int par1) {
         return 25 + (par1 * 10);
     }

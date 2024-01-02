@@ -1,9 +1,10 @@
 package com.wildcard.buddycards.savedata;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.inventory.BinderInventory;
+import com.wildcard.buddycards.container.BinderContainer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.saveddata.SavedData;
 
@@ -12,17 +13,17 @@ import java.util.Map;
 import java.util.UUID;
 
 public class EnderBinderSaveData extends SavedData {
-    private final static HashMap<UUID, BinderInventory> INVENTORIES = new HashMap<>();
+    private static final HashMap<UUID, BinderContainer> INVENTORIES = new HashMap<>();
 
     public EnderBinderSaveData() {
     }
 
     public EnderBinderSaveData(CompoundTag nbt) {
-        ListTag list = nbt.getList("ebdata", CompoundTag.TAG_COMPOUND);
+        ListTag list = nbt.getList("ebdata", Tag.TAG_COMPOUND);
         for (int i = 0; i < list.size(); i++) {
             CompoundTag compound = list.getCompound(i);
-            BinderInventory inv = new BinderInventory(54, true);
-            inv.fromTag(compound.getList("inv", CompoundTag.TAG_COMPOUND));
+            BinderContainer inv = new BinderContainer(54, true);
+            inv.fromTag(compound.getList("inv", Tag.TAG_COMPOUND));
             INVENTORIES.put(compound.getUUID("uuid"), inv);
         }
     }
@@ -34,7 +35,7 @@ public class EnderBinderSaveData extends SavedData {
     @Override
     public CompoundTag save(CompoundTag nbt) {
         ListTag list = new ListTag();
-        for (Map.Entry<UUID, BinderInventory> i: INVENTORIES.entrySet()) {
+        for (Map.Entry<UUID, BinderContainer> i: INVENTORIES.entrySet()) {
             CompoundTag compound = new CompoundTag();
             compound.putUUID("uuid", i.getKey());
             compound.put("inv", i.getValue().createTag());
@@ -44,10 +45,8 @@ public class EnderBinderSaveData extends SavedData {
         return nbt;
     }
 
-    public BinderInventory getOrMakeEnderBinder(UUID uuid) {
-        if(!INVENTORIES.containsKey(uuid))
-            INVENTORIES.put(uuid, new BinderInventory(54, true));
+    public BinderContainer getOrMakeEnderBinder(UUID uuid) {
         setDirty();
-        return(INVENTORIES.get(uuid));
+        return INVENTORIES.computeIfAbsent(uuid, key -> new BinderContainer(54, true));
     }
 }

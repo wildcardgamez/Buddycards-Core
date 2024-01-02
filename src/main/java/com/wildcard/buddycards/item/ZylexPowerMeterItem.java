@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.savedata.PerfectBuddycardCollectionSaveData;
+import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
@@ -23,14 +23,14 @@ public class ZylexPowerMeterItem extends DescriptionItem {
         if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof ZylexPowerMeterItem) {
             if(player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
                 //Specific set
-                PerfectBuddycardCollectionSaveData.Fraction cardsCollected = PerfectBuddycardCollectionSaveData.get(serverLevel).checkPlayerSetCompletion(player.getUUID(), card.getSet());
+                BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.getPerfect(serverLevel).checkPlayerSetCompletion(player.getUUID(), card.getSet());
                 player.displayClientMessage(new TranslatableComponent(card.getSet().getDescriptionId())
                         .append(new TranslatableComponent("item.buddycards.zylex_power_meter.cards_collected"))
                         .append(cardsCollected.top + "/" + cardsCollected.bottom), true);
             }
             else {
                 //Nonspecific set
-                PerfectBuddycardCollectionSaveData.Fraction cardsCollected = PerfectBuddycardCollectionSaveData.get(serverLevel).checkPlayerTotalCompletion(player.getUUID());
+                BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.getPerfect(serverLevel).checkPlayerTotalCompletion(player.getUUID());
                 player.displayClientMessage(new TranslatableComponent("item.buddycards.zylex_power_meter.total_cards_collected")
                         .append(cardsCollected.top + "/" + cardsCollected.bottom), true);
                 CompoundTag nbt = stack.getOrCreateTag();

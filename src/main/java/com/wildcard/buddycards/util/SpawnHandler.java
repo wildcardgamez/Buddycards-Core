@@ -10,8 +10,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class SpawnHandler {
     @SubscribeEvent
-    public void onSpawn(LivingSpawnEvent event) {
-        if (event instanceof LivingSpawnEvent.CheckSpawn && event.getEntity() instanceof EnderMan && ((LivingSpawnEvent.CheckSpawn) event).getSpawnReason() == MobSpawnType.NATURAL) {
+    public void onSpawn(LivingSpawnEvent.CheckSpawn event) {
+        if (event.getEntity() instanceof EnderMan && event.getSpawnReason() == MobSpawnType.NATURAL) {
             double rand = event.getWorld().getRandom().nextDouble();
             if ((event.getEntity().level.dimension().equals(Level.END) && rand < ConfigManager.enderlingChanceEnd.get()) ||
                     (event.getEntity().level.dimension().equals(Level.NETHER) && rand < ConfigManager.enderlingChanceNether.get()) ||

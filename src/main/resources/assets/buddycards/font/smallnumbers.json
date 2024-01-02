@@ -1,0 +1,15 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "buddycards:font/smallnumbers.png",
+      "height": 5,
+      "ascent": 5,
+      "chars": [
+        "\u0030\u0031\u0032\u0033\u0034\u0035\u0036\u0037\u0038\u0039",
+        "\u0ED0\u0ED1\u0ED2\u0ED3\u0ED4\u0ED5\u0ED6\u0ED7\u0ED8\u0ED9"
+      ],
+      "comment": "the second line contains the digits for 0 to 9 in the lao number system, they are used for effects"
+    }
+  ]
+}

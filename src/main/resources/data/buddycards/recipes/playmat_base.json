@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "tag": "minecraft:wool"
+    },
+    {
+      "tag": "buddycards:buddycards_base"
+    }
+  ],
+  "result":
+  {
+    "item": "buddycards:playmat_base",
+    "count": 1
+  }
+}

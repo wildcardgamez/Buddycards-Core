@@ -31,25 +31,18 @@ public class CardModelGen extends ItemModelProvider {
      */
     void genCardModel(BuddycardSet set, int cardNum) {
         String setName = set.getName();
-        final ResourceLocation location = new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum);
-        ItemModelBuilder card = factory.apply(location)
+        ItemModelBuilder card = getBuilder(ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum)
                 .parent(factory.apply(new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard")))
                 .texture("layer0", new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum));
-        card.override().predicate(new ResourceLocation("grade"), 1).model(genGradedCardModel(setName, cardNum, 1));
-        card.override().predicate(new ResourceLocation("grade"), 2).model(genGradedCardModel(setName, cardNum, 2));
-        card.override().predicate(new ResourceLocation("grade"), 3).model(genGradedCardModel(setName, cardNum, 3));
-        card.override().predicate(new ResourceLocation("grade"), 4).model(genGradedCardModel(setName, cardNum, 4));
-        card.override().predicate(new ResourceLocation("grade"), 5).model(genGradedCardModel(setName, cardNum, 5));
-        generatedModels.put(location, card);
+        for (int i = 1; i <= 5; i++) {
+            card.override().predicate(new ResourceLocation(Buddycards.MOD_ID, "grade"), i).model(genGradedCardModel(setName, cardNum, i));
+        }
     }
 
     ModelFile genGradedCardModel(String setName, int cardNum, int grade) {
-        final ResourceLocation location;
-        location = new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum + "_g" + grade);
-        ItemModelBuilder card = factory.apply(location)
+        return getBuilder(ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum + "_g" + grade)
                 .parent(factory.apply(new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard")))
-                .texture("layer0", new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum));
-        generatedModels.put(location, card.texture("layer1", new ResourceLocation(Buddycards.MOD_ID,ModelProvider.ITEM_FOLDER + "/grade" + grade)));
-        return card;
+                .texture("layer0", new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum))
+                .texture("layer1", new ResourceLocation(Buddycards.MOD_ID,ModelProvider.ITEM_FOLDER + "/grade" + grade));
     }
 }

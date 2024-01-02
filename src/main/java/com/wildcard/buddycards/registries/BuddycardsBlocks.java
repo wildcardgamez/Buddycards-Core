@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 
 public class BuddycardsBlocks {
     public static final List<Supplier<CardDisplayBlock>> DISPLAY_BLOCKS = new ArrayList<>();
-    public static final List<Supplier<PlaymatBlock>> BOARD_BLOCKS = new ArrayList<>();
+    public static final List<Supplier<PlaymatBlock>> PLAYMAT_BLOCKS = new ArrayList<>();
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Buddycards.MOD_ID);
 
@@ -67,7 +67,9 @@ public class BuddycardsBlocks {
     public static final RegistryObject<Block> BOOSTER_BOX_END = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_end", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     public static final RegistryObject<Block> BOOSTER_BOX_MYSTERY = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_mystery", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     //Playmats
-    public static final RegistryObject<PlaymatBlock> PLAYMAT = registerBoard("playmat_base", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
+    public static final RegistryObject<PlaymatBlock> PLAYMAT_BASE = registerPlaymat("playmat_base", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
+    public static final RegistryObject<PlaymatBlock> PLAYMAT_NETHER = registerPlaymat("playmat_nether", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
+    public static final RegistryObject<PlaymatBlock> PLAYMAT_END = registerPlaymat("playmat_end", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
 
     public static RegistryObject<CardDisplayBlock> registerDisplay(String id, Supplier<CardDisplayBlock> supplier) {
         RegistryObject<CardDisplayBlock> display = BLOCKS.register(id, supplier);
@@ -75,9 +77,9 @@ public class BuddycardsBlocks {
         return display;
     }
 
-    public static RegistryObject<PlaymatBlock> registerBoard(String id, Supplier<PlaymatBlock> supplier) {
-        RegistryObject<PlaymatBlock> board = BLOCKS.register(id, supplier);
-        BOARD_BLOCKS.add(board);
-        return board;
+    public static RegistryObject<PlaymatBlock> registerPlaymat(String id, Supplier<PlaymatBlock> supplier) {
+        RegistryObject<PlaymatBlock> playmat = BLOCKS.register(id, supplier);
+        PLAYMAT_BLOCKS.add(playmat);
+        return playmat;
     }
 }

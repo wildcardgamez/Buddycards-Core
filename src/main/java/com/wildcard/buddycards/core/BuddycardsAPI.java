@@ -32,4 +32,11 @@ public class BuddycardsAPI {
     public static Collection<BuddycardSet> getAllCardsets() {
         return Collections.unmodifiableCollection(CARD_SETS);
     }
+
+    public static BuddycardItem findCard(BuddycardSet set, int cardNumber) {
+        for (BuddycardItem card : set.cards)
+            if(card.getCardNumber() == cardNumber)
+                return card;
+        return null;
+    }
 }

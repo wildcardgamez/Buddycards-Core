@@ -69,6 +69,11 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 6,
+          "name": "buddycards:zylex_deckbox"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 4,
           "name": "buddycards:buddysteel_power_meter"
         },

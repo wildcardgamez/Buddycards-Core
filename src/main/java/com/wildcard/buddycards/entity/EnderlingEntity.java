@@ -21,7 +21,6 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -55,12 +54,12 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
         cheap = lvl.getRandom().nextDouble() < .1;
         setCanPickUpLoot(true);
-        if (lvl instanceof ServerLevel)
-            setupGoalItems((ServerLevel) lvl);
+        if (lvl instanceof ServerLevel serverLevel)
+            setupGoalItems(serverLevel);
     }
 
     public static AttributeSupplier setupAttributes() {
-        return Mob.createLivingAttributes()
+        return LivingEntity.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 20.0D)
                 .add(Attributes.MOVEMENT_SPEED, .5D)
                 .add(Attributes.FOLLOW_RANGE, 6.0f)
@@ -113,7 +112,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     protected boolean teleport() {
         if (!this.level.isClientSide() && this.isAlive()) {
             double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 32.0D;
-            double d1 = this.getY() + (double)(this.random.nextInt(32) - 32);
+            double d1 = this.getY() + this.random.nextInt(32) - 32;
             double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 32.0D;
             return this.teleport(d0, d1, d2);
         } else
@@ -166,6 +165,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         super.aiStep();
     }
 
+    @Override
     public boolean isSensitiveToWater() {
         return true;
     }

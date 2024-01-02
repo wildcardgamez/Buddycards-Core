@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "buddycards:item/zylex_deckbox_open"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "buddycards:full": 1
+      },
+      "model": "buddycards:item/zylex_deckbox_closed"
+    }
+  ]
+}

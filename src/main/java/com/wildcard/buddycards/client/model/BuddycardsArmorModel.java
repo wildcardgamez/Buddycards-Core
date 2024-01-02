@@ -53,11 +53,6 @@ public class BuddycardsArmorModel<T extends LivingEntity> extends HumanoidModel<
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-	}
-
-	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		head.render(poseStack, buffer, packedLight, packedOverlay);
 		body.render(poseStack, buffer, packedLight, packedOverlay);

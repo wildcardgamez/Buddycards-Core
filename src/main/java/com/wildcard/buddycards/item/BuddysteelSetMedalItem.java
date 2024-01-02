@@ -34,12 +34,11 @@ public class BuddysteelSetMedalItem extends MedalItem {
                     .append(stack.getTag().getString("player"))
                     .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddysteel_medal.time"))
                     .append(String.valueOf(stack.getTag().getInt("day")))
-                    .withStyle(ChatFormatting.GRAY));
-            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddysteel_medal.set")
-                    .withStyle(ChatFormatting.GRAY));
-            tooltip.add(new TranslatableComponent(SET.getDescriptionId())
-                    .withStyle(ChatFormatting.GRAY));
+                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddysteel_medal.set"))
+                    .append(new TranslatableComponent(SET.getDescriptionId())).withStyle(ChatFormatting.GRAY));
         }
+        else
+            tooltip.add(new TranslatableComponent(SET.getDescriptionId()).withStyle(ChatFormatting.GRAY));
     }
 
     protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
@@ -56,10 +55,12 @@ public class BuddysteelSetMedalItem extends MedalItem {
             super.fillItemCategory(group, items);
     }
 
+    @Override
     public boolean isEnchantable(ItemStack stack) {
         return stack.getCount() == 1;
     }
 
+    @Override
     public int getEnchantmentValue() {
         return 1;
     }

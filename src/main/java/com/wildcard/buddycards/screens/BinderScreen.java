@@ -1,22 +1,22 @@
-package com.wildcard.buddycards.screen;
+package com.wildcard.buddycards.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.container.BinderContainer;
+import com.wildcard.buddycards.menu.BinderMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class BinderScreen extends AbstractContainerScreen<BinderContainer> {
+public class BinderScreen extends AbstractContainerScreen<BinderMenu> {
 
     private static final ResourceLocation TEXTURE1 = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/binder.png");
     private static final ResourceLocation TEXTURE2 = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/binder2.png");
     private static final ResourceLocation TEXTURE3 = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/binder3.png");
     private static final ResourceLocation TEXTURE4 = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/binder4.png");
 
-    public BinderScreen(BinderContainer container, Inventory playerInventory, Component title) {
+    public BinderScreen(BinderMenu container, Inventory playerInventory, Component title) {
         super(container, playerInventory, title);
         //set up sizes for the gui
         int size = container.getItems().size();

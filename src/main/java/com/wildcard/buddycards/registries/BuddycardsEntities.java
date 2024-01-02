@@ -31,14 +31,14 @@ public class BuddycardsEntities {
                 Block[] blocks = BuddycardsBlocks.DISPLAY_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
                 return BlockEntityType.Builder.of(CardDisplayBlockEntity::new, blocks).build(null);
             });
-    public static final RegistryObject<BlockEntityType<PlaymatBlockEntity>> BATTLE_BOARD_ENTITY = BLOCK_ENTITIES.register("battle_board",
+    public static final RegistryObject<BlockEntityType<PlaymatBlockEntity>> PLAYMAT_ENTITY = BLOCK_ENTITIES.register("battle_board",
             () -> {
-                Block[] blocks = BuddycardsBlocks.BOARD_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
+                Block[] blocks = BuddycardsBlocks.PLAYMAT_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
                 return BlockEntityType.Builder.of(PlaymatBlockEntity::new, blocks).build(null);
             });
     public static final RegistryObject<BlockEntityType<KineticChamberBlockEntity>> KINETIC_CHAMBER_TILE = BLOCK_ENTITIES.register("kinetic_chamber",
             () -> BlockEntityType.Builder.of(KineticChamberBlockEntity::new, BuddycardsBlocks.KINETIC_CHAMBER.get()).build(null));
 
-    public static RegistryObject<EntityType<EnderlingEntity>> ENDERLING = ENTITIES.register("enderling",
+    public static final RegistryObject<EntityType<EnderlingEntity>> ENDERLING = ENTITIES.register("enderling",
             () -> EntityType.Builder.of(EnderlingEntity::new, MobCategory.CREATURE).sized(.6f, 1.8f).build(new ResourceLocation(Buddycards.MOD_ID, "enderling").toString()));
 }
