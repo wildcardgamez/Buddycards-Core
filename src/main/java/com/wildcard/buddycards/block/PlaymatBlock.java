@@ -99,18 +99,20 @@ public class PlaymatBlock extends BaseEntityBlock {
                 && opponent.getBlockState().hasProperty(DIR)
                 && opponent.getBlockState().getValue(DIR).getOpposite() == state.getValue(DIR)) {
 
+            //Set p1 for self
+            if (!self.p1 && !opponent.p1) {
+                self.p1 = true;
+            }
             //If both have no container, set them up
             if (self.container == null && opponent.container == null) {
                 self.container = new BattleContainer();
                 self.container.entity = self;
                 opponent.container = self.container;
-                self.p1 = true;
-                opponent.p1 = false;
                 self.setChanged();
                 opponent.setChanged();
             }
             //If one has a container, make them match
-            else if (self.container == null || opponent.container == null) {
+            else if (self.container == null || opponent.container == null || self.container != opponent.container) {
                 if(self.p1) {
                     opponent.container = self.container;
                     opponent.setChanged();

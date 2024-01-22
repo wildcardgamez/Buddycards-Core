@@ -106,13 +106,11 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     @Override
-    public void setLevel(Level setLevel) {
-        super.setLevel(setLevel);
-        if (setLevel.isClientSide && container == null) {
+    public void setLevel(Level lvll) {
+        super.setLevel(lvll);
+        if (level.isClientSide && container == null) {
             container = new BattleContainer();
             container.entity = this;
-            container.game = new BattleGame(container);
-            for (int i = 0; i < 6; i++) container.game.state[i] = new BattleCardState(0, BattleStatusEffect.EMPTY);
         }
     }
 

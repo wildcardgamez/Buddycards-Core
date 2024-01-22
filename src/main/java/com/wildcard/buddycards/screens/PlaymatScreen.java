@@ -140,7 +140,7 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
             if (!(itemStack.getItem() instanceof BuddycardItem card)) {
                 continue;
             }
-            int position = !menu.entity.p1 ? i : BattleGame.opposite(i);
+            int position = menu.entity.p1 ? i : BattleGame.opposite(i);
             int power = game.state[position].power;
             ChatFormatting color;
             if (power == 0) {

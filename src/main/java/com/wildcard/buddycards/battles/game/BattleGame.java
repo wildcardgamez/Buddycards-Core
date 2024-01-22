@@ -35,6 +35,7 @@ public class BattleGame {
             if (container.getItem(i).getItem() instanceof BuddycardItem item) items.add(item);
             else items.add(null);
         }
+        for (int i = 0; i < 6; i++) state[i] = new BattleCardState(0, BattleStatusEffect.EMPTY);
     }
     
     public boolean hasGameEnded() {
