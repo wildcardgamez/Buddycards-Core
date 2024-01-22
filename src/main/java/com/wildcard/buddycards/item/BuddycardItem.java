@@ -34,6 +34,20 @@ public class BuddycardItem extends Item {
 
         BuddycardsAPI.registerCard(this);
     }
+    
+    @Deprecated
+    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Properties properties) {
+        super(properties);
+        SET = set;
+        CARD_NUMBER = cardNumber;
+        RARITY = rarity;
+        REQUIREMENT = shouldLoad;
+        COST = 2;
+        POWER = 2;
+        ABILITIES = ImmutableListMultimap.of();
+
+        BuddycardsAPI.registerCard(this);
+    }
 
     protected final BuddycardSet SET;
     protected final int CARD_NUMBER;
