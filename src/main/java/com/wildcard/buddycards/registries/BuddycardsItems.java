@@ -642,14 +642,20 @@ public class BuddycardsItems {
         })).build());
         /*SKULLY   */ registerCard(NETHER_SET, 13, Rarity.UNCOMMON, 5, 2, DEFAULT_NO_ABILITIES);
         /*BLAZT    */ registerCard(NETHER_SET, 14, Rarity.UNCOMMON, 6, 2, new BattleAbility.Builder().add(BattleEvent.ACTIVATED.ability("flaming_shot", (game, slot, target, source) -> {
+            boolean p1 = BattleGame.getOwner(slot);
             int opp = BattleGame.opposite(slot);
-            if(game.getCard(opp) != null) {
+            if(game.container.energy(p1) >= 1 && game.getCard(opp) != null) {
+                if (p1)
+                    game.container.energy1 -= 1;
+                else
+                    game.container.energy2 -= 1;
                 game.state[opp].status = BattleStatusEffect.FIRE;
                 game.directAttack(opp, slot, 1, false, false);
                 game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.flaming_shot.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(1))));
                 game.updatePower(opp);
+                return true;
             }
-            return true;
+            return false;
         })).build());
         /*QUAZI    */ registerCard(NETHER_SET, 15, Rarity.UNCOMMON, 4, 2, new BattleAbility.Builder().add(BattleEvent.POWERED.ability("subtraction", (game, slot, target, source) -> {
             if(target != slot && game.getCard(target) != null && game.isP1() == BattleGame.getOwner(slot)) {
@@ -702,7 +708,22 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*GHOST    */ registerCard(NETHER_SET, 20, Rarity.UNCOMMON, 8, 2, DEFAULT_NO_ABILITIES);
+        /*GHOST    */ registerCard(NETHER_SET, 20, Rarity.UNCOMMON, 8, 2, new BattleAbility.Builder().add(BattleEvent.ACTIVATED.ability("fire_spitball", (game, slot, target, source) -> {
+            boolean p1 = BattleGame.getOwner(slot);
+            int opp = BattleGame.opposite(slot);
+            if(game.container.energy(p1) >= 2 && game.getCard(opp) != null) {
+                if (p1)
+                    game.container.energy1 -= 2;
+                else
+                    game.container.energy2 -= 2;
+                game.state[opp].status = BattleStatusEffect.FIRE;
+                game.directAttack(opp, slot, 2, false, false);
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.fire_spitball.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(2))));
+                game.updatePower(opp);
+                return true;
+            }
+            return false;
+        })).build());
         /*STRIDE   */ registerCard(NETHER_SET, 21, Rarity.UNCOMMON, 5, 3, DEFAULT_NO_ABILITIES);
         /*BARTENDER*/ registerCard(NETHER_SET, 22, Rarity.RARE,     6, 3, DEFAULT_NO_ABILITIES);
         /*PORT     */ registerCard(NETHER_SET, 23, Rarity.RARE,     10,6, DEFAULT_NO_ABILITIES);
