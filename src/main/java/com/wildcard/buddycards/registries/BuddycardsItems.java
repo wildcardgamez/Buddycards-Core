@@ -98,13 +98,21 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*BETSY      */ registerCard(BASE_SET,  7, Rarity.COMMON,   5, 2, new BattleAbility.Builder().add(BattleEvent.TURN.ability("milk_maid", (game, slot, target, source) -> {
-            if(BattleGame.getOwner(slot))
-                game.container.health1++;
-            else
-                game.container.health2++;
-            game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.milk_maid.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.healIcon(1))));
-            return true;
+        /*BETSY      */ registerCard(BASE_SET,  7, Rarity.COMMON,   5, 2, new BattleAbility.Builder().add(BattleEvent.ACTIVATED.ability("milk_maid", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            List<Integer> changedCards = new ArrayList<>();
+            for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
+                if (!game.state[i].status.equals(BattleStatusEffect.EMPTY)) {
+                    game.state[i].status = BattleStatusEffect.EMPTY;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.statusIcon(BattleStatusEffect.EMPTY));
+                }
+            }
+            if(icons.size() > 2) {
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.milk_maid.log"), icons));
+                return true;
+            }
+            return false;
         })).build());
         /*SNOWBELLE  */ registerCard(BASE_SET,  8, Rarity.COMMON,   1, 1, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("snowball_fight", (game, slot, target, source) -> {
             if(BattleGame.getOwner(slot))
@@ -614,7 +622,14 @@ public class BuddycardsItems {
             game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.soul_steal.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.healIcon(1))));
             return true;
         })).build());
-        /*BASISAL  */ registerCard(NETHER_SET,  7, Rarity.COMMON,   4, 2, DEFAULT_NO_ABILITIES);
+        /*BAISAL  */ registerCard(NETHER_SET,  7, Rarity.COMMON,   3, 2, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("igneous_extrusion", (game, slot, target, source) -> {
+            if(game.state[slot].status.equals(BattleStatusEffect.FIRE)) {
+                game.turnPower[slot] += 2;
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.igneous_extrusion.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(2))));
+                game.updatePower(slot);
+            }
+            return true;
+        })).build());
         /*VINNIE   */ registerCard(NETHER_SET,  8, Rarity.COMMON,   4, 3, DEFAULT_NO_ABILITIES);
         /*SHROOM   */ registerCard(NETHER_SET,  9, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
         /*WARP_NYE */ registerCard(NETHER_SET, 10, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
