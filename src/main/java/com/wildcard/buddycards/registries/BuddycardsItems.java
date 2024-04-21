@@ -641,7 +641,16 @@ public class BuddycardsItems {
             return true;
         })).build());
         /*SKULLY   */ registerCard(NETHER_SET, 13, Rarity.UNCOMMON, 5, 2, DEFAULT_NO_ABILITIES);
-        /*BLAZT    */ registerCard(NETHER_SET, 14, Rarity.UNCOMMON, 6, 2, DEFAULT_NO_ABILITIES);
+        /*BLAZT    */ registerCard(NETHER_SET, 14, Rarity.UNCOMMON, 6, 2, new BattleAbility.Builder().add(BattleEvent.ACTIVATED.ability("flaming_shot", (game, slot, target, source) -> {
+            int opp = BattleGame.opposite(slot);
+            if(game.getCard(opp) != null) {
+                game.state[opp].status = BattleStatusEffect.FIRE;
+                game.directAttack(opp, slot, 1, false, false);
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.flaming_shot.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(1))));
+                game.updatePower(opp);
+            }
+            return true;
+        })).build());
         /*QUAZI    */ registerCard(NETHER_SET, 15, Rarity.UNCOMMON, 4, 2, new BattleAbility.Builder().add(BattleEvent.POWERED.ability("subtraction", (game, slot, target, source) -> {
             if(target != slot && game.getCard(target) != null && game.isP1() == BattleGame.getOwner(slot)) {
                 game.directAttack(target, slot, 1, false, false);

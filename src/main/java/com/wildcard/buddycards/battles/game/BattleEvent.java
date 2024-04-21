@@ -32,6 +32,8 @@ public class BattleEvent {
     public static final BattleEvent DAMAGED = new BattleEvent("damaged");
     /** When a card is redstone powered */
     public static final BattleEvent POWERED = new BattleEvent("powered");
+    /** When a card is activated manually */
+    public static final BattleEvent ACTIVATED = new BattleEvent("activated");
     
     
     

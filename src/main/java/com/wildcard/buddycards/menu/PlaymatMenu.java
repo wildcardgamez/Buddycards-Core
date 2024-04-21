@@ -131,6 +131,9 @@ public class PlaymatMenu extends AbstractContainerMenu {
                 }
             } else if (slot instanceof BattlefieldSlot) {
                 //battlefield slots
+                if(!container.getItem(slotNum).isEmpty()) {
+                    container.game.trigger(BattleEvent.ACTIVATED, BattleGame.translateTo(slotNum));
+                }
                 int selSlot = selectedSlot.get();
                 if (selSlot != SLOT_CLICKED_OUTSIDE && container.getItem(slotNum).isEmpty()) {
                     if (container.game.playCard(BattleGame.translateTo(slotNum), container.getItem(selSlot), p1)) {
