@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "YXZ",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:buddysteel_ingot"
+    },
+    "Y": {
+      "item": "buddycards:luminis"
+    },
+    "Z": {
+      "item": "buddycards:zylex"
+    }
+  },
+  "result": {
+    "item": "buddycards:buddysteel_charger"
+  }
+}
