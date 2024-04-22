@@ -5,6 +5,7 @@ import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.CardDisplayBlockRenderer;
 import com.wildcard.buddycards.client.renderer.EnderlingRenderer;
 import com.wildcard.buddycards.client.renderer.PlaymatBlockRenderer;
+import com.wildcard.buddycards.integration.CuriosIntegration;
 import com.wildcard.buddycards.screens.ChargerScreen;
 import com.wildcard.buddycards.screens.DeckboxScreen;
 import com.wildcard.buddycards.core.BuddycardSet;

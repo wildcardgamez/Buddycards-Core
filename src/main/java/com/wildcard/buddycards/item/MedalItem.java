@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.util.CuriosIntegration;
+import com.wildcard.buddycards.integration.CuriosIntegration;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

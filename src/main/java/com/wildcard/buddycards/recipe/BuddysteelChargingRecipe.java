@@ -71,8 +71,21 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
         return Type.INSTANCE;
     }
 
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
     public float getPowerReq() {
         return powerReq;
+    }
+
+    public Ingredient getInput() {
+        return input;
+    }
+
+    public Ingredient getMeter() {
+        return meter;
     }
 
     public static class Type implements RecipeType<BuddysteelChargingRecipe> {

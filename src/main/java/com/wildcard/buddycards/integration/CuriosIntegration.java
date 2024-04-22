@@ -1,4 +1,4 @@
-package com.wildcard.buddycards.util;
+package com.wildcard.buddycards.integration;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.client.renderer.MedalRenderer;

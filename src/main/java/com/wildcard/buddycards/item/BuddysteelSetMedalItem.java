@@ -3,7 +3,7 @@ package com.wildcard.buddycards.item;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.registries.BuddycardsItems;
-import com.wildcard.buddycards.util.CuriosIntegration;
+import com.wildcard.buddycards.integration.CuriosIntegration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;

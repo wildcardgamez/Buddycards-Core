@@ -1,6 +1,7 @@
 package com.wildcard.buddycards;
 
 import com.wildcard.buddycards.battles.BuddycardsPackets;
+import com.wildcard.buddycards.integration.CuriosIntegration;
 import com.wildcard.buddycards.registries.*;
 import com.wildcard.buddycards.util.*;
 import net.minecraft.world.item.CreativeModeTab;

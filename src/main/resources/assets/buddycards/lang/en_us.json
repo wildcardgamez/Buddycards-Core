@@ -23,6 +23,7 @@
   "block.buddycards.zylex_block": "Block of Zylex",
   "block.buddycards.void_zylex_block": "Block of Void Zylex",
   "block.buddycards.buddysteel_charger": "Buddysteel Charger",
+  "block.buddycards.buddysteel_charger.jei_power": "Power required: ",
   "block.buddycards.charged_buddysteel_block": "Block of Charged Buddysteel",
   "block.buddycards.playmat_base": "Buddycards Playmat",
   "block.buddycards.playmat_nether": "Buddycards Playmat",
