@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.block.entity.BuddysteelChargerBlockEntity;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
 import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
@@ -38,6 +39,8 @@ public class BuddycardsEntities {
             });
     public static final RegistryObject<BlockEntityType<KineticChamberBlockEntity>> KINETIC_CHAMBER_TILE = BLOCK_ENTITIES.register("kinetic_chamber",
             () -> BlockEntityType.Builder.of(KineticChamberBlockEntity::new, BuddycardsBlocks.KINETIC_CHAMBER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<BuddysteelChargerBlockEntity>> BUDDYSTEEL_CHARGER_TILE = BLOCK_ENTITIES.register("buddysteel_carger",
+            () -> BlockEntityType.Builder.of(BuddysteelChargerBlockEntity::new, BuddycardsBlocks.BUDDYSTEEL_CHARGER.get()).build(null));
 
     public static final RegistryObject<EntityType<EnderlingEntity>> ENDERLING = ENTITIES.register("enderling",
             () -> EntityType.Builder.of(EnderlingEntity::new, MobCategory.CREATURE).sized(.6f, 1.8f).build(new ResourceLocation(Buddycards.MOD_ID, "enderling").toString()));

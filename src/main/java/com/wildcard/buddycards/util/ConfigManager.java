@@ -48,8 +48,8 @@ public class ConfigManager {
 
         luminisVeins = builder.comment("\nEnable Luminis vein generation, default is true")
                 .define("luminis.enableVeins", true);
-        luminisChunks = builder.comment("\nDistance between chunks that can spawn Luminis veins, under right conditions, default is 5")
-                .defineInRange("luminis.veinChunkDistance", 5, 1, 16);
+        luminisChunks = builder.comment("\nDistance between chunks that can spawn Luminis veins, under right conditions, default is 3")
+                .defineInRange("luminis.veinChunkDistance", 3, 1, 16);
         luminisBranchMin = builder.comment("\nMinimum amount of branches in a Luminis vein, default is 3")
                 .defineInRange("luminis.veinBranchAmtMin", 3, 1, 16);
         luminisBranchMax = builder.comment("\nMaximum amount of branches in a Luminis vein, default is 6")

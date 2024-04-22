@@ -943,6 +943,11 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_NETHER = ITEMS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_NETHER.get(), PACK_NETHER, DEFAULT_UNCOMMON_PROPERTIES));
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_END = ITEMS.register("buddycard_booster_box_end", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_END.get(), PACK_END, DEFAULT_UNCOMMON_PROPERTIES));
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_MYSTERY = ITEMS.register("buddycard_booster_box_mystery", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_MYSTERY.get(), MYSTERY_PACK, DEFAULT_EPIC_PROPERTIES));
+    //Charged Buddysteel Items
+    public static final RegistryObject<Item> BUDDYSTEEL_CHARGER = ITEMS.register("buddysteel_charger", () -> new BlockItem(BuddycardsBlocks.BUDDYSTEEL_CHARGER.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_INGOT = ITEMS.register("charged_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> PERFECT_BUDDYSTEEL_INGOT = ITEMS.register("perfect_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
+
 
     public static final  RegistryObject<ForgeSpawnEggItem> ENDERLING_SPAWN_EGG = ITEMS.register("spawn_egg_enderling", () -> new ForgeSpawnEggItem(BuddycardsEntities.ENDERLING, 0x2E2744, 0x9A72CC, DEFAULT_PROPERTIES));
 

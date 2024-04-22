@@ -1,10 +1,7 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.block.PlaymatBlock;
-import com.wildcard.buddycards.block.BuddycardBoosterBoxBlock;
-import com.wildcard.buddycards.block.CardDisplayBlock;
-import com.wildcard.buddycards.block.KineticChamberBlock;
+import com.wildcard.buddycards.block.*;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -70,6 +67,8 @@ public class BuddycardsBlocks {
     public static final RegistryObject<PlaymatBlock> PLAYMAT_BASE = registerPlaymat("playmat_base", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
     public static final RegistryObject<PlaymatBlock> PLAYMAT_NETHER = registerPlaymat("playmat_nether", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
     public static final RegistryObject<PlaymatBlock> PLAYMAT_END = registerPlaymat("playmat_end", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
+    //Misc
+    public static final RegistryObject<Block> BUDDYSTEEL_CHARGER = BLOCKS.register("buddysteel_charger", () -> new BuddysteelChargerBlock(BUDDYSTEEL_PROPERTIES));
 
     public static RegistryObject<CardDisplayBlock> registerDisplay(String id, Supplier<CardDisplayBlock> supplier) {
         RegistryObject<CardDisplayBlock> display = BLOCKS.register(id, supplier);

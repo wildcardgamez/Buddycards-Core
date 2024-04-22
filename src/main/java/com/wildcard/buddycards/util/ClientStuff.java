@@ -5,6 +5,7 @@ import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.CardDisplayBlockRenderer;
 import com.wildcard.buddycards.client.renderer.EnderlingRenderer;
 import com.wildcard.buddycards.client.renderer.PlaymatBlockRenderer;
+import com.wildcard.buddycards.screens.ChargerScreen;
 import com.wildcard.buddycards.screens.DeckboxScreen;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
@@ -31,6 +32,7 @@ public class ClientStuff {
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.BINDER_CONTAINER.get(), BinderScreen::new));
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.DECKBOX_CONTAINER.get(), DeckboxScreen::new));
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.PLAYMAT_CONTAINER.get(), PlaymatScreen::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.CHARGER_CONTAINER.get(), ChargerScreen::new));
         for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
             for (BuddycardItem card : set.getCards()) {
                 event.enqueueWork(() -> ItemProperties.register(card, new ResourceLocation(Buddycards.MOD_ID, "grade"), (stack, world, entity, idk) -> {

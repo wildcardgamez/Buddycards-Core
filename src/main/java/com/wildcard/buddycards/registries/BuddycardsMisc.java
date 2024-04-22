@@ -5,14 +5,17 @@ import com.wildcard.buddycards.enchantment.EnchantmentBuddyBoost;
 import com.wildcard.buddycards.enchantment.EnchantmentExtraPage;
 import com.wildcard.buddycards.enchantment.EnchantmentRecovery;
 import com.wildcard.buddycards.menu.BinderMenu;
+import com.wildcard.buddycards.menu.ChargerMenu;
 import com.wildcard.buddycards.menu.DeckboxMenu;
 import com.wildcard.buddycards.menu.PlaymatMenu;
+import com.wildcard.buddycards.recipe.BuddysteelChargingRecipe;
 import com.wildcard.buddycards.util.LootInjection;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -24,11 +27,13 @@ import net.minecraftforge.registries.RegistryObject;
 public class BuddycardsMisc {
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, Buddycards.MOD_ID);
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.CONTAINERS, Buddycards.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Buddycards.MOD_ID);
     public static final DeferredRegister<GlobalLootModifierSerializer<?>> GLMS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, Buddycards.MOD_ID);
 
     public static void registerStuff() {
         ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
         MENUS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         GLMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
@@ -44,6 +49,11 @@ public class BuddycardsMisc {
             () -> new MenuType<>((DeckboxMenu::new)));
     public static final RegistryObject<MenuType<PlaymatMenu>> PLAYMAT_CONTAINER = MENUS.register("playmat",
             () -> IForgeMenuType.create((PlaymatMenu::new)));
+    public static final RegistryObject<MenuType<ChargerMenu>> CHARGER_CONTAINER = MENUS.register("buddysteel_charger",
+            () -> IForgeMenuType.create((ChargerMenu::new)));
+
+    //Recipes
+    public static final RegistryObject<RecipeSerializer<BuddysteelChargingRecipe>> BUDDYSTEEL_CHARGING_SERIALIZER = RECIPES.register("buddysteel_charging", () -> BuddysteelChargingRecipe.Serializer.INSTANCE);
 
     //GLMs
     public static RegistryObject<GlobalLootModifierSerializer<LootInjection.LootInjectionModifier>> LOOT_INJECTION = GLMS.register("loot_injection", LootInjection.LootInjectionSerializer::new);
