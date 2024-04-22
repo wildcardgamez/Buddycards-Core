@@ -10,7 +10,10 @@ import java.util.function.Supplier;
 public enum BuddycardsToolTier implements Tier {
     BUDDYSTEEL(2048, 9.0F, 2.5F, 3, 12, BuddycardsItems.BUDDYSTEEL_INGOT),
     LUMINIS(1256, 9.0F, 3.0F, 3, 9, BuddycardsItems.CRIMSON_LUMINIS),
-    ZYLEX(1674, 9.0F, 3.0F, 3, 9, BuddycardsItems.ZYLEX);
+    ZYLEX(1674, 9.0F, 3.0F, 3, 9, BuddycardsItems.ZYLEX),
+    CHARGED_BUDDYSTEEL(2560, 9.0F, 3.5F, 4, 13, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT),
+    PERFECT_BUDDYSTEEL(3072, 10.0F, 4.5F, 4, 15, BuddycardsItems.PERFECT_BUDDYSTEEL_INGOT);
+
     int uses;
     float speed;
     float dmg;

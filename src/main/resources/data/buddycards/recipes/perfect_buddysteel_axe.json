@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "buddycards:charged_buddysteel_axe"
+  },
+  "addition": {
+    "item": "buddycards:perfect_buddysteel_ingot"
+  },
+  "result": {
+    "item": "buddycards:perfect_buddysteel_axe"
+  }
+}
