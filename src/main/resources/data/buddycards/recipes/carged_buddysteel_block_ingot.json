@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "buddycards:charged_buddysteel_block"
+    }
+  ],
+  "result":
+  {
+    "item": "buddycards:charded_buddysteel_ingot",
+    "count": 9
+  }
+}

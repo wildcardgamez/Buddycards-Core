@@ -15,7 +15,7 @@ public enum BuddycardsArmorMaterial implements ArmorMaterial {
     BUDDYSTEEL(12, 36, new int[]{3, 6, 8, 3}, 1, 0, BuddycardsItems.BUDDYSTEEL_INGOT, "buddysteel"),
     LUMINIS(8, 18, new int[]{3, 6, 8, 3}, 1, 0, BuddycardsItems.CRIMSON_LUMINIS, "luminis"),
     ZYLEX(8, 18, new int[]{3, 6, 8, 3}, 1, 0, BuddycardsItems.ZYLEX, "zylex"),
-    CHARGED_BUDDYSTEEL(13, 38, new int[]{3, 6, 8, 3}, 2, 0.1F, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT, "carged_buddysteel"),
+    CHARGED_BUDDYSTEEL(13, 38, new int[]{3, 6, 8, 3}, 2, 0.1F, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT, "charged_buddysteel"),
     PERFECT_BUDDYSTEEL(15, 45, new int[]{4, 7, 9, 4}, 2, 0.15F, BuddycardsItems.PERFECT_BUDDYSTEEL_INGOT, "perfect_buddysteel");
 
     BuddycardsArmorMaterial(int enchVal, int dura, int[] red, float toughness, float kbr, Supplier<Item> mat, String nameIn) {
