@@ -10,6 +10,8 @@
     "buddycards:luminis_ore",
     "buddycards:deepslate_luminis_ore",
     "buddycards:zylex_block",
-    "buddycards:void_zylex_block"
+    "buddycards:void_zylex_block",
+    "buddycards:charged_buddysteel_block",
+    "buddycards:perfect_buddysteel_block"
   ]
 }
