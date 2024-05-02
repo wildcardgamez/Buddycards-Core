@@ -48,6 +48,8 @@ public class BattleEvent {
         public static final Distribution ALL_ENEMY = (slot, game) -> slot < 3 ? new int[] {3,4,5} : new int[] {0,1,2};
         /** All of your cards */
         public static final Distribution ROW = (slot, game) -> slot < 3 ? new int[] {0,1,2} : new int[] {3,4,5};
+        /** All of your other cards */
+        public static final Distribution ROW_OTHER = (slot, game) -> game.allies(slot);
         /** The provided card and the opposing card */
         public static final Distribution COLUMN = (slot, game) -> new int[] {slot, game.opposite(slot)};
         /** Only the opposing card */

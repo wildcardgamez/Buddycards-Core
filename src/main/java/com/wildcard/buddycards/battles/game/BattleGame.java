@@ -400,6 +400,18 @@ public class BattleGame {
         case 5 -> new int[] {2,4};  //__2_4X
         };
     };
+
+    static public int[] allies(int slot) {
+        return switch(slot) {
+            default -> new int[] {-1};
+            case 0 -> new int[] {1,2};  //X12___
+            case 1 -> new int[] {0,2};//0X2___
+            case 2 -> new int[] {0,1};  //01X___
+            case 3 -> new int[] {4,5};  //___X45
+            case 4 -> new int[] {3,5};//___3X5
+            case 5 -> new int[] {3,4};  //___34X
+        };
+    }
     
     /** true = p1, false = p2 */
     static public boolean getOwner(int slot) {

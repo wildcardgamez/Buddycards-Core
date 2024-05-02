@@ -63,6 +63,7 @@ public class BuddycardsMisc {
     public static final TagKey<Item> BCB_ENCHANTABLE = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/enchantable"));
     public static final TagKey<Item> BCB_FIRE = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/fire"));
     public static final TagKey<Item> BCB_FOOD = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/food"));
+    public static final TagKey<Item> BCB_FUNGAL = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/fungal"));
     public static final TagKey<Item> BCB_METAL = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/metal"));
     public static final TagKey<Item> BCB_MONSTER = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/monster"));
     public static final TagKey<Item> BCB_REDSTONE = TagKey.m_203882_(Registry.ITEM_REGISTRY, new ResourceLocation(Buddycards.MOD_ID + ":battles/redstone"));

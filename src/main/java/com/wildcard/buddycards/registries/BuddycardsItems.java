@@ -188,12 +188,12 @@ public class BuddycardsItems {
                 game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.play_fetch.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.drawIcon)));
             return true;
         })).build());
-        /*YIN        */ registerCard(BASE_SET, 14, Rarity.UNCOMMON, 4, 2, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("lazy_cat", (game, slot, target, source) -> {
-            if(game.turnPower[slot] < 2 && game.isP1() == BattleGame.getOwner(slot)) {
+        /*YIN        */ registerCard(BASE_SET, 14, Rarity.UNCOMMON, 4, 2, new BattleAbility.Builder().add(BattleEvent.ACTIVATED.ability("lazy_cat", (game, slot, target, source) -> {
+            if(game.state[slot].status.equals(BattleStatusEffect.EMPTY)) {
                 game.turnPower[slot] += 2;
-                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.lazy_cat.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(2))));
+                game.state[slot].status = BattleStatusEffect.SLEEP;
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.lazy_cat.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(2), TextureBattleIcon.statusIcon(BattleStatusEffect.SLEEP))));
                 game.updatePower(slot);
-                return false;
             }
             return true;
         })).build());
@@ -630,9 +630,34 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*VINNIE   */ registerCard(NETHER_SET,  8, Rarity.COMMON,   4, 3, DEFAULT_NO_ABILITIES);
-        /*SHROOM   */ registerCard(NETHER_SET,  9, Rarity.COMMON,   3, 2, DEFAULT_NO_ABILITIES);
-        /*WARP_NYE */ registerCard(NETHER_SET, 10, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*VINNIE   */ registerCard(NETHER_SET,  8, Rarity.COMMON,   4, 3, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("warped_growth", (game, slot, target, source) -> {
+            for (int i: BattleEvent.Distribution.ROW_OTHER.apply(slot, game)) {
+                if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FUNGAL)) {
+                    game.turnPower[slot]++;
+                    game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.warped_growth.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
+                    game.updatePower(slot);
+                    break;
+                }
+            }
+            return true;
+        })).build());
+        /*SHROOM   */ registerCard(NETHER_SET,  9, Rarity.COMMON,   3, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("warping_spores", (game, slot, target, source) -> {
+            if(source != slot && game.getCard(source) != null) {
+                game.state[source].status = BattleStatusEffect.SLEEP;
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.warping_spores.desc")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.statusIcon(BattleStatusEffect.SLEEP))));
+            }
+            return true;
+        })).build());
+        /*WARP_NYE */ registerCard(NETHER_SET, 10, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("warped_spreading", (game, slot, target, source) -> {
+            for (int i: BattleEvent.Distribution.ROW_OTHER.apply(slot, game)) {
+                if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FUNGAL)) {
+                    if(game.container.tryDrawCard(game.isP1()))
+                        game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.warped_growth.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.drawIcon)));
+                    break;
+                }
+            }
+            return true;
+        })).build());
         /*FYA      */ registerCard(NETHER_SET, 11, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.DAMAGED.ability("spicy_flames", (game, slot, target, source) -> {
             if(source != slot && game.getCard(source) != null) {
                 game.state[source].status = BattleStatusEffect.FIRE;
@@ -704,6 +729,7 @@ public class BuddycardsItems {
             if(source != slot && game.getCard(source) != null) {
                 game.state[source].status = BattleStatusEffect.FIRE;
                 game.turnPower[source] -= 1;
+                game.updatePower(source);
                 game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spirit_flames.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(1))));
             }
             return true;
