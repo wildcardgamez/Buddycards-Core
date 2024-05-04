@@ -1,0 +1,16 @@
+{
+  "name": "Energy",
+  "icon": "buddycards:buddysteel_sword",
+  "category": "buddycards:basics",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Another thing every buddycard has is \uD83D\uDDE1 (Power). When played, a buddy's starting power is determined by what is written on the card, and will be displayed while in play. A green power number is equal to or above its starting power, yellow is under, and red is critically low. This power is the damage they will deal to the opponent while attacking."
+    },
+    {
+      "type": "text",
+      "text": "When you end your turn, before it goes to your next turn, your buddies attack. When you do one, each one attacks either the opponent, or the opponents buddy in front of them, for their power, but be careful, because an opposing buddy will fight back. When fighting another buddy, each one loses power equal to the other's power, and will die if they go below 0."
+    }
+  ]
+}

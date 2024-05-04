@@ -1,0 +1,21 @@
+{
+  "name": "Setting Up",
+  "icon": "buddycards:playmat_base",
+  "category": "buddycards:basics",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "In able to play Buddycards, you will need a pair of built decks (see Deckbuilding) and a pair of playmats. Playmats are easy to make. Place them across from eachother, then place your deckbox on your playmat. Once both players do this, the game will start."
+    },
+    {
+      "type": "crafting",
+      "recipe": "buddycards:playmat_base",
+      "recipe2": "buddycards:playmat_end"
+    },
+    {
+      "type": "text",
+      "text": "At the start of the game, each player draws two cards. After this, a player is chosen at random to go first, drawing a card at the start of their turn, which both players do at the start of each turn."
+    }
+  ]
+}

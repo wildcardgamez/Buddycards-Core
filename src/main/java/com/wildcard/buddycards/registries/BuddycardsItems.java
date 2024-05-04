@@ -100,7 +100,6 @@ public class BuddycardsItems {
         })).build());
         /*BETSY      */ registerCard(BASE_SET,  7, Rarity.COMMON,   5, 2, new BattleAbility.Builder().add(BattleEvent.ACTIVATED.ability("milk_maid", (game, slot, target, source) -> {
             List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
-            List<Integer> changedCards = new ArrayList<>();
             for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
                 if (!game.state[i].status.equals(BattleStatusEffect.EMPTY)) {
                     game.state[i].status = BattleStatusEffect.EMPTY;
@@ -778,9 +777,47 @@ public class BuddycardsItems {
             return false;
         })).build());
         /*STRIDE   */ registerCard(NETHER_SET, 21, Rarity.UNCOMMON, 5, 3, DEFAULT_NO_ABILITIES);
-        /*BARTENDER*/ registerCard(NETHER_SET, 22, Rarity.RARE,     6, 3, DEFAULT_NO_ABILITIES);
+        /*BARTENDER*/ registerCard(NETHER_SET, 22, Rarity.RARE,     9, 3, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("furious_cocktail", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
+                BattleStatusEffect effect = switch (BattleContainer.random.nextInt(3)) {
+                    case 0 -> BattleStatusEffect.STRENGTH;
+                    case 1 -> BattleStatusEffect.REGENERATION;
+                    default -> BattleStatusEffect.RESISTANCE;
+                };
+                game.state[i].status = effect;
+                icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                icons.add(TextureBattleIcon.statusIcon(effect));
+            }
+            game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.furious_cocktail.log"), icons));
+            return true;
+        })).add(BattleEvent.ACTIVATED.ability("splashy_potion", (game, slot, target, source) -> {
+            boolean p1 = BattleGame.getOwner(slot);
+            if(game.container.energy(p1) >= 5) {
+                List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+                for (int i : BattleEvent.Distribution.ROW_OTHER.apply(slot, game)) {
+                    BattleStatusEffect effect = switch (BattleContainer.random.nextInt(3)) {
+                        case 0 -> BattleStatusEffect.POISON;
+                        case 1 -> BattleStatusEffect.WEAKNESS;
+                        default -> BattleStatusEffect.WITHER;
+                    };
+                    game.state[i].status = effect;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.statusIcon(effect));
+                }
+                if(icons.size() > 2) {
+                    if (p1)
+                        game.container.energy1 -= 5;
+                    else
+                        game.container.energy2 -= 5;
+                    game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.splashy_potion.log"), icons));
+                    return true;
+                }
+            }
+            return false;
+        })).build());
         /*PORT     */ registerCard(NETHER_SET, 23, Rarity.RARE,     10,6, DEFAULT_NO_ABILITIES);
-        /*TRIPLE   */ registerCard(NETHER_SET, 24, Rarity.RARE,     10,4, DEFAULT_NO_ABILITIES);
+        /*TRIPLE   */ registerCard(NETHER_SET, 24, Rarity.RARE,     7,4, DEFAULT_NO_ABILITIES);
         /*ANKER    */ registerCard(NETHER_SET, 25, Rarity.RARE,     7, 4, DEFAULT_NO_ABILITIES);
         /*BEAKER   */ registerCard(NETHER_SET, 26, Rarity.EPIC,     10,5, DEFAULT_NO_ABILITIES);
         /*N_RITE   */ registerCard(NETHER_SET, 27, Rarity.EPIC,     9, 4, DEFAULT_NO_ABILITIES);

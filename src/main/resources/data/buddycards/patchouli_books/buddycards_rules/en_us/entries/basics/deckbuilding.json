@@ -1,0 +1,17 @@
+{
+  "name": "Deckbuilding",
+  "icon": "buddycards:buddysteel_deckbox",
+  "category": "buddycards:basics",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "crafting",
+      "recipe": "buddycards:buddysteel_deckbox",
+      "text": "In order to play buddycards, you need a deck! In order to make a deck, you need to make a deckbox."
+    },
+    {
+      "type": "text",
+      "text": "Each deckbox can store one 16 card deck. There will also be a ? that displays deckbuilding limitations based on rarity. By default, a deck can have 4 commons, 3 uncommons, 2 rares, and 1 epic card."
+    }
+  ]
+}

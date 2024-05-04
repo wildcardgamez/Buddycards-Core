@@ -1,0 +1,9 @@
+{
+  "name": "item.buddycards.buddycards_rulebook",
+  "landing_text": "Welcome to the Buddycards TCG! This book will cover everything you need to know to play and then some.",
+  "version": 1,
+  "creative_tab": "buddycards",
+  "book_texture": "patchouli:textures/gui/book_blue.png",
+  "model": "buddycards:buddycards_rulebook",
+  "show_progress": false
+}

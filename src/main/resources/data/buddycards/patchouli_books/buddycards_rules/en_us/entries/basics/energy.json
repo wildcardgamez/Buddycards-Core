@@ -1,0 +1,16 @@
+{
+  "name": "Energy",
+  "icon": "buddycards:luminis",
+  "category": "buddycards:basics",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "text",
+      "text": "☀ (Energy) is allocated every turn, and is mainly used to play buddies. Each buddycard has a cost on it that tells you how much you need to play it, and you will lose that much when it is played. The amount allocated each turn starts off slow, equal to the turn number, before maxing out at 5☀ per turn."
+    },
+    {
+      "type": "text",
+      "text": "This means the player who goes first only gets 1☀, then the next player gets 2☀, then they get 3☀ on their next turn, and so on. Unused energy will carry on to your next turn, but a player can only get 10☀ a turn from allocation."
+    }
+  ]
+}
