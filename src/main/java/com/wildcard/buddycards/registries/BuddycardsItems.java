@@ -680,7 +680,14 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*SKULLY   */ registerCard(NETHER_SET, 13, Rarity.UNCOMMON, 5, 2, DEFAULT_NO_ABILITIES);
+        /*SKULLY   */ registerCard(NETHER_SET, 13, Rarity.UNCOMMON, 5, 2, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("withering_strike", (game, slot, target, source) -> {
+            int opp = BattleGame.opposite(slot);
+            if(game.getCard(opp) != null) {
+                game.state[opp].status = BattleStatusEffect.WITHER;
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.withering_strike.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.WITHER))));
+            }
+            return true;
+        })).build());
         /*BLAZT    */ registerCard(NETHER_SET, 14, Rarity.UNCOMMON, 6, 2, new BattleAbility.Builder().add(BattleEvent.ACTIVATED.ability("flaming_shot", (game, slot, target, source) -> {
             boolean p1 = BattleGame.getOwner(slot);
             int opp = BattleGame.opposite(slot);
@@ -691,7 +698,7 @@ public class BuddycardsItems {
                     game.container.energy2 -= 1;
                 game.state[opp].status = BattleStatusEffect.FIRE;
                 game.directAttack(opp, slot, 1, false, false);
-                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.flaming_shot.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(1))));
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.flaming_shot.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(1))));
                 game.updatePower(opp);
                 return true;
             }
@@ -724,7 +731,12 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*CRYBABY  */ registerCard(NETHER_SET, 17, Rarity.UNCOMMON, 6, 4, DEFAULT_NO_ABILITIES);
+        /*CRYBABY  */ registerCard(NETHER_SET, 17, Rarity.UNCOMMON, 6, 4, new BattleAbility.Builder().add(BattleEvent.DAMAGED.ability("tough_tears", (game, slot, target, source) -> {
+            game.turnPower[slot]++;
+            game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.tough_tears.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
+            game.updatePower(slot);
+            return true;
+        })).build());
         /*FYO      */ registerCard(NETHER_SET, 18, Rarity.UNCOMMON, 4, 1, new BattleAbility.Builder().add(BattleEvent.DAMAGED.ability("spirit_flames", (game, slot, target, source) -> {
             if(source != slot && game.getCard(source) != null) {
                 game.state[source].status = BattleStatusEffect.FIRE;
@@ -759,7 +771,7 @@ public class BuddycardsItems {
                     game.container.energy2 -= 2;
                 game.state[opp].status = BattleStatusEffect.FIRE;
                 game.directAttack(opp, slot, 2, false, false);
-                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.fire_spitball.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(2))));
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.fire_spitball.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(2))));
                 game.updatePower(opp);
                 return true;
             }
