@@ -1,0 +1,64 @@
+{
+  "name": "Base Set Abilities",
+  "icon": "buddycards:buddycard_base1",
+  "category": "buddycards:ability_list",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base1",
+      "title": "Growing Up",
+      "text": "A turn ability that increases Saps power by 1.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base2",
+      "title": "Stone Toss",
+      "text": "A play ability that causes a direct attack for 1 damage. This does not cause the opponent to fight back, but will cause any fight triggers on Rok (there shouldn't be) and damaged triggers. It is a direct attack so damaged triggers will know Rok dealt the damage.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base3",
+      "title": "Tasty Bacon",
+      "text": "A death ability that causes Oinke's player to gain 2 life.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base4",
+      "title": "Stoke Flames",
+      "text": "A death ability that causes all of your buddies in the fire grouping to gain 1 power. Will only trigger if you have at least one fire buddy for Cole to upgrade.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base5",
+      "title": "Iron Temper",
+      "text": "A kill ability that causes Metalico to gain 1 power when it kills another buddy. This will trigger before any death triggers, and can save Metalico from death.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base6",
+      "title": "Simple Enchant",
+      "text": "A play ability that causes all of your buddies in the enchantable grouping to gain 1 power. Will only trigger if you have at least one enchantable buddy for Dr.Lazuli to upgrade.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base7",
+      "title": "Milk Maid",
+      "text": "A free activated ability. When you click on Betsy and have at least 1 buddy with a status effect, negative or positive, all of your buddies will be cleared of status effects.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base8",
+      "title": "Snowball Fight",
+      "text": "A play ability that causes the opponent to lose 1 life. This does not count as an attack and will not trigger any abilities.",
+      "link_recipe": true
+    }
+  ]
+}
