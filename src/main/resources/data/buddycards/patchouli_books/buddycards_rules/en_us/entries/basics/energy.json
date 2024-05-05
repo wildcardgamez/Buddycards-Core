@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "☀ (Energy) is allocated every turn, and is mainly used to play buddies. Each buddycard has a cost on it that tells you how much you need to play it, and you will lose that much when it is played. The amount allocated each turn starts off slow, equal to the turn number, before maxing out at 5☀ per turn."
+      "text": "Energy is allocated every turn, and is mainly used to play buddies. Each buddycard has a cost on it that tells you how much you need to play it with a sun icon, and you will lose that much when it is played. The amount allocated each turn starts off slow, equal to the turn number, before maxing out at 5☀ per turn."
     },
     {
       "type": "text",

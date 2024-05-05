@@ -1,0 +1,61 @@
+{
+  "name": "Abilities",
+  "icon": "buddycards:zylex",
+  "category": "buddycards:basics",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Every buddycard made for battle will have battle abilities. These are effects that happen under specific circumstances, and while some are more complicated than others, they can be easily sorted based on their triggers. There are also status effects, temporary abilities buddies can gain, such as being on fire."
+    },
+    {
+      "type": "text",
+      "text": "The types of abilities in Buddycards Core are as follows: Played, Turn, Fight, Kill, Death, Observe Death, Damaged, Powered, and Activated. Some abilities may have additional restrictions that are needed to trigger, such as an energy cost on an Activated ability. Many specific abilities have intricacies you can find in another section."
+    },
+    {
+      "type": "text",
+      "title": "Played",
+      "text": "A play ability, often worded as \"When you play X\" triggers whenever you play a buddycard from your hand."
+    },
+    {
+      "type": "text",
+      "title": "Turn",
+      "text": "A turn ability, often worded as \"At the start of your turn\" triggers at the start of your turn, after you draw a card and are allocated energy."
+    },
+    {
+      "type": "text",
+      "title": "Fight",
+      "text": "A fight ability, often worded as \"When X attacks\" triggers when the buddycard fights. This happens both when attacking a player or another buddycard, but in many cases will only trigger if there is an opposing buddy for the effect to target. It is worth noting these abilities may cancel an attack."
+    },
+    {
+      "type": "text",
+      "title": "Kill",
+      "text": "A kill ability, often worded as \"When X kills a buddy\" triggers whenever the buddy causes the death of another buddy directly. It is worth noting not all damage is direct. This will happen before other triggers such as death, regardless of if the dying buddy somehow escapes death from a kill ability of its own or by regaining power. The ability also may negate the kill before death triggers."
+    },
+    {
+      "type": "text",
+      "title": "Death",
+      "text": "A death ability, often worded as \"When X dies\" triggers whenever the buddy dies. This happens after kill triggers of the opposing buddy. The ability itself might prevent death, but kill and observe death triggers will still happen."
+    },
+    {
+      "type": "text",
+      "title": "Observe Death",
+      "text": "An observe death ability, often worded as \"When a buddy dies\" triggers whenever any buddy dies. This happens after kill triggers of the opposing buddy. The ability itself might prevent death, but kill and death triggers will still happen. Often comes with restrictions such as a grouping."
+    },
+    {
+      "type": "text",
+      "title": "Damage",
+      "text": "A damaged ability, often worded as \"When X takes damage\" triggers whenever the buddy takes damage from a direct attack, fighting or otherwise. The ability happens after the fight trigger. To see if a specific buddy's ability will trigger a damaged trigger, see its rulings, but most abilities that do not \"fight\" won't cause fight or damaged triggers."
+    },
+    {
+      "type": "text",
+      "title": "Powered",
+      "text": "A powered ability, often worded as \"When powered\" triggers whenever the buddy is powered by another ability, often redstone related. Most cards with the redstone grouping tend to either trigger powered abilities or have one of their own."
+    },
+    {
+      "type": "text",
+      "title": "Activated",
+      "text": "An activated ability, often worded as \"Activation:\" or \"#☀ Activation:\" is triggered manually by clicking on the card during your turn. Many of them have an energy cost for activation or some kind of additional requirement to be met to trigger. If they have an energy cost, they will not trigger if you cannot afford to pay it."
+    }
+  ]
+}

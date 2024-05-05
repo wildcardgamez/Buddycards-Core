@@ -1,0 +1,76 @@
+{
+  "name": "Groupings",
+  "icon": "buddycards:void_zylex",
+  "category": "buddycards:basics",
+  "sortnum": 5,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Many abilities only trigger or care about a specific type of buddy. This uses item tags so expansion mods can add to the groupings. This section acts as a guide for each type of grouping."
+    },
+    {
+      "type": "spotlight",
+      "item": {
+        "tag": "buddycards:battles/animal"
+      },
+      "title": "Animal",
+      "text": "Animal buddies is a grouping for mob based buddies that depict animals."
+    },
+    {
+      "type": "spotlight",
+      "item": {
+        "tag": "buddycards:battles/monster"
+      },
+      "title": "Monster",
+      "text": "Monster buddies is a grouping for mob based buddies that depict hostile monsters."
+    },
+    {
+      "type": "spotlight",
+      "item": {
+        "tag": "buddycards:battles/food"
+      },
+      "title": "Food",
+      "text": "Food buddies is a grouping for item or block based buddies that depict a food."
+    },
+    {
+      "type": "spotlight",
+      "item": {
+        "tag": "buddycards:battles/redstone"
+      },
+      "title": "Redstone",
+      "text": "Redstone buddies is a grouping for buddies that specifically care about being powered or powering other buddies, often related specifically to redstone."
+    },
+    {
+      "type": "spotlight",
+      "item": {
+        "tag": "buddycards:battles/metal"
+      },
+      "title": "Metal",
+      "text": "Metal buddies is a more abstract grouping for buddies that are metallic, normally ingots."
+    },
+    {
+      "type": "spotlight",
+      "item": {
+        "tag": "buddycards:battles/enchantable"
+      },
+      "title": "Enchantable",
+      "text": "Enchantable buddies is a more abstract grouping often used for materials that make tools or tools themselves."
+    },
+    {
+      "type": "spotlight",
+      "item": {
+        "tag": "buddycards:battles/fire"
+      },
+      "title": "Fire",
+      "text": "Fire buddies is a more niche grouping often used for buddies depicting fire or something fire-like."
+    },
+    {
+      "type": "spotlight",
+      "item": {
+        "tag": "buddycards:battles/fungal"
+      },
+      "title": "Fungal",
+      "text": "Fungal buddies is a more niche grouping often used for mushroom or fungal based buddies."
+    }
+  ]
+}
