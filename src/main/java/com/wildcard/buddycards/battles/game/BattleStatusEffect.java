@@ -134,7 +134,7 @@ public enum BattleStatusEffect {
             else
                 game.container.health1-=damage;
             game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log1")).append("" + damage).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log2")).append(BattleGame.getOwner(slot) ? game.container.name2 : game.container.name1).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log3")), List.of(TextureBattleIcon.statusIcon(AIRBORNE), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(damage), TextureBattleIcon.statusIcon(EMPTY))));
-            return true;
+            return false;
         };
     }
 }

@@ -776,7 +776,20 @@ public class BuddycardsItems {
             }
             return false;
         })).build());
-        /*STRIDE   */ registerCard(NETHER_SET, 21, Rarity.UNCOMMON, 5, 3, DEFAULT_NO_ABILITIES);
+        /*STRIDE   */ registerCard(NETHER_SET, 21, Rarity.UNCOMMON, 5, 3, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("magmawalk", (game, slot, target, source) -> {
+            for (int i: BattleEvent.Distribution.ROW_OTHER.apply(slot, game)) {
+                if (game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FUNGAL)) {
+                    int damage = game.turnPower[slot];
+                    if (BattleGame.getOwner(slot))
+                        game.container.health2 -= damage;
+                    else
+                        game.container.health1 -= damage;
+                    game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.magmawalk.log1")).append("" + damage).append(new TranslatableComponent("battles.ability.buddycards.airborne.log2")).append(BattleGame.getOwner(slot) ? game.container.name2 : game.container.name1).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log3")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(damage))));
+                    return false;
+                }
+            }
+            return true;
+        })).build());
         /*BARTENDER*/ registerCard(NETHER_SET, 22, Rarity.RARE,     9, 3, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("furious_cocktail", (game, slot, target, source) -> {
             List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
             for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
@@ -817,7 +830,26 @@ public class BuddycardsItems {
             return false;
         })).build());
         /*PORT     */ registerCard(NETHER_SET, 23, Rarity.RARE,     10,6, DEFAULT_NO_ABILITIES);
-        /*TRIPLE   */ registerCard(NETHER_SET, 24, Rarity.RARE,     7,4, DEFAULT_NO_ABILITIES);
+        /*TRIPLE   */ registerCard(NETHER_SET, 24, Rarity.RARE,     7,4, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("withering_heights", (game, slot, target, source) -> {
+            game.state[slot].status = BattleStatusEffect.FIRE;
+            game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.withering_heights.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(BattleStatusEffect.AIRBORNE))));
+            return true;
+        })).add(BattleEvent.ACTIVATED.ability("withering_shot", (game, slot, target, source) -> {
+            boolean p1 = BattleGame.getOwner(slot);
+            int opp = BattleGame.opposite(slot);
+            if(game.container.energy(p1) >= 2 && game.getCard(opp) != null) {
+                if (p1)
+                    game.container.energy1 -= 2;
+                else
+                    game.container.energy2 -= 2;
+                game.state[opp].status = BattleStatusEffect.WITHER;
+                game.directAttack(opp, slot, 1, false, false);
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.withering_shot.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.WITHER), TextureBattleIcon.subtractIcon(2))));
+                game.updatePower(opp);
+                return true;
+            }
+            return false;
+        })).build());
         /*ANKER    */ registerCard(NETHER_SET, 25, Rarity.RARE,     7, 4, DEFAULT_NO_ABILITIES);
         /*BEAKER   */ registerCard(NETHER_SET, 26, Rarity.EPIC,     10,5, DEFAULT_NO_ABILITIES);
         /*N_RITE   */ registerCard(NETHER_SET, 27, Rarity.EPIC,     9, 4, DEFAULT_NO_ABILITIES);
