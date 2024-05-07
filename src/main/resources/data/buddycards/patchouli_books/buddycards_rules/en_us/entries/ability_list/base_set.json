@@ -15,7 +15,7 @@
       "type": "spotlight",
       "item": "buddycards:buddycard_base2",
       "title": "Stone Toss",
-      "text": "A play ability that causes a direct attack for 1 damage. This does not cause the opponent to fight back, but will cause any fight triggers on Rok (there shouldn't be) and damaged triggers. It is a direct attack so damaged triggers will know Rok dealt the damage.",
+      "text": "A play ability that causes a direct attack for 1 damage. This does not cause the opponent to fight back, but will cause any fight or damaged triggers.",
       "link_recipe": true
     },
     {
@@ -29,7 +29,7 @@
       "type": "spotlight",
       "item": "buddycards:buddycard_base4",
       "title": "Stoke Flames",
-      "text": "A death ability that causes all of your buddies in the fire grouping to gain 1 power. Will only trigger if you have at least one fire buddy for Cole to upgrade.",
+      "text": "A death ability that causes all of your buddies in the fire grouping to gain 1 power.",
       "link_recipe": true
     },
     {
@@ -43,7 +43,7 @@
       "type": "spotlight",
       "item": "buddycards:buddycard_base6",
       "title": "Simple Enchant",
-      "text": "A play ability that causes all of your buddies in the enchantable grouping to gain 1 power. Will only trigger if you have at least one enchantable buddy for Dr.Lazuli to upgrade.",
+      "text": "A play ability that causes all of your buddies in the enchantable grouping to gain 1 power.",
       "link_recipe": true
     },
     {
@@ -58,6 +58,69 @@
       "item": "buddycards:buddycard_base8",
       "title": "Snowball Fight",
       "text": "A play ability that causes the opponent to lose 1 life. This does not count as an attack and will not trigger any abilities.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base9",
+      "title": "Wash Out",
+      "text": "A death ability that clears all fire status effects and deals 1 damage to each buddy in the fire grouping. Any damage caused by this will not cause attack or damage triggers.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base10",
+      "title": "Tasty Treat",
+      "text": "A death ability that causes you to gain 1 life.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base11",
+      "title": "Fresh Harvest",
+      "text": "A death ability that causes all of your buddies in the animal grouping to gain 2 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base12",
+      "title": "Feeding Time",
+      "text": "A play ability that causes all of your buddies in the animal grouping to gain 1 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base13",
+      "title": "Play Fetch",
+      "text": "A kill ability that causes you to draw a card if you have space whenever Yang kills another buddy. This will trigger before any death triggers which can possibly keep the buddy alive.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base14",
+      "title": "Lazy Cat",
+      "text": "A free activated ability. Cannot be activated when Yin has a status effect. When clicked, Yin will gain 2 power and gain a sleep status effect, causing it to skip its next attack.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base15",
+      "title": "Gilded Gift",
+      "text": "A play ability that causes all of your buddies in the food grouping to gain 1 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base16",
+      "title": "Rich Trade",
+      "text": "A play ability that draws you cards until you can't draw any more cards.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base17",
+      "title": "Unbreakable",
+      "text": "A damaged ability that causes Dio to gain 1 power when it has a damage trigger. Not all power loss or attacks trigger it, but combat damage does.",
       "link_recipe": true
     }
   ]
