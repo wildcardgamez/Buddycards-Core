@@ -831,7 +831,7 @@ public class BuddycardsItems {
         })).build());
         /*PORT     */ registerCard(NETHER_SET, 23, Rarity.RARE,     10,6, DEFAULT_NO_ABILITIES);
         /*TRIPLE   */ registerCard(NETHER_SET, 24, Rarity.RARE,     7,4, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("withering_heights", (game, slot, target, source) -> {
-            game.state[slot].status = BattleStatusEffect.FIRE;
+            game.state[slot].status = BattleStatusEffect.AIRBORNE;
             game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.withering_heights.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(BattleStatusEffect.AIRBORNE))));
             return true;
         })).add(BattleEvent.ACTIVATED.ability("withering_shot", (game, slot, target, source) -> {
@@ -867,11 +867,32 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*CHESTER  */ registerCard(END_SET,  2, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
-        /*SCALES   */ registerCard(END_SET,  3, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*CHESTER  */ registerCard(END_SET,  2, Rarity.COMMON,   4, 2, new BattleAbility.Builder().add(BattleEvent.ACTIVATED.ability("take_inventory", (game, slot, target, source) -> {
+            boolean p1 = BattleGame.getOwner(slot);
+            if(game.container.energy(p1) >= 1) {
+                if(!game.container.tryDrawCard(p1))
+                    return false;
+                if (p1)
+                    game.container.energy1 -= 1;
+                else
+                    game.container.energy2 -= 1;
+                game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.take_inventory.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.drawIcon)));
+                return true;
+            }
+            return false;
+        })).build());
+        /*SCALES   */ registerCard(END_SET,  3, Rarity.COMMON,   4, 2, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("floating_membrane", (game, slot, target, source) -> {
+            game.state[slot].status = BattleStatusEffect.AIRBORNE;
+            game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.floating_membrane.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(BattleStatusEffect.AIRBORNE))));
+            return true;
+        })).build());
         /*VWOOP    */ registerCard(END_SET,  4, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
         /*SILVER   */ registerCard(END_SET,  5, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
-        /*LIBRARIA */ registerCard(END_SET,  6, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*LIBRARIA */ registerCard(END_SET,  6, Rarity.COMMON,   6, 4, new BattleAbility.Builder().add(BattleEvent.TURN.ability("endless_knowledge", (game, slot, target, source) -> {
+            if(game.container.tryDrawCard(BattleGame.getOwner(slot)))
+                game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.endless_knowledge.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.drawIcon)));
+            return true;
+        })).build());
         /*AIROW    */ registerCard(END_SET,  7, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
         /*WEBSTER  */ registerCard(END_SET,  8, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
         /*PERL     */ registerCard(END_SET,  9, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);

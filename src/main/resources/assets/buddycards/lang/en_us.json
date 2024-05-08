@@ -591,5 +591,14 @@
   "battles.ability.buddycards.cheese_toss": "Cheese Toss",
   "battles.ability.buddycards.cheese_toss.desc": "When you play Enrok, they have a 50% chance to attack.",
   "battles.ability.buddycards.cheese_toss.log1": "Enrok deals 2 damage to ",
-  "battles.ability.buddycards.cheese_toss.log2": " from Cheese Toss"
+  "battles.ability.buddycards.cheese_toss.log2": " from Cheese Toss",
+  "battles.ability.buddycards.take_inventory": "Take Inventory",
+  "battles.ability.buddycards.take_inventory.desc": "1☀ Activation: Draw a card.",
+  "battles.ability.buddycards.take_inventory.log": " draws a card from Take Inventory.",
+  "battles.ability.buddycards.floating_membrane": "Floating Membrane",
+  "battles.ability.buddycards.floating_membrane.desc": "When played, Scales becomes airborne.",
+  "battles.ability.buddycards.floating_membrane.log": "Scales becomes airborne from Floating Membrane",
+  "battles.ability.buddycards.endless_knowledge": "Endless Knowledge",
+  "battles.ability.buddycards.endless_knowledge.desc": "At the start of your turn, draw a card.",
+  "battles.ability.buddycards.endless_knowledge.log": " draws a card from Endless Knowledge."
 }
