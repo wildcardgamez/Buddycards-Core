@@ -600,5 +600,11 @@
   "battles.ability.buddycards.floating_membrane.log": "Scales becomes airborne from Floating Membrane",
   "battles.ability.buddycards.endless_knowledge": "Endless Knowledge",
   "battles.ability.buddycards.endless_knowledge.desc": "At the start of your turn, draw a card.",
-  "battles.ability.buddycards.endless_knowledge.log": " draws a card from Endless Knowledge."
+  "battles.ability.buddycards.endless_knowledge.log": " draws a card from Endless Knowledge.",
+  "battles.ability.buddycards.fire_away": "Fire Away",
+  "battles.ability.buddycards.fire_away.desc": "Remove Activation: Airow attacks for 1 damage.",
+  "battles.ability.buddycards.fire_away.log": " attacks for 1 and is removed by Fire Away.",
+  "battles.ability.buddycards.mystical_glow": "Mystical Glow",
+  "battles.ability.buddycards.mystical_glow.desc": "At the start of your, monster buddies lose 1 power.",
+  "battles.ability.buddycards.mystical_glow.log": "Monster buddies lose 1 power from Mystical Glow"
 }
