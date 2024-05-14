@@ -334,6 +334,7 @@
   "item.buddycards.buddycard.deckbuilding_limit.uncommon": " of each §euncommon",
   "item.buddycards.buddycard.deckbuilding_limit.rare": " of each §brare",
   "item.buddycards.buddycard.deckbuilding_limit.epic": " of each §depic",
+  "item.buddycards.buddycards_rulebook" : "Buddycards Rulebook (WIP)",
   "itemGroup.buddycards": "Buddycards",
   "itemGroup.buddycards_cards": "Buddycards Cards",
   "enchantment.buddycards.extra_page": "Extra Page",
