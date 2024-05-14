@@ -23,7 +23,8 @@ public enum BattleStatusEffect {
     WEAKNESS(new BattleAbility(BattleEvent.FIGHT, "status.weakness", weakness()), 0xFF937725),
     POISON(new BattleAbility(BattleEvent.TURN, "status.poison", poison()), 0xFF55a03c),
     WITHER(new BattleAbility(BattleEvent.TURN, "status.wither", wither()), 0xFF000000),
-    AIRBORNE(new BattleAbility(BattleEvent.TURN, "status.airborne", airborne()), 0xFFffdc75);
+    AIRBORNE(new BattleAbility(BattleEvent.TURN, "status.airborne", airborne()), 0xFFffdc75),
+    STUNNED(new BattleAbility(BattleEvent.FIGHT, "status.stunned", stunned()), 0xFF937725);
 
     private final BattleAbility ability;
     private final int color;
@@ -137,4 +138,13 @@ public enum BattleStatusEffect {
             return false;
         };
     }
+
+    private static BattleAbility.BattleAbilityFunc stunned() {
+        return (game, slot, target, source) -> {
+            game.state[slot].status = EMPTY;
+            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.stunned.log")), List.of(TextureBattleIcon.statusIcon(STUNNED), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(EMPTY))));
+            return false;
+        };
+    }
+
 }

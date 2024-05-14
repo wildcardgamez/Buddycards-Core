@@ -784,7 +784,7 @@ public class BuddycardsItems {
                         game.container.health2 -= damage;
                     else
                         game.container.health1 -= damage;
-                    game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.magmawalk.log1")).append("" + damage).append(new TranslatableComponent("battles.ability.buddycards.airborne.log2")).append(BattleGame.getOwner(slot) ? game.container.name2 : game.container.name1).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log3")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(damage))));
+                    game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.magmawalk.log1")).append("" + damage).append(new TranslatableComponent("battles.ability.buddycards.magmawalk.log2")).append(BattleGame.getOwner(slot) ? game.container.name2 : game.container.name1).append(new TranslatableComponent("battles.ability.buddycards.magmawalk.log3")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(damage))));
                     return false;
                 }
             }
