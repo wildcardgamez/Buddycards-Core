@@ -839,7 +839,41 @@ public class BuddycardsItems {
             }
             return false;
         })).build());
-        /*PORT     */ registerCard(NETHER_SET, 23, Rarity.RARE,     10,6, DEFAULT_NO_ABILITIES);
+        /*PORT     */ registerCard(NETHER_SET, 23, Rarity.RARE,     10,6, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("hellish_welcome", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            for (int i: BattleEvent.Distribution.ADJACENT.apply(slot, game)) {
+                if(((BuddycardItem) game.container.getItem(BattleGame.translateFrom(i)).getItem()).getSet().equals(BuddycardsItems.NETHER_SET)) {
+                    game.turnPower[i]++;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                }
+            }
+            if(icons.size() > 2) {
+                icons.add(TextureBattleIcon.addIcon(1));
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.hellish_welcome.log"), icons));
+                game.updatePower();
+            }
+            return true;
+        })).add(BattleEvent.DEATH.ability("unwelcome_guest", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            ItemStack card;
+            int override = 0;
+            card = BattleGame.getOwner(slot) ? game.container.deck1.removeItem(BattleContainer.random.nextInt(16), 1) : game.container.deck2.removeItem(BattleContainer.random.nextInt(16), 1);
+            while (!(card.getItem() instanceof BuddycardItem bc && bc.getSet().equals(BuddycardsItems.NETHER_SET)) && override < 32) {
+                card = BattleGame.getOwner(slot) ? game.container.deck1.removeItem(BattleContainer.random.nextInt(16), 1) : game.container.deck2.removeItem(BattleContainer.random.nextInt(16), 1);
+                icons.add(BuddycardBattleIcon.create((BuddycardItem) card.getItem()));
+                override++;
+            }
+            if (card.getItem() instanceof BuddycardItem bc && bc.getSet().equals(BuddycardsItems.NETHER_SET)) {
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.deathIcon)));
+                game.removeCard(slot);
+                icons.add(TextureBattleIcon.playIcon);
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.grand_creation.log"), icons));
+                game.updatePower();
+                game.addCard(slot, card, (BuddycardItem) card.getItem());
+                return false;
+            }
+            return true;
+        })).build());
         /*TRIPLE   */ registerCard(NETHER_SET, 24, Rarity.RARE,     7,4, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("withering_heights", (game, slot, target, source) -> {
             game.state[slot].status = BattleStatusEffect.AIRBORNE;
             game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.withering_heights.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(BattleStatusEffect.AIRBORNE))));
