@@ -195,15 +195,16 @@ public class BattleGame {
     
     /** performs an attack. please ensure ahead of time the source card is valid */
     public void attack(int target, int source) {
-        int damage = state[source].power;
         if (items.get(target) == null) {
             if (!trigger(BattleEvent.FIGHT, source, target, source, BattleEvent.Distribution.THIS)) return;
+            int damage = state[source].power;
             if (getOwner(target)) container.health1 -= damage;
             else container.health2 -= damage;
             LOGGER.info(items.get(source) + " dealt " + damage + " damage to Player " + player(!isP1()));
             container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.attack1")).append("" + damage).append(new TranslatableComponent("battles.log.buddycards.attack2")).append(getOwner(target) ? container.name1 : container.name2), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage))));
         } else {
             if (!trigger(BattleEvent.FIGHT, source, target, source)) return;
+            int damage = state[source].power;
             turnPower[target] -= damage;
             LOGGER.info(items.get(source) + " dealt " + damage + " damage to " + items.get(target));
             container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.attack1")).append("" + damage).append(new TranslatableComponent("battles.log.buddycards.attack2")).append(new TranslatableComponent(getCard(target).getDescriptionId())), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage), BuddycardBattleIcon.create(getCard(target)))));

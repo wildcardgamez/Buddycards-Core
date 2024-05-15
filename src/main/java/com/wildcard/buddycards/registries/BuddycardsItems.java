@@ -640,6 +640,8 @@ public class BuddycardsItems {
             return true;
         })).build());
         /*VINNIE   */ registerCard(NETHER_SET,  8, Rarity.COMMON,   4, 3, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("warped_growth", (game, slot, target, source) -> {
+            if(game.isP1() != BattleGame.getOwner(slot))
+                return true;
             for (int i: BattleEvent.Distribution.ROW_OTHER.apply(slot, game)) {
                 if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FUNGAL)) {
                     game.turnPower[slot]++;
@@ -653,7 +655,7 @@ public class BuddycardsItems {
         /*SHROOM   */ registerCard(NETHER_SET,  9, Rarity.COMMON,   3, 2, new BattleAbility.Builder().add(BattleEvent.DEATH.ability("warping_spores", (game, slot, target, source) -> {
             if(source != slot && game.getCard(source) != null) {
                 game.state[source].status = BattleStatusEffect.SLEEP;
-                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.warping_spores.desc")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.statusIcon(BattleStatusEffect.SLEEP))));
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.warping_spores.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.statusIcon(BattleStatusEffect.SLEEP))));
             }
             return true;
         })).build());
@@ -803,14 +805,16 @@ public class BuddycardsItems {
         /*BARTENDER*/ registerCard(NETHER_SET, 22, Rarity.RARE,     9, 3, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("furious_cocktail", (game, slot, target, source) -> {
             List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
             for (int i: BattleEvent.Distribution.ROW.apply(slot, game)) {
-                BattleStatusEffect effect = switch (BattleContainer.random.nextInt(3)) {
-                    case 0 -> BattleStatusEffect.STRENGTH;
-                    case 1 -> BattleStatusEffect.REGENERATION;
-                    default -> BattleStatusEffect.RESISTANCE;
-                };
-                game.state[i].status = effect;
-                icons.add(BuddycardBattleIcon.create(game.getCard(i)));
-                icons.add(TextureBattleIcon.statusIcon(effect));
+                if(game.getCard(i) != null) {
+                    BattleStatusEffect effect = switch (BattleContainer.random.nextInt(3)) {
+                        case 0 -> BattleStatusEffect.STRENGTH;
+                        case 1 -> BattleStatusEffect.REGENERATION;
+                        default -> BattleStatusEffect.RESISTANCE;
+                    };
+                    game.state[i].status = effect;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                    icons.add(TextureBattleIcon.statusIcon(effect));
+                }
             }
             game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.furious_cocktail.log"), icons));
             return true;
@@ -819,14 +823,16 @@ public class BuddycardsItems {
             if(game.container.energy(p1) >= 5) {
                 List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.energyIcon(5), TextureBattleIcon.dividerIcon));
                 for (int i : BattleEvent.Distribution.ROW_OTHER.apply(slot, game)) {
-                    BattleStatusEffect effect = switch (BattleContainer.random.nextInt(3)) {
-                        case 0 -> BattleStatusEffect.POISON;
-                        case 1 -> BattleStatusEffect.WEAKNESS;
-                        default -> BattleStatusEffect.WITHER;
-                    };
-                    game.state[i].status = effect;
-                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
-                    icons.add(TextureBattleIcon.statusIcon(effect));
+                    if(game.getCard(i) != null) {
+                        BattleStatusEffect effect = switch (BattleContainer.random.nextInt(3)) {
+                            case 0 -> BattleStatusEffect.POISON;
+                            case 1 -> BattleStatusEffect.WEAKNESS;
+                            default -> BattleStatusEffect.WITHER;
+                        };
+                        game.state[i].status = effect;
+                        icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                        icons.add(TextureBattleIcon.statusIcon(effect));
+                    }
                 }
                 if(icons.size() > 2) {
                     if (p1)

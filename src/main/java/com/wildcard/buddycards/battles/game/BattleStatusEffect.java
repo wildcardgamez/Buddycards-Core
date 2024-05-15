@@ -23,7 +23,7 @@ public enum BattleStatusEffect {
     WEAKNESS(new BattleAbility(BattleEvent.FIGHT, "status.weakness", weakness()), 0xFF937725),
     POISON(new BattleAbility(BattleEvent.TURN, "status.poison", poison()), 0xFF55a03c),
     WITHER(new BattleAbility(BattleEvent.TURN, "status.wither", wither()), 0xFF000000),
-    AIRBORNE(new BattleAbility(BattleEvent.TURN, "status.airborne", airborne()), 0xFFffdc75),
+    AIRBORNE(new BattleAbility(BattleEvent.FIGHT, "status.airborne", airborne()), 0xFFffdc75),
     STUNNED(new BattleAbility(BattleEvent.FIGHT, "status.stunned", stunned()), 0xFF937725);
 
     private final BattleAbility ability;
@@ -121,7 +121,7 @@ public enum BattleStatusEffect {
     private static BattleAbility.BattleAbilityFunc wither() {
         return (game, slot, target, source) -> {
             game.state[slot].power--;
-            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.wither.log")), List.of(TextureBattleIcon.statusIcon(SLEEP), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.subtractIcon(1))));
+            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.wither.log")), List.of(TextureBattleIcon.statusIcon(WITHER), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.subtractIcon(1))));
             game.updatePower(slot);
             return true;
         };
@@ -134,6 +134,7 @@ public enum BattleStatusEffect {
                 game.container.health2-=damage;
             else
                 game.container.health1-=damage;
+            game.state[slot].status = EMPTY;
             game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log1")).append("" + damage).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log2")).append(BattleGame.getOwner(slot) ? game.container.name2 : game.container.name1).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log3")), List.of(TextureBattleIcon.statusIcon(AIRBORNE), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(damage), TextureBattleIcon.statusIcon(EMPTY))));
             return false;
         };

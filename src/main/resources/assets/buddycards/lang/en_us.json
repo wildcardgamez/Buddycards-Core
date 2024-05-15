@@ -367,7 +367,7 @@
   "battles.ability.buddycards.status.weakness.log": " loses 2 power from Weakness",
   "battles.ability.buddycards.status.poison.log": " loses 1 power from Poison",
   "battles.ability.buddycards.status.wither.log": " loses 1 power from Wither",
-  "battles.ability.buddycards.status.airborne.log1": "Deals ",
+  "battles.ability.buddycards.status.airborne.log1": " deals ",
   "battles.ability.buddycards.status.airborne.log2": " damage to ",
   "battles.ability.buddycards.status.airborne.log3": " from Airborne",
   "battles.ability.buddycards.status.stunned.log": " doesn't fight back and loses Stun",
