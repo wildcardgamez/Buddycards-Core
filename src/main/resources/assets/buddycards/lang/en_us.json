@@ -620,5 +620,8 @@
   "battles.ability.buddycards.sticky_situation.log": " is stunned by Sticky Situation",
   "battles.ability.buddycards.mystical_glow": "Mystical Glow",
   "battles.ability.buddycards.mystical_glow.desc": "At the start of your, monster buddies lose 1 power.",
-  "battles.ability.buddycards.mystical_glow.log": "Monster buddies lose 1 power from Mystical Glow"
+  "battles.ability.buddycards.mystical_glow.log": "Monster buddies lose 1 power from Mystical Glow",
+  "battles.ability.buddycards.big_bang": "Fire Away",
+  "battles.ability.buddycards.big_bang.desc": "Remove Activation: All buddies lose 1 power.",
+  "battles.ability.buddycards.big_bang.log": "All buddies lose 1 power from Big Bang"
 }

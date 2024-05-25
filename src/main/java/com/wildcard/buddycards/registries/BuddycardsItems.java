@@ -978,7 +978,22 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*ROKIT    */ registerCard(END_SET, 12, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*ROKIT    */ registerCard(END_SET, 12, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.ACTIVATED.ability("big_bang", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            for (int i: BattleEvent.Distribution.ALL.apply(slot, game)) {
+                if(i != slot) {
+                    game.turnPower[i]--;
+                    icons.add(BuddycardBattleIcon.create(game.getCard(i)));
+                }
+            }
+            if(icons.size() > 2) {
+                icons.add(TextureBattleIcon.subtractIcon(1));
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.big_bang.log"), icons));
+                game.updatePower();
+                game.removeCard(slot);
+            }
+            return true;
+        })).build());
         /*WALLY    */ registerCard(END_SET, 13, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
         /*FLOUER   */ registerCard(END_SET, 14, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
         /*LINGERER */ registerCard(END_SET, 15, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
