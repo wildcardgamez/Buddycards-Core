@@ -703,10 +703,7 @@ public class BuddycardsItems {
             boolean p1 = BattleGame.getOwner(slot);
             int opp = BattleGame.opposite(slot);
             if(game.container.energy(p1) >= 1 && game.getCard(opp) != null) {
-                if (p1)
-                    game.container.energy1 -= 1;
-                else
-                    game.container.energy2 -= 1;
+                game.container.spendEnergy(p1, 1);
                 game.state[opp].status = BattleStatusEffect.FIRE;
                 game.directAttack(opp, slot, 1, false, false);
                 game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.flaming_shot.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.energyIcon(1), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(1))));
@@ -776,10 +773,7 @@ public class BuddycardsItems {
             boolean p1 = BattleGame.getOwner(slot);
             int opp = BattleGame.opposite(slot);
             if(game.container.energy(p1) >= 2 && game.getCard(opp) != null) {
-                if (p1)
-                    game.container.energy1 -= 2;
-                else
-                    game.container.energy2 -= 2;
+                game.container.spendEnergy(p1, 2);
                 game.state[opp].status = BattleStatusEffect.FIRE;
                 game.directAttack(opp, slot, 2, false, false);
                 game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.fire_spitball.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.energyIcon(2), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(2))));
@@ -835,10 +829,7 @@ public class BuddycardsItems {
                     }
                 }
                 if(icons.size() > 2) {
-                    if (p1)
-                        game.container.energy1 -= 5;
-                    else
-                        game.container.energy2 -= 5;
+                    game.container.spendEnergy(p1, 5);
                     game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.splashy_potion.log"), icons));
                     return true;
                 }
@@ -888,10 +879,7 @@ public class BuddycardsItems {
             boolean p1 = BattleGame.getOwner(slot);
             int opp = BattleGame.opposite(slot);
             if(game.container.energy(p1) >= 2 && game.getCard(opp) != null) {
-                if (p1)
-                    game.container.energy1 -= 2;
-                else
-                    game.container.energy2 -= 2;
+                game.container.spendEnergy(p1, 2);
                 game.state[opp].status = BattleStatusEffect.WITHER;
                 game.directAttack(opp, slot, 1, false, false);
                 game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(opp).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.withering_shot.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.energyIcon(2), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(opp)), TextureBattleIcon.statusIcon(BattleStatusEffect.WITHER), TextureBattleIcon.subtractIcon(2))));
@@ -900,7 +888,27 @@ public class BuddycardsItems {
             }
             return false;
         })).build());
-        /*ANKER    */ registerCard(NETHER_SET, 25, Rarity.RARE,     7, 4, DEFAULT_NO_ABILITIES);
+        /*ANKER    */ registerCard(NETHER_SET, 25, Rarity.RARE,     7, 4, new BattleAbility.Builder().add(BattleEvent.OBSERVE_DEATH.ability("charged_respawn", (game, slot, target, source) -> {
+            if(game.turnPower[slot] > 0) {
+                game.turnPower[slot]--;
+                game.turnPower[target] = 1;
+                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.charged_respawn.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.subtractIcon(1), BuddycardBattleIcon.create(game.getCard(target)), TextureBattleIcon.equalsIcon(1))));
+                game.updatePower(slot);
+                game.updatePower(target);
+                return false;
+            }
+            return true;
+        })).add(BattleEvent.ACTIVATED.ability("respawn_recharge", (game, slot, target, source) -> {
+            boolean p1 = BattleGame.getOwner(slot);
+            if(game.container.energy(p1) >= 2) {
+                game.container.spendEnergy(p1, 2);
+                game.turnPower[slot]++;
+                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.respawn_recharge.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.energyIcon(2), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
+                game.updatePower(slot);
+                return true;
+            }
+            return false;
+        })).build());
         /*BEAKER   */ registerCard(NETHER_SET, 26, Rarity.EPIC,     10,5, DEFAULT_NO_ABILITIES);
         /*N_RITE   */ registerCard(NETHER_SET, 27, Rarity.EPIC,     9, 4, DEFAULT_NO_ABILITIES);
 
@@ -922,10 +930,7 @@ public class BuddycardsItems {
             if(game.container.energy(p1) >= 1) {
                 if(!game.container.tryDrawCard(p1))
                     return false;
-                if (p1)
-                    game.container.energy1 -= 1;
-                else
-                    game.container.energy2 -= 1;
+                game.container.spendEnergy(p1, 1);
                 game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.take_inventory.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.energyIcon(1), TextureBattleIcon.dividerIcon, TextureBattleIcon.drawIcon)));
                 return true;
             }

@@ -55,6 +55,10 @@ public record TextureBattleIcon(int texturePosX, int texturePosY, ResourceLocati
         return new TextureBattleIcon(180, 244, PlaymatScreen.TEXTURE1, 12, List.of(new BattleInfo(Character.toString('\u0ED0' + status.ordinal()), 8, 2, status.getColor(), false)));
     }
 
+    public static IBattleIcon equalsIcon(int amt) {
+        return new TextureBattleIcon(196, 244, PlaymatScreen.TEXTURE1, 12, List.of(new BattleInfo(String.valueOf(amt), 12, 0, 0xFFffff89, false)));
+    }
+
     public record BattleInfo(String display, int x, int y, int color, boolean isLeftAligned) {
         public static final Codec<BattleInfo> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("display").forGetter(BattleInfo::display),

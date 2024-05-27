@@ -117,6 +117,11 @@ public class BattleContainer extends SimpleContainer {
         return p1 ? energy1 : energy2;
     }
 
+    public void spendEnergy(boolean p1, int amt) {
+        if(p1) energy1 -= amt;
+        else energy2 -= amt;
+    }
+
     public void addLog(BattleComponent log) {
         battleLog.add(0, log);
     }
