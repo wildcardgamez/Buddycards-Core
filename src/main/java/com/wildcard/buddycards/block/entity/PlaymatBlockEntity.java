@@ -16,6 +16,9 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -104,6 +107,16 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
         saveAdditional(nbt);
         return nbt;
     }
+    
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+    
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        this.load(tag);
+    }
 
     @Override
     public void setLevel(Level lvll) {
@@ -161,6 +174,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             for (int i = 0; i < 6; i++) {
                 container.game.state[i] = BattleCardState.load(gameState.getCompound(i));
             }
+            container.game.initFromContainer();
         }
         if (inGame && level != null && level.getBlockState(getBlockPos()).getBlock() instanceof PlaymatBlock && level.getBlockEntity(getBlockPos().relative(level.getBlockState(getBlockPos()).getValue(PlaymatBlock.DIR))) instanceof PlaymatBlockEntity opponent) {
             if (p1)

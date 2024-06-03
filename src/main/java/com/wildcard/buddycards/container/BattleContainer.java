@@ -9,8 +9,10 @@ import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +113,7 @@ public class BattleContainer extends SimpleContainer {
         addLog(new BattleComponent(new TextComponent("").append(p1Victory ? name1 : name2).append(new TranslatableComponent("battles.log.buddycards.victory")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.winIcon, TextureBattleIcon.spacerIcon)));
         deck1.saveStats(p1Victory);
         deck2.saveStats(!p1Victory);
+        this.syncData();
     }
     
     public int energy(boolean p1) {
@@ -124,5 +127,11 @@ public class BattleContainer extends SimpleContainer {
 
     public void addLog(BattleComponent log) {
         battleLog.add(0, log);
+    }
+
+    public void syncData() {
+        if (this.entity != null && this.entity.getLevel() instanceof ServerLevel level) {
+            level.sendBlockUpdated(entity.getBlockPos(), entity.getBlockState(), entity.getBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+        }
     }
 }

@@ -32,10 +32,17 @@ public class BattleGame {
     public BattleGame(BattleContainer container) {
         this.container = container;
         for (int i = 0; i < 6; i++) {
-            if (container.getItem(i).getItem() instanceof BuddycardItem item) items.add(item);
+            if (container.getItem(translateFrom(i)).getItem() instanceof BuddycardItem item) items.add(item);
             else items.add(null);
         }
         for (int i = 0; i < 6; i++) state[i] = new BattleCardState(0, BattleStatusEffect.EMPTY);
+    }
+    
+    public void initFromContainer() {
+        for (int i = 0; i < 6; i++) {
+            items.set(i, container.getItem(translateFrom(i)).getItem() instanceof BuddycardItem item ? item : null);
+            turnPower[i] = state[i].power;
+        }
     }
     
     public boolean hasGameEnded() {
@@ -73,6 +80,7 @@ public class BattleGame {
         for (int i = slot(0); i < slot(3); i++) {
             trigger(BattleEvent.TURN, i);
         }
+        container.syncData();
     }
     
     /** ends a turn */
@@ -159,6 +167,7 @@ public class BattleGame {
             gameEnded = true;
             return false;
         }
+        container.syncData();
         //game continues, return true
         return true;
     }
