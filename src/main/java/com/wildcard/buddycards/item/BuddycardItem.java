@@ -60,15 +60,20 @@ public class BuddycardItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(new TextComponent("" + COST).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.cost"))
-                .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
-                .append("" + POWER).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.power")));
-        for (BattleAbility ability: ABILITIES.values()) {
-            tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name).withStyle(ChatFormatting.GRAY));
-            tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+        //Show cost, base power, and abilities for battles
+        if(ABILITIES.size() > 0) {
+            tooltip.add(new TextComponent("" + COST).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.cost"))
+                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
+                    .append("" + POWER).append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.power")));
+            for (BattleAbility ability : ABILITIES.values()) {
+                tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name).withStyle(ChatFormatting.GRAY));
+                tooltip.add(new TranslatableComponent("battles.ability." + Buddycards.MOD_ID + "." + ability.name + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+            }
         }
+        else
+            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.unimplemented").withStyle(ChatFormatting.DARK_RED));
         //Show the cards joke/tooltip
-        tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+        tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.ITALIC));
         //Show the set, card number, and shiny symbol if applicable
         TranslatableComponent cn = new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
         cn.append("" + CARD_NUMBER);
