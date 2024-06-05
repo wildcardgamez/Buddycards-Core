@@ -2,7 +2,7 @@
   "name": "Base Set Abilities",
   "icon": "buddycards:buddycard_base1",
   "category": "buddycards:ability_list",
-  "sortnum": 0,
+  "sortnum": 1,
   "pages": [
     {
       "type": "spotlight",
@@ -122,6 +122,187 @@
       "title": "Unbreakable",
       "text": "A damaged ability that causes Dio to gain 1 power when it has a damage trigger. Not all power loss or attacks trigger it, but combat damage does.",
       "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base18",
+      "title": "Delicious Desert",
+      "text": "A death ability that causes you to gain 3 life.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base19",
+      "title": "Energize",
+      "text": "A turn ability that causes power triggers for all of your adjacent buddies in the redstone grouping.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base20",
+      "title": "Sweet Treat",
+      "text": "A death ability that causes you to gain 2 life.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base21",
+      "title": "Spook Em",
+      "text": "A fight ability that causes an opposing buddy to lose 1 power. This happens before damage and only if there is an opposing buddy.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base22",
+      "title": "Premium Enchant",
+      "text": "A play ability that causes all of your buddies in the enchantable grouping to gain 2 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base22",
+      "title": "XP Farm",
+      "text": "A kill ability that causes all of your buddies in the enchantable grouping to gain 1 power."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base23",
+      "title": "Anvil Drop",
+      "text": "A play ability that deals 4 damage to an opposing buddycard. This damage is direct and causes attack and damage triggers.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base23",
+      "title": "Reforge",
+      "text": "A turn ability that causes your buddies in the metal grouping to gain 1 power. This includes Caster itself."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base24",
+      "title": "Push Back",
+      "text": "A play ability that will return the opposing buddy to its owner's hand. Will only trigger if there is space in the opponents hand.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base24",
+      "title": "Empowered Push",
+      "text": "A powered ability that will return the opposing buddy to its owner's hand. Will only trigger if there is space in the opponents hand."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base25",
+      "title": "Prismarine Spines",
+      "text": "A damaged ability that causes the source of the damage, if one of the enemies buddies, loses 1 power. This only works off of direct damage thhat can trigger damaged abilities.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base25",
+      "title": "Laser Gaze",
+      "text": "A turn ability that deals 2 damage to an opposing buddy every odd turn. Worth noting that this does not start specifically on the turn that Knight is played, but is based on the number of YOUR turns that has passed."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base26",
+      "title": "Grand Creation",
+      "text": "A play ability that chooses cards at random from your deck to play in any of your empty slots.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base26",
+      "title": "Craft Together",
+      "text": "A death ability that will attempt to regain power by removing your adjacent buddies and gaining power equal to their power when removed. If they can, the death is canceled."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base27",
+      "title": "Smeltdown",
+      "text": "A play ability that kills all of your other buddies not in the metal grouping, then gains Meltor 2 power for each buddy removed this way. This can also trigger Meltor's second ability when killing fire buddies.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base27",
+      "title": "Flaming Forge",
+      "text": "An observe death ability limited to buddies in the fire grouping. When a buddy from the fire grouping dies, Meltor and your buddies of the metal grouping gain power."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base28",
+      "title": "Thick Thicket",
+      "text": "A turn ability that increases Angsty Saps power by 2 as long as there are no buddies in adjacent slots.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base29",
+      "title": "Conduction",
+      "text": "A powered ability that increases Coppor's power by 1.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base30",
+      "title": "Courage Chime",
+      "text": "A death ability that increases your other buddies power by 1.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base31",
+      "title": "Drip Drop",
+      "text": "A turn ability that returns Dropper to your hand if there is space in your hand. This happens after draw.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base32",
+      "title": "Pulse Extender",
+      "text": "A powered ability that increases Tick's power by 1 and powers adjacent redstone buddies twice. Tick will die if they reach 8 power this way.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base33",
+      "title": "Waiting Game",
+      "text": "A play ability that increases Tock's power by the turn number divided by 2 (This includes enemy turns, and is rounded down.)",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base34",
+      "title": "Travel Game",
+      "text": "A play ability that increases Whare's power by the number of total buddies in play.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base35",
+      "title": "Axo-Regeneration",
+      "text": "A kill ability that gives Ambystoma the Regeneration status effect.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base35",
+      "title": "Rare Blue",
+      "text": "A play ability that has a 1/10 chance to increase Ambystoma's power by 6."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base36",
+      "title": "Railway",
+      "text": "A turn ability that attempts to move Kart to an adjacent empty slot and increases its power by 2. Won't trigger with no empty adjacent slots.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_base36",
+      "title": "Mine Crash",
+      "text": "A powered ability that deals 10 damage to the opponent if Kart has 10 or more power."
     }
   ]
 }

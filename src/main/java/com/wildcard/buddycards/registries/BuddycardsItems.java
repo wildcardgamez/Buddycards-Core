@@ -532,12 +532,9 @@ public class BuddycardsItems {
             return true;
         })).build());
         /*AMBYSTOMA  */ registerCard(BASE_SET, 35, Rarity.RARE,     4, 3, new BattleAbility.Builder().add(BattleEvent.KILL.ability("axo-regeneration", (game, slot, target, source) -> {
-            int power = 3 - game.turnPower[slot];
-            if(power > 0) {
-                game.turnPower[slot] += power;
-                game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.axo-regeneration.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(power))));
-                game.updatePower();
-            }
+            game.state[slot].status = BattleStatusEffect.REGENERATION;
+            game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.axo-regeneration.log"), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(BattleStatusEffect.REGENERATION))));
+            game.updatePower();
             return true;
         })).add(BattleEvent.PLAYED.ability("rare_blue", (game, slot, target, source) -> {
             if(BattleContainer.random.nextInt(10) == 0) {

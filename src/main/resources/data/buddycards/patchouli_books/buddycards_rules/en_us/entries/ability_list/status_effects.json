@@ -1,0 +1,68 @@
+{
+  "name": "Status Effects",
+  "icon": "buddycards:battle_sleeve",
+  "category": "buddycards:ability_list",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "text",
+      "title": "Fire",
+      "text": "A turn ability that hhas a 50% chance to have the affected buddy lose 1 power or to clear the status effect.",
+      "link_recipe": true
+    },
+    {
+      "type": "text",
+      "title": "Sleep",
+      "text": "An attack ability that cancels the affected buddy's attack and clears the status effect.",
+      "link_recipe": true
+    },
+    {
+      "type": "text",
+      "title": "Strength",
+      "text": "An attack ability that gains the affected buddy 2 power and clears the status effect.",
+      "link_recipe": true
+    },
+    {
+      "type": "text",
+      "title": "Resistance",
+      "text": "A damaged ability that causes the affected buddy to gain 1 power whenever it takes damage. This can prevent its death in some situations.",
+      "link_recipe": true
+    },
+    {
+      "type": "text",
+      "title": "Regeneration",
+      "text": "A turn ability that causes the affected buddy to gain 1 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "text",
+      "title": "Weakness",
+      "text": "An attack ability that loses the affected buddy 2 power and clears the status effect. It can die as this ability happens.",
+      "link_recipe": true
+    },
+    {
+      "type": "text",
+      "title": "Poison",
+      "text": "A turn ability that causes the affected buddy to lose 1 power. This ability won't trigger unless the buddy is at greater than 0 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "text",
+      "title": "Wither",
+      "text": "A turn ability that causes the affected buddy to lose 1 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "text",
+      "title": "Airborne",
+      "text": "An attack ability that cancels out its attack and replaces it with a direct attack to the opponent, before clearing the status effect.",
+      "link_recipe": true
+    },
+    {
+      "type": "text",
+      "title": "Stunned",
+      "text": "An attack ability that cancels out a defending attack and clears the status effect.",
+      "link_recipe": true
+    }
+  ]
+}

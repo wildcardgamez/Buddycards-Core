@@ -1,0 +1,233 @@
+{
+  "name": "nether Set Abilities",
+  "icon": "buddycards:buddycard_nether1",
+  "category": "buddycards:ability_list",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether1",
+      "title": "Btick Toss",
+      "text": "A play ability that causes a direct attack for 2 damage. This does not cause the opponent to fight back, but will cause any fight or damaged triggers.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether2",
+      "title": "Tough Stuff",
+      "text": "A turn ability that sets Obby's power to 3 if it is less than 3.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether3",
+      "title": "Radiant Glow",
+      "text": "A turn ability that causes the power of buddies of the monster grouping to decrease by 1.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether4",
+      "title": "Bounce Back",
+      "text": "A death ability that causes Slinky to return to your hand if there is space.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether5",
+      "title": "Hearty Bacon",
+      "text": "A death ability that causes you to gain 2 life and gives your other buddies the strength status effect.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether6",
+      "title": "Soul Steal",
+      "text": "A kill ability that causes you to gain 1 life.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether7",
+      "title": "Igneous Extrusion",
+      "text": "A fight ability that increases Baisal's power by 2 while Baisal is on fire.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether8",
+      "title": "Warped Growth",
+      "text": "A fight ability that increases Vinnie's power by 1 if you have another buddy in the fungal grouping in play.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether9",
+      "title": "Warping Spores",
+      "text": "A death ability that gives an opposing buddy a sleep ability if there is an opposing buddy. Only triggers if there is an opposing buddy.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether10",
+      "title": "Spreading Spores",
+      "text": "A play ability that draws you a card if you have another buddy in the fungal grouping in play.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether11",
+      "title": "Fresh Harvest",
+      "text": "A death ability that causes all of your buddies in the animal grouping to gain 2 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether12",
+      "title": "Feeding Time",
+      "text": "A play ability that causes all of your buddies in the animal grouping to gain 1 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether13",
+      "title": "Play Fetch",
+      "text": "A kill ability that causes you to draw a card if you have space whenever Yang kills another buddy. This will trigger before any death triggers which can possibly keep the buddy alive.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether14",
+      "title": "Lazy Cat",
+      "text": "A free activated ability. Cannot be activated when Yin has a status effect. When clicked, Yin will gain 2 power and gain a sleep status effect, causing it to skip its next attack.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether15",
+      "title": "Gilded Gift",
+      "text": "A play ability that causes all of your buddies in the food grouping to gain 1 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether16",
+      "title": "Rich Trade",
+      "text": "A play ability that draws you cards until you can't draw any more cards.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether17",
+      "title": "Unbreakable",
+      "text": "A damaged ability that causes Dio to gain 1 power when it has a damage trigger. Not all power loss or attacks trigger it, but combat damage does.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether18",
+      "title": "Delicious Desert",
+      "text": "A death ability that causes you to gain 3 life.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether19",
+      "title": "Energize",
+      "text": "A turn ability that causes power triggers for all of your adjacent buddies in the redstone grouping.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether20",
+      "title": "Sweet Treat",
+      "text": "A death ability that causes you to gain 2 life.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether21",
+      "title": "Spook Em",
+      "text": "An attack ability that causes an opposing buddy to lose 1 power. This happens before damage and only if there is an opposing buddy.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether22",
+      "title": "Premium Enchant",
+      "text": "A play ability that causes all of your buddies in the enchantable grouping to gain 2 power.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether22",
+      "title": "XP Farm",
+      "text": "A kill ability that causes all of your buddies in the enchantable grouping to gain 1 power."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether23",
+      "title": "Anvil Drop",
+      "text": "A play ability that deals 4 damage to an opposing buddycard. This damage is direct and causes attack and damage triggers.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether23",
+      "title": "Reforge",
+      "text": "A turn ability that causes your buddies in the metal grouping to gain 1 power. This includes Caster itself."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether24",
+      "title": "Push Back",
+      "text": "A play ability that will return the opposing buddy to its owner's hand. Will only trigger if there is space in the opponents hand.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether24",
+      "title": "Empowered Push",
+      "text": "A powered ability that will return the opposing buddy to its owner's hand. Will only trigger if there is space in the opponents hand."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether25",
+      "title": "Prismarine Spines",
+      "text": "A damaged ability that causes the source of the damage, if one of the enemies buddies, loses 1 power. This only works off of direct damage thhat can trigger damaged abilities.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether25",
+      "title": "Laser Gaze",
+      "text": "A turn ability that deals 2 damage to an opposing buddy every odd turn. Worth noting that this does not start specifically on the turn that Knight is played, but is netherd on the number of YOUR turns that has passed."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether26",
+      "title": "Grand Creation",
+      "text": "A play ability that chooses cards at random from your deck to play in any of your empty slots.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether26",
+      "title": "Craft Together",
+      "text": "A death ability that will attempt to regain power by removing your adjacent buddies and gaining power equal to their power when removed. If they can, the death is canceled."
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether27",
+      "title": "Smeltdown",
+      "text": "A play ability that kills all of your other buddies not in the metal grouping, then gains Meltor 2 power for each buddy removed this way. This can also trigger Meltor's second ability when killing fire buddies.",
+      "link_recipe": true
+    },
+    {
+      "type": "spotlight",
+      "item": "buddycards:buddycard_nether27",
+      "title": "Flaming Forge",
+      "text": "An observe death ability limited to buddies in the fire grouping. When a buddy from the fire grouping dies, Meltor and your buddies of the metal grouping gain power."
+    }
+  ]
+}
