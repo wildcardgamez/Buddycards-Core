@@ -170,8 +170,6 @@ public class PlaymatBlock extends BaseEntityBlock {
     public static boolean checkP1Pos(BlockPos self, BlockPos opponent) {
         if (self.getX() > opponent.getX()) return true;
         else if (self.getX() < opponent.getX()) return false;
-        else if (self.getY() > opponent.getY()) return true;
-        else if (self.getY() < opponent.getY()) return false;
         else if (self.getZ() > opponent.getZ()) return true;
         else return false;
     }
