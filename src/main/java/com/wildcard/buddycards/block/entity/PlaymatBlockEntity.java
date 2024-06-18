@@ -30,11 +30,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
+
 public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     public BattleContainer container;
     public boolean inGame;
     public boolean p1;
     private Component name;
+    private UUID playerUUID;
 
     public PlaymatBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -64,6 +67,8 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             tag.putString("name", Component.Serializer.toJson(name));
         tag.putBoolean("game", inGame);
         tag.putBoolean("p1", p1);
+        if(playerUUID != null)
+            tag.putUUID("player", playerUUID);
         if(p1) {
             tag.put("log", BattleComponent.LIST_CODEC.encodeStart(NbtOps.INSTANCE, container.battleLog).result().orElse(new ListTag()));
             CompoundTag inv = new CompoundTag();
@@ -134,6 +139,8 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
             this.name = Component.Serializer.fromJson(tag.getString("name"));
         inGame = tag.getBoolean("game");
         p1 = tag.getBoolean("p1");
+        if(tag.contains("player"))
+            playerUUID = tag.getUUID("player");
         if(p1) {
             if(container == null)
                 container = new BattleContainer();
@@ -194,5 +201,13 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
         name = itemInHand.getHoverName();
         setChanged();
         return removedDeck;
+    }
+
+    public UUID getPlayerUUID() {
+        return playerUUID;
+    }
+
+    public void setPlayerUUID(UUID playerUUID) {
+        this.playerUUID = playerUUID;
     }
 }

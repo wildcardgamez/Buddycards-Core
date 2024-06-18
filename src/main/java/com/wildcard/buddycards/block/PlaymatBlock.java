@@ -130,6 +130,7 @@ public class PlaymatBlock extends BaseEntityBlock {
             //If you are holding a deckbox, swap it out
             if (player.getItemInHand(hand).getItem() instanceof DeckboxItem && !self.inGame) {
                 player.setItemInHand(hand, self.swapDeck(player.getItemInHand(hand)));
+                self.setPlayerUUID(player.getUUID());
             }
             //If there's a container and both decks
             if (self.container != null && self.getContainer().getItem(0).getItem() instanceof DeckboxItem && self.getContainer().getItem(7).getItem() instanceof DeckboxItem) {
@@ -142,7 +143,7 @@ public class PlaymatBlock extends BaseEntityBlock {
                     opponent.setChanged();
                 }
                 //Open the GUI
-                if (player instanceof ServerPlayer serverPlayer) NetworkHooks.openGui(serverPlayer, self, pos);
+                if (player instanceof ServerPlayer serverPlayer && player.getUUID().equals(self.getPlayerUUID())) NetworkHooks.openGui(serverPlayer, self, pos);
             }
             return InteractionResult.sidedSuccess(level.isClientSide());
         }
