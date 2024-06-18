@@ -35,7 +35,6 @@ import java.util.function.Supplier;
 public class PlaymatMenu extends AbstractContainerMenu {
     public PlaymatBlockEntity entity;
     public BattleContainer container;
-    final boolean p1;
     public final DataSlot energy = DataSlot.standalone();
     public final DataSlot health = DataSlot.standalone();
     public final DataSlot opponentEnergy = DataSlot.standalone();
@@ -58,18 +57,17 @@ public class PlaymatMenu extends AbstractContainerMenu {
         super(BuddycardsMisc.PLAYMAT_CONTAINER.get(), id);
         this.entity = entity;
         this.container = entity.container;
-        this.p1 = entity.p1;
-        this.addSlot(new DeckSlot(this.container, (p1 ? 7 : 0), 143, 18));
-        this.addSlot(new DeckSlot(this.container, (p1 ? 0 : 7), 143, 64));
+        this.addSlot(new DeckSlot(this.container, (entity.p1 ? 7 : 0), 143, 18));
+        this.addSlot(new DeckSlot(this.container, (entity.p1 ? 0 : 7), 143, 64));
         Direction dir = entity.getBlockState().getValue(PlaymatBlock.DIR);
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new HandSlot(this, (p1 ? 1 : 8) + i, 80 + (18 * i), 64));
+            this.addSlot(new HandSlot(this, (entity.p1 ? 1 : 8) + i, 80 + (18 * i), 64));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new BattlefieldSlot(this, (p1 ? 4 : 11)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 36));
+            this.addSlot(new BattlefieldSlot(this, (entity.p1 ? 4 : 11)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 36));
         }
         for (int i = 0; i < 3; i++) {
-            this.addSlot(new OpponentBattlefieldSlot(this, (p1 ? 11 : 4)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 18));
+            this.addSlot(new OpponentBattlefieldSlot(this, (entity.p1 ? 11 : 4)+i, (dir == Direction.SOUTH || dir == Direction.WEST) ? 80 + (18 * i) : 116 - (18 * i), 18));
         }
         this.addDataSlot(energy);
         this.addDataSlot(health);
@@ -120,7 +118,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
             if (slot instanceof HandSlot) {
                 //hand slots
                 ItemStack stack = container.getItem(slotNum);
-                if (stack.getItem() instanceof BuddycardItem item && container.game.canPlay(p1, item)) {
+                if (stack.getItem() instanceof BuddycardItem item && container.game.canPlay(entity.p1, item)) {
                     selectedSlot.set(slotNum == selectedSlot.get() ? SLOT_CLICKED_OUTSIDE : slotNum);
                 } else {
                     if (selectedSlot.get() != SLOT_CLICKED_OUTSIDE && stack.isEmpty()) {
@@ -132,11 +130,13 @@ public class PlaymatMenu extends AbstractContainerMenu {
             } else if (slot instanceof BattlefieldSlot) {
                 //battlefield slots
                 if(!container.getItem(slotNum).isEmpty()) {
-                    container.game.trigger(BattleEvent.ACTIVATED, BattleGame.translateTo(slotNum));
+                    if (container.game.trigger(BattleEvent.ACTIVATED, BattleGame.translateTo(slotNum))) {
+                        container.syncData();
+                    }
                 }
                 int selSlot = selectedSlot.get();
                 if (selSlot != SLOT_CLICKED_OUTSIDE && container.getItem(slotNum).isEmpty()) {
-                    if (container.game.playCard(BattleGame.translateTo(slotNum), container.getItem(selSlot), p1)) {
+                    if (container.game.playCard(BattleGame.translateTo(slotNum), container.getItem(selSlot), entity.p1)) {
                         container.setItem(selSlot, ItemStack.EMPTY);
                         container.game.trigger(BattleEvent.PLAYED, BattleGame.translateTo(slotNum));
                         this.broadcastChanges();
@@ -155,7 +155,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int buttonId) {
-        if (buttonId == ButtonIds.END_TURN && container.game.isP1() == p1 && !container.game.hasGameEnded()) {
+        if (buttonId == ButtonIds.END_TURN && container.game.isP1() == entity.p1 && !container.game.hasGameEnded()) {
             if(container.game.endTurn()) {
                 container.game.nextTurn();
             }
@@ -179,7 +179,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
     //Updates the values in the data slots. Does NOT synchronize them to clients!
     //clickMenuButton does it if you return true or you can call broadcastChanges();
     private void updateDataSlots() {
-        if (this.p1) {
+        if (entity.p1) {
             this.energy.set(container.energy1);
             this.opponentEnergy.set(container.energy2);
             this.health.set(container.health1);
