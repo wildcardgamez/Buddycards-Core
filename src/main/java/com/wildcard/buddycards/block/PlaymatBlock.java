@@ -100,9 +100,19 @@ public class PlaymatBlock extends BaseEntityBlock {
                 && opponent.getBlockState().hasProperty(DIR)
                 && opponent.getBlockState().getValue(DIR).getOpposite() == state.getValue(DIR)) {
 
-            //Set p1 for self
+            // Reset p1 if both are p1
+            if (self.p1 && opponent.p1) {
+                self.p1 = false;
+                opponent.p1 = false;
+            }
+
+            //Set p1 if no p1 found
             if (!self.p1 && !opponent.p1) {
-                self.p1 = true;
+                // Set based on position for consistent behavior
+                if (checkP1Pos(self.getBlockPos(), opponent.getBlockPos())) self.p1 = true;
+                else opponent.p1 = true;
+
+                // Sync to clients
                 if (level instanceof ServerLevel serverLevel) {
                     serverLevel.sendBlockUpdated(self.getBlockPos(), self.getBlockState(), self.getBlockState(), Block.UPDATE_ALL_IMMEDIATE);
                     serverLevel.sendBlockUpdated(opponent.getBlockPos(), opponent.getBlockState(), opponent.getBlockState(), Block.UPDATE_ALL_IMMEDIATE);
@@ -148,5 +158,21 @@ public class PlaymatBlock extends BaseEntityBlock {
             return InteractionResult.sidedSuccess(level.isClientSide());
         }
         return super.use(state, level, pos, player, hand, hitResult);
+    }
+
+    /**
+     * Checks which position should get the p1 status<br>
+     * DO NOT USE IN MOST CASES, ONLY MEANT TO BE USED BEFORE p1 IS SET
+     * @param self The position of the block being checked
+     * @param opponent The position of the opposing block
+     * @return true if self is p1, false if opponent is p1
+     */
+    public static boolean checkP1Pos(BlockPos self, BlockPos opponent) {
+        if (self.getX() > opponent.getX()) return true;
+        else if (self.getX() < opponent.getX()) return false;
+        else if (self.getY() > opponent.getY()) return true;
+        else if (self.getY() < opponent.getY()) return false;
+        else if (self.getZ() > opponent.getZ()) return true;
+        else return false;
     }
 }
