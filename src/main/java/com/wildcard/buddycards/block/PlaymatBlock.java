@@ -5,6 +5,7 @@ import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.DeckboxItem;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -102,6 +103,10 @@ public class PlaymatBlock extends BaseEntityBlock {
             //Set p1 for self
             if (!self.p1 && !opponent.p1) {
                 self.p1 = true;
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.sendBlockUpdated(self.getBlockPos(), self.getBlockState(), self.getBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+                    serverLevel.sendBlockUpdated(opponent.getBlockPos(), opponent.getBlockState(), opponent.getBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+                }
             }
             //If both have no container, set them up
             if (self.container == null && opponent.container == null) {
