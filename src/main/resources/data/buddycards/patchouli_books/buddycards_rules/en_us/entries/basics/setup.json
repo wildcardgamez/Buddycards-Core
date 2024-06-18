@@ -11,7 +11,8 @@
     {
       "type": "crafting",
       "recipe": "buddycards:playmat_base",
-      "recipe2": "buddycards:playmat_end"
+      "recipe2": "buddycards:playmat_end",
+      "link_recipe": false
     },
     {
       "type": "text",

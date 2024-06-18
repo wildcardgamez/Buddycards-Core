@@ -39,7 +39,7 @@ public class BuddycardsEntities {
             });
     public static final RegistryObject<BlockEntityType<KineticChamberBlockEntity>> KINETIC_CHAMBER_TILE = BLOCK_ENTITIES.register("kinetic_chamber",
             () -> BlockEntityType.Builder.of(KineticChamberBlockEntity::new, BuddycardsBlocks.KINETIC_CHAMBER.get()).build(null));
-    public static final RegistryObject<BlockEntityType<BuddysteelChargerBlockEntity>> BUDDYSTEEL_CHARGER_TILE = BLOCK_ENTITIES.register("buddysteel_carger",
+    public static final RegistryObject<BlockEntityType<BuddysteelChargerBlockEntity>> BUDDYSTEEL_CHARGER_TILE = BLOCK_ENTITIES.register("buddysteel_charger",
             () -> BlockEntityType.Builder.of(BuddysteelChargerBlockEntity::new, BuddycardsBlocks.BUDDYSTEEL_CHARGER.get()).build(null));
 
     public static final RegistryObject<EntityType<EnderlingEntity>> ENDERLING = ENTITIES.register("enderling",
