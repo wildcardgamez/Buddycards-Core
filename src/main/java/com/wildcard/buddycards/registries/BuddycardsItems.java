@@ -747,8 +747,8 @@ public class BuddycardsItems {
             if(source != slot && game.getCard(source) != null) {
                 game.state[source].status = BattleStatusEffect.FIRE;
                 game.turnPower[source]--;
-                game.updatePower(source);
                 game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.spirit_flames.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(source)), TextureBattleIcon.statusIcon(BattleStatusEffect.FIRE), TextureBattleIcon.subtractIcon(1))));
+                game.updatePower(source);
             }
             return true;
         })).build());
