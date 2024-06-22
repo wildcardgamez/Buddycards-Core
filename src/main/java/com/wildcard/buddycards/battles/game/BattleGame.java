@@ -273,12 +273,15 @@ public class BattleGame {
         BuddycardItem card = items.get(slot);
         if(state[slot].status != BattleStatusEffect.EMPTY) {
             BattleAbility effect = state[slot].getStatusEffect();
-            if (effect != null && effect.event.equals(event))
+            if (effect != null && effect.event.equals(event)) {
                 if (!effect.ability.trigger(this, slot, target, source)) return false;
+                if (items.get(slot) != card) return true;
+            }
         }
         if (card != null && card.getAbilities().containsKey(event)) {
             for (BattleAbility ability : card.getAbilities().get(event)) {
                 if (!ability.ability.trigger(this, slot, target, source)) return false;
+                if (items.get(slot) != card) return true;
             }
         }
         return true;

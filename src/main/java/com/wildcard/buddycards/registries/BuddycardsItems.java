@@ -656,7 +656,7 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*WARP_NYE */ registerCard(NETHER_SET, 10, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("warped_spreading", (game, slot, target, source) -> {
+        /*WARP_NYE */ registerCard(NETHER_SET, 10, Rarity.COMMON,   2, 1, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("spreading_spores", (game, slot, target, source) -> {
             for (int i: BattleEvent.Distribution.ROW_OTHER.apply(slot, game)) {
                 if(game.container.getItem(BattleGame.translateFrom(i)).m_204117_(BuddycardsMisc.BCB_FUNGAL)) {
                     if(game.container.tryDrawCard(game.isP1()))

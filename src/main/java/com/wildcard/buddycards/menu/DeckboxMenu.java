@@ -61,12 +61,14 @@ public class DeckboxMenu extends AbstractContainerMenu {
             if((stack.getItem() instanceof BuddycardItem item)) {
                 item = item.getOriginal();
                 Rarity r = item.getRarity();
+                if (item.getAbilities().size() == 0)
+                    return false;
                 //Each rarity has a limit on how many can be in the deck
                 int max = r.equals(Rarity.COMMON) ? ConfigManager.deckLimitCommon.get() : r.equals(Rarity.UNCOMMON) ? ConfigManager.deckLimitUncommon.get() : r.equals(Rarity.RARE) ? ConfigManager.deckLimitRare.get() : ConfigManager.deckLimitEpic.get();
                 for (int i = 0; i < 16; i++)
                     //Check for limit and that the card is properly implemented with an ability
                     if (!container.getItem(i).isEmpty() && item.equals(((BuddycardItem)container.getItem(i).getItem()).getOriginal())) {
-                        if (--max <= 0 || ((BuddycardItem)container.getItem(i).getItem()).getOriginal().getAbilities().size() == 0) return false;
+                        if (--max <= 0) return false;
                     }
                 return true;
             }
