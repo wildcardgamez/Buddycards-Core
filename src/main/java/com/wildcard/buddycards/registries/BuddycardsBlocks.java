@@ -29,14 +29,15 @@ public class BuddycardsBlocks {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    static final BlockBehaviour.Properties BUDDYSTEEL_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
+    public static final BlockBehaviour.Properties BUDDYSTEEL_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
+    public static final BlockBehaviour.Properties BOOSTER_BOX_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_GRAY).strength(0.8F).sound(SoundType.WOOL);
+    public static final BlockBehaviour.Properties PLAYMAT_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_LIGHT_BLUE).strength(0.8F).sound(SoundType.WOOL);
+
     static final BlockBehaviour.Properties LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 12).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
     static final BlockBehaviour.Properties CRYSTAL_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(1.5F, 3.0F).sound(SoundType.AMETHYST);
     static final BlockBehaviour.Properties CRIMSON_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.CRIMSON_NYLIUM).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
     static final BlockBehaviour.Properties ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_PURPLE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
     static final BlockBehaviour.Properties VOID_ZYLEX_PROPERTIES = BlockBehaviour.Properties.of(Material.METAL, MaterialColor.WARPED_HYPHAE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
-    static final BlockBehaviour.Properties BOOSTER_BOX_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_GRAY).strength(0.8F).sound(SoundType.WOOL);
-    static final BlockBehaviour.Properties PLAYMAT_PROPERTIES = BlockBehaviour.Properties.of(Material.DECORATION, MaterialColor.COLOR_LIGHT_BLUE).strength(0.8F).sound(SoundType.WOOL);
 
     //Basic Blocks
     public static final RegistryObject<Block> BUDDYSTEEL_BLOCK = BLOCKS.register("buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
