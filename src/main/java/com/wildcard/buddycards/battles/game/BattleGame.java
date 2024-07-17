@@ -307,7 +307,7 @@ public class BattleGame {
     
     private boolean infLoopFail() {
         if (loopDetector > 200) {
-            if (sentInfLoopMsg) {
+            if (!sentInfLoopMsg) {
                 sentInfLoopMsg = true;
                 LOGGER.error("Infinite ability loop detected!", new Throwable());
                 for (int i = 0; i < 10; i++) {
