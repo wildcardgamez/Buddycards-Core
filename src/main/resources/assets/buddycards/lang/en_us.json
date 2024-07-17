@@ -359,6 +359,7 @@
   "battles.log.buddycards.attack1": " deals ",
   "battles.log.buddycards.attack2": " damage to ",
   "battles.log.buddycards.victory": " wins!!!",
+  "battles.log.buddycards.infinite_loop": "An infinite ability loop has been detected! Report this and include your game log!",
 
   "battles.ability.buddycards.status.fire.log1": " loses Fire",
   "battles.ability.buddycards.status.fire.log2": " loses 1 power from Fire",
@@ -562,7 +563,7 @@
   "battles.ability.buddycards.subtraction": "Subtraction",
   "battles.ability.buddycards.subtraction.desc": "When Quazi is powered, an opposing buddy loses 1 power.",
   "battles.ability.buddycards.subtraction.log": " loses 1 power from Subtraction",
-  "battles.ability.buddycards.fire_resistance": "Subtraction",
+  "battles.ability.buddycards.fire_resistance": "Fire Resistance",
   "battles.ability.buddycards.fire_resistance.desc": "When Hot Pot dies, adjacent buddies on fire are put out and gain 2 power.",
   "battles.ability.buddycards.fire_resistance.log": "Buddies on fire are put out and gain 2 power",
   "battles.ability.buddycards.tough_tears": "Tough Tears",

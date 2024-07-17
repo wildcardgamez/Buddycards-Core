@@ -2,7 +2,6 @@ package com.wildcard.buddycards.registries;
 
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ListMultimap;
-import com.ibm.icu.impl.Pair;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.battles.BattleComponent;
 import com.wildcard.buddycards.battles.BuddycardBattleIcon;
@@ -32,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 public class BuddycardsItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Buddycards.MOD_ID);
@@ -375,7 +376,7 @@ public class BuddycardsItems {
                 game.container.addLog(new BattleComponent(new TranslatableComponent("battles.ability.buddycards.grand_creation.log"), icons));
                 game.updatePower();
                 for (Pair<Integer, ItemStack> p : cards) {
-                    game.addCard(p.first, p.second, (BuddycardItem) p.second.getItem());
+                    game.addCard(p.getKey(), p.getValue(), (BuddycardItem) p.getValue().getItem());
                 }
             }
             return true;

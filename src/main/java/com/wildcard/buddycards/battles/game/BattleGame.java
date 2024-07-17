@@ -29,6 +29,9 @@ public class BattleGame {
     /** Actively changing turn power. */
     public final int[] turnPower = new int[6];
     
+    private int loopDetector = 0;
+    private boolean sentInfLoopMsg = false;
+    
     public BattleGame(BattleContainer container) {
         this.container = container;
         for (int i = 0; i < 6; i++) {
@@ -64,6 +67,9 @@ public class BattleGame {
     /** starts a turn */
     public void startTurn() {
         LOGGER.info("Player " + player() + "'s turn!");
+        // reset infinite loop detector
+        loopDetector = 0;
+        sentInfLoopMsg = false;
         //allocate energy
         if (isP1()) container.energy1 = Math.min(container.energy1 + container.turnEnergy, 10);
         else container.energy2 = Math.min(container.energy2 + container.turnEnergy, 10);
@@ -86,6 +92,9 @@ public class BattleGame {
     /** ends a turn */
     public boolean endTurn() {
         container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_attack")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.startAttackIcon, TextureBattleIcon.spacerIcon)));
+        // reset infinite loop detector
+        loopDetector = 0;
+        sentInfLoopMsg = false;
         //have all your cards attack
         for (int i = slot(0); i < slot(3); i++) {
             if (items.get(i) != null) {
@@ -270,17 +279,22 @@ public class BattleGame {
     }
     
     public boolean trigger(BattleEvent event, int slot, int target, int source) {
+        // detect infinite loops and stop everything if true
+        // (only checks at top of trigger, since if it's an INFINITE loop it should reach this quite a few times)
+        if (infLoopFail()) return false;
         BuddycardItem card = items.get(slot);
         if(state[slot].status != BattleStatusEffect.EMPTY) {
             BattleAbility effect = state[slot].getStatusEffect();
             if (effect != null && effect.event.equals(event)) {
                 if (!effect.ability.trigger(this, slot, target, source)) return false;
+                ++loopDetector; // count triggers for infinite loops
                 if (items.get(slot) != card) return true;
             }
         }
         if (card != null && card.getAbilities().containsKey(event)) {
             for (BattleAbility ability : card.getAbilities().get(event)) {
                 if (!ability.ability.trigger(this, slot, target, source)) return false;
+                ++loopDetector; // count triggers for infinite loops
                 if (items.get(slot) != card) return true;
             }
         }
@@ -289,6 +303,19 @@ public class BattleGame {
     
     public boolean trigger(BattleEvent event, int slot) {
         return trigger(event, slot, slot, slot);
+    }
+    
+    private boolean infLoopFail() {
+        if (loopDetector > 200) {
+            if (sentInfLoopMsg) {
+                sentInfLoopMsg = true;
+                LOGGER.error("Infinite ability loop detected!", new Throwable());
+                for (int i = 0; i < 10; i++) {
+                    container.addLog(new BattleComponent(new TranslatableComponent("battles.log.buddycards.infinite_loop"), List.of(TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon)));
+                }
+            }
+            return true;
+        } else return false;
     }
     
     public boolean playCard(int slot, ItemStack stack, boolean p1) {
