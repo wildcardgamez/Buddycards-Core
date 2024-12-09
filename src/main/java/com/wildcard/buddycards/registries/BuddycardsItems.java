@@ -1032,7 +1032,15 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*SILVER   */ registerCard(END_SET,  5, Rarity.COMMON,   2, 1, DEFAULT_NO_ABILITIES);
+        /*SILVER   */ registerCard(END_SET,  5, Rarity.COMMON,   1, 1, new BattleAbility.Builder().add(BattleEvent.TURN.ability("silver_swarm", (game, slot, target, source) -> {
+            boolean p1 = game.isP1();
+            for (int i = p1 ? 1 : 8; i < (p1 ? 4 : 11); i++) {
+                //if(game.getCard(i).) {
+
+                //}
+            }
+            return true;
+        })).build());
         /*LIBRARIA */ registerCard(END_SET,  6, Rarity.COMMON,   6, 4, new BattleAbility.Builder().add(BattleEvent.TURN.ability("endless_knowledge", (game, slot, target, source) -> {
             if(game.container.tryDrawCard(BattleGame.getOwner(slot)))
                 game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.endless_knowledge.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.drawIcon)));

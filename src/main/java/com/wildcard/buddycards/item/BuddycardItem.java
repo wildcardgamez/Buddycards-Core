@@ -71,7 +71,7 @@ public class BuddycardItem extends Item {
             }
         }
         else
-            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.unimplemented").withStyle(ChatFormatting.DARK_RED));
+            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddycard.unimplemented").withStyle(ChatFormatting.DARK_GRAY));
         //Show the cards joke/tooltip
         tooltip.add(new TranslatableComponent(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.ITALIC));
         //Show the set, card number, and shiny symbol if applicable
