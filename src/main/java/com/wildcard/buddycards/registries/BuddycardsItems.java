@@ -19,6 +19,7 @@ import com.wildcard.buddycards.gear.BuddycardsToolTier;
 import com.wildcard.buddycards.item.*;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
@@ -1032,13 +1033,12 @@ public class BuddycardsItems {
             }
             return true;
         })).build());
-        /*SILVER   */ registerCard(END_SET,  5, Rarity.COMMON,   1, 1, new BattleAbility.Builder().add(BattleEvent.TURN.ability("silver_swarm", (game, slot, target, source) -> {
-            boolean p1 = game.isP1();
-            for (int i = p1 ? 1 : 8; i < (p1 ? 4 : 11); i++) {
-                //if(game.getCard(i).) {
-
-                //}
-            }
+        /*SILVER   */ registerCard(END_SET,  5, Rarity.COMMON,   1, 1, new BattleAbility.Builder().add(BattleEvent.DAMAGED.ability("silver_swarm", (game, slot, target, source) -> {
+            if (game.container.tryTutorCard(BattleGame.getOwner(slot), (c) -> {
+                BuddycardItem card = ((BuddycardItem)c.getItem()).getOriginal();
+                return card.getSet() == END_SET && card.getCardNumber() == 5;
+            }))
+                game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.silver_swarm.log")), List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon, TextureBattleIcon.drawIcon)));
             return true;
         })).build());
         /*LIBRARIA */ registerCard(END_SET,  6, Rarity.COMMON,   6, 4, new BattleAbility.Builder().add(BattleEvent.TURN.ability("endless_knowledge", (game, slot, target, source) -> {
@@ -1117,7 +1117,17 @@ public class BuddycardsItems {
             return true;
         })).build());
         /*WALLY    */ registerCard(END_SET, 13, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
-        /*FLOUER   */ registerCard(END_SET, 14, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*FLOUER   */ registerCard(END_SET, 14, Rarity.UNCOMMON, 2, 1, new BattleAbility.Builder().add(BattleEvent.PLAYED.ability("chorus_bloom", (game, slot, target, source) -> {
+            List<IBattleIcon> icons = new ArrayList<>(List.of(BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.dividerIcon));
+            while (game.container.tryTutorCard(BattleGame.getOwner(slot), (c) -> {
+                BuddycardItem card = ((BuddycardItem)c.getItem()).getOriginal();
+                return card.getSet() == END_SET && card.getCardNumber() == 16;
+            }))
+                icons.add(TextureBattleIcon.drawIcon);
+            if(icons.size() > 2)
+                game.container.addLog(new BattleComponent(new TextComponent("").append(BattleGame.getOwner(slot) ? game.container.name1 : game.container.name2).append(new TranslatableComponent("battles.ability.buddycards.chorus_bloom.log")), icons));
+            return true;
+        })).build());
         /*LINGERER */ registerCard(END_SET, 15, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
         /*CHORUS   */ registerCard(END_SET, 16, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
         /*SHULK    */ registerCard(END_SET, 17, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);

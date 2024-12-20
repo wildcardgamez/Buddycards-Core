@@ -2,6 +2,7 @@ package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.battles.BattleComponent;
+import com.wildcard.buddycards.battles.game.BuddycardFilter;
 import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.game.BattleGame;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
@@ -95,10 +96,38 @@ public class BattleContainer extends SimpleContainer {
             if(getItem(i).isEmpty()) {
                 setItem(i, card);
                 setChanged();
-                System.out.println("CARD PUT IN HAND");
                 return true;
             }
         }
+        return false;
+    }
+
+    public boolean tryTutorCard(boolean p1, BuddycardFilter filter) {
+        //If there is no deckbox, fail
+        if(!(getItem(p1 ? 0 : 7).getItem() instanceof DeckboxItem))
+            return false;
+        //If no cards are in the box, fail
+        if((p1 && deck1.isEmpty()) || (!p1 && deck2.isEmpty()))
+            return false;
+        //Check the hand slots
+        for (int i = p1 ? 1 : 8; i < (p1 ? 4 : 11); i++) {
+            //Once it finds an empty one, get a random slot, then increment through the other slots until it finds a valid card to put in hand or has checked every card
+            if(getItem(i).isEmpty()) {
+                int j = random.nextInt(16);
+                int initialSlot = j;
+                ItemStack card = p1 ? deck1.removeItem((++j)%16, 1) : deck2.removeItem((++j)%16, 1);
+                while(initialSlot != j && (card.isEmpty() || !filter.filter(card)))
+                    card = p1 ? deck1.removeItem((++j)%16, 1) : deck2.removeItem((++j)%16, 1);
+                setItem(i, card);
+                if(p1)
+                    deck1.setChanged();
+                else
+                    deck2.setChanged();
+                setChanged();
+                return true;
+            }
+        }
+        //If the hand was full, return false
         return false;
     }
     

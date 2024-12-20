@@ -35,8 +35,6 @@ public class BattleEvent {
     /** When a card is activated manually */
     public static final BattleEvent ACTIVATED = new BattleEvent("activated");
     
-    
-    
     public static interface Distribution extends BiFunction<Integer, BattleGame, int[]> {
         /** All cards */
         public static final Distribution ALL = (slot, game) -> new int[] {0,1,2,3,4,5};
