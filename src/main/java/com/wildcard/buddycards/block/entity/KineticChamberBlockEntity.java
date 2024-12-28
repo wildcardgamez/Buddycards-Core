@@ -48,7 +48,7 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
         if(lvl.random.nextFloat() < ConfigManager.kineticSuccessRate.get()) {
             if(itemSlot.getItem().equals(BuddycardsItems.CRIMSON_LUMINIS_BLOCK.get()) && lvl.random.nextFloat() < ConfigManager.luminisKineticSpecialtyOdds.get()) {
                 LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
-                LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/luminis_kinetic_chamber"));
+                LootTable table = lvl.getServer().getLootData().getLootTable(new ResourceLocation(Buddycards.MOD_ID, "gameplay/luminis_kinetic_chamber"));
                 List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
                 itemSlot = ItemStack.EMPTY;
                 for (ItemStack i: items)

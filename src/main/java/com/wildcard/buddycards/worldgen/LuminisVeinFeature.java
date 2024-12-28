@@ -4,13 +4,12 @@ import com.mojang.serialization.Codec;
 import com.wildcard.buddycards.registries.BuddycardsBlocks;
 import com.wildcard.buddycards.util.ConfigManager;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-
-import java.util.Random;
 
 public class LuminisVeinFeature extends Feature<NoneFeatureConfiguration> {
     public LuminisVeinFeature(Codec<NoneFeatureConfiguration> codec) {
@@ -21,7 +20,7 @@ public class LuminisVeinFeature extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext context) {
         if(!ConfigManager.luminisVeins.get() || ((context.origin().getX() / 16) % ConfigManager.luminisChunks.get() != 0) && ((context.origin().getZ() / 16) % ConfigManager.luminisChunks.get() != 0))
             return false;
-        Random rand = context.random();
+        RandomSource rand = context.random();
         BlockPos pos = context.origin().offset(rand.nextInt(16), rand.nextInt(5, 64), rand.nextInt(16));
         WorldGenLevel lvl = context.level();
         if(pos.getY() < 0 && pos.getY() > -60 && context.level().getBlockState(pos).getBlock().equals(Blocks.LAVA)) {

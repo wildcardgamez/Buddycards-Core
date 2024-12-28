@@ -80,7 +80,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     @Override
     protected int getExperienceReward(Player player) {
-        return 1 + this.level.random.nextInt(3);
+        return 1 + this.level().random.nextInt(3);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     @Override
     protected void customServerAiStep() {
-        if (this.level.isDay() && this.tickCount >= 600) {
+        if (this.level().isDay() && this.tickCount >= 600) {
             float f = this.getBrightness();
             if (f > 0.5F && this.level.canSeeSky(this.blockPosition()) && this.random.nextFloat() * 60.0F < (f - 0.4F) * 2.0F) {
                 this.teleport();
@@ -110,7 +110,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     protected boolean teleport() {
-        if (!this.level.isClientSide() && this.isAlive()) {
+        if (!this.level().isClientSide() && this.isAlive()) {
             double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 32.0D;
             double d1 = this.getY() + this.random.nextInt(32) - 32;
             double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 32.0D;
@@ -121,15 +121,15 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     private boolean teleport(double p_70825_1_, double p_70825_3_, double p_70825_5_) {
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(p_70825_1_, p_70825_3_, p_70825_5_);
-        while(blockpos$mutable.getY() > 0 && !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion())
+        while(blockpos$mutable.getY() > 0 && !this.level().getBlockState(blockpos$mutable).getMaterial().blocksMotion())
             blockpos$mutable.move(Direction.DOWN);
-        BlockState blockstate = this.level.getBlockState(blockpos$mutable);
+        BlockState blockstate = this.level().getBlockState(blockpos$mutable);
         if (blockstate.getMaterial().blocksMotion() && !blockstate.getFluidState().is(Fluids.WATER)) {
             EntityTeleportEvent event = new EntityTeleportEvent(this, p_70825_1_, p_70825_3_, p_70825_5_);
             if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return false;
             boolean success = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
             if (success && !this.isSilent()) {
-                this.level.playSound(null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
+                this.level().playSound(null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
                 this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
             }
             return success;

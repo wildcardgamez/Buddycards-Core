@@ -25,7 +25,7 @@ public class BattleComponent {
                     try {
                         return DataResult.success(Pair.of(Component.Serializer.fromJson(tag), ops.empty()));
                     } catch (JsonSyntaxException e) {
-                        return DataResult.error(e.getMessage());
+                        return DataResult.error(e::getMessage);
                     }
                 }
             }, "component");

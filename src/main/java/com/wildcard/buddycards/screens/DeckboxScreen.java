@@ -40,11 +40,11 @@ public class DeckboxScreen extends AbstractContainerScreen<DeckboxMenu> {
         this.font.draw(matrixStack, title, 8.0f, 6.0f, 4210752);
         this.font.draw(matrixStack, playerInventoryTitle,8.0f, 56.0f, 4210752);
         if (x >= 157 + leftPos && x <= 188 +leftPos && y >= 22 + topPos && y <= 33 + topPos) {
-            List<Component> tooltips = List.of(new TranslatableComponent("item.buddycards.buddycard.deckbuilding_limit"),
-                    new TextComponent("" + ConfigManager.deckLimitCommon.get()).append(new TranslatableComponent("item.buddycards.buddycard.deckbuilding_limit.common")).withStyle(ChatFormatting.GRAY),
-                    new TextComponent("" + ConfigManager.deckLimitUncommon.get()).append(new TranslatableComponent("item.buddycards.buddycard.deckbuilding_limit.uncommon")).withStyle(ChatFormatting.GRAY),
-                    new TextComponent("" + ConfigManager.deckLimitRare.get()).append(new TranslatableComponent("item.buddycards.buddycard.deckbuilding_limit.rare")).withStyle(ChatFormatting.GRAY),
-                    new TextComponent("" + ConfigManager.deckLimitEpic.get()).append(new TranslatableComponent("item.buddycards.buddycard.deckbuilding_limit.epic")).withStyle(ChatFormatting.GRAY));
+            List<Component> tooltips = List.of(Component.translatable("item.buddycards.buddycard.deckbuilding_limit"),
+                    Component.literal("" + ConfigManager.deckLimitCommon.get()).append(Component.translatable("item.buddycards.buddycard.deckbuilding_limit.common")).withStyle(ChatFormatting.GRAY),
+                    Component.literal("" + ConfigManager.deckLimitUncommon.get()).append(Component.translatable("item.buddycards.buddycard.deckbuilding_limit.uncommon")).withStyle(ChatFormatting.GRAY),
+                    Component.literal("" + ConfigManager.deckLimitRare.get()).append(Component.translatable("item.buddycards.buddycard.deckbuilding_limit.rare")).withStyle(ChatFormatting.GRAY),
+                    Component.literal("" + ConfigManager.deckLimitEpic.get()).append(Component.translatable("item.buddycards.buddycard.deckbuilding_limit.epic")).withStyle(ChatFormatting.GRAY));
             renderComponentTooltip(matrixStack, tooltips, x - leftPos, y - topPos);
         }
     }

@@ -2,14 +2,12 @@ package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.battles.BattleComponent;
-import com.wildcard.buddycards.battles.game.BuddycardFilter;
 import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.game.BattleGame;
+import com.wildcard.buddycards.battles.game.BuddycardFilter;
 import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.item.DeckboxItem;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
@@ -45,7 +43,7 @@ public class BattleContainer extends SimpleContainer {
             isPlayer1Turn = true;
         name1 = getItem(0).getDisplayName().plainCopy();
         name2 = getItem(7).getDisplayName().plainCopy();
-        addLog(new BattleComponent(new TextComponent("").append(isPlayer1Turn ? name1 : name2).append(new TranslatableComponent("battles.log.buddycards.go_first")), List.of(TextureBattleIcon.playIcon)));
+        addLog(new BattleComponent(Component.literal("").append(isPlayer1Turn ? name1 : name2).append(Component.translatable("battles.log.buddycards.go_first")), List.of(TextureBattleIcon.playIcon)));
         deck1 = new DeckboxContainer(getItem(0));
         deck2 = new DeckboxContainer(getItem(7));
         deck1.startOpen();
@@ -139,7 +137,7 @@ public class BattleContainer extends SimpleContainer {
     
     public void endGame(boolean p1Victory) {
         System.out.println("Player " + BattleGame.player(p1Victory) + " Wins!");
-        addLog(new BattleComponent(new TextComponent("").append(p1Victory ? name1 : name2).append(new TranslatableComponent("battles.log.buddycards.victory")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.winIcon, TextureBattleIcon.spacerIcon)));
+        addLog(new BattleComponent(Component.literal("").append(p1Victory ? name1 : name2).append(Component.translatable("battles.log.buddycards.victory")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.winIcon, TextureBattleIcon.spacerIcon)));
         deck1.saveStats(p1Victory);
         deck2.saveStats(!p1Victory);
         this.syncData();
