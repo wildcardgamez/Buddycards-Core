@@ -153,7 +153,7 @@ public class PlaymatBlock extends BaseEntityBlock {
                     opponent.setChanged();
                 }
                 //Open the GUI
-                if (player instanceof ServerPlayer serverPlayer && player.getUUID().equals(self.getPlayerUUID())) NetworkHooks.openGui(serverPlayer, self, pos);
+                if (player instanceof ServerPlayer serverPlayer && player.getUUID().equals(self.getPlayerUUID())) NetworkHooks.openScreen(serverPlayer, self, pos);
             }
             return InteractionResult.sidedSuccess(level.isClientSide());
         }

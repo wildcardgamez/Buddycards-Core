@@ -3,22 +3,21 @@ package com.wildcard.buddycards.client.renderer;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.wildcard.buddycards.block.CardDisplayBlock;
 import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
 import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,9 +59,9 @@ public class CardDisplayBlockRenderer<T extends CardDisplayBlockRenderer> implem
                 Vec3 vec3 = vec3s.get(i);
                 poseStack.translate(vec3.x(), vec3.y(), vec3.z());
                 poseStack.scale(0.5f, 0.5f, 0.5f);
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(360 - direction.get2DDataValue()*90));
+                poseStack.mulPose(Axis.YP.rotationDegrees(360 - direction.get2DDataValue()*90));
                 BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, tileEntityIn.getLevel(), null, 0);
-                Minecraft.getInstance().getItemRenderer().render(itemstack, ItemTransforms.TransformType.FIXED, true, poseStack, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel);
+                Minecraft.getInstance().getItemRenderer().render(itemstack, ItemDisplayContext.FIXED, true, poseStack, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel);
                 poseStack.popPose();
             }
         }

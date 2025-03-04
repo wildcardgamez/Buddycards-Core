@@ -22,7 +22,7 @@ public class EnderBinderItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
         if(player instanceof ServerPlayer serverPlayer && world instanceof ServerLevel serverLevel) {
             //Open the GUI on server side
-            NetworkHooks.openGui(serverPlayer, new SimpleMenuProvider(
+            NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(
                     (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(),
                             EnderBinderSaveData.get(serverLevel).getOrMakeEnderBinder(player.getUUID()))
                     , player.getItemInHand(hand).getHoverName()));

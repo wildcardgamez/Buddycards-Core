@@ -19,14 +19,14 @@ public class ChargerMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public ChargerMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-        this(id, playerInv, playerInv.player.level.getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
+        this(id, playerInv, playerInv.player.level().getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
     }
 
     public ChargerMenu(int id, Inventory playerInv, BlockEntity entity, ContainerData data) {
         super(BuddycardsMisc.CHARGER_CONTAINER.get(), id);
         checkContainerSize(playerInv, 7);
         this.entity = (BuddysteelChargerBlockEntity) entity;
-        this.level = playerInv.player.level;
+        this.level = playerInv.player.level();
         this.data = data;
         IItemHandler handler = ((BuddysteelChargerBlockEntity) entity).getInventory();
         if(handler != null) {

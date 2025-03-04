@@ -56,7 +56,7 @@ public class BuddycardBinderItem extends Item {
                     slots += 18;
             }
             int finalSlots = slots;
-            NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider(
+            NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
                     (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderContainer(finalSlots, binder))
                     , player.getItemInHand(hand).getHoverName()));
         }

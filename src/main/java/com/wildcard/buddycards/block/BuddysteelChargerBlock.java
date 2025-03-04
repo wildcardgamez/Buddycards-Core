@@ -50,7 +50,7 @@ public class BuddysteelChargerBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if(!level.isClientSide && level.getBlockEntity(pos) instanceof BuddysteelChargerBlockEntity entity) {
-            NetworkHooks.openGui((ServerPlayer) player, entity, pos);
+            NetworkHooks.openScreen((ServerPlayer) player, entity, pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

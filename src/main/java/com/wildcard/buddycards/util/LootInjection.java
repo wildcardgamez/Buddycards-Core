@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.util;
 
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -23,9 +24,9 @@ public class LootInjection {
         }
 
         @Override
-        protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+        protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
             LootContext.Builder builder = (new LootContext.Builder(context.getLevel()).withRandom(context.getRandom()));
-            LootTable loottable = context.getLevel().getServer().getLootTables().get(table);
+            LootTable loottable = context.getLevel().getServer().getLootData().getLootTable(table);
             generatedLoot.addAll(loottable.getRandomItems(builder.create(LootContextParamSets.EMPTY)));
             return generatedLoot;
         }

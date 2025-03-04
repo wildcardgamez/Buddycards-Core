@@ -44,7 +44,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
     private final List<SyncedData> syncedData = new ArrayList<>();
 
     public PlaymatMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
-        this(id, playerInv, decodeBlockEntity(playerInv.player.level, buf.readBlockPos()));
+        this(id, playerInv, decodeBlockEntity(playerInv.player.level(), buf.readBlockPos()));
     }
 
     private static PlaymatBlockEntity decodeBlockEntity(Level level, BlockPos pos) {
@@ -164,6 +164,12 @@ public class PlaymatMenu extends AbstractContainerMenu {
         }
         
         return false; //return true if data slots are updated
+    }
+
+    //I don't think this should be doing anything. Maybe we can use it for hand abilities? (Shift right-click a card in hand to discard it for an ability?)
+    @Override
+    public ItemStack quickMoveStack(Player player, int stack) {
+        return null;
     }
 
     private void setPlaymatsChanged() {

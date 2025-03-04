@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.menu.BinderMenu;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -55,29 +56,22 @@ public class BinderScreen extends AbstractContainerScreen<BinderMenu> {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
-    }
-
-    @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+    protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
         //Draw the name of the binder and the inventory titles
-        this.font.draw(matrixStack, title, 8.0f, 6.0f, 4210752);
+        pGuiGraphics.drawString(font, title, 8, 6, 4210752, false);
         int size = menu.getItems().size();
         if (size == 90)
             this.font.draw(matrixStack, playerInventoryTitle,8.0f, 128.0f, 4210752);
         else if (size == 108)
             this.font.draw(matrixStack, playerInventoryTitle,35.0f, 128.0f, 4210752);
         else if (size == 132)
-            this.font.draw(matrixStack, playerInventoryTitle,35.0f, 164.0f, 4210752);
+            pGuiGraphics.drawString(font, playerInventoryTitle, 35.0f, 164.0f, 4210752, false);
         else if (size == 156)
             this.font.draw(matrixStack, playerInventoryTitle,35.0f, 200.0f, 4210752);
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         //Place the texture for the binder gui
         int size = menu.getItems().size();
         assert this.minecraft != null;

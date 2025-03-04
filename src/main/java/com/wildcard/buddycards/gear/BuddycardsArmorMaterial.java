@@ -5,6 +5,7 @@ import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -38,13 +39,13 @@ public enum BuddycardsArmorMaterial implements ArmorMaterial {
     private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
 
     @Override
-    public int getDurabilityForSlot(EquipmentSlot slotIn) {
-        return HEALTH_PER_SLOT[slotIn.getIndex()] * duraMult;
+    public int getDurabilityForType(ArmorItem.Type type) {
+        return HEALTH_PER_SLOT[type.ordinal()] * duraMult;
     }
 
     @Override
-    public int getDefenseForSlot(EquipmentSlot slotIn) {
-        return dam_red[slotIn.getIndex()];
+    public int getDefenseForType(ArmorItem.Type type) {
+        return dam_red[type.ordinal()];
     }
 
     @Override
