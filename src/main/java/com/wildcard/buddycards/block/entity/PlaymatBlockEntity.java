@@ -2,8 +2,6 @@ package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.battles.BattleComponent;
 import com.wildcard.buddycards.battles.game.BattleCardState;
-import com.wildcard.buddycards.battles.game.BattleGame;
-import com.wildcard.buddycards.battles.game.BattleStatusEffect;
 import com.wildcard.buddycards.block.PlaymatBlock;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.container.DeckboxContainer;
@@ -15,7 +13,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -51,7 +48,7 @@ public class PlaymatBlockEntity extends BlockEntity implements MenuProvider {
     public Component getDisplayName() {
         if (name != null)
             return name;
-        return new TextComponent("empty");
+        return Component.literal("empty");
     }
 
     @Nullable

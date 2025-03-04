@@ -14,6 +14,7 @@ import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.menu.PlaymatMenu;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -53,9 +55,9 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
+    public void render(GuiGraphics pGuiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(pGuiGraphics);
+        super.render(pGuiGraphics, mouseX, mouseY, partialTicks);
         int selectedSlot = this.menu.selectedSlot.get();
         if (selectedSlot != AbstractContainerMenu.SLOT_CLICKED_OUTSIDE) {
             ItemStack stack = this.menu.container.getItem(selectedSlot);
@@ -72,23 +74,22 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
                 posestack.popPose();
             }
         }
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(pGuiGraphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+    protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
         //Draw the name of the playmat and the inventory titles
-        this.font.draw(matrixStack, title, 8.0f, 6.0f, 4210752);
-
-        this.font.draw(matrixStack, Integer.toString(this.menu.opponentEnergy.get()), 20.0f, 22.0f, 4210752);
-        this.font.draw(matrixStack, Integer.toString(this.menu.opponentHealth.get()), 51.0f, 22.0f, 4210752);
-        this.font.draw(matrixStack, Integer.toString(this.menu.energy.get()), 20.0f, 40.0f, 4210752);
-        this.font.draw(matrixStack, Integer.toString(this.menu.health.get()), 51.0f, 40.0f, 4210752);
-        renderBattleLog(matrixStack, x, y);
-        renderCardPower(matrixStack);
+        pGuiGraphics.drawString(font, title, 8, 6, 4210752);
+        pGuiGraphics.drawString(font, Integer.toString(this.menu.opponentEnergy.get()), 20, 22, 4210752);
+        pGuiGraphics.drawString(font, Integer.toString(this.menu.opponentHealth.get()), 51, 22, 4210752);
+        pGuiGraphics.drawString(font, Integer.toString(this.menu.energy.get()), 20, 40, 4210752);
+        pGuiGraphics.drawString(font, Integer.toString(this.menu.health.get()), 51, 40, 4210752);
+        renderBattleLog(pGuiGraphics, pMouseX, pMouseY);
+        renderCardPower(pGuiGraphics);
     }
 
-    private void renderBattleLog(PoseStack poseStack, int mouseX, int mouseY) {
+    private void renderBattleLog(GuiGraphics pGuiGraphics, int mouseX, int mouseY) {
         int scale = (int)minecraft.getWindow().getGuiScale();
         ScrollerData data = ScrollerData.fromScreen(this);
         RenderSystem.enableScissor((leftPos-103) * scale, (topPos-data.drawableHeight()+imageHeight - 7)*scale, 98 * scale, (data.drawableHeight()+4)*scale);
@@ -99,19 +100,19 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
             int leftShift = -103;
             for (IBattleIcon battleIcon : battleComponent.getBattleIcons()) {
                 if (battleIcon instanceof BuddycardBattleIcon buddycardBattleIcon) {
-                    itemRenderer.renderAndDecorateItem(this.minecraft.player, buddycardBattleIcon.getItem().getDefaultInstance(), leftShift - 4, height - 2 - data.scrollerOffset(scrollPosition), 0);
+                    pGuiGraphics.renderItem(this.minecraft.player, buddycardBattleIcon.getItem().getDefaultInstance(), leftShift - 4, height - 2 - data.scrollerOffset(scrollPosition), 0);
                     lastDraw = null;
                 } else if (battleIcon instanceof TextureBattleIcon t) {
                     if (t.texture() != lastDraw) {
                         lastDraw = t.texture();
                         RenderSystem._setShaderTexture(0, lastDraw);
                     }
-                    blit(poseStack, leftShift, height - data.scrollerOffset(scrollPosition), t.texturePosX(), t.texturePosY(), battleIcon.width(), 12);
+                    pGuiGraphics.blit(TEXTURE1, leftShift, height - data.scrollerOffset(scrollPosition), t.texturePosX(), t.texturePosY(), battleIcon.width(), 12);
                     poseStack.pushPose();
                     RenderSystem.disableDepthTest();
                     for (TextureBattleIcon.BattleInfo battleInfo : t.info()) {
-                        MutableComponent text = new TextComponent(battleInfo.display()).withStyle(style -> style.withFont(smallFont));
-                        this.font.draw(poseStack, text, leftShift + battleInfo.x() - (battleInfo.isLeftAligned() ? 0 : this.font.width(text)), height + battleInfo.y() - data.scrollerOffset(scrollPosition), battleInfo.color());
+                        MutableComponent text = Component.literal(battleInfo.display()).withStyle(style -> style.withFont(smallFont));
+                        pGuiGraphics.drawString(font, text, leftShift + battleInfo.x() - (battleInfo.isLeftAligned() ? 0 : this.font.width(text)), height + battleInfo.y() - data.scrollerOffset(scrollPosition), battleInfo.color());
                     }
                     RenderSystem.enableDepthTest();
                     poseStack.popPose();
@@ -127,12 +128,12 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
         RenderSystem.disableScissor();
         if (tooltipRow >= 0 && tooltipRow < battleLog.size() && yMouseScreen > 0) {
             if (mouseX > leftPos - 103 && mouseX < leftPos) {
-                renderTooltip(poseStack, battleLog.get(tooltipRow).getHoverText(), xMouseScreen, yMouseScreen);
+                pGuiGraphics.renderTooltip(font, battleLog.get(tooltipRow).getHoverText(), xMouseScreen, yMouseScreen);
             }
         }
     }
 
-    private void renderCardPower(PoseStack poseStack) {
+    private void renderCardPower(GuiGraphics pGuiGraphics) {
         BattleGame game = getMenu().container.game;
         for (int i = 0; i < 6; i++) {
             Slot slot = getMenu().getSlot( i + 5);
@@ -150,42 +151,42 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
             } else {
                 color = ChatFormatting.YELLOW;
             }
-            MutableComponent text = new TextComponent(power + "").withStyle(style -> style.withFont(smallFont));
-            this.font.draw(poseStack, text, slot.x + 13, slot.y + (i < 3 ? 8 : -1), Objects.requireNonNull(color.getColor()));
+            MutableComponent text = Component.literal(power + "").withStyle(style -> style.withFont(smallFont));
+            pGuiGraphics.drawString(font, text, slot.x + 13, slot.y + (i < 3 ? 8 : -1), Objects.requireNonNull(color.getColor()));
             if(!game.state[position].status.equals(BattleStatusEffect.EMPTY)) {
                 BattleStatusEffect status = game.state[position].status;
-                text = new TextComponent(Character.toString('\u0ED0' + status.ordinal())).withStyle(style -> style.withFont(smallFont));
-                this.font.draw(poseStack, text, slot.x + 13, slot.y + (i < 3 ? 2 : 5), status.getColor());
+                text = Component.literal(Character.toString('\u0ED0' + status.ordinal())).withStyle(style -> style.withFont(smallFont));
+                pGuiGraphics.drawString(font, text, slot.x + 13, slot.y + (i < 3 ? 2 : 5), status.getColor());
             }
         }
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(@NotNull GuiGraphics pGuiGraphics, float partialTicks, int mouseX, int mouseY) {
         //Place the texture for the gui
         RenderSystem._setShaderTexture(0, TEXTURE1);
-        blit(matrixStack, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        pGuiGraphics.blit(TEXTURE1, leftPos, topPos, 0, 0, imageWidth, imageHeight);
         int battleLogLength = getMenu().getBattleLog().size();
         if (battleLogLength > 0) {
             ScrollerData scrollerData = ScrollerData.fromScreen(this);
             int height = 0;
-            blit(matrixStack, leftPos - 108, topPos + height, 0, 88, 108, 5);
+            pGuiGraphics.blit(TEXTURE1, leftPos - 108, topPos + height, 0, 88, 108, 5);
             if (scrollerData.needsScroller()) {
-                blit(matrixStack, leftPos - 118, topPos + height, 108, 88, 10, 5);
+                pGuiGraphics.blit(TEXTURE1, leftPos - 118, topPos + height, 108, 88, 10, 5);
             }
             height += 5;
             while (height < scrollerData.drawableHeight() + 5) {
                 int drawnHeight = Math.min(14, scrollerData.drawableHeight() - height + 5);
-                blit(matrixStack, leftPos - 108, topPos + height, 0, 98, 108, drawnHeight);
+                pGuiGraphics.blit(TEXTURE1, leftPos - 108, topPos + height, 0, 98, 108, drawnHeight);
                 if (scrollerData.needsScroller()) {
-                    blit(matrixStack, leftPos - 118, topPos + height, 108, 98, 10, drawnHeight);
+                    pGuiGraphics.blit(TEXTURE1, leftPos - 118, topPos + height, 108, 98, 10, drawnHeight);
                 }
                 height += drawnHeight;
             }
-            blit(matrixStack, leftPos - 108, topPos + height, 0, 93, 108, 5);
+            pGuiGraphics.blit(TEXTURE1, leftPos - 108, topPos + height, 0, 93, 108, 5);
             if (scrollerData.needsScroller()) {
-                blit(matrixStack, leftPos - 118, topPos + height, 108, 93, 10, 5);
-                blit(matrixStack, leftPos - 115, topPos + (int)scrollPosition + 3, 118, 98, 4, 14);
+                pGuiGraphics.blit(TEXTURE1, leftPos - 118, topPos + height, 108, 93, 10, 5);
+                pGuiGraphics.blit(TEXTURE1, leftPos - 115, topPos + (int)scrollPosition + 3, 118, 98, 4, 14);
             }
         }
     }

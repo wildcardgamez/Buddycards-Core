@@ -2,13 +2,12 @@ package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.BuddycardSet;
-import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.integration.CuriosIntegration;
+import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,15 +29,15 @@ public class BuddysteelSetMedalItem extends MedalItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         if(level != null && stack.hasTag() && stack.getTag().contains("player") && stack.getTag().contains("day")) {
-            tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddysteel_medal.name")
+            tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".buddysteel_medal.name")
                     .append(stack.getTag().getString("player"))
-                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddysteel_medal.time"))
+                    .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddysteel_medal.time"))
                     .append(String.valueOf(stack.getTag().getInt("day")))
-                    .append(new TranslatableComponent("item." + Buddycards.MOD_ID + ".buddysteel_medal.set"))
-                    .append(new TranslatableComponent(SET.getDescriptionId())).withStyle(ChatFormatting.GRAY));
+                    .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddysteel_medal.set"))
+                    .append(Component.translatable(SET.getDescriptionId())).withStyle(ChatFormatting.GRAY));
         }
         else
-            tooltip.add(new TranslatableComponent(SET.getDescriptionId()).withStyle(ChatFormatting.GRAY));
+            tooltip.add(Component.translatable(SET.getDescriptionId()).withStyle(ChatFormatting.GRAY));
     }
 
     protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;

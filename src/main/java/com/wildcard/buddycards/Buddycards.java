@@ -4,6 +4,7 @@ import com.wildcard.buddycards.battles.BuddycardsPackets;
 import com.wildcard.buddycards.integration.CuriosIntegration;
 import com.wildcard.buddycards.registries.*;
 import com.wildcard.buddycards.util.*;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -52,7 +53,7 @@ public class Buddycards
     public static final CreativeModeTab CARDS_TAB = new CreativeModeTab("buddycards_cards") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(BuddycardsItems.PACK_BASE.get().rollCard(new Random()));
+            return new ItemStack(BuddycardsItems.PACK_BASE.get().rollCard(RandomSource.create()));
         }
     };
 

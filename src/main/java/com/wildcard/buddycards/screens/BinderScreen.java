@@ -61,13 +61,13 @@ public class BinderScreen extends AbstractContainerScreen<BinderMenu> {
         pGuiGraphics.drawString(font, title, 8, 6, 4210752, false);
         int size = menu.getItems().size();
         if (size == 90)
-            this.font.draw(matrixStack, playerInventoryTitle,8.0f, 128.0f, 4210752);
+            pGuiGraphics.drawString(font, playerInventoryTitle, 8, 128, 4210752, false);
         else if (size == 108)
-            this.font.draw(matrixStack, playerInventoryTitle,35.0f, 128.0f, 4210752);
+            pGuiGraphics.drawString(font, playerInventoryTitle, 35, 128, 4210752, false);
         else if (size == 132)
-            pGuiGraphics.drawString(font, playerInventoryTitle, 35.0f, 164.0f, 4210752, false);
+            pGuiGraphics.drawString(font, playerInventoryTitle, 35, 164, 4210752, false);
         else if (size == 156)
-            this.font.draw(matrixStack, playerInventoryTitle,35.0f, 200.0f, 4210752);
+            pGuiGraphics.drawString(font, playerInventoryTitle, 35, 200, 4210752, false);
     }
 
     @Override
@@ -75,21 +75,14 @@ public class BinderScreen extends AbstractContainerScreen<BinderMenu> {
         //Place the texture for the binder gui
         int size = menu.getItems().size();
         assert this.minecraft != null;
-        if (size == 90) {
-            RenderSystem._setShaderTexture(0, TEXTURE1);
-            blit(matrixStack, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
-        }
-        else if (size == 108) {
-            RenderSystem._setShaderTexture(0, TEXTURE2);
-            blit(matrixStack, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
-        }
-        else if (size == 132) {
-            RenderSystem._setShaderTexture(0, TEXTURE3);
-            blit(matrixStack, leftPos, topPos, 0, 0, imageWidth, imageHeight, 512, 512);
-        }
-        else if (size == 156) {
-            RenderSystem._setShaderTexture(0, TEXTURE4);
-            blit(matrixStack, leftPos, topPos, 0, 0, imageWidth, imageHeight, 512, 512);
-        }
+        this.renderBackground(pGuiGraphics);
+        if (size == 90)
+            pGuiGraphics.blit(TEXTURE1, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        else if (size == 108)
+            pGuiGraphics.blit(TEXTURE2, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        else if (size == 132)
+            pGuiGraphics.blit(TEXTURE3, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        else if (size == 156)
+            pGuiGraphics.blit(TEXTURE4, leftPos, topPos, 0, 0, imageWidth, imageHeight);
     }
 }

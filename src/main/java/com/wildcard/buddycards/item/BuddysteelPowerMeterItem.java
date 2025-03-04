@@ -2,7 +2,7 @@ package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -24,14 +24,14 @@ public class BuddysteelPowerMeterItem extends DescriptionItem {
             if(player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
                 //Specific set
                 BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerSetCompletion(player.getUUID(), card.getSet());
-                player.displayClientMessage(new TranslatableComponent(card.getSet().getDescriptionId())
-                        .append(new TranslatableComponent("item.buddycards.buddysteel_power_meter.cards_collected"))
+                player.displayClientMessage(Component.translatable(card.getSet().getDescriptionId())
+                        .append(Component.translatable("item.buddycards.buddysteel_power_meter.cards_collected"))
                         .append(cardsCollected.top + "/" + cardsCollected.bottom), true);
             }
             else {
                 //Nonspecific set
                 BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerTotalCompletion(player.getUUID());
-                player.displayClientMessage(new TranslatableComponent("item.buddycards.buddysteel_power_meter.total_cards_collected")
+                player.displayClientMessage(Component.translatable("item.buddycards.buddysteel_power_meter.total_cards_collected")
                         .append(cardsCollected.top + "/" + cardsCollected.bottom), true);
                 CompoundTag nbt = stack.getOrCreateTag();
                 nbt.putInt("power", (int) (11 * (float) cardsCollected.top / cardsCollected.bottom));

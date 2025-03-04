@@ -6,8 +6,6 @@ import com.wildcard.buddycards.menu.DeckboxMenu;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -31,7 +29,7 @@ public class DeckboxItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack deck = player.getItemInHand(hand);
         if (level instanceof ServerLevel && player.isShiftKeyDown()) {
-            NetworkHooks.openGui((ServerPlayer) player, new SimpleMenuProvider(
+            NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
                     (id, playerInventory, entity) -> new DeckboxMenu(id, player.getInventory(), new DeckboxContainer(deck))
                     , player.getItemInHand(hand).getHoverName()));
         }
@@ -43,10 +41,10 @@ public class DeckboxItem extends Item {
         if (stack.hasTag() && stack.getTag().contains("Deck")) {
             CompoundTag deck = stack.getTag().getCompound("Deck");
             if(deck.isEmpty())
-                tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".deckbox.empty"));
+                tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".deckbox.empty"));
             else
                 for (String i : deck.getAllKeys())
-                    tooltip.add(new TextComponent(deck.get(i) + " " + i));
+                    tooltip.add(Component.literal(deck.get(i) + " " + i));
         }
     }
 

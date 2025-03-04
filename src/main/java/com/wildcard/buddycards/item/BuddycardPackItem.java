@@ -4,6 +4,7 @@ import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -68,7 +69,7 @@ public abstract class BuddycardPackItem extends Item {
         }
     }
 
-    public BuddycardItem rollCard(Random random) {
+    public BuddycardItem rollCard(RandomSource random) {
         Optional<Rarity> optional = rarityWeights.getRandomValue(random);
         return optional
                 .map(this::getPossibleCards)
