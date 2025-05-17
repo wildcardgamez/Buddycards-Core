@@ -14,8 +14,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class BuddycardSetPackItem extends BuddycardPackItem {
-    public BuddycardSetPackItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, Properties properties) {
-        super(shouldLoad, amount, foils, rarityWeights, properties);
+    public BuddycardSetPackItem(BuddycardSet set, int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, Properties properties) {
+        super(amount, foils, rarityWeights, properties);
         SET = set;
     }
 

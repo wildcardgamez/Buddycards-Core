@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.wildcard.buddycards.Buddycards;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -42,7 +43,7 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer container) {
+    public ItemStack assemble(SimpleContainer container, RegistryAccess access) {
         return output;
     }
 
@@ -52,7 +53,7 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess access) {
         return output.copy();
     }
 
@@ -86,6 +87,10 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
 
     public Ingredient getMeter() {
         return meter;
+    }
+
+    public ItemStack getResultItem() {
+        return output;
     }
 
     public static class Type implements RecipeType<BuddysteelChargingRecipe> {
@@ -133,10 +138,10 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
             buf.writeFloat(recipe.powerReq);
             recipe.input.toNetwork(buf);
             recipe.meter.toNetwork(buf);
-            buf.writeItemStack(recipe.getResultItem(), false);
+            buf.writeItemStack(recipe.getResultItem(RegistryAccess.EMPTY), false);
         }
 
-        @Override
+        /**@Override
         public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
             return INSTANCE;
         }
@@ -149,7 +154,7 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
         @Override
         public Class<RecipeSerializer<?>> getRegistryType() {
             return Serializer.castClass(RecipeSerializer.class);
-        }
+        }**/
 
         @SuppressWarnings("unchecked")
         private static <G> Class<G> castClass(Class<?> cls) {

@@ -5,21 +5,19 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.battles.BattleComponent;
-import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.BuddycardBattleIcon;
 import com.wildcard.buddycards.battles.IBattleIcon;
+import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.battles.game.BattleGame;
 import com.wildcard.buddycards.battles.game.BattleStatusEffect;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.menu.PlaymatMenu;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -66,11 +64,11 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
                 posestack.pushPose();
                 posestack.translate(0.0D, 0.0D, 32.0D);
                 RenderSystem.applyModelViewMatrix();
-                this.setBlitOffset(200);
-                this.itemRenderer.blitOffset = 200.0F;
-                this.itemRenderer.renderAndDecorateItem(stack, mouseX - 8, mouseY - 8);
-                this.setBlitOffset(0);
-                this.itemRenderer.blitOffset = 0.0F;
+                //this.setBlitOffset(200);
+                //this.itemRenderer.blitOffset = 200.0F;
+                pGuiGraphics.renderItem(stack, mouseX - 8, mouseY - 8);
+                //this.setBlitOffset(0);
+                //this.itemRenderer.blitOffset = 0.0F;
                 posestack.popPose();
             }
         }
@@ -108,14 +106,15 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
                         RenderSystem._setShaderTexture(0, lastDraw);
                     }
                     pGuiGraphics.blit(TEXTURE1, leftShift, height - data.scrollerOffset(scrollPosition), t.texturePosX(), t.texturePosY(), battleIcon.width(), 12);
-                    poseStack.pushPose();
+                    //This pop and push might not work?
+                    pGuiGraphics.pose().pushPose();
                     RenderSystem.disableDepthTest();
                     for (TextureBattleIcon.BattleInfo battleInfo : t.info()) {
                         MutableComponent text = Component.literal(battleInfo.display()).withStyle(style -> style.withFont(smallFont));
                         pGuiGraphics.drawString(font, text, leftShift + battleInfo.x() - (battleInfo.isLeftAligned() ? 0 : this.font.width(text)), height + battleInfo.y() - data.scrollerOffset(scrollPosition), battleInfo.color());
                     }
                     RenderSystem.enableDepthTest();
-                    poseStack.popPose();
+                    pGuiGraphics.pose().popPose();
                 }
                 leftShift += battleIcon.width() + 2;
             }

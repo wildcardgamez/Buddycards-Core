@@ -16,7 +16,7 @@ public sealed interface IBattleIcon permits TextureBattleIcon, BuddycardBattleIc
     }
     static Either<BuddycardBattleIcon, TextureBattleIcon> wrap(IBattleIcon icon) {
         /*
-        TODO: once switch pattern matching is out of preview and available
+        TODO: once switch pattern matching is out of preview and available (1.21)
         return switch (icon) {
             case BuddycardBattleIcon b -> Either.left(b);
             case TextureBattleIcon t -> Either.right(t);

@@ -38,8 +38,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 
@@ -80,7 +82,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     @Override
-    protected int getExperienceReward(Player player) {
+    public int getExperienceReward() {
         return 1 + this.level().random.nextInt(3);
     }
 
@@ -102,7 +104,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     @Override
     protected void customServerAiStep() {
         if (this.level().isDay() && this.tickCount >= 600) {
-            float f = this.getBrightness();
+            float f = this.getLightLevelDependentMagicValue();
             if (f > 0.5F && this.level().canSeeSky(this.blockPosition()) && this.random.nextFloat() * 60.0F < (f - 0.4F) * 2.0F) {
                 this.teleport();
             }
@@ -122,10 +124,10 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     private boolean teleport(double p_70825_1_, double p_70825_3_, double p_70825_5_) {
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(p_70825_1_, p_70825_3_, p_70825_5_);
-        while(blockpos$mutable.getY() > 0 && !this.level().getBlockState(blockpos$mutable).getMaterial().blocksMotion())
+        while(blockpos$mutable.getY() > 0 && !this.level().getBlockState(blockpos$mutable).blocksMotion())
             blockpos$mutable.move(Direction.DOWN);
         BlockState blockstate = this.level().getBlockState(blockpos$mutable);
-        if (blockstate.getMaterial().blocksMotion() && !blockstate.getFluidState().is(Fluids.WATER)) {
+        if (blockstate.blocksMotion() && !blockstate.getFluidState().is(Fluids.WATER)) {
             EntityTeleportEvent event = new EntityTeleportEvent(this, p_70825_1_, p_70825_3_, p_70825_5_);
             if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return false;
             boolean success = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
@@ -174,12 +176,12 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     public void setupGoalItems(ServerLevel lvl) {
         RandomSource rand = lvl.getRandom();
         List<BuddycardItem> cards = BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 20; i++) {
             ItemStack card = new ItemStack(cards.get(rand.nextInt(cards.size())));
             if (i % 3 == 0)
                 BuddycardItem.setShiny(card);
             goalTrades.add(new Pair<>(card, getCardSellValue(card, rand, cheap)));
-            if (i < 4) {
+            if (i < 8) {
                 ItemStack card2 = card.copy();
                 card2.getOrCreateTag().putInt("grade", rand.nextInt(1,5));
                 goalTrades.add(new Pair<>(card2, getCardSellValue(card2, rand, cheap)));
@@ -191,15 +193,14 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     public static ItemStack getBarterResult(Level level, boolean voidZylex) {
         if (level instanceof ServerLevel lvl) {
-            LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
             if (voidZylex) {
-                LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
-                List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+                LootTable table = lvl.getServer().getLootData().getLootTable(new ResourceLocation(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
+                List<ItemStack> items = table.getRandomItems((new LootParams.Builder(lvl)).create(LootContextParamSets.EMPTY));
                 return items.get(0);
             }
             else {
-                LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/zylex_barter"));
-                List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+                LootTable table = lvl.getServer().getLootData().getLootTable(new ResourceLocation(Buddycards.MOD_ID, "gameplay/zylex_barter"));
+                List<ItemStack> items = table.getRandomItems((new LootParams.Builder(lvl)).create(LootContextParamSets.EMPTY));
                 return items.get(0);
             }
         }

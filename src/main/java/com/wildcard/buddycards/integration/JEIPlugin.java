@@ -4,7 +4,6 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.recipe.BuddysteelChargingRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
@@ -30,6 +29,6 @@ public class JEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         RecipeManager rm = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
         List<BuddysteelChargingRecipe> recipes = rm.getAllRecipesFor(BuddysteelChargingRecipe.Type.INSTANCE);
-        registration.addRecipes(new RecipeType<>(BuddysteelChargingRecipeCategory.UID, BuddysteelChargingRecipe.class), recipes);
+        registration.addRecipes(BuddysteelChargingRecipeCategory.TYPE, recipes);
     }
 }

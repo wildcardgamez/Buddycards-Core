@@ -18,7 +18,7 @@ public class EnderlingRenderer  extends MobRenderer<EnderlingEntity, EnderlingMo
     public EnderlingRenderer(EntityRendererProvider.Context context) {
         super(context, new EnderlingModel(context.bakeLayer(ClientStuff.ENDERLING_LAYER)), .6f);
         this.addLayer(new EnderlingEyesLayer(this));
-        this.addLayer(new ItemInHandLayer<>(this));
+        this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
     }
 
     @Override

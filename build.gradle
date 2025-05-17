@@ -132,8 +132,8 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'
 
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.6.3")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.19.2-5.1.6.3:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1:api")
 
     //compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1:api")
     //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.18.2-71.1")

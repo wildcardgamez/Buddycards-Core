@@ -26,13 +26,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class BuddycardBinderItem extends Item {
-    public BuddycardBinderItem(BuddycardsItems.BuddycardRequirement shouldLoad, Properties properties, BuddycardSet set) {
+    public BuddycardBinderItem(Properties properties, BuddycardSet set) {
         super(properties);
-        REQUIREMENT = shouldLoad;
         SET = set;
     }
 
-    protected BuddycardsItems.BuddycardRequirement REQUIREMENT;
     protected BuddycardSet SET;
 
     @Override
@@ -60,14 +58,6 @@ public class BuddycardBinderItem extends Item {
                     , player.getItemInHand(hand).getHoverName()));
         }
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        //Only show in the creative menu when the respective mod is loaded
-        if(this.allowdedIn(group) && REQUIREMENT.shouldLoad()) {
-            items.add(new ItemStack(this));
-        }
     }
 
     @Override

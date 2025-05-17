@@ -12,6 +12,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -72,7 +73,7 @@ public class BuddycardItem extends Item {
         //Show the cards joke/tooltip
         tooltip.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.ITALIC));
         //Show the set, card number, and shiny symbol if applicable
-        Component cn = Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
+        MutableComponent cn = Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
         cn.append("" + CARD_NUMBER);
         if(isFoil(stack))
             cn.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol"));
@@ -142,19 +143,6 @@ public class BuddycardItem extends Item {
     
     public ListMultimap<BattleEvent, BattleAbility> getAbilities() {
         return this.ABILITIES;
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        //Only show cards in the creative menu when the respective mod is loaded
-        if(this.allowdedIn(group) && REQUIREMENT.shouldLoad()) {
-            ItemStack foil = new ItemStack(this);
-            CompoundTag nbt = new CompoundTag();
-            nbt.putBoolean("foil", true);
-            foil.setTag(nbt);
-            items.add(new ItemStack(this));
-            items.add(foil);
-        }
     }
 
     public boolean shouldLoad() {

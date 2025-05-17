@@ -15,8 +15,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class MysteryBuddycardPackItem extends BuddycardPackItem {
-    public MysteryBuddycardPackItem(BuddycardsItems.BuddycardRequirement shouldLoad, int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, boolean includeUnloaded, Properties properties) {
-        super(shouldLoad, amount, foils, rarityWeights, properties);
+    public MysteryBuddycardPackItem(int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, boolean includeUnloaded, Properties properties) {
+        super(amount, foils, rarityWeights, properties);
         INCLUDE_UNLOADED = includeUnloaded;
     }
 

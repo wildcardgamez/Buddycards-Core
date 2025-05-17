@@ -20,6 +20,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import top.theillusivec4.curios.api.CuriosCapability;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 import top.theillusivec4.curios.api.type.capability.ICurio;
@@ -30,15 +31,13 @@ import javax.annotation.Nullable;
 public class CuriosIntegration {
     public static void imc() {
         InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("medal")
-                .icon(new ResourceLocation(Buddycards.MOD_ID, "misc/medal")).build());
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("ring")
-                .build());
+                .icon(new ResourceLocation(Buddycards.MOD_ID, "slot/medal")).build());
     }
 
     public static ICapabilityProvider initCapabilities(IMedalTypes type, ItemStack itemStack) {
         ICurio curio = new ICurio() {
             @Override
-            public boolean canRightClickEquip() {
+            public boolean canEquipFromUse(SlotContext slotContext) {
                 return true;
             }
 
@@ -48,9 +47,9 @@ public class CuriosIntegration {
             }
 
             @Override
-            public void curioTick(String identifier, int index, LivingEntity livingEntity) {
-                if (livingEntity instanceof Player player) {
-                    int mod = EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.BUDDY_BOOST.get(), itemStack);
+            public void curioTick(SlotContext slotContext) {
+                if (slotContext.entity() instanceof Player player) {
+                    int mod = EnchantmentHelper.getTagEnchantmentLevel(BuddycardsMisc.BUDDY_BOOST.get(), itemStack);
                     type.applyEffect(player, mod);
                 }
             }
@@ -65,12 +64,6 @@ public class CuriosIntegration {
                 return CuriosCapability.ITEM.orEmpty(cap, curioOpt);
             }
         };
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @SubscribeEvent
-    public static void LoadTextures(TextureStitchEvent.Pre event) {
-        event.addSprite(new ResourceLocation(Buddycards.MOD_ID, "misc/medal"));
     }
 
     public static void setupRenderers() {

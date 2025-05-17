@@ -49,12 +49,6 @@ public class BuddysteelSetMedalItem extends MedalItem {
     }
 
     @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if(REQUIREMENT.shouldLoad())
-            super.fillItemCategory(group, items);
-    }
-
-    @Override
     public boolean isEnchantable(ItemStack stack) {
         return stack.getCount() == 1;
     }
