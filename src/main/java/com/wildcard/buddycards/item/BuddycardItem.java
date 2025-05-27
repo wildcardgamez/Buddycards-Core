@@ -75,12 +75,13 @@ public class BuddycardItem extends Item {
         //Show the set, card number, and shiny symbol if applicable
         MutableComponent cn = Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
         cn.append("" + CARD_NUMBER);
-        if(isFoil(stack))
-            cn.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol"));
+        if(isFoil(stack)) {
+            cn.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol." + getFoil(stack)));
+        }
         tooltip.add(Component.translatable(SET.getDescriptionId()).append(cn).withStyle(ChatFormatting.GRAY));
         //Show grade
-        if(stack.hasTag() && stack.getTag().contains("grade")) {
-            tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.grade." + stack.getTag().getInt("grade")).withStyle(ChatFormatting.LIGHT_PURPLE));
+        if(isGraded(stack)) {
+            tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.grade." + getGrade(stack)).withStyle(ChatFormatting.LIGHT_PURPLE));
         }
         //Show battle stats
         if(stack.hasTag() && stack.getTag().contains("wins")) {
@@ -112,19 +113,29 @@ public class BuddycardItem extends Item {
     }
 
     public static void setShiny(ItemStack stack) {
+        setShiny(stack, 1);
+    }
+
+    public static void setShiny(ItemStack stack, int type) {
         CompoundTag nbt = stack.getOrCreateTag();
-        nbt.putBoolean("foil", true);
+        nbt.putInt("foil", type);
         stack.setTag(nbt);
     }
 
     @Override
     public boolean isFoil(ItemStack stack) {
         //Make shiny cards have enchant glow
-        return hasFoil(stack);
+        return stack.hasTag() && stack.getTag().contains("foil") && stack.getTag().getInt("foil") != 0;
     }
 
-    public static boolean hasFoil(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().contains("foil") && stack.getTag().getBoolean("foil");
+    public static int getFoil(ItemStack stack) {
+        if (stack.hasTag() && stack.getTag().contains("foil"))
+            return stack.getTag().getInt("foil");
+        return 0;
+    }
+
+    public boolean isGraded(ItemStack stack) {
+        return stack.hasTag() && stack.getTag().contains("grade") && stack.getTag().getInt("grade") != 0;
     }
 
     public static int getGrade(ItemStack stack) {

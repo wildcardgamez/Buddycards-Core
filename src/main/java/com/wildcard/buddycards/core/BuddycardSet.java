@@ -18,6 +18,10 @@ public class BuddycardSet {
 
     @Nullable
     protected Supplier<BuddysteelSetMedalItem> medalSupplier;
+    @Nullable
+    protected Supplier<BuddysteelSetMedalItem> luminisMedalSupplier;
+    @Nullable
+    protected Supplier<BuddysteelSetMedalItem> zylexMedalSupplier;
 
     @Nullable
     protected String descriptionId;
@@ -41,9 +45,31 @@ public class BuddycardSet {
     public void setMedal(Supplier<BuddysteelSetMedalItem> supplier) {
         this.medalSupplier = supplier;
     }
+    public void setLuminisMedal(Supplier<BuddysteelSetMedalItem> supplier) {
+        this.luminisMedalSupplier = supplier;
+    }
+    public void setZylexMedal(Supplier<BuddysteelSetMedalItem> supplier) {
+        this.zylexMedalSupplier = supplier;
+    }
 
     @Nullable
     public BuddysteelSetMedalItem getMedal() {
+        if (medalSupplier == null) {
+            return null;
+        }
+        return medalSupplier.get();
+    }
+
+    @Nullable
+    public BuddysteelSetMedalItem getLuminisMedal() {
+        if (medalSupplier == null) {
+            return null;
+        }
+        return medalSupplier.get();
+    }
+
+    @Nullable
+    public BuddysteelSetMedalItem getZylexMedal() {
         if (medalSupplier == null) {
             return null;
         }

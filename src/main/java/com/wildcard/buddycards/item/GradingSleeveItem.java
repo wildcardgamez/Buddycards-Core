@@ -13,6 +13,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemHandlerHelper;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+
+import java.util.Optional;
 
 public class GradingSleeveItem extends DescriptionItem {
     public GradingSleeveItem(Properties properties, float[] odds) {
@@ -27,7 +30,9 @@ public class GradingSleeveItem extends DescriptionItem {
         if(level instanceof ServerLevel serverLevel && card.getItem() instanceof BuddycardItem buddycardItem && !nbt.contains("grade")) {
             int grade;
             float rand = level.getRandom().nextFloat();
-            if (!CuriosApi.getCuriosHelper().findCurios(player, BuddycardsItems.ZYLEX_RING.get()).isEmpty())
+            //Check for zylex ring to reroll
+            Optional<ICuriosItemHandler> curios = CuriosApi.getCuriosInventory(player).resolve();
+            if(curios.isPresent() && curios.get().isEquipped(BuddycardsItems.ZYLEX.get()))
                 rand = Math.max(rand, level.getRandom().nextFloat());
             for (grade = 1; grade < 5; grade++) {
                 if(rand < ODDS[grade-1])
@@ -40,10 +45,12 @@ public class GradingSleeveItem extends DescriptionItem {
             sleeves.shrink(1);
             card.shrink(1);
             ItemHandlerHelper.giveItemToPlayer(player, newCard);
-            if (grade == 5) {
+            int foil = 0;
+            if (nbt.contains("foil"))
+                foil = nbt.getInt("foil");
+            BuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), buddycardItem, foil, grade);
+            if(grade == 5)
                 player.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-                BuddycardCollectionSaveData.getPerfect(serverLevel).addPlayerCardFound(player.getUUID(), buddycardItem);
-            }
             return true;
         }
         return false;

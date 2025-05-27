@@ -47,6 +47,11 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:blank_zylex_medal"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 2,
           "name": "buddycards:zylex_hoe"
         },

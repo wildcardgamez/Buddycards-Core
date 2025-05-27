@@ -46,26 +46,14 @@ public class ConfigManager {
         witherMaxPacks = builder.comment("\nMaximum amount of packs dropped when a wither drops packs, default is 3")
                 .defineInRange("mobDrops.witherMaxPacks", 3, 1, 16);
 
-        luminisVeins = builder.comment("\nEnable Luminis vein generation, default is true")
-                .define("luminis.enableVeins", true);
-        luminisChunks = builder.comment("\nDistance between chunks that can spawn Luminis veins, under right conditions, default is 3")
-                .defineInRange("luminis.veinChunkDistance", 3, 1, 16);
-        luminisBranchMin = builder.comment("\nMinimum amount of branches in a Luminis vein, default is 3")
-                .defineInRange("luminis.veinBranchAmtMin", 3, 1, 16);
-        luminisBranchMax = builder.comment("\nMaximum amount of branches in a Luminis vein, default is 6")
-                .defineInRange("luminis.veinBranchAmtMax", 6, 1, 32);
-        luminisBranchLengthMin = builder.comment("\nMinimum length of branches in a Luminis vein, default is 8")
-                .defineInRange("luminis.veinBranchLengthMin", 8, 1, 32);
-        luminisBranchLengthMax = builder.comment("\nMaximum length of branches in a Luminis vein, default is 32")
-                .defineInRange("luminis.veinBranchLengthMax", 32, 1, 64);
         luminisToCrimsonAvg = builder.comment("\nAmount of Luminis blocks, on average, needed to make 1 Crimson Luminis in an explosion, default is 2")
                 .defineInRange("luminis.explodeCrimsonAvg", 2, 1, 16);
-        kineticSuccessRate = builder.comment("\nOdds of an explosion triggering a Kinetic Chamber to activate, default is 50%")
-                .defineInRange("luminis.kineticSuccessOdds", .5f, 0, 1);
-        luminisKineticCrimsonOdds = builder.comment("\nOdds of a kinetic chamber properly converting Luminis blocks to Crimson Luminis, default is 75% \nWARNING: FAILURE WILL CONSUME")
-                .defineInRange("luminis.kineticCrimsonOdds", .75f, 0, 1);
-        luminisKineticSpecialtyOdds = builder.comment("\nOdds of a kinetic chamber properly converting Crimson Luminis blocks to specialty items, default is 85% \nWARNING: FAILURE WILL CONSUME")
-                .defineInRange("luminis.kineticSpecialtyOdds", .85f, 0, 1);
+        kineticSuccessRate = builder.comment("\nOdds of an explosion triggering a Kinetic Chamber to activate, default is 100%")
+                .defineInRange("luminis.kineticSuccessOdds", 1f, 0, 1);
+        luminisKineticCrimsonOdds = builder.comment("\nOdds of a kinetic chamber properly converting Luminis blocks to Crimson Luminis, default is 80% \nWARNING: FAILURE WILL CONSUME")
+                .defineInRange("luminis.kineticCrimsonOdds", .8f, 0, 1);
+        luminisKineticSpecialtyOdds = builder.comment("\nOdds of a kinetic chamber properly converting Crimson Luminis blocks to specialty items, default is 90% \nWARNING: FAILURE WILL CONSUME")
+                .defineInRange("luminis.kineticSpecialtyOdds", .9f, 0, 1);
 
         enderlingChanceEnd = builder.comment("\nOdds for an Enderling to spawn with an Enderman in the End, 0-1, default is 0.5%")
                 .defineInRange("enderling.endOdds", .005, 0, 1);
@@ -95,12 +83,6 @@ public class ConfigManager {
     public static ForgeConfigSpec.DoubleValue witherChance;
     public static ForgeConfigSpec.IntValue witherMaxPacks;
 
-    public static ForgeConfigSpec.BooleanValue luminisVeins;
-    public static ForgeConfigSpec.IntValue luminisChunks;
-    public static ForgeConfigSpec.IntValue luminisBranchMin;
-    public static ForgeConfigSpec.IntValue luminisBranchMax;
-    public static ForgeConfigSpec.IntValue luminisBranchLengthMin;
-    public static ForgeConfigSpec.IntValue luminisBranchLengthMax;
     public static ForgeConfigSpec.IntValue luminisToCrimsonAvg;
     public static ForgeConfigSpec.DoubleValue kineticSuccessRate;
     public static ForgeConfigSpec.DoubleValue luminisKineticCrimsonOdds;

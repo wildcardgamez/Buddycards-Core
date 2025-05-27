@@ -294,6 +294,6 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     static boolean cardsMatch(ItemStack a, ItemStack b) {
-        return a.getItem().equals(b.getItem()) && BuddycardItem.hasFoil(a) == BuddycardItem.hasFoil(b) && BuddycardItem.getGrade(a) == BuddycardItem.getGrade(b);
+        return a.getItem().equals(b.getItem()) && BuddycardItem.getFoil(a) == BuddycardItem.getFoil(b) && BuddycardItem.getGrade(a) == BuddycardItem.getGrade(b);
     }
 }

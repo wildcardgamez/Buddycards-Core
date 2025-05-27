@@ -11,8 +11,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class ZylexPowerMeterItem extends DescriptionItem {
-    public ZylexPowerMeterItem(Properties properties) {
+public class LuminisPowerMeterItem extends DescriptionItem {
+    public LuminisPowerMeterItem(Properties properties) {
         super(properties);
     }
 
@@ -20,18 +20,18 @@ public class ZylexPowerMeterItem extends DescriptionItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         InteractionHand cardHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
-        if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof ZylexPowerMeterItem) {
+        if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof LuminisPowerMeterItem) {
             if(player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
                 //Specific set
-                BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerGradeSetCompletion(player.getUUID(), card.getSet());
+                BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerFoilSetCompletion(player.getUUID(), card.getSet());
                 player.displayClientMessage(Component.translatable(card.getSet().getDescriptionId())
-                        .append(Component.translatable("item.buddycards.zylex_power_meter.cards_collected"))
+                        .append(Component.translatable("item.buddycards.luminis_power_meter.cards_collected"))
                         .append(cardsCollected.top + "/" + cardsCollected.bottom), true);
             }
             else {
                 //Nonspecific set
-                BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerGradeTotalCompletion(player.getUUID());
-                player.displayClientMessage(Component.translatable("item.buddycards.zylex_power_meter.total_cards_collected")
+                BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerFoilTotalCompletion(player.getUUID());
+                player.displayClientMessage(Component.translatable("item.buddycards.luminis_power_meter.total_cards_collected")
                         .append(cardsCollected.top + "/" + cardsCollected.bottom), true);
                 CompoundTag nbt = stack.getOrCreateTag();
                 nbt.putInt("power", (int) (11 * (float) cardsCollected.top / cardsCollected.bottom));

@@ -39,4 +39,11 @@ public class BuddycardsAPI {
                 return card;
         return null;
     }
+
+    public static BuddycardSet findSet(String setName) {
+        for (BuddycardSet set : CARD_SETS)
+            if(set.getName().equals(setName))
+                return set;
+        return null;
+    }
 }

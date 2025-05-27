@@ -3,7 +3,7 @@
   "injection": "buddycards:inject/village_house",
   "conditions": [
     {
-      "condition": "minecraft:alternative",
+      "condition": "minecraft:any_of",
       "terms": [
         {
           "condition": "forge:loot_table_id",

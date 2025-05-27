@@ -30,10 +30,12 @@ public class CreativeGradingSleeveItem extends GradingSleeveItem{
             newCard.setTag(nbt);
             card.shrink(1);
             ItemHandlerHelper.giveItemToPlayer(player, newCard);
-            if(grade == 5) {
+            int foil = 0;
+            if (nbt.contains("foil"))
+                foil = nbt.getInt("foil");
+            BuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), buddycardItem, foil, grade);
+            if(grade == 5)
                 player.playSound(SoundEvents.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-                BuddycardCollectionSaveData.getPerfect(serverLevel).addPlayerCardFound(player.getUUID(), buddycardItem);
-            }
             return true;
         }
         return false;
