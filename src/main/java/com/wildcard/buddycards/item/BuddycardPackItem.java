@@ -45,7 +45,7 @@ public abstract class BuddycardPackItem extends Item {
             NonNullList<ItemStack> cards = NonNullList.create();
             //Check for luminis ring to determine foil amount
             Optional<ICuriosItemHandler> curios = CuriosApi.getCuriosInventory(player).resolve();
-            int foilAmt = !(curios.isPresent() && curios.get().isEquipped(BuddycardsItems.LUMINIS_RING.get())) ? FOIL_AMT + 1 : FOIL_AMT;
+            int foilAmt = curios.isPresent() && curios.get().isEquipped(BuddycardsItems.LUMINIS_RING.get()) ? FOIL_AMT + 1 : FOIL_AMT;
             for (int i = 0; i < CARD_AMT; i++) {
                 BuddycardItem card = rollCard(level.getRandom());
                 ItemStack item = new ItemStack(card);
@@ -53,7 +53,8 @@ public abstract class BuddycardPackItem extends Item {
                 int foil = 0;
                 if (i >= CARD_AMT - foilAmt) {
                     foil = level.getRandom().nextIntBetweenInclusive(0,10);
-                    BuddycardItem.setShiny(item, foil == 10 ? 3 : foil > 6 ? 2 : 1);
+                    foil = foil == 10 ? 3 : foil > 6 ? 2 : 1;
+                    BuddycardItem.setShiny(item, foil);
                 }
                 cards.add(item);
                 BuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), card, foil, 0);

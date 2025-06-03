@@ -70,6 +70,12 @@ public class CuriosIntegration {
         CuriosRendererRegistry.register(BuddycardsItems.MEDAL_BASE.get(), () -> new MedalRenderer(getDefaultMedalTexture("buddysteel_medal_base")));
         CuriosRendererRegistry.register(BuddycardsItems.MEDAL_NETHER.get(), () -> new MedalRenderer(getDefaultMedalTexture("buddysteel_medal_nether")));
         CuriosRendererRegistry.register(BuddycardsItems.MEDAL_END.get(), () -> new MedalRenderer(getDefaultMedalTexture("buddysteel_medal_end")));
+        CuriosRendererRegistry.register(BuddycardsItems.LUMINIS_MEDAL_BASE.get(), () -> new MedalRenderer(getDefaultMedalTexture("luminis_medal_base")));
+        CuriosRendererRegistry.register(BuddycardsItems.LUMINIS_MEDAL_NETHER.get(), () -> new MedalRenderer(getDefaultMedalTexture("luminis_medal_nether")));
+        CuriosRendererRegistry.register(BuddycardsItems.LUMINIS_MEDAL_END.get(), () -> new MedalRenderer(getDefaultMedalTexture("luminis_medal_end")));
+        CuriosRendererRegistry.register(BuddycardsItems.ZYLEX_MEDAL_BASE.get(), () -> new MedalRenderer(getDefaultMedalTexture("zylex_medal_base")));
+        CuriosRendererRegistry.register(BuddycardsItems.ZYLEX_MEDAL_NETHER.get(), () -> new MedalRenderer(getDefaultMedalTexture("zylex_medal_nether")));
+        CuriosRendererRegistry.register(BuddycardsItems.ZYLEX_MEDAL_END.get(), () -> new MedalRenderer(getDefaultMedalTexture("zylex_medal_end")));
     }
 
     protected static ResourceLocation getDefaultMedalTexture(String name) {
