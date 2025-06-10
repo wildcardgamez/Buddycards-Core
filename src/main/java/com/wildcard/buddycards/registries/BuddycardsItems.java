@@ -19,7 +19,6 @@ import com.wildcard.buddycards.gear.BuddycardsToolTier;
 import com.wildcard.buddycards.item.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.random.SimpleWeightedRandomList;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -1245,6 +1244,7 @@ public class BuddycardsItems {
     public static final RegistryObject<Item> BUDDYSTEEL_PICKAXE = ITEMS.register("buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.BUDDYSTEEL,1, -2.8F, UNCOMMON_TOOL_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_AXE = ITEMS.register("buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.BUDDYSTEEL,6, -3.1F, UNCOMMON_TOOL_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_HOE = ITEMS.register("buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.BUDDYSTEEL,-2, -1F, UNCOMMON_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> BUDDYSTEEL_CHARGER = ITEMS.register("buddysteel_charger", () -> new BlockItem(BuddycardsBlocks.BUDDYSTEEL_CHARGER.get(), DEFAULT_PROPERTIES));
     //Luminis Items
     public static final RegistryObject<BlockItem> LUMINIS_ORE = ITEMS.register("luminis_ore", () -> new BlockItem(BuddycardsBlocks.LUMINIS_ORE.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<BlockItem> DEEPSLATE_LUMINIS_ORE = ITEMS.register("deepslate_luminis_ore", () -> new BlockItem(BuddycardsBlocks.DEEPSLATE_LUMINIS_ORE.get(), DEFAULT_PROPERTIES));
@@ -1306,7 +1306,7 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_END = ITEMS.register("buddycard_booster_box_end", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_END.get(), PACK_END, DEFAULT_UNCOMMON_PROPERTIES));
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_MYSTERY = ITEMS.register("buddycard_booster_box_mystery", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_MYSTERY.get(), MYSTERY_PACK, DEFAULT_EPIC_PROPERTIES));
     //Charged Buddysteel Items
-    public static final RegistryObject<Item> BUDDYSTEEL_CHARGER = ITEMS.register("buddysteel_charger", () -> new BlockItem(BuddycardsBlocks.BUDDYSTEEL_CHARGER.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_TEMPLATE = ITEMS.register("charged_buddysteel_template", BuddycardsSmithingTemplateItem::createChargedBuddysteelUpgradeTemplate);
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_INGOT = ITEMS.register("charged_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_BLOCK = ITEMS.register("charged_buddysteel_block", () -> new BlockItem(BuddycardsBlocks.CHARGED_BUDDYSTEEL_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_HELMET = ITEMS.register("charged_buddysteel_helmet", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.CHARGED_BUDDYSTEEL, ArmorItem.Type.HELMET));
@@ -1318,6 +1318,30 @@ public class BuddycardsItems {
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_PICKAXE = ITEMS.register("charged_buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL,1, -2.8F, RARE_TOOL_PROPERTIES));
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_AXE = ITEMS.register("charged_buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL,5.5f, -3.1F, RARE_TOOL_PROPERTIES));
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_HOE = ITEMS.register("charged_buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL,-3, -1F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_TEMPLATE = ITEMS.register("crimson_buddysteel_template", BuddycardsSmithingTemplateItem::createCrimsonBuddysteelUpgradeTemplate);
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_INGOT = ITEMS.register("crimson_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_BLOCK = ITEMS.register("crimson_buddysteel_block", () -> new BlockItem(BuddycardsBlocks.CRIMSON_BUDDYSTEEL_BLOCK.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_HELMET = ITEMS.register("crimson_buddysteel_helmet", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.CRIMSON_BUDDYSTEEL, ArmorItem.Type.HELMET));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_CHESTPLATE = ITEMS.register("crimson_buddysteel_chestplate", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.CRIMSON_BUDDYSTEEL, ArmorItem.Type.CHESTPLATE));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_LEGGINGS = ITEMS.register("crimson_buddysteel_leggings", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.CRIMSON_BUDDYSTEEL, ArmorItem.Type.LEGGINGS));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_BOOTS = ITEMS.register("crimson_buddysteel_boots", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.CRIMSON_BUDDYSTEEL, ArmorItem.Type.BOOTS));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_SWORD = ITEMS.register("crimson_buddysteel_sword", () -> new SwordItem(BuddycardsToolTier.CRIMSON_BUDDYSTEEL,3, -2.4F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_SHOVEL = ITEMS.register("crimson_buddysteel_shovel", () -> new ShovelItem(BuddycardsToolTier.CRIMSON_BUDDYSTEEL,1.5F, -3F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_PICKAXE = ITEMS.register("crimson_buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.CRIMSON_BUDDYSTEEL,1, -2.8F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_AXE = ITEMS.register("crimson_buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.CRIMSON_BUDDYSTEEL,5.5f, -3.1F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_HOE = ITEMS.register("crimson_buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.CRIMSON_BUDDYSTEEL,-3, -1F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_TEMPLATE = ITEMS.register("void_buddysteel_template", BuddycardsSmithingTemplateItem::createVoidBuddysteelUpgradeTemplate);
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_INGOT = ITEMS.register("void_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_BLOCK = ITEMS.register("void_buddysteel_block", () -> new BlockItem(BuddycardsBlocks.VOID_BUDDYSTEEL_BLOCK.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_HELMET = ITEMS.register("void_buddysteel_helmet", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.VOID_BUDDYSTEEL, ArmorItem.Type.HELMET));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_CHESTPLATE = ITEMS.register("void_buddysteel_chestplate", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.VOID_BUDDYSTEEL, ArmorItem.Type.CHESTPLATE));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_LEGGINGS = ITEMS.register("void_buddysteel_leggings", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.VOID_BUDDYSTEEL, ArmorItem.Type.LEGGINGS));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_BOOTS = ITEMS.register("void_buddysteel_boots", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.VOID_BUDDYSTEEL, ArmorItem.Type.BOOTS));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_SWORD = ITEMS.register("void_buddysteel_sword", () -> new SwordItem(BuddycardsToolTier.VOID_BUDDYSTEEL,3, -2.4F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_SHOVEL = ITEMS.register("void_buddysteel_shovel", () -> new ShovelItem(BuddycardsToolTier.VOID_BUDDYSTEEL,1.5F, -3F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_PICKAXE = ITEMS.register("void_buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.VOID_BUDDYSTEEL,1, -2.8F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_AXE = ITEMS.register("void_buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.VOID_BUDDYSTEEL,5.5f, -3.1F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> VOID_BUDDYSTEEL_HOE = ITEMS.register("void_buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.VOID_BUDDYSTEEL,-3, -1F, RARE_TOOL_PROPERTIES));
     public static final RegistryObject<Item> PERFECT_BUDDYSTEEL_INGOT = ITEMS.register("perfect_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> PERFECT_BUDDYSTEEL_BLOCK = ITEMS.register("perfect_buddysteel_block", () -> new BlockItem(BuddycardsBlocks.PERFECT_BUDDYSTEEL_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> PERFECT_BUDDYSTEEL_HELMET = ITEMS.register("perfect_buddysteel_helmet", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.PERFECT_BUDDYSTEEL, ArmorItem.Type.HELMET));
@@ -1329,6 +1353,18 @@ public class BuddycardsItems {
     public static final RegistryObject<Item> PERFECT_BUDDYSTEEL_PICKAXE = ITEMS.register("perfect_buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.PERFECT_BUDDYSTEEL,1, -2.8F, RARE_TOOL_PROPERTIES));
     public static final RegistryObject<Item> PERFECT_BUDDYSTEEL_AXE = ITEMS.register("perfect_buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.PERFECT_BUDDYSTEEL,6, -3, RARE_TOOL_PROPERTIES));
     public static final RegistryObject<Item> PERFECT_BUDDYSTEEL_HOE = ITEMS.register("perfect_buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.PERFECT_BUDDYSTEEL,-4, -1F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_TEMPLATE = ITEMS.register("true_perfect_buddysteel_template", BuddycardsSmithingTemplateItem::createTruePerfectBuddysteelUpgradeTemplate);
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_INGOT = ITEMS.register("true_perfect_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_BLOCK = ITEMS.register("true_perfect_buddysteel_block", () -> new BlockItem(BuddycardsBlocks.TRUE_PERFECT_BUDDYSTEEL_BLOCK.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_HELMET = ITEMS.register("true_perfect_buddysteel_helmet", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.TRUE_PERFECT_BUDDYSTEEL, ArmorItem.Type.HELMET));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_CHESTPLATE = ITEMS.register("true_perfect_buddysteel_chestplate", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.TRUE_PERFECT_BUDDYSTEEL, ArmorItem.Type.CHESTPLATE));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_LEGGINGS = ITEMS.register("true_perfect_buddysteel_leggings", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.TRUE_PERFECT_BUDDYSTEEL, ArmorItem.Type.LEGGINGS));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_BOOTS = ITEMS.register("true_perfect_buddysteel_boots", () -> new BuddycardsArmorItem(BuddycardsArmorMaterial.TRUE_PERFECT_BUDDYSTEEL, ArmorItem.Type.BOOTS));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_SWORD = ITEMS.register("true_perfect_buddysteel_sword", () -> new SwordItem(BuddycardsToolTier.TRUE_PERFECT_BUDDYSTEEL,3, -2.4F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_SHOVEL = ITEMS.register("true_perfect_buddysteel_shovel", () -> new ShovelItem(BuddycardsToolTier.TRUE_PERFECT_BUDDYSTEEL,1.5F, -3F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_PICKAXE = ITEMS.register("true_perfect_buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.TRUE_PERFECT_BUDDYSTEEL,1, -2.8F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_AXE = ITEMS.register("true_perfect_buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.TRUE_PERFECT_BUDDYSTEEL,6, -3, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> TRUE_PERFECT_BUDDYSTEEL_HOE = ITEMS.register("true_perfect_buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.TRUE_PERFECT_BUDDYSTEEL,-4, -1F, RARE_TOOL_PROPERTIES));
 
     public static final  RegistryObject<ForgeSpawnEggItem> ENDERLING_SPAWN_EGG = ITEMS.register("spawn_egg_enderling", () -> new ForgeSpawnEggItem(BuddycardsEntities.ENDERLING, 0x2E2744, 0x9A72CC, DEFAULT_PROPERTIES));
 
