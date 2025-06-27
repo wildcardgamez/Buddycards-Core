@@ -9,6 +9,6 @@ import net.minecraftforge.fml.common.Mod;
 public class Datagen {
     @SubscribeEvent
     static void onGatherData(GatherDataEvent event) {
-        event.getGenerator().addProvider(true, new CardModelGen(event.getGenerator().getPackOutput(), Buddycards.MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(true, new ModelGen(event.getGenerator().getPackOutput(), Buddycards.MOD_ID, event.getExistingFileHelper()));
     }
 }
