@@ -4,8 +4,7 @@ import com.wildcard.buddycards.battles.BattleComponent;
 import com.wildcard.buddycards.battles.BuddycardBattleIcon;
 import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.container.BattleContainer;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
@@ -51,10 +50,10 @@ public enum BattleStatusEffect {
         return (game,slot,target,source) ->{
             if(BattleContainer.random.nextBoolean()) {
                 game.state[slot].status=EMPTY;
-                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.fire.log1")),List.of(TextureBattleIcon.statusIcon(FIRE),TextureBattleIcon.dividerIcon,BuddycardBattleIcon.create(game.getCard(slot)),TextureBattleIcon.statusIcon(EMPTY))));
+                game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.fire.log1")),List.of(TextureBattleIcon.statusIcon(FIRE),TextureBattleIcon.dividerIcon,BuddycardBattleIcon.create(game.getCard(slot)),TextureBattleIcon.statusIcon(EMPTY))));
             } else{
                 game.turnPower[slot]--;
-                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.fire.log2")),List.of(TextureBattleIcon.statusIcon(FIRE),TextureBattleIcon.dividerIcon,BuddycardBattleIcon.create(game.getCard(slot)),TextureBattleIcon.subtractIcon(1))));
+                game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.fire.log2")),List.of(TextureBattleIcon.statusIcon(FIRE),TextureBattleIcon.dividerIcon,BuddycardBattleIcon.create(game.getCard(slot)),TextureBattleIcon.subtractIcon(1))));
                 game.updatePower(slot);
             }
             return true;
@@ -64,7 +63,7 @@ public enum BattleStatusEffect {
     private static BattleAbility.BattleAbilityFunc sleep() {
         return (game, slot, target, source) -> {
             game.state[slot].status = EMPTY;
-            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.sleep.log")), List.of(TextureBattleIcon.statusIcon(SLEEP), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(EMPTY))));
+            game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.sleep.log")), List.of(TextureBattleIcon.statusIcon(SLEEP), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(EMPTY))));
             return false;
         };
     }
@@ -73,7 +72,7 @@ public enum BattleStatusEffect {
         return (game, slot, target, source) -> {
             game.state[slot].power+=2;
             game.state[slot].status = EMPTY;
-            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.strength.log")), List.of(TextureBattleIcon.statusIcon(STRENGTH), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(2), TextureBattleIcon.statusIcon(EMPTY))));
+            game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.strength.log")), List.of(TextureBattleIcon.statusIcon(STRENGTH), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(2), TextureBattleIcon.statusIcon(EMPTY))));
             game.updatePower(slot);
             return true;
         };
@@ -82,7 +81,7 @@ public enum BattleStatusEffect {
     private static BattleAbility.BattleAbilityFunc resistance() {
         return (game, slot, target, source) -> {
             game.state[slot].power++;
-            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.resistance.log")), List.of(TextureBattleIcon.statusIcon(RESISTANCE), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
+            game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.resistance.log")), List.of(TextureBattleIcon.statusIcon(RESISTANCE), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
             game.updatePower(slot);
             return true;
         };
@@ -91,7 +90,7 @@ public enum BattleStatusEffect {
     private static BattleAbility.BattleAbilityFunc regeneration() {
         return (game, slot, target, source) -> {
             game.state[slot].power++;
-            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.regeneration.log")), List.of(TextureBattleIcon.statusIcon(REGENERATION), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
+            game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.regeneration.log")), List.of(TextureBattleIcon.statusIcon(REGENERATION), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.addIcon(1))));
             game.updatePower(slot);
             return true;
         };
@@ -101,7 +100,7 @@ public enum BattleStatusEffect {
         return (game, slot, target, source) -> {
             game.state[slot].power -= 2;
             game.state[slot].status = EMPTY;
-            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.weakness.log")), List.of(TextureBattleIcon.statusIcon(SLEEP), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.subtractIcon(2), TextureBattleIcon.statusIcon(EMPTY))));
+            game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.weakness.log")), List.of(TextureBattleIcon.statusIcon(SLEEP), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.subtractIcon(2), TextureBattleIcon.statusIcon(EMPTY))));
             game.updatePower(slot);
             return true;
         };
@@ -111,7 +110,7 @@ public enum BattleStatusEffect {
         return (game, slot, target, source) -> {
             if(game.state[slot].power > 0) {
                 game.state[slot].power--;
-                game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.poison.log")), List.of(TextureBattleIcon.statusIcon(SLEEP), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.subtractIcon(1))));
+                game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.poison.log")), List.of(TextureBattleIcon.statusIcon(SLEEP), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.subtractIcon(1))));
                 game.updatePower(slot);
             }
             return true;
@@ -121,7 +120,7 @@ public enum BattleStatusEffect {
     private static BattleAbility.BattleAbilityFunc wither() {
         return (game, slot, target, source) -> {
             game.state[slot].power--;
-            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.wither.log")), List.of(TextureBattleIcon.statusIcon(WITHER), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.subtractIcon(1))));
+            game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.wither.log")), List.of(TextureBattleIcon.statusIcon(WITHER), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.subtractIcon(1))));
             game.updatePower(slot);
             return true;
         };
@@ -135,7 +134,7 @@ public enum BattleStatusEffect {
             else
                 game.container.health1-=damage;
             game.state[slot].status = EMPTY;
-            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log1")).append("" + damage).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log2")).append(BattleGame.getOwner(slot) ? game.container.name2 : game.container.name1).append(new TranslatableComponent("battles.ability.buddycards.status.airborne.log3")), List.of(TextureBattleIcon.statusIcon(AIRBORNE), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(damage), TextureBattleIcon.statusIcon(EMPTY))));
+            game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.airborne.log1")).append("" + damage).append(Component.translatable("battles.ability.buddycards.status.airborne.log2")).append(BattleGame.getOwner(slot) ? game.container.name2 : game.container.name1).append(Component.translatable("battles.ability.buddycards.status.airborne.log3")), List.of(TextureBattleIcon.statusIcon(AIRBORNE), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.damageIcon(damage), TextureBattleIcon.statusIcon(EMPTY))));
             return false;
         };
     }
@@ -143,7 +142,7 @@ public enum BattleStatusEffect {
     private static BattleAbility.BattleAbilityFunc stunned() {
         return (game, slot, target, source) -> {
             game.state[slot].status = EMPTY;
-            game.container.addLog(new BattleComponent(new TranslatableComponent(game.getCard(slot).getDescriptionId()).append(new TranslatableComponent("battles.ability.buddycards.status.stunned.log")), List.of(TextureBattleIcon.statusIcon(STUNNED), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(EMPTY))));
+            game.container.addLog(new BattleComponent(Component.translatable(game.getCard(slot).getDescriptionId()).append(Component.translatable("battles.ability.buddycards.status.stunned.log")), List.of(TextureBattleIcon.statusIcon(STUNNED), TextureBattleIcon.dividerIcon, BuddycardBattleIcon.create(game.getCard(slot)), TextureBattleIcon.statusIcon(EMPTY))));
             return false;
         };
     }

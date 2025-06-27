@@ -1,38 +1,38 @@
 {
   "parent": "buddycards:item/buddycard",
-  "textures": {
-    "layer0": "buddycards:item/base_set/6"
-  },
   "overrides": [
     {
+      "model": "buddycards:item/buddycard_base6_g1",
       "predicate": {
         "buddycards:grade": 1.0
-      },
-      "model": "buddycards:item/buddycard_base6_g1"
+      }
     },
     {
+      "model": "buddycards:item/buddycard_base6_g2",
       "predicate": {
         "buddycards:grade": 2.0
-      },
-      "model": "buddycards:item/buddycard_base6_g2"
+      }
     },
     {
+      "model": "buddycards:item/buddycard_base6_g3",
       "predicate": {
         "buddycards:grade": 3.0
-      },
-      "model": "buddycards:item/buddycard_base6_g3"
+      }
     },
     {
+      "model": "buddycards:item/buddycard_base6_g4",
       "predicate": {
         "buddycards:grade": 4.0
-      },
-      "model": "buddycards:item/buddycard_base6_g4"
+      }
     },
     {
+      "model": "buddycards:item/buddycard_base6_g5",
       "predicate": {
         "buddycards:grade": 5.0
-      },
-      "model": "buddycards:item/buddycard_base6_g5"
+      }
     }
-  ]
+  ],
+  "textures": {
+    "layer0": "buddycards:item/base_set/6"
+  }
 }

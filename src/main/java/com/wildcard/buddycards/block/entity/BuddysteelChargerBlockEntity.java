@@ -4,11 +4,9 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.menu.ChargerMenu;
 import com.wildcard.buddycards.recipe.BuddysteelChargingRecipe;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
-import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,8 +18,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -76,7 +75,7 @@ public class BuddysteelChargerBlockEntity extends BlockEntity implements MenuPro
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent("block." + Buddycards.MOD_ID + ".buddysteel_charger");
+        return Component.translatable("block." + Buddycards.MOD_ID + ".buddysteel_charger");
     }
 
     @Nullable
@@ -88,7 +87,7 @@ public class BuddysteelChargerBlockEntity extends BlockEntity implements MenuPro
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        if(cap == ForgeCapabilities.ITEM_HANDLER)
             return lazyInventory.cast();
         return super.getCapability(cap);
     }

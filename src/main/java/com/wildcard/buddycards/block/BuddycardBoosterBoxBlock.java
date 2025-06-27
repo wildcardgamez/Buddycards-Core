@@ -86,14 +86,6 @@ public class BuddycardBoosterBoxBlock extends Block {
     }
 
     @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        //Only show in the creative menu when the respective mod is loaded
-        if(REQUIREMENT.shouldLoad()) {
-            super.fillItemCategory(group, items);
-        }
-    }
-
-    @Override
     public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         if (!player.isCreative()) {
                 Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(state.getBlock().asItem(), state.getValue(LAYERS)));

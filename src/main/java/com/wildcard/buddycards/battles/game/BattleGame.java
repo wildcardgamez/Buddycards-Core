@@ -1,19 +1,16 @@
 package com.wildcard.buddycards.battles.game;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
 import com.wildcard.buddycards.battles.BattleComponent;
 import com.wildcard.buddycards.battles.BuddycardBattleIcon;
 import com.wildcard.buddycards.battles.TextureBattleIcon;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.BuddycardItem;
-
-import com.wildcard.buddycards.screens.PlaymatScreen;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 //IMPORTANT - This is the ONLY class in battles.game that will use classes outside the battles.game package.
 //ALSO IMPORTANT - Any methods in this class take slots ranging 1-6, with slot 012=P1 and 345=P2
@@ -59,7 +56,7 @@ public class BattleGame {
         container.tryDrawCard(true);
         container.tryDrawCard(false);
         container.tryDrawCard(false);
-        container.addLog(new BattleComponent(new TranslatableComponent("battles.log.buddycards.starting_draw"), List.of(TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon)));
+        container.addLog(new BattleComponent(Component.translatable("battles.log.buddycards.starting_draw"), List.of(TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.drawIcon)));
         for (int i = 0; i < 6; i++) state[i] = new BattleCardState(0, BattleStatusEffect.EMPTY);
         startTurn(); //do not use nextTurn(), turn 1 player already chosen
     }
@@ -76,10 +73,10 @@ public class BattleGame {
         LOGGER.info("Player " + player() + " gained " + container.turnEnergy + " energy!");
         LOGGER.debug("                         (" + ((isP1() ? container.energy1 : container.energy2) - container.turnEnergy) + "->" + (isP1() ? container.energy1 : container.energy2) + ")");
         if(container.tryDrawCard(isP1()))
-            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_draw")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.spacerIcon)));
+            container.addLog(new BattleComponent(Component.literal("").append(isP1() ? container.name1 : container.name2).append(Component.translatable("battles.log.buddycards.turn_draw")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.drawIcon, TextureBattleIcon.spacerIcon)));
         else
-            container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_fail_draw")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.playIcon, TextureBattleIcon.spacerIcon)));
-        container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_energy1")).append("" + container.turnEnergy).append(new TranslatableComponent("battles.log.buddycards.turn_energy2")), List.of(TextureBattleIcon.energyIcon(container.turnEnergy))));
+            container.addLog(new BattleComponent(Component.literal("").append(isP1() ? container.name1 : container.name2).append(Component.translatable("battles.log.buddycards.turn_fail_draw")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.playIcon, TextureBattleIcon.spacerIcon)));
+        container.addLog(new BattleComponent(Component.literal("").append(isP1() ? container.name1 : container.name2).append(Component.translatable("battles.log.buddycards.turn_energy1")).append("" + container.turnEnergy).append(Component.translatable("battles.log.buddycards.turn_energy2")), List.of(TextureBattleIcon.energyIcon(container.turnEnergy))));
         //copy power values to turn power (must be done here before events have a chance to fire)
         for (int i = 0; i < 6; i++) turnPower[i] = state[i].power;
         //send turn event to all your cards
@@ -91,7 +88,7 @@ public class BattleGame {
     
     /** ends a turn */
     public boolean endTurn() {
-        container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.turn_attack")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.startAttackIcon, TextureBattleIcon.spacerIcon)));
+        container.addLog(new BattleComponent(Component.literal("").append(isP1() ? container.name1 : container.name2).append(Component.translatable("battles.log.buddycards.turn_attack")), List.of(TextureBattleIcon.spacerIcon, TextureBattleIcon.startAttackIcon, TextureBattleIcon.spacerIcon)));
         // reset infinite loop detector
         loopDetector = 0;
         sentInfLoopMsg = false;
@@ -115,7 +112,7 @@ public class BattleGame {
             int source = attack.source;
             if (state[target].power < 0) {
                 LOGGER.info(items.get(source) + " killed " + items.get(target));
-                container.addLog(new BattleComponent(new TranslatableComponent(getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
+                container.addLog(new BattleComponent(Component.translatable(getCard(target).getDescriptionId()).append(Component.translatable("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
                 if (!trigger(BattleEvent.KILL, source, target, source)) continue;
                 if (!trigger(BattleEvent.DEATH, target, target, source)) continue;
                 if (!trigger(BattleEvent.OBSERVE_DEATH, source, target, source, BattleEvent.Distribution.ALL)) continue;
@@ -152,12 +149,12 @@ public class BattleGame {
 
                 if (killTarget && items.get(target) != null) {
                     LOGGER.info(items.get(source) + " killed " + items.get(target));
-                    container.addLog(new BattleComponent(new TranslatableComponent(getCard(target).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
+                    container.addLog(new BattleComponent(Component.translatable(getCard(target).getDescriptionId()).append(Component.translatable("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(target)), TextureBattleIcon.deathIcon)));
                     removeCard(target);
                 }
                 if (killSource && items.get(source) != null) {
                     LOGGER.info(items.get(target) + " killed " + items.get(source));
-                    container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.deathIcon)));
+                    container.addLog(new BattleComponent(Component.translatable(getCard(source).getDescriptionId()).append(Component.translatable("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.deathIcon)));
                     removeCard(source);
                 }
             }
@@ -192,7 +189,7 @@ public class BattleGame {
     public void updatePower(int i) {
         state[i].power = turnPower[i];
         if (state[i].power < 0 && trigger(BattleEvent.KILL, i, i, i) && trigger(BattleEvent.OBSERVE_DEATH, i, i, i, BattleEvent.Distribution.ALL)) {
-            container.addLog(new BattleComponent(new TranslatableComponent(getCard(i).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(i)), TextureBattleIcon.deathIcon)));
+            container.addLog(new BattleComponent(Component.translatable(getCard(i).getDescriptionId()).append(Component.translatable("battles.log.buddycards.death")), List.of(BuddycardBattleIcon.create(getCard(i)), TextureBattleIcon.deathIcon)));
             trigger(BattleEvent.DEATH, i, i, i);
             trigger(BattleEvent.OBSERVE_DEATH, i, i, i, BattleEvent.Distribution.ALL);
             removeCard(i);
@@ -219,13 +216,13 @@ public class BattleGame {
             if (getOwner(target)) container.health1 -= damage;
             else container.health2 -= damage;
             LOGGER.info(items.get(source) + " dealt " + damage + " damage to Player " + player(!isP1()));
-            container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.attack1")).append("" + damage).append(new TranslatableComponent("battles.log.buddycards.attack2")).append(getOwner(target) ? container.name1 : container.name2), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage))));
+            container.addLog(new BattleComponent(Component.translatable(getCard(source).getDescriptionId()).append(Component.translatable("battles.log.buddycards.attack1")).append("" + damage).append(Component.translatable("battles.log.buddycards.attack2")).append(getOwner(target) ? container.name1 : container.name2), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage))));
         } else {
             if (!trigger(BattleEvent.FIGHT, source, target, source)) return;
             int damage = state[source].power;
             turnPower[target] -= damage;
             LOGGER.info(items.get(source) + " dealt " + damage + " damage to " + items.get(target));
-            container.addLog(new BattleComponent(new TranslatableComponent(getCard(source).getDescriptionId()).append(new TranslatableComponent("battles.log.buddycards.attack1")).append("" + damage).append(new TranslatableComponent("battles.log.buddycards.attack2")).append(new TranslatableComponent(getCard(target).getDescriptionId())), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage), BuddycardBattleIcon.create(getCard(target)))));
+            container.addLog(new BattleComponent(Component.translatable(getCard(source).getDescriptionId()).append(Component.translatable("battles.log.buddycards.attack1")).append("" + damage).append(Component.translatable("battles.log.buddycards.attack2")).append(Component.translatable(getCard(target).getDescriptionId())), List.of(BuddycardBattleIcon.create(getCard(source)), TextureBattleIcon.damageIcon(damage), BuddycardBattleIcon.create(getCard(target)))));
             if (!trigger(BattleEvent.DAMAGED, target, target, source)) return;
             savedAttacks.add(new BattleAttack(target, source));
         }
@@ -311,7 +308,7 @@ public class BattleGame {
                 sentInfLoopMsg = true;
                 LOGGER.error("Infinite ability loop detected!", new Throwable());
                 for (int i = 0; i < 10; i++) {
-                    container.addLog(new BattleComponent(new TranslatableComponent("battles.log.buddycards.infinite_loop"), List.of(TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon)));
+                    container.addLog(new BattleComponent(Component.translatable("battles.log.buddycards.infinite_loop"), List.of(TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon, TextureBattleIcon.deathIcon)));
                 }
             }
             return true;
@@ -334,7 +331,7 @@ public class BattleGame {
         items.set(slot, item);
         state[slot] = new BattleCardState(item.getPower(), BattleStatusEffect.EMPTY);
         turnPower[slot] = item.getPower();
-        container.addLog(new BattleComponent(new TextComponent("").append(isP1() ? container.name1 : container.name2).append(new TranslatableComponent("battles.log.buddycards.card_play")).append(new TranslatableComponent(item.getDescriptionId())), List.of(BuddycardBattleIcon.create(item) ,TextureBattleIcon.playIcon)));
+        container.addLog(new BattleComponent(Component.literal("").append(isP1() ? container.name1 : container.name2).append(Component.translatable("battles.log.buddycards.card_play")).append(Component.translatable(item.getDescriptionId())), List.of(BuddycardBattleIcon.create(item) ,TextureBattleIcon.playIcon)));
         return true;
     }
     

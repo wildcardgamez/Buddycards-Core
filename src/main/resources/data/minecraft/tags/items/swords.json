@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:buddysteel_sword",
+    "buddycards:charged_buddysteel_sword",
+    "buddycards:crimson_buddysteel_sword",
+    "buddycards:void_buddysteel_sword",
+    "buddycards:perfect_buddysteel_sword",
+    "buddycards:true_perfect_buddysteel_sword"
+  ]
+}

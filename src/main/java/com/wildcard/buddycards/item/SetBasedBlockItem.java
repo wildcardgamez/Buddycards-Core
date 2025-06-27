@@ -3,7 +3,6 @@ package com.wildcard.buddycards.item;
 import com.wildcard.buddycards.core.BuddycardSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -23,6 +22,6 @@ public class SetBasedBlockItem extends BlockItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(new TranslatableComponent(SET.getDescriptionId()).withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable(SET.getDescriptionId()).withStyle(ChatFormatting.GRAY));
     }
 }

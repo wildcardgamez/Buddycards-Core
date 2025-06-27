@@ -7,6 +7,9 @@
     "buddycards:charged_buddysteel_block",
     "buddycards:crimson_luminis_block",
     "buddycards:void_zylex_block",
-    "buddycards:perfect_buddysteel_block"
+    "buddycards:crimson_buddysteel_block",
+    "buddycards:void_buddysteel_block",
+    "buddycards:perfect_buddysteel_block",
+    "buddycards:true_perfect_buddysteel_block"
   ]
 }

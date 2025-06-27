@@ -48,6 +48,11 @@ public class ClientStuff {
                 return stack.getTag().getInt("power");
             return 0;
         }));
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.LUMINIS_POWER_METER.get(), new ResourceLocation(Buddycards.MOD_ID, "power"), (stack, world, entity, idk) -> {
+            if (stack.getTag() != null)
+                return stack.getTag().getInt("power");
+            return 0;
+        }));
         event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.ZYLEX_POWER_METER.get(), new ResourceLocation(Buddycards.MOD_ID, "power"), (stack, world, entity, idk) -> {
             if (stack.getTag() != null)
                 return stack.getTag().getInt("power");

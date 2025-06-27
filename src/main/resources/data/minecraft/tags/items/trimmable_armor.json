@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:buddysteel_helmet",
+    "buddycards:luminis_helmet",
+    "buddycards:charged_buddysteel_helmet",
+    "buddycards:crimson_buddysteel_helmet",
+    "buddycards:void_buddysteel_helmet",
+    "buddycards:perfect_buddysteel_helmet",
+    "buddycards:true_perfect_buddysteel_helmet",
+    "buddycards:buddysteel_chestplate",
+    "buddycards:charged_buddysteel_chestplate",
+    "buddycards:crimson_buddysteel_chestplate",
+    "buddycards:void_buddysteel_chestplate",
+    "buddycards:perfect_buddysteel_chestplate",
+    "buddycards:true_perfect_buddysteel_chestplate",
+    "buddycards:buddysteel_leggings",
+    "buddycards:charged_buddysteel_leggings",
+    "buddycards:crimson_buddysteel_leggings",
+    "buddycards:void_buddysteel_leggings",
+    "buddycards:perfect_buddysteel_leggings",
+    "buddycards:true_perfect_buddysteel_leggings",
+    "buddycards:buddysteel_boots",
+    "buddycards:zylex_boots",
+    "buddycards:charged_buddysteel_boots",
+    "buddycards:crimson_buddysteel_boots",
+    "buddycards:void_buddysteel_boots",
+    "buddycards:perfect_buddysteel_boots",
+    "buddycards:true_perfect_buddysteel_boots"
+  ]
+}

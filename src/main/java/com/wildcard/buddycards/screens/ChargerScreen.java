@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.menu.ChargerMenu;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,25 +22,17 @@ public class ChargerScreen extends AbstractContainerScreen<ChargerMenu> {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
-    }
-
-    @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) {
-        this.font.draw(matrixStack, title, 8.0f, 6.0f, 4210752);
-        this.font.draw(matrixStack, playerInventoryTitle,8.0f, 74.0f, 4210752);
+    protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
+        pGuiGraphics.drawString(font, title, 8, 6, 4210752);
+        pGuiGraphics.drawString(font, playerInventoryTitle,8, 74, 4210752);
     }
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         //Place the texture for the gui
-        RenderSystem._setShaderTexture(0, TEXTURE);
-        blit(matrixStack, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
-
+        this.renderBackground(pGuiGraphics);
+        pGuiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
         int progress = menu.getProgress();
         if(progress > 0)
-            blit(matrixStack, leftPos + 52, topPos + 37, 176, 0, progress, 16);
+            pGuiGraphics.blit(TEXTURE, leftPos + 52, topPos + 37, 176, 0, progress, 16);
     }
 }

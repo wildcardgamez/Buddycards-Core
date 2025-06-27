@@ -4,23 +4,25 @@ import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemHandlerHelper;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 public abstract class BuddycardPackItem extends Item {
-    public BuddycardPackItem(BuddycardsItems.BuddycardRequirement shouldLoad, int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, Properties properties) {
+    public BuddycardPackItem(int amount, int foils, SimpleWeightedRandomList<Rarity> rarityWeights, Properties properties) {
         super(properties);
-        REQUIREMENT = shouldLoad;
         CARD_AMT = amount;
         FOIL_AMT = foils;
         this.rarityWeights = rarityWeights;
@@ -30,7 +32,6 @@ public abstract class BuddycardPackItem extends Item {
         }
     }
 
-    protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
     protected final int CARD_AMT;
     protected final int FOIL_AMT;
     protected final SimpleWeightedRandomList<Rarity> rarityWeights;
@@ -42,38 +43,35 @@ public abstract class BuddycardPackItem extends Item {
             player.getItemInHand(hand).shrink(1);
             //Roll each card and throw it into a list
             NonNullList<ItemStack> cards = NonNullList.create();
-            int foilAmt = !CuriosApi.getCuriosHelper().findCurios(player, BuddycardsItems.LUMINIS_RING.get()).isEmpty() ? FOIL_AMT + 1 : FOIL_AMT;
+            //Check for luminis ring to determine foil amount
+            Optional<ICuriosItemHandler> curios = CuriosApi.getCuriosInventory(player).resolve();
+            int foilAmt = curios.isPresent() && curios.get().isEquipped(BuddycardsItems.LUMINIS_RING.get()) ? FOIL_AMT + 1 : FOIL_AMT;
             for (int i = 0; i < CARD_AMT; i++) {
-                ItemStack card = new ItemStack(rollCard(level.getRandom()));
+                BuddycardItem card = rollCard(level.getRandom());
+                ItemStack item = new ItemStack(card);
                 //If its one of the last ones that needs foil, make it foil
-                if (i >= CARD_AMT - foilAmt)
-                    BuddycardItem.setShiny(card);
-                cards.add(card);
+                int foil = 0;
+                if (i >= CARD_AMT - foilAmt) {
+                    foil = level.getRandom().nextIntBetweenInclusive(0,10);
+                    foil = foil == 10 ? 3 : foil > 6 ? 2 : 1;
+                    BuddycardItem.setShiny(item, foil);
+                }
+                cards.add(item);
+                BuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), card, foil, 0);
             }
             //Give each card to the player and put their collection data in
-            cards.forEach(card -> {
-                ItemHandlerHelper.giveItemToPlayer(player, card);
-                BuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), ((BuddycardItem) card.getItem()).getSet(), ((BuddycardItem) card.getItem()).getCardNumber());
-            });
+            cards.forEach(card -> ItemHandlerHelper.giveItemToPlayer(player, card));
         }
         //Return success every time because we shrink it ourselves instead of using consume
         return InteractionResultHolder.success(player.getItemInHand(hand));
     }
 
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        //Only show in the creative menu when the respective mod is loaded
-        if (this.allowdedIn(group) && REQUIREMENT.shouldLoad()) {
-            items.add(new ItemStack(this));
-        }
-    }
-
-    public BuddycardItem rollCard(Random random) {
+    public BuddycardItem rollCard(RandomSource random) {
         Optional<Rarity> optional = rarityWeights.getRandomValue(random);
         return optional
                 .map(this::getPossibleCards)
                 .map(cards -> cards.get(random.nextInt(cards.size())))
-                .orElseThrow(() -> new IllegalStateException("Cardpack " + getRegistryName() + " does not contain cards for rarity"));
+                .orElseThrow(() -> new IllegalStateException("Cardpack " + getDescriptionId() + " does not contain cards for rarity"));
     }
 
     public abstract List<BuddycardItem> getPossibleCards(Rarity rarity);

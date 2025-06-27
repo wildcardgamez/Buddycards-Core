@@ -5,7 +5,6 @@ import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -26,7 +25,7 @@ public class BlankBuddysteelMedalItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(new TranslatableComponent("item." + Buddycards.MOD_ID + ".blank_buddysteel_medal.desc").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".blank_buddysteel_medal.desc", ChatFormatting.GRAY));
     }
 
     @Override
@@ -35,9 +34,9 @@ public class BlankBuddysteelMedalItem extends Item {
         InteractionHand cardHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof BlankBuddysteelMedalItem && player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
             BuddysteelSetMedalItem medalItem = card.getSet().getMedal();
-            if(medalItem != null && medalItem.REQUIREMENT.shouldLoad()) {
+            if(medalItem != null) {
                 if (BuddycardCollectionSaveData.get(serverLevel).checkPlayerSetCompleted(player.getUUID(), card.getSet())) {
-                    player.displayClientMessage(new TranslatableComponent("item.buddycards.blank_buddysteel_medal.success").append(new TranslatableComponent(card.getSet().getDescriptionId())), true);
+                    player.displayClientMessage(Component.translatable("item.buddycards.blank_buddysteel_medal.success").append(Component.translatable(card.getSet().getDescriptionId())), true);
                     ItemStack medal = new ItemStack(medalItem);
                     CompoundTag nbt = new CompoundTag();
                     nbt.putString("player", player.getName().getString());
@@ -45,10 +44,10 @@ public class BlankBuddysteelMedalItem extends Item {
                     medal.setTag(nbt);
                     return new InteractionResultHolder<>(InteractionResult.SUCCESS, medal);
                 } else
-                    player.displayClientMessage(new TranslatableComponent("item.buddycards.blank_buddysteel_medal.fail"), true);
+                    player.displayClientMessage(Component.translatable("item.buddycards.blank_buddysteel_medal.fail"), true);
             }
             else
-                player.displayClientMessage(new TranslatableComponent("item.buddycards.blank_buddysteel_medal.fizzle"), true);
+                player.displayClientMessage(Component.translatable("item.buddycards.blank_buddysteel_medal.fizzle"), true);
         }
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
     }

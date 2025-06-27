@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:buddysteel_chestplate",
+    "buddycards:charged_buddysteel_chestplate",
+    "buddycards:crimson_buddysteel_chestplate",
+    "buddycards:void_buddysteel_chestplate",
+    "buddycards:perfect_buddysteel_chestplate",
+    "buddycards:true_perfect_buddysteel_chestplate"
+  ]
+}

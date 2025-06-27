@@ -15,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.Nameable;
@@ -37,8 +38,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 
@@ -79,8 +82,8 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     @Override
-    protected int getExperienceReward(Player player) {
-        return 1 + this.level.random.nextInt(3);
+    public int getExperienceReward() {
+        return 1 + this.level().random.nextInt(3);
     }
 
     @Override
@@ -100,9 +103,9 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     @Override
     protected void customServerAiStep() {
-        if (this.level.isDay() && this.tickCount >= 600) {
-            float f = this.getBrightness();
-            if (f > 0.5F && this.level.canSeeSky(this.blockPosition()) && this.random.nextFloat() * 60.0F < (f - 0.4F) * 2.0F) {
+        if (this.level().isDay() && this.tickCount >= 600) {
+            float f = this.getLightLevelDependentMagicValue();
+            if (f > 0.5F && this.level().canSeeSky(this.blockPosition()) && this.random.nextFloat() * 60.0F < (f - 0.4F) * 2.0F) {
                 this.teleport();
             }
         }
@@ -110,7 +113,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     protected boolean teleport() {
-        if (!this.level.isClientSide() && this.isAlive()) {
+        if (!this.level().isClientSide() && this.isAlive()) {
             double d0 = this.getX() + (this.random.nextDouble() - 0.5D) * 32.0D;
             double d1 = this.getY() + this.random.nextInt(32) - 32;
             double d2 = this.getZ() + (this.random.nextDouble() - 0.5D) * 32.0D;
@@ -121,15 +124,15 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     private boolean teleport(double p_70825_1_, double p_70825_3_, double p_70825_5_) {
         BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(p_70825_1_, p_70825_3_, p_70825_5_);
-        while(blockpos$mutable.getY() > 0 && !this.level.getBlockState(blockpos$mutable).getMaterial().blocksMotion())
+        while(blockpos$mutable.getY() > 0 && !this.level().getBlockState(blockpos$mutable).blocksMotion())
             blockpos$mutable.move(Direction.DOWN);
-        BlockState blockstate = this.level.getBlockState(blockpos$mutable);
-        if (blockstate.getMaterial().blocksMotion() && !blockstate.getFluidState().is(Fluids.WATER)) {
+        BlockState blockstate = this.level().getBlockState(blockpos$mutable);
+        if (blockstate.blocksMotion() && !blockstate.getFluidState().is(Fluids.WATER)) {
             EntityTeleportEvent event = new EntityTeleportEvent(this, p_70825_1_, p_70825_3_, p_70825_5_);
             if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return false;
             boolean success = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
             if (success && !this.isSilent()) {
-                this.level.playSound(null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
+                this.level().playSound(null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
                 this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
             }
             return success;
@@ -139,25 +142,25 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     @Override
     public void aiStep() {
-        if (this.level.isClientSide)
+        if (this.level().isClientSide)
             for(int i = 0; i < 2; ++i)
-                this.level.addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
+                this.level().addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
         if (timer > 0) {
             timer -= 1;
             if (timer == 0) {
                 for (Pair<ItemStack, ItemStack> goalTrade : goalTrades)
                     if (cardsMatch(goalTrade.getFirst(), getMainHandItem())) {
                         Vec3 pos = position().add(0, 1, 0);
-                        Player player = level.getNearestPlayer(this, 5);
+                        Player player = level().getNearestPlayer(this, 5);
                         if (player != null)
                             pos = player.position().add(0, 1, 0);
                         BehaviorUtils.throwItem(this, goalTrade.getSecond(), pos);
                         setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
                         goalTrades.remove(goalTrade);
                         if (goalTrade.getFirst().getItem().equals(BuddycardsItems.ZYLEX.get()))
-                            goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level, false)));
+                            goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level(), false)));
                         if (goalTrade.getFirst().getItem().equals(BuddycardsItems.VOID_ZYLEX.get()))
-                            goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level, true)));
+                            goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level(), true)));
                         break;
                     }
             }
@@ -171,41 +174,40 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     public void setupGoalItems(ServerLevel lvl) {
-        Random rand = lvl.getRandom();
+        RandomSource rand = lvl.getRandom();
         List<BuddycardItem> cards = BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 20; i++) {
             ItemStack card = new ItemStack(cards.get(rand.nextInt(cards.size())));
             if (i % 3 == 0)
                 BuddycardItem.setShiny(card);
             goalTrades.add(new Pair<>(card, getCardSellValue(card, rand, cheap)));
-            if (i < 4) {
+            if (i < 8) {
                 ItemStack card2 = card.copy();
                 card2.getOrCreateTag().putInt("grade", rand.nextInt(1,5));
                 goalTrades.add(new Pair<>(card2, getCardSellValue(card2, rand, cheap)));
             }
         }
-        goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level, false)));
-        goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level, true)));
+        goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level(), false)));
+        goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level(), true)));
     }
 
     public static ItemStack getBarterResult(Level level, boolean voidZylex) {
         if (level instanceof ServerLevel lvl) {
-            LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
             if (voidZylex) {
-                LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
-                List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+                LootTable table = lvl.getServer().getLootData().getLootTable(new ResourceLocation(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
+                List<ItemStack> items = table.getRandomItems((new LootParams.Builder(lvl)).create(LootContextParamSets.EMPTY));
                 return items.get(0);
             }
             else {
-                LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/zylex_barter"));
-                List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+                LootTable table = lvl.getServer().getLootData().getLootTable(new ResourceLocation(Buddycards.MOD_ID, "gameplay/zylex_barter"));
+                List<ItemStack> items = table.getRandomItems((new LootParams.Builder(lvl)).create(LootContextParamSets.EMPTY));
                 return items.get(0);
             }
         }
         return ItemStack.EMPTY;
     }
 
-    public static ItemStack getCardSellValue(ItemStack card, Random rand, boolean cheap) {
+    public static ItemStack getCardSellValue(ItemStack card, RandomSource rand, boolean cheap) {
         int value = rand.nextInt(1, 4);
         boolean markVoid = false;
         if (card.getRarity() == Rarity.RARE)
@@ -292,6 +294,6 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     static boolean cardsMatch(ItemStack a, ItemStack b) {
-        return a.getItem().equals(b.getItem()) && BuddycardItem.hasFoil(a) == BuddycardItem.hasFoil(b) && BuddycardItem.getGrade(a) == BuddycardItem.getGrade(b);
+        return a.getItem().equals(b.getItem()) && BuddycardItem.getFoil(a) == BuddycardItem.getFoil(b) && BuddycardItem.getGrade(a) == BuddycardItem.getGrade(b);
     }
 }

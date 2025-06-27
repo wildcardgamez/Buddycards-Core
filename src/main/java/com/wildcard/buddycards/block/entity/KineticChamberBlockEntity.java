@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
@@ -47,9 +48,8 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
     public void absorbExplosion(ServerLevel lvl) {
         if(lvl.random.nextFloat() < ConfigManager.kineticSuccessRate.get()) {
             if(itemSlot.getItem().equals(BuddycardsItems.CRIMSON_LUMINIS_BLOCK.get()) && lvl.random.nextFloat() < ConfigManager.luminisKineticSpecialtyOdds.get()) {
-                LootContext.Builder builder = (new LootContext.Builder(lvl).withRandom(lvl.random));
-                LootTable table = lvl.getServer().getLootTables().get(new ResourceLocation(Buddycards.MOD_ID, "gameplay/luminis_kinetic_chamber"));
-                List<ItemStack> items = table.getRandomItems(builder.create(LootContextParamSets.EMPTY));
+                LootTable table = lvl.getServer().getLootData().getLootTable(new ResourceLocation(Buddycards.MOD_ID, "gameplay/luminis_kinetic_chamber"));
+                List<ItemStack> items = table.getRandomItems((new LootParams.Builder(lvl)).create(LootContextParamSets.EMPTY));
                 itemSlot = ItemStack.EMPTY;
                 for (ItemStack i: items)
                     if (!i.isEmpty())

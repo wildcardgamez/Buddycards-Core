@@ -26,6 +26,16 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:luminis_power_meter"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:blank_luminis_medal"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 2,
           "name": "buddycards:luminis_ring"
         },

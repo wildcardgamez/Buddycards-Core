@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:buddysteel_helmet",
+    "buddycards:luminis_helmet",
+    "buddycards:charged_buddysteel_helmet",
+    "buddycards:crimson_buddysteel_helmet",
+    "buddycards:void_buddysteel_helmet",
+    "buddycards:perfect_buddysteel_helmet",
+    "buddycards:true_perfect_buddysteel_helmet"
+  ]
+}

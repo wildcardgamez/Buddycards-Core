@@ -12,8 +12,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 6.0,
-                "min": 2.0
+                "max": 8.0,
+                "min": 3.0
               },
               "function": "minecraft:set_count"
             }
@@ -44,6 +44,11 @@
           "type": "minecraft:item",
           "weight": 1,
           "name": "buddycards:zylex_power_meter"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:blank_zylex_medal"
         },
         {
           "type": "minecraft:item",

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "C": {
+      "item": "buddycards:charged_buddysteel_ingot"
+    },
+    "S": {
+      "item": "buddycards:charged_buddysteel_upgrade_smithing_template"
+    }
+  },
+  "pattern": [
+    "#S#",
+    "#C#",
+    "###"
+  ],
+  "result": {
+    "count": 2,
+    "item": "buddycards:charged_buddysteel_upgrade_smithing_template"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "features": "buddycards:ore_luminis",
+  "biomes" : "#minecraft:is_overworld",
+  "step" : "underground_ores"
+}
