@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "C": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:glowstone"
     },
     "#": {
-      "item": "buddycards:buddysteel_ingot"
+      "item": "buddycards:luminis"
     },
     "S": {
-      "item": "buddycards:charged_buddysteel_upgrade_smithing_template"
+      "item": "buddycards:crimson_buddysteel_upgrade_smithing_template"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 2,
-    "item": "buddycards:charged_buddysteel_upgrade_smithing_template"
+    "item": "buddycards:crimson_buddysteel_upgrade_smithing_template"
   }
 }

@@ -23,8 +23,8 @@ public class ChargerScreen extends AbstractContainerScreen<ChargerMenu> {
 
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
-        pGuiGraphics.drawString(font, title, 8, 6, 4210752);
-        pGuiGraphics.drawString(font, playerInventoryTitle,8, 74, 4210752);
+        pGuiGraphics.drawString(font, title, 8, 6, 4210752, false);
+        pGuiGraphics.drawString(font, playerInventoryTitle,8, 74, 4210752, false);
     }
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {

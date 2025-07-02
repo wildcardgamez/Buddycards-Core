@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "C": {
-      "tag": "minecraft:planks"
+      "item": "minecraft:endstone"
     },
     "#": {
-      "item": "buddycards:buddysteel_ingot"
+      "item": "buddycards:zylex"
     },
     "S": {
-      "item": "buddycards:charged_buddysteel_upgrade_smithing_template"
+      "item": "buddycards:void_buddysteel_upgrade_smithing_template"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 2,
-    "item": "buddycards:charged_buddysteel_upgrade_smithing_template"
+    "item": "buddycards:void_buddysteel_upgrade_smithing_template"
   }
 }

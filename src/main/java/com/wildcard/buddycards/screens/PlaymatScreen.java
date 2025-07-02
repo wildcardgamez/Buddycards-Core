@@ -78,11 +78,11 @@ public class PlaymatScreen extends AbstractContainerScreen<PlaymatMenu> {
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
         //Draw the name of the playmat and the inventory titles
-        pGuiGraphics.drawString(font, title, 8, 6, 4210752);
-        pGuiGraphics.drawString(font, Integer.toString(this.menu.opponentEnergy.get()), 20, 22, 4210752);
-        pGuiGraphics.drawString(font, Integer.toString(this.menu.opponentHealth.get()), 51, 22, 4210752);
-        pGuiGraphics.drawString(font, Integer.toString(this.menu.energy.get()), 20, 40, 4210752);
-        pGuiGraphics.drawString(font, Integer.toString(this.menu.health.get()), 51, 40, 4210752);
+        pGuiGraphics.drawString(font, title, 8, 6, 4210752, false);
+        pGuiGraphics.drawString(font, Integer.toString(this.menu.opponentEnergy.get()), 20, 22, 4210752, false);
+        pGuiGraphics.drawString(font, Integer.toString(this.menu.opponentHealth.get()), 51, 22, 4210752, false);
+        pGuiGraphics.drawString(font, Integer.toString(this.menu.energy.get()), 20, 40, 4210752, false);
+        pGuiGraphics.drawString(font, Integer.toString(this.menu.health.get()), 51, 40, 4210752, false);
         renderBattleLog(pGuiGraphics, pMouseX, pMouseY);
         renderCardPower(pGuiGraphics);
     }

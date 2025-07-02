@@ -26,9 +26,9 @@ public class DeckboxScreen extends AbstractContainerScreen<DeckboxMenu> {
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
         //Draw the name of the deck and the inventory titles
-        pGuiGraphics.drawString(font, title, 8, 6, 4210752);
-        pGuiGraphics.drawString(font, playerInventoryTitle, 8, 56, 4210752);
-        if (pMouseX >= 157 + leftPos && pMouseX <= 188 +leftPos && pMouseY >= 22 + topPos && pMouseY <= 33 + topPos) {
+        pGuiGraphics.drawString(font, title, 8, 6, 4210752, false);
+        pGuiGraphics.drawString(font, playerInventoryTitle, 8, 56, 4210752, false);
+        if (pMouseX >= 157 + leftPos && pMouseX <= 172 + leftPos && pMouseY >= 22 + topPos && pMouseY <= 33 + topPos) {
             List<Component> tooltips = List.of(Component.translatable("item.buddycards.buddycard.deckbuilding_limit"),
                     Component.literal("" + ConfigManager.deckLimitCommon.get()).append(Component.translatable("item.buddycards.buddycard.deckbuilding_limit.common")).withStyle(ChatFormatting.GRAY),
                     Component.literal("" + ConfigManager.deckLimitUncommon.get()).append(Component.translatable("item.buddycards.buddycard.deckbuilding_limit.uncommon")).withStyle(ChatFormatting.GRAY),

@@ -15,6 +15,9 @@ public class BuddycardsArmorItem extends ArmorItem {
 
     @Override
     public Rarity getRarity(ItemStack stack) {
-        return material.equals(BuddycardsArmorMaterial.BUDDYSTEEL) ? Rarity.UNCOMMON : Rarity.RARE;
+        if (material.equals(BuddycardsArmorMaterial.BUDDYSTEEL)) return Rarity.COMMON;
+        if (material.equals(BuddycardsArmorMaterial.CHARGED_BUDDYSTEEL)) return Rarity.UNCOMMON;
+        if (material.equals(BuddycardsArmorMaterial.TRUE_PERFECT_BUDDYSTEEL)) return Rarity.EPIC;
+        return Rarity.RARE;
     }
 }

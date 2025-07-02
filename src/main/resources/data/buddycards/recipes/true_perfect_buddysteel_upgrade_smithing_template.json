@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "buddycards:charged_buddysteel_upgrade_smithing_template"
+    },
+    "B": {
+      "item": "buddycards:void_buddysteel_upgrade_smithing_template"
+    },
+    "C": {
+      "item": "buddycards:crimson_buddysteel_upgrade_smithing_template"
+    },
+    "1": {
+      "item": "buddycards:charged_buddysteel"
+    },
+    "2": {
+      "item": "buddycards:void_zylex"
+    },
+    "3": {
+      "item": "buddycards:crimson_luminis"
+    }
+  },
+  "pattern": [
+    "123",
+    "ABC",
+    "123"
+  ],
+  "result": {
+    "item": "buddycards:true_perfect_buddysteel_upgrade_smithing_template"
+  }
+}
