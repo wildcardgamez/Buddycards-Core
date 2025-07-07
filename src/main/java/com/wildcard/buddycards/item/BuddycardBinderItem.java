@@ -8,6 +8,7 @@ import com.wildcard.buddycards.registries.BuddycardsMisc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -26,12 +27,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class BuddycardBinderItem extends Item {
-    public BuddycardBinderItem(Properties properties, BuddycardSet set) {
+    public BuddycardBinderItem(Properties properties, BuddycardSet set, ResourceLocation texture) {
         super(properties);
         SET = set;
+        TEXTURE = texture;
     }
 
-    protected BuddycardSet SET;
+    protected final BuddycardSet SET;
+    protected final ResourceLocation TEXTURE;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
@@ -42,19 +45,9 @@ public class BuddycardBinderItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack binder = player.getItemInHand(hand);
         if(level instanceof ServerLevel) {
-            //Find the amount of slots and then open the binder GUI
-            int slots = 54;
-            switch (EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), binder)) {
-                case 3:
-                    slots += 24;
-                case 2:
-                    slots += 24;
-                case 1:
-                    slots += 18;
-            }
-            int finalSlots = slots;
+            int pages = 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), binder);
             NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderContainer(finalSlots, binder))
+                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderContainer(binder, pages))
                     , player.getItemInHand(hand).getHoverName()));
         }
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
@@ -68,5 +61,9 @@ public class BuddycardBinderItem extends Item {
     @Override
     public int getEnchantmentValue() {
         return 1;
+    }
+
+    public ResourceLocation getBinderTexture() {
+        return TEXTURE;
     }
 }

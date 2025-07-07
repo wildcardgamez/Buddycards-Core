@@ -12,17 +12,17 @@ public class EnchantmentExtraPage extends Enchantment {
 
     @Override
     public int getMinCost(int par1) {
-        return 15 * (par1 - 1);
+        return 6 * (par1 - 1);
     }
 
     @Override
     public int getMaxCost(int par1) {
-        return 20 + (par1 * 10);
+        return 6 + (par1 * 6);
     }
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return 7;
     }
 
     static final EnchantmentCategory BUDDY_BINDER = EnchantmentCategory.create("BUDDY_BINDER", BuddycardBinderItem.class::isInstance);

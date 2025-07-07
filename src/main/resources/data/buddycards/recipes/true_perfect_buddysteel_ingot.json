@@ -1,0 +1,32 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "input": {
+    "item": "buddycards:perfect_buddysteel_ingot"
+  },
+  "meter": {
+    "item": "buddycards:charged_buddysteel_power_meter"
+  },
+  "power": 1,
+  "ingredients": [
+    {
+      "item": "buddycards:crimson_luminis",
+      "count": 1
+    },
+    {
+      "item": "buddycards:void_zylex",
+      "count": 1
+    },
+    {
+      "item": "buddycards:crimson_luminis",
+      "count": 1
+    },
+    {
+      "item": "buddycards:void_zylex",
+      "count": 1
+    }
+  ],
+  "output": {
+    "item": "buddycards:true_perfect_buddysteel_ingot",
+    "count": 1
+  }
+}

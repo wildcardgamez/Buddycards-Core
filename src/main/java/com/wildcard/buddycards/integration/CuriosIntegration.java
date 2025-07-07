@@ -30,8 +30,7 @@ import javax.annotation.Nullable;
 
 public class CuriosIntegration {
     public static void imc() {
-        InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("medal")
-                .icon(new ResourceLocation(Buddycards.MOD_ID, "slot/medal")).build());
+        //InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("medal").icon(new ResourceLocation(Buddycards.MOD_ID, "slot/medal")).build());
     }
 
     public static ICapabilityProvider initCapabilities(IMedalTypes type, ItemStack itemStack) {

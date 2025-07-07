@@ -18,6 +18,7 @@ import com.wildcard.buddycards.gear.BuddycardsArmorMaterial;
 import com.wildcard.buddycards.gear.BuddycardsToolTier;
 import com.wildcard.buddycards.item.*;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -1217,10 +1218,9 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddycardPackItem> PACK_END = ITEMS.register("buddycard_pack_end", () -> new BuddycardSetPackItem(END_SET, 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
     public static final RegistryObject<BuddycardPackItem> MYSTERY_PACK = ITEMS.register("buddycard_pack_mystery", () -> new MysteryBuddycardPackItem(4, 1, DEFAULT_RARITY_WEIGHTS, false, RARE_PACK_PROPERTIES));
     //Binders
-    public static final RegistryObject<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, BASE_SET));
-    public static final RegistryObject<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, NETHER_SET));
-    public static final RegistryObject<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, END_SET));
-    public static final RegistryObject<EnderBinderItem> ENDER_BINDER = ITEMS.register("ender_buddycard_binder", () -> new EnderBinderItem(DEFAULT_BINDER_PROPERTIES));
+    public static final RegistryObject<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, BASE_SET, new ResourceLocation(Buddycards.MOD_ID, "textures/gui/buddycard_binder_base.png")));
+    public static final RegistryObject<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, NETHER_SET, new ResourceLocation(Buddycards.MOD_ID, "textures/gui/buddycard_binder_nether.png")));
+    public static final RegistryObject<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, END_SET, new ResourceLocation(Buddycards.MOD_ID, "textures/gui/buddycard_binder_end.png")));
     //Deckboxes
     public static final RegistryObject<DeckboxItem> BUDDYSTEEL_DECKBOX = ITEMS.register("buddysteel_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
     public static final RegistryObject<DeckboxItem> LUMINIS_DECKBOX = ITEMS.register("luminis_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
@@ -1276,11 +1276,11 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_BASE = ITEMS.register("buddysteel_medal_base", () -> new BuddysteelSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_NETHER = ITEMS.register("buddysteel_medal_nether", () -> new BuddysteelSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_END = ITEMS.register("buddysteel_medal_end", () -> new BuddysteelSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
-    public static final RegistryObject<BlankBuddysteelMedalItem> BLANK_LUMINIS_MEDAL = ITEMS.register("blank_luminis_medal", () -> new BlankBuddysteelMedalItem(BUDDYSTEEL_MEDAL_PROPERTIES));
+    public static final RegistryObject<BlankBuddysteelMedalItem> BLANK_LUMINIS_MEDAL = ITEMS.register("blank_luminis_medal", () -> new BlankLuminisMedalItem(BUDDYSTEEL_MEDAL_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> LUMINIS_MEDAL_BASE = ITEMS.register("luminis_medal_base", () -> new LuminisSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> LUMINIS_MEDAL_NETHER = ITEMS.register("luminis_medal_nether", () -> new LuminisSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> LUMINIS_MEDAL_END = ITEMS.register("luminis_medal_end", () -> new LuminisSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
-    public static final RegistryObject<BlankBuddysteelMedalItem> BLANK_ZYLEX_MEDAL = ITEMS.register("blank_zylex_medal", () -> new BlankBuddysteelMedalItem(BUDDYSTEEL_MEDAL_PROPERTIES));
+    public static final RegistryObject<BlankBuddysteelMedalItem> BLANK_ZYLEX_MEDAL = ITEMS.register("blank_zylex_medal", () -> new BlankZylexMedalItem(BUDDYSTEEL_MEDAL_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> ZYLEX_MEDAL_BASE = ITEMS.register("zylex_medal_base", () -> new ZylexSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> ZYLEX_MEDAL_NETHER = ITEMS.register("zylex_medal_nether", () -> new ZylexSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> ZYLEX_MEDAL_END = ITEMS.register("zylex_medal_end", () -> new ZylexSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
@@ -1318,6 +1318,7 @@ public class BuddycardsItems {
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_PICKAXE = ITEMS.register("charged_buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL,1, -2.8F, RARE_TOOL_PROPERTIES));
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_AXE = ITEMS.register("charged_buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL,5.5f, -3.1F, RARE_TOOL_PROPERTIES));
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_HOE = ITEMS.register("charged_buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL,-3, -1F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<ChargedBuddysteelPowerMeterItem> CHARGED_BUDDYSTEEL_POWER_METER = ITEMS.register("charged_buddysteel_power_meter", () -> new ChargedBuddysteelPowerMeterItem(DEFAULT_RARE_PROPERTIES));
     public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_TEMPLATE = ITEMS.register("crimson_buddysteel_upgrade_smithing_template", BuddycardsSmithingTemplateItem::createCrimsonBuddysteelUpgradeTemplate);
     public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_INGOT = ITEMS.register("crimson_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_BLOCK = ITEMS.register("crimson_buddysteel_block", () -> new BlockItem(BuddycardsBlocks.CRIMSON_BUDDYSTEEL_BLOCK.get(), DEFAULT_PROPERTIES));

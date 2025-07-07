@@ -70,6 +70,9 @@ public class ConfigManager {
                 .defineInRange("deckBuilding.rareDupeLimit", 2, 1, 16);
         deckLimitEpic = builder.comment("\nMax duplicates of an epic card for a Buddycards deck, 0-16, default is 1")
                 .defineInRange("deckBuilding.epicDupeLimit", 1, 1, 16);
+
+        enableBattles = builder.comment("\nEnables Buddycards Battles Beta, default is false. Currently unfinished and buggy. Some bugged cards may cause crashes or other issues.")
+                .define("battles.enabled", false);
     }
 
     public static ForgeConfigSpec.DoubleValue zombieChance;
@@ -96,4 +99,6 @@ public class ConfigManager {
     public static ForgeConfigSpec.IntValue deckLimitUncommon;
     public static ForgeConfigSpec.IntValue deckLimitRare;
     public static ForgeConfigSpec.IntValue deckLimitEpic;
+
+    public static ForgeConfigSpec.BooleanValue enableBattles;
 }

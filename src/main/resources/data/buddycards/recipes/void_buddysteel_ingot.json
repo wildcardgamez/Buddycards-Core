@@ -4,12 +4,16 @@
     "item": "buddycards:charged_buddysteel_ingot"
   },
   "meter": {
-    "item": "buddycards:buddysteel_power_meter"
+    "item": "buddycards:zylex_power_meter"
   },
-  "power": 1,
+  "power": 0.5,
   "ingredients": [
     {
-      "item": "buddycards:crimson_luminis",
+      "item": "buddycards:void_zylex",
+      "count": 1
+    },
+    {
+      "item": "buddycards:zylex",
       "count": 1
     },
     {
@@ -17,16 +21,12 @@
       "count": 1
     },
     {
-      "item": "buddycards:crimson_luminis",
-      "count": 1
-    },
-    {
-      "item": "buddycards:void_zylex",
+      "item": "buddycards:zylex",
       "count": 1
     }
   ],
   "output": {
-    "item": "buddycards:perfect_buddysteel_ingot",
+    "item": "buddycards:void_buddysteel_ingot",
     "count": 1
   }
 }

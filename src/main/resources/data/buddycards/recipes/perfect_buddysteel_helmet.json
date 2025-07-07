@@ -1,7 +1,10 @@
 {
-  "type": "minecraft:smithing",
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "buddycards:void_buddysteel_upgrade_smithing_template"
+  },
   "base": {
-    "item": "buddycards:charged_buddysteel_helmet"
+    "item": "buddycards:crimson_buddysteel_helmet"
   },
   "addition": {
     "item": "buddycards:perfect_buddysteel_ingot"

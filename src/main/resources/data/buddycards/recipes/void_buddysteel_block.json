@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:void_buddysteel_ingot"
+    }
+  },
+  "result": {
+    "item": "buddycards:void_buddysteel_block"
+  }
+}

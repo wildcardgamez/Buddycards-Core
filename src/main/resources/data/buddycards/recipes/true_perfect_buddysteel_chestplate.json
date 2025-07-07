@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "buddycards:true_perfect_buddysteel_upgrade_smithing_template"
+  },
+  "base": {
+    "item": "buddycards:perfect_buddysteel_chestplate"
+  },
+  "addition": {
+    "item": "buddycards:true_perfect_buddysteel_ingot"
+  },
+  "result": {
+    "item": "buddycards:true_perfect_buddysteel_chestplate"
+  }
+}

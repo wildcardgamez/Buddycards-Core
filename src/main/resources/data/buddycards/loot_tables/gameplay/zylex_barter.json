@@ -80,7 +80,15 @@
         {
           "type": "minecraft:item",
           "weight": 4,
-          "name": "buddycards:ender_buddycard_binder"
+          "name": "buddycards:buddycard_binder_end",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly",
+              "enchantments": [
+                "buddycards:extra_page"
+              ]
+            }
+            ]
         },
         {
           "type": "minecraft:item",

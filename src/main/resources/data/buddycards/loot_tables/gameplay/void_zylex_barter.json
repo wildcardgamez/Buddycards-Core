@@ -52,6 +52,11 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:void_buddysteel_upgrade_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 2,
           "name": "buddycards:zylex_hoe"
         },

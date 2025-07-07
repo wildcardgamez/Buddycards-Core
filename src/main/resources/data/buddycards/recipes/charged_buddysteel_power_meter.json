@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": {
+    "item": "buddycards:charged_buddysteel_upgrade_smithing_template"
+  },
+  "base": {
+    "item": "buddycards:buddysteel_power_meter"
+  },
+  "addition": {
+    "item": "buddycards:charged_buddysteel_ingot"
+  },
+  "result": {
+    "item": "buddycards:charged_buddysteel_power_meter"
+  }
+}

@@ -20,5 +20,21 @@
         "weight": 4
       }
     ]
-  }]
+  },
+    {
+      "name": "buddycards_template",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "buddycards:charged_buddysteel_upgrade_smithing_template",
+          "weight": 1
+        },
+        {
+          "type": "empty",
+          "weight": 4
+        }
+      ]
+    }
+  ]
 }

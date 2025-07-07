@@ -8,6 +8,7 @@ import com.wildcard.buddycards.battles.game.BattleEvent;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.registries.BuddycardsItems;
+import com.wildcard.buddycards.util.ConfigManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -59,17 +60,18 @@ public class BuddycardItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
         //Show cost, base power, and abilities for battles
-        if(ABILITIES.size() > 0) {
-            tooltip.add(Component.literal("" + COST).append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.cost"))
-                    .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
-                    .append("" + POWER).append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.power")));
-            for (BattleAbility ability : ABILITIES.values()) {
-                tooltip.add(Component.translatable("battles.ability." + Buddycards.MOD_ID + "." + ability.name).withStyle(ChatFormatting.GRAY));
-                tooltip.add(Component.translatable("battles.ability." + Buddycards.MOD_ID + "." + ability.name + ".desc").withStyle(ChatFormatting.DARK_GRAY));
-            }
+        if(ConfigManager.enableBattles.get()) {
+            if (ABILITIES.size() > 0) {
+                tooltip.add(Component.literal("" + COST).append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.cost"))
+                        .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
+                        .append("" + POWER).append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.power")));
+                for (BattleAbility ability : ABILITIES.values()) {
+                    tooltip.add(Component.translatable("battles.ability." + Buddycards.MOD_ID + "." + ability.name).withStyle(ChatFormatting.GRAY));
+                    tooltip.add(Component.translatable("battles.ability." + Buddycards.MOD_ID + "." + ability.name + ".desc").withStyle(ChatFormatting.DARK_GRAY));
+                }
+            } else
+                tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.unimplemented").withStyle(ChatFormatting.DARK_GRAY));
         }
-        else
-            tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.unimplemented").withStyle(ChatFormatting.DARK_GRAY));
         //Show the cards joke/tooltip
         tooltip.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.ITALIC));
         //Show the set, card number, and shiny symbol if applicable

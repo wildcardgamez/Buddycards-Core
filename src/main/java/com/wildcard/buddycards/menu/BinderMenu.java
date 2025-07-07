@@ -1,9 +1,10 @@
 package com.wildcard.buddycards.menu;
 
-import com.wildcard.buddycards.registries.BuddycardsMisc;
 import com.wildcard.buddycards.container.BinderContainer;
+import com.wildcard.buddycards.item.BuddycardBinderItem;
 import com.wildcard.buddycards.item.BuddycardItem;
-import com.wildcard.buddycards.savedata.EnderBinderSaveData;
+import com.wildcard.buddycards.registries.BuddycardsMisc;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,97 +16,45 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 public class BinderMenu extends AbstractContainerMenu {
 
     private final BinderContainer binderInv;
-    private static final int[] slotsForLevel = {54, 72, 96, 120};
 
     public BinderMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new BinderContainer(slotsForLevel[EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected())], playerInv.getSelected()));
+        this(id, playerInv, new BinderContainer(playerInv.getSelected(), 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected())));
     }
 
     public BinderMenu(int id, Inventory playerInv, BinderContainer binderInv) {
         super(BuddycardsMisc.BINDER_CONTAINER.get(), id);
         checkContainerSize(binderInv, binderInv.getContainerSize());
         this.binderInv = binderInv;
-
-        if (this.binderInv.getContainerSize() == 54) {
-            //Set up slots for binder
-            for (int y = 0; y < 6; y++) {
-                for (int x = 0; x < 9; x++) {
-                    this.addSlot(new BinderSlot(this.binderInv, x + (y * 9), 8 + x * 18, 18 + y * 18));
-                }
-            }
-            //Set up slots for inventory
-            for (int y = 0; y < 3; y++) {
-                for (int x = 0; x < 9; x++) {
-                    this.addSlot(new InvSlot(playerInv, x + (y * 9) + 9, 8 + x * 18, 140 + y * 18));
-                }
-            }
-            //Set up slots for hotbar
-            for (int x = 0; x < 9; x++) {
-                this.addSlot(new InvSlot(playerInv, x, 8 + x * 18, 198));
+        //Set up slots for binder
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 8; x++) {
+                this.addSlot(new BinderSlot(this.binderInv, x + (y * 8), (x < 4 ? 8 : 26) + x * 18, 26 + y * 18));
             }
         }
-        else if (this.binderInv.getContainerSize() == 72) {
-            //Set up slots for binder
-            for (int y = 0; y < 6; y++) {
-                for (int x = 0; x < 12; x++) {
-                    this.addSlot(new BinderSlot(this.binderInv, x + (y * 12), 8 + x * 18, 18 + y * 18));
-                }
-            }
-            //Set up slots for inventory
-            for (int y = 0; y < 3; y++) {
-                for (int x = 0; x < 9; x++) {
-                    this.addSlot(new InvSlot(playerInv, x + (y * 9) + 9, 35 + x * 18, 140 + y * 18));
-                }
-            }
-            //Set up slots for hotbar
+        //Set up slots for inventory
+        for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 9; x++) {
-                this.addSlot(new InvSlot(playerInv, x, 35 + x * 18, 198));
+                this.addSlot(new InvSlot(playerInv, x + (y * 9) + 9, 8 + x * 18, 122 + y * 18));
             }
         }
-        else if (this.binderInv.getContainerSize() == 96) {
-            //Set up slots for binder
-            for (int y = 0; y < 8; y++) {
-                for (int x = 0; x < 12; x++) {
-                    this.addSlot(new BinderSlot(this.binderInv, x + (y * 12), 8 + x * 18, 18 + y * 18));
-                }
-            }
-            //Set up slots for inventory
-            for (int y = 0; y < 3; y++) {
-                for (int x = 0; x < 9; x++) {
-                    this.addSlot(new InvSlot(playerInv, x + (y * 9) + 9, 35 + x * 18, 176 + y * 18));
-                }
-            }
-            //Set up slots for hotbar
-            for (int x = 0; x < 9; x++) {
-                this.addSlot(new InvSlot(playerInv, x, 35 + x * 18, 234));
-            }
+        //Set up slots for hotbar
+        for (int x = 0; x < 9; x++) {
+            this.addSlot(new InvSlot(playerInv, x, 8 + x * 18, 180));
         }
-        else if (this.binderInv.getContainerSize() == 120) {
-            //Set up slots for binder
-            for (int y = 0; y < 10; y++) {
-                for (int x = 0; x < 12; x++) {
-                    this.addSlot(new BinderSlot(this.binderInv, x + (y * 12), 8 + x * 18, 18 + y * 18));
-                }
-            }
-            //Set up slots for inventory
-            for (int y = 0; y < 3; y++) {
-                for (int x = 0; x < 9; x++) {
-                    this.addSlot(new InvSlot(playerInv, x + (y * 9) + 9, 35 + x * 18, 212 + y * 18));
-                }
-            }
-            //Set up slots for hotbar
-            for (int x = 0; x < 9; x++) {
-                this.addSlot(new InvSlot(playerInv, x, 35 + x * 18, 270));
-            }
-        }
-
-        if(!this.binderInv.ender)
-            this.binderInv.startOpen(playerInv.player);
     }
 
     @Override
     public boolean stillValid(Player player) {
         return true;
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int buttonId) {
+        if (buttonId == 0 && 0 < binderInv.currentPage)
+            binderInv.lastPage();
+        else if (buttonId == 1 && binderInv.currentPage < binderInv.pageAmt)
+            binderInv.nextPage();
+        return false;
     }
 
     public static class BinderSlot extends Slot {
@@ -139,10 +88,7 @@ public class BinderMenu extends AbstractContainerMenu {
     @Override
     public void removed(Player player) {
         //Run the code to check the inventory and convert to nbt
-        if(!binderInv.ender)
-            binderInv.stopOpen(player);
-        else
-            EnderBinderSaveData.get(player.createCommandSourceStack().getLevel()).setDirty();
+        binderInv.stopOpen(player);
         super.removed(player);
     }
 
@@ -166,5 +112,17 @@ public class BinderMenu extends AbstractContainerMenu {
                 slot.setChanged();
         }
         return stack;
+    }
+
+    public ResourceLocation getTexture() {
+        return ((BuddycardBinderItem) binderInv.binder.getItem()).getBinderTexture();
+    }
+
+    public int getPageAmt() {
+        return binderInv.pageAmt;
+    }
+
+    public int getCurrentPage() {
+        return binderInv.currentPage + 1;
     }
 }

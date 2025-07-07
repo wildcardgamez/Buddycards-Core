@@ -32,6 +32,11 @@
         {
           "type": "minecraft:item",
           "weight": 1,
+          "name": "buddycards:crimson_buddysteel_upgrade_smithing_template"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
           "name": "buddycards:blank_luminis_medal"
         },
         {

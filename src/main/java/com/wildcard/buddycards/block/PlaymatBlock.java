@@ -4,7 +4,9 @@ import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
 import com.wildcard.buddycards.container.BattleContainer;
 import com.wildcard.buddycards.item.DeckboxItem;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
+import com.wildcard.buddycards.util.ConfigManager;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -94,8 +96,11 @@ public class PlaymatBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if(!ConfigManager.enableBattles.get()) {
+            player.displayClientMessage(Component.translatable("misc.buddycards.battles_beta_warning"), true);
+        }
         //If both playmats exist...
-        if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity self
+        else if(level.getBlockEntity(pos) instanceof PlaymatBlockEntity self
                 && level.getBlockEntity(pos.relative(state.getValue(DIR))) instanceof PlaymatBlockEntity opponent
                 && opponent.getBlockState().hasProperty(DIR)
                 && opponent.getBlockState().getValue(DIR).getOpposite() == state.getValue(DIR)) {

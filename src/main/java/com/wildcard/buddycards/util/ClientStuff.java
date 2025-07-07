@@ -58,6 +58,11 @@ public class ClientStuff {
                 return stack.getTag().getInt("power");
             return 0;
         }));
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.CHARGED_BUDDYSTEEL_POWER_METER.get(), new ResourceLocation(Buddycards.MOD_ID, "power"), (stack, world, entity, idk) -> {
+            if (stack.getTag() != null)
+                return stack.getTag().getInt("power");
+            return 0;
+        }));
         event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.BUDDYSTEEL_DECKBOX.get(), new ResourceLocation(Buddycards.MOD_ID, "full"), (stack, world, entity, idk) -> {
             if (stack.getTag() != null)
                 return stack.getTag().getInt("full");

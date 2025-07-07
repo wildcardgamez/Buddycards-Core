@@ -34,7 +34,7 @@ public class BlankZylexMedalItem extends BlankBuddysteelMedalItem {
         if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof BlankZylexMedalItem && player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
             BuddysteelSetMedalItem medalItem = card.getSet().getMedal();
             if(medalItem != null) {
-                if (BuddycardCollectionSaveData.get(serverLevel).checkPlayerSetCompleted(player.getUUID(), card.getSet())) {
+                if (BuddycardCollectionSaveData.get(serverLevel).checkPlayerGradeSetCompleted(player.getUUID(), card.getSet())) {
                     player.displayClientMessage(Component.translatable("item.buddycards.blank_zylex_medal.success").append(Component.translatable(card.getSet().getDescriptionId())), true);
                     ItemStack medal = new ItemStack(medalItem);
                     CompoundTag nbt = new CompoundTag();
