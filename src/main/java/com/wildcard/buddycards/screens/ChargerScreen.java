@@ -1,7 +1,5 @@
 package com.wildcard.buddycards.screens;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.menu.ChargerMenu;
 import net.minecraft.client.gui.GuiGraphics;

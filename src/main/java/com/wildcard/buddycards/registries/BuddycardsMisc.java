@@ -5,6 +5,8 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.enchantment.EnchantmentBuddyBoost;
 import com.wildcard.buddycards.enchantment.EnchantmentExtraPage;
 import com.wildcard.buddycards.enchantment.EnchantmentRecovery;
+import com.wildcard.buddycards.enchantment.EnchantmentThickPockets;
+import com.wildcard.buddycards.item.BuddycardBinderItem;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.loot.LootInjectionModifier;
 import com.wildcard.buddycards.menu.BinderMenu;
@@ -23,6 +25,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -47,8 +50,11 @@ public class BuddycardsMisc {
 
     //Enchantment
     public static final RegistryObject<Enchantment> EXTRA_PAGE = ENCHANTMENTS.register("extra_page", EnchantmentExtraPage::new);
+    public static final RegistryObject<Enchantment> THICK_POCKETS = ENCHANTMENTS.register("thick_pockets", EnchantmentThickPockets::new);
     public static final RegistryObject<Enchantment> BUDDY_BOOST = ENCHANTMENTS.register("buddy_boost", EnchantmentBuddyBoost::new);
     public static final RegistryObject<Enchantment> RECOVERY = ENCHANTMENTS.register("recovery", EnchantmentRecovery::new);
+
+    public static final EnchantmentCategory BUDDYCARD_BINDER = EnchantmentCategory.create("BUDDY_BINDER", BuddycardBinderItem.class::isInstance);
 
     //Containers
     public static final RegistryObject<MenuType<BinderMenu>> BINDER_CONTAINER = MENUS.register("binder",

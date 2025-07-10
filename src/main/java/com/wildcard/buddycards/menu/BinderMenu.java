@@ -9,6 +9,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -16,9 +17,10 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 public class BinderMenu extends AbstractContainerMenu {
 
     private final BinderContainer binderInv;
+    private final DataSlot page = DataSlot.standalone();
 
     public BinderMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new BinderContainer(playerInv.getSelected(), 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected())));
+        this(id, playerInv, new BinderContainer(playerInv.getSelected(), 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected()), EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.THICK_POCKETS.get(), playerInv.getSelected())));
     }
 
     public BinderMenu(int id, Inventory playerInv, BinderContainer binderInv) {
@@ -26,6 +28,7 @@ public class BinderMenu extends AbstractContainerMenu {
         checkContainerSize(binderInv, binderInv.getContainerSize());
         this.binderInv = binderInv;
         //Set up slots for binder
+        this.addDataSlot(page);
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 8; x++) {
                 this.addSlot(new BinderSlot(this.binderInv, x + (y * 8), (x < 4 ? 8 : 26) + x * 18, 26 + y * 18));
@@ -50,14 +53,20 @@ public class BinderMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int buttonId) {
-        if (buttonId == 0 && 0 < binderInv.currentPage)
-            binderInv.lastPage();
-        else if (buttonId == 1 && binderInv.currentPage < binderInv.pageAmt)
-            binderInv.nextPage();
+        if (buttonId == 0 && 0 < page.get()) {
+            page.set(page.get() - 1);
+            broadcastChanges();
+            return true;
+        }
+        else if (buttonId == 1 && page.get() + 1 < binderInv.pageAmt) {
+            page.set(page.get() + 1);
+            broadcastChanges();
+            return true;
+        }
         return false;
     }
 
-    public static class BinderSlot extends Slot {
+    public class BinderSlot extends Slot {
         public BinderSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
@@ -66,6 +75,22 @@ public class BinderMenu extends AbstractContainerMenu {
         @Override
         public boolean mayPlace(ItemStack stack) {
             return stack.getItem() instanceof BuddycardItem;
+        }
+
+        @Override
+        public void set(ItemStack stack) {
+            this.container.setItem((page.get() * 32) + index, stack);
+            this.setChanged();
+        }
+
+        @Override
+        public ItemStack getItem() {
+            return this.container.getItem((page.get() * 32) + index);
+        }
+
+        @Override
+        public ItemStack remove(int amt) {
+            return this.container.removeItem((page.get() * 32) + index, amt);
         }
     }
     public class InvSlot extends Slot {
@@ -123,6 +148,6 @@ public class BinderMenu extends AbstractContainerMenu {
     }
 
     public int getCurrentPage() {
-        return binderInv.currentPage + 1;
+        return page.get() + 1;
     }
 }
