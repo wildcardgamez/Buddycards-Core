@@ -1,12 +1,10 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.container.BinderContainer;
+import com.wildcard.buddycards.container.BinderItemHandler;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.menu.BinderMenu;
-import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +13,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -48,7 +45,7 @@ public class BuddycardBinderItem extends Item {
             int pages = 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), binder);
             int stacks = EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.THICK_POCKETS.get(), binder);
             NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderContainer(binder, pages, stacks))
+                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderItemHandler(binder, pages, stacks))
                     , player.getItemInHand(hand).getHoverName()));
         }
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());

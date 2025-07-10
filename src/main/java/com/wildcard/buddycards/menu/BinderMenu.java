@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.menu;
 
-import com.wildcard.buddycards.container.BinderContainer;
+import com.wildcard.buddycards.container.BinderItemHandler;
 import com.wildcard.buddycards.item.BuddycardBinderItem;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
@@ -13,25 +13,27 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class BinderMenu extends AbstractContainerMenu {
 
-    private final BinderContainer binderInv;
-    private final DataSlot page = DataSlot.standalone();
+    private final BinderItemHandler handler;
+    private final DataSlot pageData = DataSlot.standalone();
+    private int page;
 
     public BinderMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new BinderContainer(playerInv.getSelected(), 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected()), EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.THICK_POCKETS.get(), playerInv.getSelected())));
+        this(id, playerInv, new BinderItemHandler(playerInv.getSelected(), 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected()), EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.THICK_POCKETS.get(), playerInv.getSelected())));
     }
 
-    public BinderMenu(int id, Inventory playerInv, BinderContainer binderInv) {
-        super(BuddycardsMisc.BINDER_CONTAINER.get(), id);
-        checkContainerSize(binderInv, binderInv.getContainerSize());
-        this.binderInv = binderInv;
+    public BinderMenu(int id, Inventory playerInv, BinderItemHandler handler) {
+        super(BuddycardsMisc.BINDER_MENU.get(), id);
+        this.handler = handler;
         //Set up slots for binder
-        this.addDataSlot(page);
+        this.addDataSlot(pageData);
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 8; x++) {
-                this.addSlot(new BinderSlot(this.binderInv, x + (y * 8), (x < 4 ? 8 : 26) + x * 18, 26 + y * 18));
+                this.addSlot(new BinderSlot(this.handler, x + (y * 8), (x < 4 ? 8 : 26) + x * 18, 26 + y * 18));
             }
         }
         //Set up slots for inventory
@@ -53,21 +55,23 @@ public class BinderMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int buttonId) {
-        if (buttonId == 0 && 0 < page.get()) {
-            page.set(page.get() - 1);
+        if (buttonId == 0 && 0 < page) {
+            page -= 1;
+            pageData.set(page);
             broadcastChanges();
             return true;
         }
-        else if (buttonId == 1 && page.get() + 1 < binderInv.pageAmt) {
-            page.set(page.get() + 1);
+        else if (buttonId == 1 && page + 1 < handler.getPageAmt()) {
+            page += 1;
+            pageData.set(page);
             broadcastChanges();
             return true;
         }
         return false;
     }
 
-    public class BinderSlot extends Slot {
-        public BinderSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
+    public class BinderSlot extends SlotItemHandler {
+        public BinderSlot(IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
             super(inventoryIn, index, xPosition, yPosition);
         }
 
@@ -79,18 +83,18 @@ public class BinderMenu extends AbstractContainerMenu {
 
         @Override
         public void set(ItemStack stack) {
-            this.container.setItem((page.get() * 32) + index, stack);
+            this.container.setItem((page * 32) + getSlotIndex(), stack);
             this.setChanged();
         }
 
         @Override
         public ItemStack getItem() {
-            return this.container.getItem((page.get() * 32) + index);
+            return this.container.getItem((page * 32) + getSlotIndex());
         }
 
         @Override
         public ItemStack remove(int amt) {
-            return this.container.removeItem((page.get() * 32) + index, amt);
+            return this.container.removeItem((page * 32) + getSlotIndex(), amt);
         }
     }
     public class InvSlot extends Slot {
@@ -101,19 +105,19 @@ public class BinderMenu extends AbstractContainerMenu {
         //Only let the stack move if it isn't the open binder
         @Override
         public boolean mayPickup(Player player) {
-            return !(this.getItem().equals(binderInv.binder));
+            return !(this.getItem().getItem() instanceof BuddycardBinderItem);
         }
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            return !(this.getItem().equals(binderInv.binder));
+            return !(this.getItem().getItem() instanceof BuddycardBinderItem);
         }
     }
 
     @Override
     public void removed(Player player) {
         //Run the code to check the inventory and convert to nbt
-        binderInv.stopOpen(player);
+        handler.saveAndClose();
         super.removed(player);
     }
 
@@ -140,14 +144,14 @@ public class BinderMenu extends AbstractContainerMenu {
     }
 
     public ResourceLocation getTexture() {
-        return ((BuddycardBinderItem) binderInv.binder.getItem()).getBinderTexture();
+        return ((BuddycardBinderItem) handler.getBinder().getItem()).getBinderTexture();
     }
 
     public int getPageAmt() {
-        return binderInv.pageAmt;
+        return handler.getPageAmt();
     }
 
     public int getCurrentPage() {
-        return page.get() + 1;
+        return pageData.get() + 1;
     }
 }

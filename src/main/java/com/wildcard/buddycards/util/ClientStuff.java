@@ -30,7 +30,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientStuff {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.BINDER_CONTAINER.get(), BinderScreen::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.BINDER_MENU.get(), BinderScreen::new));
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.DECKBOX_CONTAINER.get(), DeckboxScreen::new));
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.PLAYMAT_CONTAINER.get(), PlaymatScreen::new));
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.CHARGER_CONTAINER.get(), ChargerScreen::new));
