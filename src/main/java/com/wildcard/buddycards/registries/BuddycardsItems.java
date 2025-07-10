@@ -1277,13 +1277,13 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_NETHER = ITEMS.register("buddysteel_medal_nether", () -> new BuddysteelSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_END = ITEMS.register("buddysteel_medal_end", () -> new BuddysteelSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BlankBuddysteelMedalItem> BLANK_LUMINIS_MEDAL = ITEMS.register("blank_luminis_medal", () -> new BlankLuminisMedalItem(BUDDYSTEEL_MEDAL_PROPERTIES));
-    public static final RegistryObject<BuddysteelSetMedalItem> LUMINIS_MEDAL_BASE = ITEMS.register("luminis_medal_base", () -> new LuminisSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
-    public static final RegistryObject<BuddysteelSetMedalItem> LUMINIS_MEDAL_NETHER = ITEMS.register("luminis_medal_nether", () -> new LuminisSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
-    public static final RegistryObject<BuddysteelSetMedalItem> LUMINIS_MEDAL_END = ITEMS.register("luminis_medal_end", () -> new LuminisSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
+    public static final RegistryObject<LuminisSetMedalItem> LUMINIS_MEDAL_BASE = ITEMS.register("luminis_medal_base", () -> new LuminisSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
+    public static final RegistryObject<LuminisSetMedalItem> LUMINIS_MEDAL_NETHER = ITEMS.register("luminis_medal_nether", () -> new LuminisSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
+    public static final RegistryObject<LuminisSetMedalItem> LUMINIS_MEDAL_END = ITEMS.register("luminis_medal_end", () -> new LuminisSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BlankBuddysteelMedalItem> BLANK_ZYLEX_MEDAL = ITEMS.register("blank_zylex_medal", () -> new BlankZylexMedalItem(BUDDYSTEEL_MEDAL_PROPERTIES));
-    public static final RegistryObject<BuddysteelSetMedalItem> ZYLEX_MEDAL_BASE = ITEMS.register("zylex_medal_base", () -> new ZylexSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
-    public static final RegistryObject<BuddysteelSetMedalItem> ZYLEX_MEDAL_NETHER = ITEMS.register("zylex_medal_nether", () -> new ZylexSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
-    public static final RegistryObject<BuddysteelSetMedalItem> ZYLEX_MEDAL_END = ITEMS.register("zylex_medal_end", () -> new ZylexSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
+    public static final RegistryObject<ZylexSetMedalItem> ZYLEX_MEDAL_BASE = ITEMS.register("zylex_medal_base", () -> new ZylexSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
+    public static final RegistryObject<ZylexSetMedalItem> ZYLEX_MEDAL_NETHER = ITEMS.register("zylex_medal_nether", () -> new ZylexSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
+    public static final RegistryObject<ZylexSetMedalItem> ZYLEX_MEDAL_END = ITEMS.register("zylex_medal_end", () -> new ZylexSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
     //Grading Sleeves
     public static final RegistryObject<GradingSleeveItem> GRADING_SLEEVE = ITEMS.register("grading_sleeve", () -> new GradingSleeveItem(DEFAULT_PROPERTIES, new float[]{0.4f, 0.3f, 0.225f, 0.073f}));
     public static final RegistryObject<GradingSleeveItem> GOLDEN_GRADING_SLEEVE = ITEMS.register("golden_grading_sleeve", () -> new GradingSleeveItem(DEFAULT_UNCOMMON_PROPERTIES, new float[]{0.1f, 0.4f, 0.3f, 0.195f}));

@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.item.BuddycardItem;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -11,8 +12,8 @@ public class BinderItemHandler extends ItemStackHandler {
         binder = binderIn;
         pageAmt = pageAmtIn;
         slotLimit = 32 * (1 + stackModIn);
-        if (binder.hasTag() && binder.getTag().contains("Items"))
-            deserializeNBT(binder.getTag());
+        if (binder.hasTag() && binder.getTag().contains("Inventory"))
+            deserializeNBT(binder.getTag().getCompound("Inventory"));
     }
 
     protected ItemStack binder;
@@ -38,6 +39,8 @@ public class BinderItemHandler extends ItemStackHandler {
     }
 
     public void saveAndClose() {
-        binder.setTag(serializeNBT());
+        CompoundTag nbt = binder.getOrCreateTag();
+        nbt.put("Inventory", serializeNBT());
+        binder.setTag(nbt);
     }
 }

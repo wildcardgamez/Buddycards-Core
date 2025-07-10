@@ -14,7 +14,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class BinderMenu extends AbstractContainerMenu {
 
@@ -82,19 +84,59 @@ public class BinderMenu extends AbstractContainerMenu {
         }
 
         @Override
+        public ItemStack getItem() {
+            return this.getItemHandler().getStackInSlot(getRealSlotIndex());
+        }
+
+        @Override
         public void set(ItemStack stack) {
-            this.container.setItem((page * 32) + getSlotIndex(), stack);
+            ((IItemHandlerModifiable) this.getItemHandler()).setStackInSlot(getRealSlotIndex(), stack);
             this.setChanged();
         }
 
         @Override
-        public ItemStack getItem() {
-            return this.container.getItem((page * 32) + getSlotIndex());
+        public int getMaxStackSize() {
+            return this.getItemHandler().getSlotLimit(getRealSlotIndex());
         }
 
         @Override
+        public int getMaxStackSize(@NotNull ItemStack stack)
+        {
+            int index = getRealSlotIndex();
+            ItemStack maxAdd = stack.copy();
+            int maxInput = stack.getMaxStackSize();
+            maxAdd.setCount(maxInput);
+            IItemHandler handler = this.getItemHandler();
+            ItemStack currentStack = handler.getStackInSlot(index);
+            if (handler instanceof IItemHandlerModifiable) {
+                IItemHandlerModifiable handlerModifiable = (IItemHandlerModifiable) handler;
+                handlerModifiable.setStackInSlot(index, ItemStack.EMPTY);
+                ItemStack remainder = handlerModifiable.insertItem(index, maxAdd, true);
+                handlerModifiable.setStackInSlot(index, currentStack);
+                return maxInput - remainder.getCount();
+            }
+            else
+            {
+                ItemStack remainder = handler.insertItem(index, maxAdd, true);
+                int current = currentStack.getCount();
+                int added = maxInput - remainder.getCount();
+                return current + added;
+            }
+        }
+
+        @Override
+        public boolean mayPickup(Player playerIn) {
+            return !this.getItemHandler().extractItem(getRealSlotIndex(), 1, true).isEmpty();
+        }
+
+        @Override
+        @NotNull
         public ItemStack remove(int amt) {
-            return this.container.removeItem((page * 32) + getSlotIndex(), amt);
+            return this.getItemHandler().extractItem(getRealSlotIndex(), amt, false);
+        }
+
+        public int getRealSlotIndex() {
+            return (page * 32) + getSlotIndex();
         }
     }
     public class InvSlot extends Slot {

@@ -27,7 +27,7 @@ public class BinderScreen extends AbstractContainerScreen<BinderMenu> {
     @Override
     protected void init() {
         super.init();
-        this.addRenderableWidget(new ImageButton(leftPos - 18, topPos + 52, 15, 18, 176, 0, 18, TEXTURE, btn -> {
+        this.addRenderableWidget(new ImageButton(leftPos - 15, topPos + 52, 15, 18, 176, 0, 18, TEXTURE, btn -> {
             this.sendButtonPress(0);
         }));
         this.addRenderableWidget(new ImageButton(leftPos + 176, topPos + 52, 15, 18, 191, 0, 18, TEXTURE, btn -> {
@@ -49,10 +49,14 @@ public class BinderScreen extends AbstractContainerScreen<BinderMenu> {
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        //Place the texture for the binder gui
-        int size = menu.getItems().size();
         assert this.minecraft != null;
-        this.renderBackground(pGuiGraphics);
         pGuiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+    }
+
+    @Override
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float delta) {
+        super.renderBackground(pGuiGraphics);
+        super.render(pGuiGraphics, pMouseX, pMouseY, delta);
+        renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
 }

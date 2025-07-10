@@ -32,7 +32,7 @@ public class BlankZylexMedalItem extends BlankBuddysteelMedalItem {
         ItemStack stack = player.getItemInHand(hand);
         InteractionHand cardHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof BlankZylexMedalItem && player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
-            BuddysteelSetMedalItem medalItem = card.getSet().getMedal();
+            ZylexSetMedalItem medalItem = card.getSet().getZylexMedal();
             if(medalItem != null) {
                 if (BuddycardCollectionSaveData.get(serverLevel).checkPlayerGradeSetCompleted(player.getUUID(), card.getSet())) {
                     player.displayClientMessage(Component.translatable("item.buddycards.blank_zylex_medal.success").append(Component.translatable(card.getSet().getDescriptionId())), true);

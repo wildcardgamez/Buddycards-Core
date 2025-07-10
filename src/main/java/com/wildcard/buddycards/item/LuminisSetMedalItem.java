@@ -2,18 +2,23 @@ package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.BuddycardSet;
+import com.wildcard.buddycards.integration.CuriosIntegration;
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class LuminisSetMedalItem extends BuddysteelSetMedalItem {
+public class LuminisSetMedalItem extends MedalItem {
     public LuminisSetMedalItem(IMedalTypes type, BuddycardSet set, Properties properties) {
-        super(type, set, properties);
+        super(type, properties);
+        SET = set;
+        SET.setLuminisMedal(() -> this);
     }
 
     @Override
@@ -28,5 +33,22 @@ public class LuminisSetMedalItem extends BuddysteelSetMedalItem {
         }
         else
             tooltip.add(Component.translatable(SET.getDescriptionId()).withStyle(ChatFormatting.GRAY));
+    }
+
+    protected final BuddycardSet SET;
+
+    @Override
+    public ICapabilityProvider initCapabilities(final ItemStack stack, CompoundTag unused) {
+        return CuriosIntegration.initCapabilities(TYPE, stack);
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return stack.getCount() == 1;
+    }
+
+    @Override
+    public int getEnchantmentValue() {
+        return 1;
     }
 }

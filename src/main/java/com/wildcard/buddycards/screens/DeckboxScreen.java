@@ -41,7 +41,13 @@ public class DeckboxScreen extends AbstractContainerScreen<DeckboxMenu> {
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         //Place the texture for the gui
-        this.renderBackground(pGuiGraphics);
         pGuiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+    }
+
+    @Override
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float delta) {
+        super.renderBackground(pGuiGraphics);
+        super.render(pGuiGraphics, pMouseX, pMouseY, delta);
+        renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
 }

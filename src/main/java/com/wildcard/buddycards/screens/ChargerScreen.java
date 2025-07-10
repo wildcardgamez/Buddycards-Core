@@ -24,13 +24,19 @@ public class ChargerScreen extends AbstractContainerScreen<ChargerMenu> {
         pGuiGraphics.drawString(font, title, 8, 6, 4210752, false);
         pGuiGraphics.drawString(font, playerInventoryTitle,8, 74, 4210752, false);
     }
+
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        //Place the texture for the gui
-        this.renderBackground(pGuiGraphics);
         pGuiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
         int progress = menu.getProgress();
         if(progress > 0)
             pGuiGraphics.blit(TEXTURE, leftPos + 52, topPos + 37, 176, 0, progress, 16);
+    }
+
+    @Override
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float delta) {
+        super.renderBackground(pGuiGraphics);
+        super.render(pGuiGraphics, pMouseX, pMouseY, delta);
+        renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
 }

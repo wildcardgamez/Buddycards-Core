@@ -3,6 +3,8 @@ package com.wildcard.buddycards.core;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.item.BuddysteelSetMedalItem;
+import com.wildcard.buddycards.item.LuminisSetMedalItem;
+import com.wildcard.buddycards.item.ZylexSetMedalItem;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -19,9 +21,9 @@ public class BuddycardSet {
     @Nullable
     protected Supplier<BuddysteelSetMedalItem> medalSupplier;
     @Nullable
-    protected Supplier<BuddysteelSetMedalItem> luminisMedalSupplier;
+    protected Supplier<LuminisSetMedalItem> luminisMedalSupplier;
     @Nullable
-    protected Supplier<BuddysteelSetMedalItem> zylexMedalSupplier;
+    protected Supplier<ZylexSetMedalItem> zylexMedalSupplier;
 
     @Nullable
     protected String descriptionId;
@@ -45,10 +47,10 @@ public class BuddycardSet {
     public void setMedal(Supplier<BuddysteelSetMedalItem> supplier) {
         this.medalSupplier = supplier;
     }
-    public void setLuminisMedal(Supplier<BuddysteelSetMedalItem> supplier) {
+    public void setLuminisMedal(Supplier<LuminisSetMedalItem> supplier) {
         this.luminisMedalSupplier = supplier;
     }
-    public void setZylexMedal(Supplier<BuddysteelSetMedalItem> supplier) {
+    public void setZylexMedal(Supplier<ZylexSetMedalItem> supplier) {
         this.zylexMedalSupplier = supplier;
     }
 
@@ -61,19 +63,19 @@ public class BuddycardSet {
     }
 
     @Nullable
-    public BuddysteelSetMedalItem getLuminisMedal() {
-        if (medalSupplier == null) {
+    public LuminisSetMedalItem getLuminisMedal() {
+        if (luminisMedalSupplier == null) {
             return null;
         }
-        return medalSupplier.get();
+        return luminisMedalSupplier.get();
     }
 
     @Nullable
-    public BuddysteelSetMedalItem getZylexMedal() {
-        if (medalSupplier == null) {
+    public ZylexSetMedalItem getZylexMedal() {
+        if (zylexMedalSupplier == null) {
             return null;
         }
-        return medalSupplier.get();
+        return zylexMedalSupplier.get();
     }
 
     public void addCard(BuddycardItem card) {

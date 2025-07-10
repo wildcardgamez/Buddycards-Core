@@ -32,7 +32,7 @@ public class BlankLuminisMedalItem extends BlankBuddysteelMedalItem {
         ItemStack stack = player.getItemInHand(hand);
         InteractionHand cardHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof BlankLuminisMedalItem && player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
-            BuddysteelSetMedalItem medalItem = card.getSet().getMedal();
+            LuminisSetMedalItem medalItem = card.getSet().getLuminisMedal();
             if(medalItem != null) {
                 if (BuddycardCollectionSaveData.get(serverLevel).checkPlayerFoilSetCompleted(player.getUUID(), card.getSet())) {
                     player.displayClientMessage(Component.translatable("item.buddycards.blank_luminis_medal.success").append(Component.translatable(card.getSet().getDescriptionId())), true);
