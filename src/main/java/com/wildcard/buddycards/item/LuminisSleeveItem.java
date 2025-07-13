@@ -18,8 +18,9 @@ public class LuminisSleeveItem extends DescriptionItem {
     public boolean tryFoil(ItemStack card, ItemStack sleeves, Player player, Level level) {
         CompoundTag nbt = card.getOrCreateTag().copy();
         if(level instanceof ServerLevel && card.getItem() instanceof BuddycardItem && !nbt.contains("foil")) {
+            nbt.putInt("foil", 2);
             ItemStack newCard = new ItemStack(card.getItem());
-            BuddycardItem.setShiny(newCard);
+            newCard.setTag(nbt);
             sleeves.shrink(1);
             card.shrink(1);
             ItemHandlerHelper.giveItemToPlayer(player, newCard);

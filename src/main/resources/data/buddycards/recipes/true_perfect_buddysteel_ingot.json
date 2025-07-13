@@ -6,7 +6,7 @@
   "meter": {
     "item": "buddycards:charged_buddysteel_power_meter"
   },
-  "power": 1,
+  "power": 11,
   "ingredients": [
     {
       "item": "buddycards:crimson_luminis",

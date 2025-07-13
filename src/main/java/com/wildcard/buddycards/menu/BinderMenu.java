@@ -25,7 +25,7 @@ public class BinderMenu extends AbstractContainerMenu {
     private int page;
 
     public BinderMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new BinderItemHandler(playerInv.getSelected(), 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected()), EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.THICK_POCKETS.get(), playerInv.getSelected())));
+        this(id, playerInv, new BinderItemHandler(playerInv.getSelected(), 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected())));
     }
 
     public BinderMenu(int id, Inventory playerInv, BinderItemHandler handler) {

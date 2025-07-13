@@ -53,7 +53,7 @@ public abstract class BuddycardPackItem extends Item {
                 int foil = 0;
                 if (i >= CARD_AMT - foilAmt) {
                     foil = level.getRandom().nextIntBetweenInclusive(0,10);
-                    foil = foil == 10 ? 3 : foil > 6 ? 2 : 1;
+                    foil = foil == 10 ? 3 : foil > 7 ? 2 : 1;
                     BuddycardItem.setShiny(item, foil);
                 }
                 cards.add(item);

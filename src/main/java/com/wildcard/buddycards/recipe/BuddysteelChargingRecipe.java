@@ -19,9 +19,9 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
     private final Ingredient input;
     private final Ingredient meter;
     private final NonNullList<Ingredient> ingredients;
-    private final float powerReq;
+    private final int powerReq;
 
-    public BuddysteelChargingRecipe(ResourceLocation id, ItemStack output, Ingredient input, Ingredient meter, NonNullList<Ingredient> ingredients, float powerReq) {
+    public BuddysteelChargingRecipe(ResourceLocation id, ItemStack output, Ingredient input, Ingredient meter, NonNullList<Ingredient> ingredients, int powerReq) {
         this.id = id;
         this.output = output;
         this.input = input;
@@ -77,7 +77,7 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
         return ingredients;
     }
 
-    public float getPowerReq() {
+    public int getPowerReq() {
         return powerReq;
     }
 
@@ -114,7 +114,7 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
             for (int i = 0; i < ingredients.size(); i++) {
                 ingredients.set(i, Ingredient.fromJson(ingredientsJson.get(i)));
             }
-            float req = GsonHelper.getAsFloat(json, "power");
+            int req = GsonHelper.getAsInt(json, "power");
             return new BuddysteelChargingRecipe(id, output, input, meter, ingredients, req);
         }
 
@@ -122,7 +122,7 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
         public BuddysteelChargingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
             inputs.replaceAll(ignored -> Ingredient.fromNetwork(buf));
-            float req = buf.readFloat();
+            int req = buf.readInt();
             Ingredient input = Ingredient.fromNetwork(buf);
             Ingredient meter = Ingredient.fromNetwork(buf);
             ItemStack output = buf.readItem();
@@ -135,7 +135,7 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
             for (Ingredient ing : recipe.getIngredients()) {
                 ing.toNetwork(buf);
             }
-            buf.writeFloat(recipe.powerReq);
+            buf.writeInt(recipe.powerReq);
             recipe.input.toNetwork(buf);
             recipe.meter.toNetwork(buf);
             buf.writeItemStack(recipe.getResultItem(RegistryAccess.EMPTY), false);

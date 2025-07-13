@@ -6,7 +6,7 @@
   "meter": {
     "item": "buddycards:zylex_power_meter"
   },
-  "power": 0.5,
+  "power": 5,
   "ingredients": [
     {
       "item": "buddycards:void_zylex",

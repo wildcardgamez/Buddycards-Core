@@ -7,23 +7,16 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class BinderItemHandler extends ItemStackHandler {
-    public BinderItemHandler(ItemStack binderIn, int pageAmtIn, int stackModIn) {
+    public BinderItemHandler(ItemStack binderIn, int pageAmtIn) {
         super(32 * pageAmtIn);
         binder = binderIn;
         pageAmt = pageAmtIn;
-        slotLimit = 32 * (1 + stackModIn);
         if (binder.hasTag() && binder.getTag().contains("Inventory"))
             deserializeNBT(binder.getTag().getCompound("Inventory"));
     }
 
     protected ItemStack binder;
     protected final int pageAmt;
-    protected final int slotLimit;
-
-    @Override
-    public int getSlotLimit(int slot) {
-        return slotLimit;
-    }
 
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) {

@@ -50,7 +50,6 @@ public class BuddycardsMisc {
 
     //Enchantment
     public static final RegistryObject<Enchantment> EXTRA_PAGE = ENCHANTMENTS.register("extra_page", EnchantmentExtraPage::new);
-    public static final RegistryObject<Enchantment> THICK_POCKETS = ENCHANTMENTS.register("thick_pockets", EnchantmentThickPockets::new);
     public static final RegistryObject<Enchantment> BUDDY_BOOST = ENCHANTMENTS.register("buddy_boost", EnchantmentBuddyBoost::new);
     public static final RegistryObject<Enchantment> RECOVERY = ENCHANTMENTS.register("recovery", EnchantmentRecovery::new);
 

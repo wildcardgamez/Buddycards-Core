@@ -119,7 +119,7 @@ public class BuddycardItem extends Item {
     }
 
     public static void setShiny(ItemStack stack, int type) {
-        CompoundTag nbt = stack.getOrCreateTag();
+        CompoundTag nbt = stack.getOrCreateTag().copy();
         nbt.putInt("foil", type);
         stack.setTag(nbt);
     }

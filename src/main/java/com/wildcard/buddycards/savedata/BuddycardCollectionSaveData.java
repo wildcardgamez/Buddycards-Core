@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.saveddata.SavedData;
 
 import java.util.*;
@@ -28,24 +29,26 @@ public class BuddycardCollectionSaveData extends SavedData {
             Map<String, NonNullList<CardCollectionData>> playerData = new HashMap<>();
             for (String set : sets) {
                 //For every set...
-                CompoundTag setNbt = playerDataNbt.getCompound(set);
-                Set<String> cards = setNbt.getAllKeys();
-                NonNullList<CardCollectionData> setCollection = NonNullList.withSize(BuddycardsAPI.findSet(set).getCards().size(), new CardCollectionData());
-                int size = Objects.requireNonNull(BuddycardsAPI.findSet(set)).getCards().size();
-                for (int i = 0; i < size; i++) {
-                    //For every card...
-                    CompoundTag cardNbt = playerDataNbt.getCompound(String.valueOf(i));
-                    CardCollectionData cardData = new CardCollectionData();
-                    for (int j = 0; j < 4; j++) {
-                        //Set the values of each variant
-                        CompoundTag tagNbt = cardNbt.getCompound(String.valueOf(j));
-                        for (int k = 0; k < 6; k++) {
-                            cardData.variants[j][k] = tagNbt.getBoolean(String.valueOf(k));
+                CompoundTag setDataNbt = playerDataNbt.getCompound(set);
+                BuddycardSet cardSet = BuddycardsAPI.findSet(set);
+                if (cardSet != null) {
+                    NonNullList<CardCollectionData> setCollection = newSetData(cardSet);
+                    for (int i = 0; i < cardSet.getCards().size(); i++) {
+                        //For every card...
+                        CardCollectionData cardData = setCollection.get(i);
+                        if (setDataNbt.contains(String.valueOf(i))) {
+                            CompoundTag cardNbt = setDataNbt.getCompound(String.valueOf(i));
+                            for (int j = 0; j < 4; j++) {
+                                //Set the values of each variant
+                                CompoundTag tagNbt = cardNbt.getCompound(String.valueOf(j));
+                                for (int k = 0; k < 6; k++) {
+                                    cardData.variants[j][k] = tagNbt.getBoolean(String.valueOf(k));
+                                }
+                            }
                         }
                     }
-                    setCollection.set(i, cardData);
+                    playerData.put(set, setCollection);
                 }
-                playerData.put(setNbt.getString("name"), setCollection);
             }
             CARD_LISTS.put(UUID.fromString(uuid), playerData);
         }
@@ -72,13 +75,13 @@ public class BuddycardCollectionSaveData extends SavedData {
                         CompoundTag foil = new CompoundTag();
                         for (int m = 0; m < 6; m++) {
                             //For every grade
-                            foil.putBoolean(String.valueOf(l), setArray.get(k).variants[l][m]);
+                            foil.putBoolean(String.valueOf(m), setArray.get(k).variants[l][m]);
                         }
                         card.put(String.valueOf(l), foil);
                     }
                     set.put(String.valueOf(k), card);
                 }
-                set.put(j.getKey(), set);
+                playerData.put(j.getKey(), set);
             }
             nbt.put(i.getKey().toString(), playerData);
         }
@@ -92,7 +95,7 @@ public class BuddycardCollectionSaveData extends SavedData {
     public Fraction checkPlayerSetCompletion(UUID uuid, BuddycardSet set) {
         int foundCards = 0, totalCards = 0;
         if (CARD_LISTS.get(uuid) != null) {
-            NonNullList<CardCollectionData> playerSet = CARD_LISTS.get(uuid).getOrDefault(set.getName(), NonNullList.withSize(set.getCards().size(), new CardCollectionData()));
+            NonNullList<CardCollectionData> playerSet = CARD_LISTS.get(uuid).getOrDefault(set.getName(), newSetData(set));
             for (BuddycardItem card : set.getCards()) {
                 if (card.shouldLoad()) {
                     totalCards++;
@@ -109,7 +112,7 @@ public class BuddycardCollectionSaveData extends SavedData {
         if(playerCollection != null) {
             int foundCards = 0, totalCards = 0;
             for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
-                NonNullList<CardCollectionData> playerSet = playerCollection.getOrDefault(set.getName(), NonNullList.withSize(set.getCards().size(), new CardCollectionData()));
+                NonNullList<CardCollectionData> playerSet = playerCollection.getOrDefault(set.getName(), newSetData(set));
                 for(BuddycardItem card : set.getCards()) {
                     if(card.shouldLoad()) {
                         totalCards++;
@@ -130,7 +133,7 @@ public class BuddycardCollectionSaveData extends SavedData {
     public Fraction checkPlayerFoilSetCompletion(UUID uuid, BuddycardSet set) {
         int foundCards = 0, totalCards = 0;
         if (CARD_LISTS.get(uuid) != null) {
-            NonNullList<CardCollectionData> playerSet = CARD_LISTS.get(uuid).getOrDefault(set.getName(), NonNullList.withSize(set.getCards().size(), new CardCollectionData()));
+            NonNullList<CardCollectionData> playerSet = CARD_LISTS.get(uuid).getOrDefault(set.getName(), newSetData(set));
             for (BuddycardItem card : set.getCards()) {
                 if(card.shouldLoad()) {
                     for (int i = 1; i < 4; i++) {
@@ -149,7 +152,7 @@ public class BuddycardCollectionSaveData extends SavedData {
         if(playerCollection != null) {
             int foundCards = 0, totalCards = 0;
             for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
-                NonNullList<CardCollectionData> playerSet = playerCollection.getOrDefault(set.getName(), NonNullList.withSize(set.getCards().size(), new CardCollectionData()));
+                NonNullList<CardCollectionData> playerSet = playerCollection.getOrDefault(set.getName(), newSetData(set));
                 for(BuddycardItem card : set.getCards()) {
                     if(card.shouldLoad()) {
                         for (int i = 1; i < 4; i++) {
@@ -172,7 +175,7 @@ public class BuddycardCollectionSaveData extends SavedData {
     public Fraction checkPlayerGradeSetCompletion(UUID uuid, BuddycardSet set) {
         int foundCards = 0, totalCards = 0;
         if (CARD_LISTS.get(uuid) != null) {
-            NonNullList<CardCollectionData> playerSet = CARD_LISTS.get(uuid).getOrDefault(set.getName(), NonNullList.withSize(set.getCards().size(), new CardCollectionData()));
+            NonNullList<CardCollectionData> playerSet = CARD_LISTS.get(uuid).getOrDefault(set.getName(), newSetData(set));
             for (BuddycardItem card : set.getCards()) {
                 if(card.shouldLoad()) {
                     for (int i = 1; i < 6; i++) {
@@ -191,7 +194,7 @@ public class BuddycardCollectionSaveData extends SavedData {
         if(playerCollection != null) {
             int foundCards = 0, totalCards = 0;
             for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
-                NonNullList<CardCollectionData> playerSet = playerCollection.getOrDefault(set.getName(), NonNullList.withSize(set.getCards().size(), new CardCollectionData()));
+                NonNullList<CardCollectionData> playerSet = playerCollection.getOrDefault(set.getName(), newSetData(set));
                 for(BuddycardItem card : set.getCards()) {
                     if(card.shouldLoad()) {
                         for (int i = 1; i < 6; i++) {
@@ -214,7 +217,7 @@ public class BuddycardCollectionSaveData extends SavedData {
     public Fraction checkPlayerPerfectSetCompletion(UUID uuid, BuddycardSet set) {
         int foundCards = 0, totalCards = 0;
         if (CARD_LISTS.get(uuid) != null) {
-            NonNullList<CardCollectionData> playerSet = CARD_LISTS.get(uuid).getOrDefault(set.getName(), NonNullList.withSize(set.getCards().size(), new CardCollectionData()));
+            NonNullList<CardCollectionData> playerSet = CARD_LISTS.get(uuid).getOrDefault(set.getName(), newSetData(set));
             for (BuddycardItem card : set.getCards()) {
                 if(card.shouldLoad()) {
                     for (int i = 1; i < 4; i++) {
@@ -235,7 +238,7 @@ public class BuddycardCollectionSaveData extends SavedData {
         if(playerCollection != null) {
             int foundCards = 0, totalCards = 0;
             for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
-                NonNullList<CardCollectionData> playerSet = playerCollection.getOrDefault(set.getName(), NonNullList.withSize(set.getCards().size(), new CardCollectionData()));
+                NonNullList<CardCollectionData> playerSet = playerCollection.getOrDefault(set.getName(), newSetData(set));
                 for(BuddycardItem card : set.getCards()) {
                     if(card.shouldLoad()) {
                         for (int i = 1; i < 4; i++) {
@@ -253,13 +256,27 @@ public class BuddycardCollectionSaveData extends SavedData {
         return new Fraction(0, BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList().size());
     }
 
+    public void addPlayerCardFound(UUID uuid, ItemStack stack) {
+        if (stack.getItem() instanceof BuddycardItem item) {
+            int foil = 0,  grade = 0;
+            if (stack.hasTag()) {
+                CompoundTag nbt = stack.getTag();
+                if (nbt.contains("foil"))
+                    foil = nbt.getInt("foil");
+                if (nbt.contains("grade"))
+                    grade = nbt.getInt("grade");
+            }
+            addPlayerCardFound(uuid, item.getSet(), item.getCardNumber(), foil, grade);
+        }
+    }
+
     public void addPlayerCardFound(UUID uuid, BuddycardItem item, int foil, int grade) {
         addPlayerCardFound(uuid, item.getSet(), item.getCardNumber(), foil, grade);
     }
 
     public void addPlayerCardFound(UUID uuid, BuddycardSet set, int cardNumber, int foil, int grade) {
         NonNullList<CardCollectionData> setList = CARD_LISTS.computeIfAbsent(uuid, key -> new HashMap<>())
-                .computeIfAbsent(set.getName(), key -> NonNullList.withSize(set.getCards().size(), new CardCollectionData()));
+                .computeIfAbsent(set.getName(), key -> newSetData(set));
         CardCollectionData data = setList.get(cardNumber-1);
         data.variants[0][0] = true;
         if (foil != 0)
@@ -292,5 +309,13 @@ public class BuddycardCollectionSaveData extends SavedData {
         public CardCollectionData() {
             variants = new boolean[4][6];
         }
+    }
+
+    private static NonNullList<CardCollectionData> newSetData(BuddycardSet set) {
+        NonNullList<CardCollectionData> data = NonNullList.withSize(set.getCards().size(), new CardCollectionData());
+        for (int i = 1; i < set.getCards().size(); i++) {
+            data.set(i, new CardCollectionData());
+        }
+        return data;
     }
 }

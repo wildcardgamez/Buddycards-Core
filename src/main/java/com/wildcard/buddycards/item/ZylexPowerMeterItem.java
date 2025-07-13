@@ -22,6 +22,8 @@ public class ZylexPowerMeterItem extends DescriptionItem {
         InteractionHand cardHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         if(level instanceof ServerLevel serverLevel && stack.getItem() instanceof ZylexPowerMeterItem) {
             if(player.getItemInHand(cardHand).getItem() instanceof BuddycardItem card) {
+                //Manually add that card
+                BuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), player.getItemInHand(cardHand));
                 //Specific set
                 BuddycardCollectionSaveData.Fraction cardsCollected = BuddycardCollectionSaveData.get(serverLevel).checkPlayerGradeSetCompletion(player.getUUID(), card.getSet());
                 player.displayClientMessage(Component.translatable(card.getSet().getDescriptionId())

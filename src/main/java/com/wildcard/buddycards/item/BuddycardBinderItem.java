@@ -43,9 +43,8 @@ public class BuddycardBinderItem extends Item {
         ItemStack binder = player.getItemInHand(hand);
         if(level instanceof ServerLevel) {
             int pages = 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), binder);
-            int stacks = EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.THICK_POCKETS.get(), binder);
             NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderItemHandler(binder, pages, stacks))
+                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderItemHandler(binder, pages))
                     , player.getItemInHand(hand).getHoverName()));
         }
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
