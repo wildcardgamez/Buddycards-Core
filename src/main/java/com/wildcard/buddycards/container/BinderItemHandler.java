@@ -2,6 +2,8 @@ package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -35,5 +37,21 @@ public class BinderItemHandler extends ItemStackHandler {
         CompoundTag nbt = binder.getOrCreateTag();
         nbt.put("Inventory", serializeNBT());
         binder.setTag(nbt);
+    }
+
+    @Override
+    public void deserializeNBT(CompoundTag nbt) {
+        ListTag tagList = nbt.getList("Items", Tag.TAG_COMPOUND);
+        for (int i = 0; i < tagList.size(); i++)
+        {
+            CompoundTag itemTags = tagList.getCompound(i);
+            int slot = itemTags.getInt("Slot");
+
+            if (slot >= 0 && slot < stacks.size())
+            {
+                stacks.set(slot, ItemStack.of(itemTags));
+            }
+        }
+        onLoad();
     }
 }
