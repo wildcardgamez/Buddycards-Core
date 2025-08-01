@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    " X ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "minecraft:cherry_planks"
+    }
+  },
+  "result": {
+    "item": "buddycards:cherry_card_display"
+  }
+}

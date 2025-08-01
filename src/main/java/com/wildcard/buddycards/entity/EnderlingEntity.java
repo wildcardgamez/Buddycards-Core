@@ -1,25 +1,33 @@
 package com.wildcard.buddycards.entity;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsItems;
+import mezz.jei.library.plugins.vanilla.ingredients.ItemStackHelper;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -30,8 +38,13 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.Npc;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,12 +53,15 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.functions.SetLoreFunction;
+import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 
 import java.util.*;
+import java.util.function.UnaryOperator;
 
 public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     final ArrayList<Pair<ItemStack, ItemStack>> goalTrades = new ArrayList<>();
@@ -143,26 +159,64 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     @Override
     public void aiStep() {
         if (this.level().isClientSide)
-            for(int i = 0; i < 2; ++i)
+            for (int i = 0; i < 2; ++i)
                 this.level().addParticle(ParticleTypes.PORTAL, this.getRandomX(0.5D), this.getRandomY() - 0.25D, this.getRandomZ(0.5D), (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
         if (timer > 0) {
             timer -= 1;
             if (timer == 0) {
-                for (Pair<ItemStack, ItemStack> goalTrade : goalTrades)
-                    if (cardsMatch(goalTrade.getFirst(), getMainHandItem())) {
-                        Vec3 pos = position().add(0, 1, 0);
-                        Player player = level().getNearestPlayer(this, 5);
-                        if (player != null)
-                            pos = player.position().add(0, 1, 0);
-                        BehaviorUtils.throwItem(this, goalTrade.getSecond(), pos);
-                        setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-                        goalTrades.remove(goalTrade);
-                        if (goalTrade.getFirst().getItem().equals(BuddycardsItems.ZYLEX.get()))
-                            goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level(), false)));
-                        if (goalTrade.getFirst().getItem().equals(BuddycardsItems.VOID_ZYLEX.get()))
-                            goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level(), true)));
-                        break;
+                if (getMainHandItem().getItem().equals(Items.PAPER)) {
+                    ItemStack note = new ItemStack(Items.PAPER, 1);
+                    ListTag lore = new ListTag();
+                    for (Pair<ItemStack, ItemStack> goalTrade : goalTrades) {
+                        ItemStack card = goalTrade.getFirst();
+                        if (card.getItem() instanceof BuddycardItem cardItem) {
+                            MutableComponent component = Component.translatable(cardItem.getDescriptionId());
+                            if (card.hasTag()) {
+                                CompoundTag cardTag = card.getTag();
+                                if (cardTag.contains("foil")) {
+                                    component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator"));
+                                    component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol." + cardTag.getInt("foil")));
+                                }
+                                if (cardTag.contains("grade")) {
+                                    component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator"));
+                                    component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.grade." + cardTag.getInt("grade")));
+                                }
+                            }
+                            lore.add(StringTag.valueOf(Component.Serializer.toJson(component.withStyle(ChatFormatting.DARK_PURPLE))));
+                        }
                     }
+                    if(hasCustomName()) {
+                        MutableComponent component = Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
+                        lore.add(StringTag.valueOf(Component.Serializer.toJson(component.append(getCustomName()).withStyle(ChatFormatting.DARK_PURPLE))));
+                    }
+                    CompoundTag displayTag = new CompoundTag();
+                    displayTag.put("Lore", lore);
+                    note.getOrCreateTag().put("display", displayTag);
+                    Vec3 pos = position().add(0, 1, 0);
+                    Player player = level().getNearestPlayer(this, 5);
+                    if (player != null)
+                        pos = player.position().add(0, 1, 0);
+                    BehaviorUtils.throwItem(this, note, pos);
+                    setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+
+                } else
+                    for (Pair<ItemStack, ItemStack> goalTrade : goalTrades)
+                        if (cardsMatch(goalTrade.getFirst(), getMainHandItem())) {
+                            Vec3 pos = position().add(0, 1, 0);
+                            Player player = level().getNearestPlayer(this, 5);
+                            if (player != null)
+                                pos = player.position().add(0, 1, 0);
+                            BehaviorUtils.throwItem(this, goalTrade.getSecond(), pos);
+                            setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+                            goalTrades.remove(goalTrade);
+                            if (goalTrade.getFirst().getItem().equals(BuddycardsItems.ZYLEX.get()))
+                                goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level(), false)));
+                            if (goalTrade.getFirst().getItem().equals(BuddycardsItems.VOID_ZYLEX.get()))
+                                goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level(), true)));
+                            else
+                                addSingleCardTrade(level());
+                            break;
+                        }
             }
         }
         super.aiStep();
@@ -173,22 +227,29 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         return true;
     }
 
-    public void setupGoalItems(ServerLevel lvl) {
+    public void setupGoalItems(Level lvl) {
         RandomSource rand = lvl.getRandom();
         List<BuddycardItem> cards = BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             ItemStack card = new ItemStack(cards.get(rand.nextInt(cards.size())));
             if (i % 3 == 0)
                 BuddycardItem.setShiny(card);
             goalTrades.add(new Pair<>(card, getCardSellValue(card, rand, cheap)));
-            if (i < 8) {
+            if (i < 3) {
                 ItemStack card2 = card.copy();
-                card2.getOrCreateTag().putInt("grade", rand.nextInt(1,5));
+                card2.getOrCreateTag().putInt("grade", rand.nextInt(2,5));
                 goalTrades.add(new Pair<>(card2, getCardSellValue(card2, rand, cheap)));
             }
         }
         goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.ZYLEX.get()), getBarterResult(level(), false)));
         goalTrades.add(new Pair<>(new ItemStack(BuddycardsItems.VOID_ZYLEX.get()), getBarterResult(level(), true)));
+    }
+
+    public void addSingleCardTrade(Level lvl) {
+        RandomSource rand = lvl.getRandom();
+        List<BuddycardItem> cards = BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList();
+        ItemStack card = new ItemStack(cards.get(rand.nextInt(cards.size())));
+        goalTrades.add(new Pair<>(card, getCardSellValue(card, rand, cheap)));
     }
 
     public static ItemStack getBarterResult(Level level, boolean voidZylex) {
@@ -211,24 +272,24 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         int value = rand.nextInt(1, 4);
         boolean markVoid = false;
         if (card.getRarity() == Rarity.RARE)
-            value += 2;
+            value += 4;
         if (card.getRarity() == Rarity.EPIC)
-            value += 6;
+            value += 8;
         if (card.hasFoil())
-            value += 3;
+            value += 4;
         if(card.hasTag() && card.getTag().contains("grade")) {
             int grade = card.getTag().getInt("grade");
             if (grade == 1)
                 value -= 2;
             else if (grade == 2)
-                value += 2;
+                value += 4;
             else if (grade == 3)
                 value *= 2;
             else if (grade == 4)
                 value *= 4;
             else if (grade == 5)
-                value *= 18;
-            if(grade >= 3 || card.getRarity() == Rarity.EPIC)
+                value *= 25;
+            if(grade >= 2 || card.getRarity() == Rarity.EPIC)
                 markVoid = true;
         }
         if (cheap)
@@ -247,6 +308,10 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
         if(timer == 0 && goalTrades.stream().anyMatch((i) -> cardsMatch(i.getFirst(), player.getItemInHand(hand)))) {
+            setItemInHand(InteractionHand.MAIN_HAND, player.getMainHandItem().split(1));
+            timer = 200;
+        }
+        if(player.getItemInHand(hand).getItem().equals(Items.PAPER)) {
             setItemInHand(InteractionHand.MAIN_HAND, player.getMainHandItem().split(1));
             timer = 200;
         }
@@ -295,5 +360,39 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     static boolean cardsMatch(ItemStack a, ItemStack b) {
         return a.getItem().equals(b.getItem()) && BuddycardItem.getFoil(a) == BuddycardItem.getFoil(b) && BuddycardItem.getGrade(a) == BuddycardItem.getGrade(b);
+    }
+
+    public boolean hurt(DamageSource source, float amt) {
+        if (this.isInvulnerableTo(source)) {
+            return false;
+        } else {
+            boolean flag = source.getDirectEntity() instanceof ThrownPotion;
+            if (!source.is(DamageTypeTags.IS_PROJECTILE) && !flag) {
+                boolean flag2 = super.hurt(source, amt);
+                if (!this.level().isClientSide() && !(source.getEntity() instanceof LivingEntity) && this.random.nextInt(10) != 0) {
+                    this.teleport();
+                }
+
+                return flag2;
+            } else {
+                boolean flag1 = flag && this.hurtWithCleanWater(source, (ThrownPotion)source.getDirectEntity(), amt);
+
+                for(int i = 0; i < 64; ++i) {
+                    if (this.teleport()) {
+                        return true;
+                    }
+                }
+
+                return flag1;
+            }
+        }
+    }
+
+    private boolean hurtWithCleanWater(DamageSource source, ThrownPotion thrownPotion, float amt) {
+        ItemStack itemstack = thrownPotion.getItem();
+        Potion potion = PotionUtils.getPotion(itemstack);
+        List<MobEffectInstance> list = PotionUtils.getMobEffects(itemstack);
+        boolean flag = potion == Potions.WATER && list.isEmpty();
+        return flag ? super.hurt(source, amt) : false;
     }
 }

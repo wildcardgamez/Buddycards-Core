@@ -28,8 +28,6 @@ public class Buddycards
 
         ConfigManager.loadConfig(FMLPaths.CONFIGDIR.get().resolve("buddycards-common.toml").toString());
 
-        CuriosIntegration.imc();
-
         BuddycardsBlocks.registerBlocks();
         BuddycardsEntities.registerEntities();
         BuddycardsItems.registerItems();

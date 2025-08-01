@@ -1,5 +1,5 @@
 {
-  "parent": "item/generated",
+  "parent": "builtin/entity",
   "display": {
     "thirdperson_righthand": {
       "translation": [0, 3, 1],

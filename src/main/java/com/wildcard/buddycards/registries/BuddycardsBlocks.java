@@ -63,6 +63,9 @@ public class BuddycardsBlocks {
     public static final RegistryObject<CardDisplayBlock> DARK_OAK_CARD_DISPLAY = registerDisplay("dark_oak_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.DARK_OAK_PLANKS)));
     public static final RegistryObject<CardDisplayBlock> CRIMSON_CARD_DISPLAY = registerDisplay("crimson_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.CRIMSON_PLANKS)));
     public static final RegistryObject<CardDisplayBlock> WARPED_CARD_DISPLAY = registerDisplay("warped_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.WARPED_PLANKS)));
+    public static final RegistryObject<CardDisplayBlock> MANGROVE_CARD_DISPLAY = registerDisplay("mangrove_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)));
+    public static final RegistryObject<CardDisplayBlock> CHERRY_CARD_DISPLAY = registerDisplay("cherry_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)));
+    public static final RegistryObject<CardDisplayBlock> BAMBOO_CARD_DISPLAY = registerDisplay("bamboo_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS)));
     //Booster Boxes
     public static final RegistryObject<Block> BOOSTER_BOX_BASE = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_base", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     public static final RegistryObject<Block> BOOSTER_BOX_NETHER = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));

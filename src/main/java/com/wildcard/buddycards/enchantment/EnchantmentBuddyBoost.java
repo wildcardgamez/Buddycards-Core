@@ -1,6 +1,8 @@
 package com.wildcard.buddycards.enchantment;
 
 import com.wildcard.buddycards.item.BuddysteelSetMedalItem;
+import com.wildcard.buddycards.item.LuminisSetMedalItem;
+import com.wildcard.buddycards.item.ZylexSetMedalItem;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -25,5 +27,5 @@ public class EnchantmentBuddyBoost extends Enchantment {
         return 2;
     }
 
-    static final EnchantmentCategory BUDDYSTEEL_MEDAL = EnchantmentCategory.create("BUDDYSTEEL_MEDAL", i -> (i instanceof BuddysteelSetMedalItem));
+    static final EnchantmentCategory BUDDYSTEEL_MEDAL = EnchantmentCategory.create("BUDDYSTEEL_MEDAL", i -> (i instanceof BuddysteelSetMedalItem) || (i instanceof LuminisSetMedalItem) || (i instanceof ZylexSetMedalItem));
 }

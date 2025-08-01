@@ -5,14 +5,14 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 6,
           "name": "buddycards:zylex_grading_sleeve",
           "functions": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 8.0,
+                "max": 7.0,
                 "min": 3.0
               },
               "function": "minecraft:set_count"
@@ -21,7 +21,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 6,
           "name": "buddycards:buddycard_pack_mystery",
           "functions": [
             {
@@ -38,6 +38,22 @@
         {
           "type": "minecraft:item",
           "weight": 3,
+          "name": "buddycards:buddycard_pack_end",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 7.0,
+                "min": 3.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 4,
           "name": "buddycards:zylex_ring"
         },
         {
@@ -57,12 +73,12 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 1,
           "name": "buddycards:zylex_hoe"
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
+          "weight": 1,
           "name": "buddycards:zylex_boots"
         },
         {
