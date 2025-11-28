@@ -2,17 +2,20 @@ package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.items.ItemHandlerHelper;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
@@ -59,8 +62,22 @@ public abstract class BuddycardPackItem extends Item {
                 cards.add(item);
                 BuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), card, foil, 0);
             }
-            //Give each card to the player and put their collection data in
-            cards.forEach(card -> ItemHandlerHelper.giveItemToPlayer(player, card));
+            //Handle fake players by spawning item entities in front of them instead of adding to inventory
+            if (player instanceof FakePlayer) {
+                for (ItemStack cardStack : cards) {
+                    BlockPos blockPos = player.blockPosition();
+                    ItemEntity itemEntity = new ItemEntity(serverLevel,
+                            blockPos.getX() + 0.5,
+                            blockPos.getY() + 0.5,
+                            blockPos.getZ() + 0.5,
+                            cardStack);
+                    itemEntity.setDeltaMovement(0, 0.2, 0);
+                    serverLevel.addFreshEntity(itemEntity);
+                }
+            } else {
+                //Give each card to the player and put their collection data in
+                cards.forEach(card -> ItemHandlerHelper.giveItemToPlayer(player, card));
+            }
         }
         //Return success every time because we shrink it ourselves instead of using consume
         return InteractionResultHolder.success(player.getItemInHand(hand));
