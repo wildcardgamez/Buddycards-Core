@@ -45,8 +45,8 @@ public class BuddycardsBlocks {
     public static final RegistryObject<Block> VOID_BUDDYSTEEL_BLOCK = BLOCKS.register("void_buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
     public static final RegistryObject<Block> PERFECT_BUDDYSTEEL_BLOCK = BLOCKS.register("perfect_buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
     public static final RegistryObject<Block> TRUE_PERFECT_BUDDYSTEEL_BLOCK = BLOCKS.register("true_perfect_buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
-    public static final RegistryObject<Block> LUMINIS_ORE = BLOCKS.register("luminis_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.GOLD_ORE), UniformInt.of(2, 5)));
-    public static final RegistryObject<Block> DEEPSLATE_LUMINIS_ORE = BLOCKS.register("deepslate_luminis_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_GOLD_ORE), UniformInt.of(2, 5)));
+    public static final RegistryObject<Block> LUMINIS_ORE = BLOCKS.register("luminis_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.GOLD_ORE).lightLevel((i) -> 3).noOcclusion(), UniformInt.of(2, 5)));
+    public static final RegistryObject<Block> DEEPSLATE_LUMINIS_ORE = BLOCKS.register("deepslate_luminis_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_GOLD_ORE).lightLevel((i) -> 3).noOcclusion(), UniformInt.of(2, 5)));
     public static final RegistryObject<Block> LUMINIS_CRYSTAL_BLOCK = BLOCKS.register("luminis_crystal_block", () -> new Block(CRYSTAL_LUMINIS_PROPERTIES));
     public static final RegistryObject<Block> LUMINIS_BLOCK = BLOCKS.register("luminis_block", () -> new Block(LUMINIS_PROPERTIES));
     public static final RegistryObject<Block> CRIMSON_LUMINIS_BLOCK = BLOCKS.register("crimson_luminis_block", () -> new Block(CRIMSON_LUMINIS_PROPERTIES));
