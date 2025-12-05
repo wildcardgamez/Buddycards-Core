@@ -4,6 +4,7 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.CardDisplayBlockRenderer;
 import com.wildcard.buddycards.client.renderer.EnderlingRenderer;
+import com.wildcard.buddycards.client.renderer.KineticChamberBlockRenderer;
 import com.wildcard.buddycards.client.renderer.PlaymatBlockRenderer;
 import com.wildcard.buddycards.integration.CuriosIntegration;
 import com.wildcard.buddycards.screens.ChargerScreen;
@@ -87,6 +88,7 @@ public class ClientStuff {
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(BuddycardsEntities.ENDERLING.get(), EnderlingRenderer::new);
         event.registerBlockEntityRenderer(BuddycardsEntities.CARD_DISPLAY_ENTITY.get(), CardDisplayBlockRenderer::new);
+        event.registerBlockEntityRenderer(BuddycardsEntities.KINETIC_CHAMBER_TILE.get(), KineticChamberBlockRenderer::new);
         event.registerBlockEntityRenderer(BuddycardsEntities.PLAYMAT_ENTITY.get(), PlaymatBlockRenderer::new);
     }
 

@@ -10,10 +10,10 @@
       "item": "minecraft:obsidian"
     },
     "Y": {
-      "item": "buddycards:luminis_panel"
+      "item": "buddycards:crimson_luminis"
     },
     "Z": {
-      "item": "buddycards:crimson_luminis"
+      "item": "minecraft:tinted_glass"
     }
   },
   "result": {

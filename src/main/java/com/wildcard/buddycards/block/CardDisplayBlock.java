@@ -29,6 +29,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,18 +38,14 @@ import java.util.Map;
 
 public class CardDisplayBlock extends BaseEntityBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
-    private static final Map<Direction, VoxelShape> shapes = Util.make(() -> {
+    private static final Map<Direction, VoxelShape> SHAPES = Util.make(() -> {
         Map<Direction, VoxelShape> shape = new HashMap<>();
-        shape.put(Direction.NORTH, Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 3.0D));
-        shape.put(Direction.EAST, Block.box(13.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D));
-        shape.put(Direction.SOUTH, Block.box(0.0D, 0.0D, 13.0D, 16.0D, 16.0D, 16.0D));
-        shape.put(Direction.WEST, Block.box(0.0D, 0.0D, 0.0D, 3.0D, 16.0D, 16.0D));
+        shape.put(Direction.NORTH, Shapes.or(Block.box(0, 0, 0, 16, 16, 2), Block.box(0, 0, 2, 16, 1, 3), Block.box(0, 8, 2, 16, 9, 3)));;
+        shape.put(Direction.EAST, Shapes.or(Block.box(14, 0, 0, 16, 16, 16), Block.box(13, 0, 0, 14, 1, 16), Block.box(13, 8, 0, 14, 9, 16)));
+        shape.put(Direction.SOUTH, Shapes.or(Block.box(0, 0, 14, 16, 16, 16), Block.box(0, 0, 13, 16, 1, 14), Block.box(0, 8, 13, 16, 9, 14)));
+        shape.put(Direction.WEST, Shapes.or(Block.box(0, 0, 0, 2, 16, 16), Block.box(2, 0, 0, 3, 1, 16), Block.box(2, 8, 0, 3, 9, 16)));
         return ImmutableMap.copyOf(shape);
     });
-    protected static final VoxelShape NSHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 3.0D);
-    protected static final VoxelShape ESHAPE = Block.box(13.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape SSHAPE = Block.box(0.0D, 0.0D, 13.0D, 16.0D, 16.0D, 16.0D);
-    protected static final VoxelShape WSHAPE = Block.box(0.0D, 0.0D, 0.0D, 3.0D, 16.0D, 16.0D);
 
     public CardDisplayBlock(Properties properties) {
         super(properties);
@@ -97,7 +94,7 @@ public class CardDisplayBlock extends BaseEntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
-        return shapes.get(state.getValue(DIR));
+        return SHAPES.get(state.getValue(DIR));
     }
 
     @Override

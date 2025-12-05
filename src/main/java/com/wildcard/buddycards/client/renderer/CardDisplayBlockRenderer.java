@@ -37,6 +37,7 @@ public class CardDisplayBlockRenderer<T extends CardDisplayBlockRenderer> implem
         tempMap.put(Direction.WEST, fromDoubleArr(WEST_POSITIONS));
         return ImmutableMap.copyOf(tempMap);
     });
+
     private static List<Vec3> fromDoubleArr(double[][] arr) {
         List<Vec3> tempList = new ArrayList<>();
         for (double[] doubles : arr) {

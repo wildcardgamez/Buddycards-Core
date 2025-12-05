@@ -34,6 +34,7 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
     @Override
     public void clearContent() {
         itemSlot = ItemStack.EMPTY;
+        setChanged();
     }
 
     public ItemStack getItemSlot() {
@@ -41,8 +42,11 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
     }
 
     public void setItemSlot(ItemStack stack) {
-        itemSlot = stack;
-        setChanged();
+        if(this.level != null) {
+            itemSlot = stack;
+            setChanged();
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
+        }
     }
 
     public void absorbExplosion(ServerLevel lvl) {
@@ -58,11 +62,8 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
             else if(itemSlot.getItem().equals(BuddycardsItems.LUMINIS_BLOCK.get()) && lvl.random.nextFloat() < ConfigManager.luminisKineticCrimsonOdds.get()) {
                 itemSlot = new ItemStack(BuddycardsItems.CRIMSON_LUMINIS.get());
             }
-            else {
-                if(itemSlot.isEmpty())
-                    return;
-                itemSlot = ItemStack.EMPTY;
-            }
+            else
+                return;
             this.setChanged();
         }
     }
