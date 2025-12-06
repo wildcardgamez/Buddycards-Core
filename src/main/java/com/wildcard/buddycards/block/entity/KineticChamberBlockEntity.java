@@ -6,16 +6,22 @@ import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.util.ConfigManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -23,7 +29,7 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
     private ItemStack itemSlot = ItemStack.EMPTY;
 
     public KineticChamberBlockEntity(BlockPos pos, BlockState state) {
-        super(BuddycardsEntities.KINETIC_CHAMBER_TILE.get(), pos, state);
+        super(BuddycardsEntities.KINETIC_CHAMBER_ENTITY.get(), pos, state);
     }
 
     public KineticChamberBlockEntity(BlockPos pos, BlockState state, BlockEntityType block) {
@@ -33,7 +39,6 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
     @Override
     public void clearContent() {
         itemSlot = ItemStack.EMPTY;
-        setChanged();
     }
 
     public ItemStack getItemSlot() {
@@ -43,7 +48,7 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
     public void setItemSlot(ItemStack stack) {
         if(this.level != null) {
             itemSlot = stack;
-            setChanged();
+            this.setChanged();
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
         }
     }
@@ -63,8 +68,8 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
             }
             else
                 return;
-            this.setChanged();
         }
+        this.setChanged();
     }
 
     @Override
@@ -77,7 +82,7 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
     public void load(CompoundTag compound) {
         super.load(compound);
         if(compound.contains("item"))
-            itemSlot = ItemStack.of((CompoundTag) compound.get("item"));
+            itemSlot = ItemStack.of(compound.getCompound("item"));
     }
 
     @Override
@@ -85,5 +90,17 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
         CompoundTag nbt = new CompoundTag();
         saveAdditional(nbt);
         return nbt;
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if(level instanceof ServerLevel serverLevel)
+            serverLevel.getChunkSource().blockChanged(getBlockPos());
     }
 }

@@ -16,14 +16,14 @@ public class KineticChamberBlockRenderer implements BlockEntityRenderer<KineticC
     }
 
     @Override
-    public void render(KineticChamberBlockEntity tileEntityIn, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-            ItemStack itemstack = tileEntityIn.getItemSlot();
+    public void render(KineticChamberBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+            ItemStack itemstack = blockEntity.getItemSlot();
             if (!itemstack.isEmpty()) {
                 poseStack.pushPose();
                 poseStack.translate(.5, .5, .5);
                 poseStack.scale(0.5f, 0.5f, 0.5f);
-                poseStack.mulPose(Axis.YP.rotationDegrees(tileEntityIn.getLevel().getGameTime() % 360));
-                BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, tileEntityIn.getLevel(), null, 0);
+                poseStack.mulPose(Axis.YP.rotationDegrees(blockEntity.getLevel().getGameTime() % 360));
+                BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, blockEntity.getLevel(), null, 0);
                 Minecraft.getInstance().getItemRenderer().render(itemstack, ItemDisplayContext.FIXED, true, poseStack, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel);
                 poseStack.popPose();
             }

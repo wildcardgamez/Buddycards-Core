@@ -60,9 +60,8 @@ public class KineticChamberBlock extends BaseEntityBlock {
                 if(!player.addItem(oldItem))
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldItem);
             }
-            else if(!stack.isEmpty()) {
+            else if(!stack.isEmpty())
                 entity.setItemSlot(stack.split(1));
-            }
         }
         level.updateNeighbourForOutputSignal(pos, this);
         return InteractionResult.SUCCESS;

@@ -6,6 +6,7 @@ import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -52,32 +53,24 @@ public class CardStandBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        int slot = getSlot(state.getValue(DIR), hit.getLocation());
-        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity standTile) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity standEntity && level instanceof ServerLevel) {
+            int slot = getSlot(state.getValue(DIR), hit.getLocation());
             ItemStack stack = player.getItemInHand(hand);
-            if(standTile.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
-                ItemStack oldCard = standTile.getCardInSlot(slot);
-                if (stack.getItem() instanceof BuddycardItem) {
-                    ItemStack card = new ItemStack(stack.getItem(), 1);
-                    card.setTag(stack.getTag());
-                    standTile.putCardInSlot(card, slot);
-                    stack.shrink(1);
-                }
-                else {
-                    standTile.putCardInSlot(ItemStack.EMPTY, slot);
-                }
+            if(standEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
+                ItemStack oldCard = standEntity.getCardInSlot(slot);
+                if (stack.getItem() instanceof BuddycardItem)
+                    standEntity.putCardInSlot(stack.split(1), slot);
+                else
+                    standEntity.putCardInSlot(ItemStack.EMPTY, slot);
                 if(!player.addItem(oldCard))
-                    Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), oldCard);
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldCard);
             }
             else if(stack.getItem() instanceof BuddycardItem) {
-                ItemStack card = new ItemStack(stack.getItem(), 1);
-                card.setTag(stack.getTag());
-                standTile.putCardInSlot(card, slot);
-                stack.shrink(1);
+                standEntity.putCardInSlot(stack.split(1), slot);
             }
         }
-        world.updateNeighbourForOutputSignal(pos, this);
+        level.updateNeighbourForOutputSignal(pos, this);
         return InteractionResult.SUCCESS;
     }
 
@@ -112,7 +105,7 @@ public class CardStandBlock extends BaseEntityBlock {
         return state.setValue(DIR, direction.rotate(state.getValue(DIR)));
     }
 
-    private int getSlot(Direction dir, Vec3 hit) {
+    private static int getSlot(Direction dir, Vec3 hit) {
         hit = new Vec3(
                 ((hit.x < 0) ? hit.x - Math.floor(hit.x) : hit.x) % 1,
                 ((hit.y < 0) ? hit.y - Math.floor(hit.y) : hit.y) % 1,

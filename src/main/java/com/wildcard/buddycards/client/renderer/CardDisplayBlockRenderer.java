@@ -50,18 +50,18 @@ public class CardDisplayBlockRenderer implements BlockEntityRenderer<CardDisplay
     }
 
     @Override
-    public void render(CardDisplayBlockEntity tileEntityIn, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        Direction direction = tileEntityIn.getBlockState().getValue(CardDisplayBlock.DIR);
+    public void render(CardDisplayBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        Direction direction = blockEntity.getBlockState().getValue(CardDisplayBlock.DIR);
         List<Vec3> vec3s = positions.get(direction);
         for (int i = 0; i < 6; i++) {
-            ItemStack itemstack = tileEntityIn.getCardInSlot(i+1);
+            ItemStack itemstack = blockEntity.getCardInSlot(i+1);
             if (itemstack.getItem() instanceof BuddycardItem) {
                 poseStack.pushPose();
                 Vec3 vec3 = vec3s.get(i);
                 poseStack.translate(vec3.x(), vec3.y(), vec3.z());
                 poseStack.scale(0.5f, 0.5f, 0.5f);
                 poseStack.mulPose(Axis.YP.rotationDegrees(360 - direction.get2DDataValue()*90));
-                BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, tileEntityIn.getLevel(), null, 0);
+                BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, blockEntity.getLevel(), null, 0);
                 Minecraft.getInstance().getItemRenderer().render(itemstack, ItemDisplayContext.FIXED, true, poseStack, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel);
                 poseStack.popPose();
             }

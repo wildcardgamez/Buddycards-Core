@@ -55,7 +55,7 @@ public class BuddycardsMisc {
 
     public static final EnchantmentCategory BUDDYCARD_BINDER = EnchantmentCategory.create("BUDDY_BINDER", BuddycardBinderItem.class::isInstance);
 
-    //Containers
+    //Menus
     public static final RegistryObject<MenuType<BinderMenu>> BINDER_MENU = MENUS.register("binder",
             () -> new MenuType<>(BinderMenu::new, FeatureFlags.DEFAULT_FLAGS));
     public static final RegistryObject<MenuType<DeckboxMenu>> DECKBOX_CONTAINER = MENUS.register("deckbox",

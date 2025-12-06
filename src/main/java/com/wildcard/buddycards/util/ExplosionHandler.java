@@ -27,7 +27,7 @@ public class ExplosionHandler {
             BlockState targetBlock = level.getBlockState(blockPos);
             //Check if the block is a kinetic chamber
             if (level instanceof ServerLevel server && targetBlock.getBlock().equals(BuddycardsBlocks.KINETIC_CHAMBER.get()))
-                level.getBlockEntity(blockPos, BuddycardsEntities.KINETIC_CHAMBER_TILE.get()).ifPresent(be -> be.absorbExplosion(server));
+                level.getBlockEntity(blockPos, BuddycardsEntities.KINETIC_CHAMBER_ENTITY.get()).ifPresent(be -> be.absorbExplosion(server));
             //Or luminis
             else if (targetBlock.getBlock().equals(BuddycardsBlocks.LUMINIS_BLOCK.get())) {
                 luminisBlocks++;

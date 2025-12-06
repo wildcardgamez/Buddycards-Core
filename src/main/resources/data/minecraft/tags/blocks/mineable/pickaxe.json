@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
+    "buddycards:stone_card_stand",
+    "buddycards:deepslate_card_stand",
+    "buddycards:blackstone_card_stand",
     "buddycards:buddysteel_block",
     "buddycards:luminis_block",
     "buddycards:luminis_panels",

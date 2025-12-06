@@ -86,7 +86,7 @@ public class ClientStuff {
         event.registerEntityRenderer(BuddycardsEntities.ENDERLING.get(), EnderlingRenderer::new);
         event.registerBlockEntityRenderer(BuddycardsEntities.CARD_DISPLAY_ENTITY.get(), CardDisplayBlockRenderer::new);
         event.registerBlockEntityRenderer(BuddycardsEntities.CARD_STAND_ENTITY.get(), CardStandBlockRenderer::new);
-        event.registerBlockEntityRenderer(BuddycardsEntities.KINETIC_CHAMBER_TILE.get(), KineticChamberBlockRenderer::new);
+        event.registerBlockEntityRenderer(BuddycardsEntities.KINETIC_CHAMBER_ENTITY.get(), KineticChamberBlockRenderer::new);
         event.registerBlockEntityRenderer(BuddycardsEntities.PLAYMAT_ENTITY.get(), PlaymatBlockRenderer::new);
     }
 

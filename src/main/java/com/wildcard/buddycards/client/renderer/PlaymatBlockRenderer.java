@@ -52,13 +52,13 @@ public class PlaymatBlockRenderer implements BlockEntityRenderer<PlaymatBlockEnt
     }
 
     @Override
-    public void render(PlaymatBlockEntity tileEntityIn, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        Direction direction = tileEntityIn.getBlockState().getValue(CardDisplayBlock.DIR);
+    public void render(PlaymatBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        Direction direction = blockEntity.getBlockState().getValue(CardDisplayBlock.DIR);
         List<Vec3> vec3s = positions.get(direction);
         for (int i = 0; i < 3; i++) {
-            if(tileEntityIn.getContainer() == null)
+            if(blockEntity.getContainer() == null)
                 return;
-            ItemStack itemstack = tileEntityIn.getContainer().getItem(BattleGame.translateFrom(BattleGame.slot(i, tileEntityIn.p1)));
+            ItemStack itemstack = blockEntity.getContainer().getItem(BattleGame.translateFrom(BattleGame.slot(i, blockEntity.p1)));
             if (itemstack.getItem() instanceof BuddycardItem) {
                 poseStack.pushPose();
                 Vec3 vec3 = vec3s.get(i);
@@ -66,7 +66,7 @@ public class PlaymatBlockRenderer implements BlockEntityRenderer<PlaymatBlockEnt
                 poseStack.scale(0.5f, 0.5f, 0.5f);
                 poseStack.mulPose(Axis.YP.rotationDegrees(360 - direction.get2DDataValue()*90));
                 poseStack.mulPose(Axis.XP.rotationDegrees(90));
-                BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, tileEntityIn.getLevel(), null, 0);
+                BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, blockEntity.getLevel(), null, 0);
                 Minecraft.getInstance().getItemRenderer().render(itemstack, ItemDisplayContext.FIXED, true, poseStack, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel);
                 poseStack.popPose();
             }

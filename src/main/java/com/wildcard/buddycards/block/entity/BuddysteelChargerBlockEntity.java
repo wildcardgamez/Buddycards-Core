@@ -18,7 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
@@ -43,7 +42,7 @@ public class BuddysteelChargerBlockEntity extends BlockEntity implements MenuPro
     private int maxProgress = 72;
 
     public BuddysteelChargerBlockEntity(BlockPos pos, BlockState state) {
-        super(BuddycardsEntities.BUDDYSTEEL_CHARGER_TILE.get(), pos, state);
+        super(BuddycardsEntities.BUDDYSTEEL_CHARGER_ENTITY.get(), pos, state);
         this.data = new ContainerData() {
             @Override
             public int get(int index) {

@@ -27,26 +27,26 @@ public class CardStandBlockRenderer implements BlockEntityRenderer<CardStandBloc
     private static final double[][] NORTH_POSITIONS= {
             {0.1875, 0.6875, 0.125}, {0.5, 0.6875, 0.12}, {0.8125, 0.6875, 0.125},
             {0.1875, 0.5625, 0.375}, {0.5, 0.5625, 0.37}, {0.8125, 0.5625, 0.375},
-            {0.1875, 0.4375, 0.625}, {0.5, 0.4375, 0.62}, {0.8125, 0.3125, 0.625},
-            {0.1875, 0.4375, 0.875}, {0.5, 0.3125, 0.87}, {0.8125, 0.3125, 0.875}
+            {0.1875, 0.4375, 0.625}, {0.5, 0.4375, 0.62}, {0.8125, 0.4375, 0.625},
+            {0.1875, 0.3125, 0.875}, {0.5, 0.3125, 0.87}, {0.8125, 0.3125, 0.875}
     };
     private static final double[][] EAST_POSITIONS = {
             {0.875, 0.6875, 0.1875}, {0.88, 0.6875, 0.5}, {0.875, 0.6875, 0.8125},
             {0.625, 0.5625, 0.1875}, {0.63, 0.5625, 0.5}, {0.625, 0.5625, 0.8125},
-            {0.375, 0.4375, 0.1875}, {0.38, 0.4375, 0.5}, {0.375, 0.3125, 0.8125},
-            {0.125, 0.4375, 0.1875}, {0.13, 0.3125, 0.5}, {0.125, 0.3125, 0.8125}
+            {0.375, 0.4375, 0.1875}, {0.38, 0.4375, 0.5}, {0.375, 0.4375, 0.8125},
+            {0.125, 0.3125, 0.1875}, {0.13, 0.3125, 0.5}, {0.125, 0.3125, 0.8125}
     };
     private static final double[][] SOUTH_POSITIONS = {
             {0.8125, 0.6875, 0.875}, {0.5, 0.6875, 0.88}, {0.1875, 0.6875, 0.875},
             {0.8125, 0.5625, 0.625}, {0.5, 0.5625, 0.63}, {0.1875, 0.5625, 0.625},
-            {0.8125, 0.4375, 0.375}, {0.5, 0.4375, 0.38}, {0.1875, 0.3125, 0.375},
-            {0.8125, 0.4375, 0.125}, {0.5, 0.3125, 0.13}, {0.1875, 0.3125, 0.125}
+            {0.8125, 0.4375, 0.375}, {0.5, 0.4375, 0.38}, {0.1875, 0.4375, 0.375},
+            {0.8125, 0.3125, 0.125}, {0.5, 0.3125, 0.13}, {0.1875, 0.3125, 0.125}
     };
     private static final double[][] WEST_POSITIONS = {
             {0.125, 0.6875, 0.8125}, {0.12, 0.6875, 0.5}, {0.125, 0.6875, 0.1875},
             {0.375, 0.5625, 0.8125}, {0.37, 0.5625, 0.5}, {0.375, 0.5625, 0.1875},
-            {0.625, 0.4375, 0.8125}, {0.62, 0.4375, 0.5}, {0.625, 0.3125, 0.1875},
-            {0.875, 0.4375, 0.8125}, {0.87, 0.3125, 0.5}, {0.875, 0.3125, 0.1875}
+            {0.625, 0.4375, 0.8125}, {0.62, 0.4375, 0.5}, {0.625, 0.4375, 0.1875},
+            {0.875, 0.3125, 0.8125}, {0.87, 0.3125, 0.5}, {0.875, 0.3125, 0.1875}
     };
 
     private static final Map<Direction, List<Vec3>> positions = Util.make(() -> {
@@ -70,19 +70,18 @@ public class CardStandBlockRenderer implements BlockEntityRenderer<CardStandBloc
     }
 
     @Override
-    public void render(CardStandBlockEntity tileEntityIn, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        System.out.println("uh");
-        Direction direction = tileEntityIn.getBlockState().getValue(CardStandBlock.DIR);
+    public void render(CardStandBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        Direction direction = blockEntity.getBlockState().getValue(CardStandBlock.DIR);
         List<Vec3> vec3s = positions.get(direction);
         for (int i = 0; i < 12; i++) {
-            ItemStack itemstack = tileEntityIn.getCardInSlot(i+1);
+            ItemStack itemstack = blockEntity.getCardInSlot(i+1);
             if (itemstack.getItem() instanceof BuddycardItem) {
                 poseStack.pushPose();
                 Vec3 vec3 = vec3s.get(i);
                 poseStack.translate(vec3.x(), vec3.y(), vec3.z());
                 poseStack.scale(0.5f, 0.5f, 0.5f);
                 poseStack.mulPose(Axis.YP.rotationDegrees(360 - direction.get2DDataValue()*90));
-                BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, tileEntityIn.getLevel(), null, 0);
+                BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, blockEntity.getLevel(), null, 0);
                 Minecraft.getInstance().getItemRenderer().render(itemstack, ItemDisplayContext.FIXED, true, poseStack, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel);
                 poseStack.popPose();
             }

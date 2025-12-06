@@ -5,6 +5,10 @@ import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +20,7 @@ public class CardStandBlockEntity extends BlockEntity implements Clearable {
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(12, ItemStack.EMPTY);
 
     public CardStandBlockEntity(BlockPos pos, BlockState state) {
-        super(BuddycardsEntities.CARD_DISPLAY_ENTITY.get(), pos, state);
+        super(BuddycardsEntities.CARD_STAND_ENTITY.get(), pos, state);
     }
 
     public CardStandBlockEntity(BlockPos pos, BlockState state, BlockEntityType block) {
@@ -73,5 +77,17 @@ public class CardStandBlockEntity extends BlockEntity implements Clearable {
     @Override
     public void clearContent() {
         this.inventory.clear();
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if(level instanceof ServerLevel serverLevel)
+            serverLevel.getChunkSource().blockChanged(getBlockPos());
     }
 }

@@ -69,7 +69,7 @@ public class BuddysteelChargerBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, BuddycardsEntities.BUDDYSTEEL_CHARGER_TILE.get(), BuddysteelChargerBlockEntity::tick);
+        return createTickerHelper(type, BuddycardsEntities.BUDDYSTEEL_CHARGER_ENTITY.get(), BuddysteelChargerBlockEntity::tick);
     }
 
     @Override
