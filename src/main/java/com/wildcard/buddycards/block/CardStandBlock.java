@@ -118,19 +118,17 @@ public class CardStandBlock extends BaseEntityBlock {
                 ((hit.y < 0) ? hit.y - Math.floor(hit.y) : hit.y) % 1,
                 ((hit.z < 0) ? hit.z - Math.floor(hit.z) : hit.z) % 1
         );
+        double x, z;
+        x = dir.getAxis() == Direction.Axis.X ? (dir.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? 1-hit.x() : hit.x()) : (dir.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? 1-hit.z() : hit.z());
+        z = dir.getAxis() == Direction.Axis.X ? (dir.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? 1-hit.z() : hit.z()) : (dir.getAxisDirection() == Direction.AxisDirection.NEGATIVE ? hit.x() : 1-hit.x());
         int slotIndex = 0;
-        if (hit.y() >= 0.75)
+        if (x <= 0.25)
             slotIndex += 9;
-        else if (hit.y() >= 0.5)
+        else if (x <= 0.5)
             slotIndex += 6;
-        else if (hit.y() >= 0.25)
+        else if (x <= 0.75)
             slotIndex += 3;
-        double position = dir.getAxis() == Direction.Axis.X ? hit.z() : hit.x();
-        if (dir.getCounterClockWise().getAxisDirection() == Direction.AxisDirection.NEGATIVE) {
-            return slotIndex + Mth.clamp(Mth.floor(position*3), 0, 2) + 1;
-        } else {
-            return slotIndex + Mth.clamp(Mth.floor((1 - position)*3), 0, 2) + 1;
-        }
+        return slotIndex + Mth.clamp(Mth.floor(z*3), 0, 2) + 1;
     }
 
     @Override

@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PlaymatBlockRenderer<T extends PlaymatBlockRenderer> implements BlockEntityRenderer<PlaymatBlockEntity> {
+public class PlaymatBlockRenderer implements BlockEntityRenderer<PlaymatBlockEntity> {
     private static final double[][] NORTH_POSITIONS= {{0.8125, 0.0625, .75}, {0.5, 0.0625, 0.75}, {0.1875, 0.0625, 0.75}};
     private static final double[][] EAST_POSITIONS= {{.25, 0.0625, 0.8125}, {0.25, 0.0625, 0.5}, {0.25, 0.0625, 0.1875}};
     private static final double[][] SOUTH_POSITIONS= {{0.8125, 0.0625, .25}, {0.5, 0.0625, 0.25}, {0.1875, 0.0625, 0.25}};

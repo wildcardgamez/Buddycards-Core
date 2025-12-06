@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CardStandBlockRenderer<T extends CardStandBlockRenderer> implements BlockEntityRenderer<CardStandBlockEntity> {
+public class CardStandBlockRenderer implements BlockEntityRenderer<CardStandBlockEntity> {
     private static final double[][] NORTH_POSITIONS= {
             {0.1875, 0.6875, 0.125}, {0.5, 0.6875, 0.12}, {0.8125, 0.6875, 0.125},
             {0.1875, 0.5625, 0.375}, {0.5, 0.5625, 0.37}, {0.8125, 0.5625, 0.375},
@@ -71,6 +71,7 @@ public class CardStandBlockRenderer<T extends CardStandBlockRenderer> implements
 
     @Override
     public void render(CardStandBlockEntity tileEntityIn, float partialTicks, PoseStack poseStack, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+        System.out.println("uh");
         Direction direction = tileEntityIn.getBlockState().getValue(CardStandBlock.DIR);
         List<Vec3> vec3s = positions.get(direction);
         for (int i = 0; i < 12; i++) {

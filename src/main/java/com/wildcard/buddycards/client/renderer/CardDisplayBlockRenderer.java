@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CardDisplayBlockRenderer<T extends CardDisplayBlockRenderer> implements BlockEntityRenderer<CardDisplayBlockEntity> {
+public class CardDisplayBlockRenderer implements BlockEntityRenderer<CardDisplayBlockEntity> {
     private static final double[][] NORTH_POSITIONS= {{0.1875, 0.75, 0.125}, {0.5, 0.75, 0.13}, {0.8125, 0.75, 0.125}, {0.1875, 0.25, 0.125}, {0.5, 0.25, 0.13}, {0.8125, 0.25, 0.125}};
     private static final double[][] EAST_POSITIONS= {{0.875, 0.75, 0.1875}, {0.87, 0.75, 0.5}, {0.875, 0.75, 0.8125}, {0.875, 0.25, 0.1875}, {0.87, 0.25, 0.5}, {0.875, 0.25, 0.8125}};
     private static final double[][] SOUTH_POSITIONS= {{0.8125, 0.75, 0.875}, {0.5, 0.75, 0.87}, {0.1875, 0.75, 0.875}, {0.8125, 0.25, 0.875}, {0.5, 0.25, 0.87}, {0.1875, 0.25, 0.875}};

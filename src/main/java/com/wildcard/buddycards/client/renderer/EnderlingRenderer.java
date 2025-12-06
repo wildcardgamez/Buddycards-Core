@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EnderlingRenderer  extends MobRenderer<EnderlingEntity, EnderlingModel<EnderlingEntity>> {
+public class EnderlingRenderer extends MobRenderer<EnderlingEntity, EnderlingModel<EnderlingEntity>> {
     public EnderlingRenderer(EntityRendererProvider.Context context) {
         super(context, new EnderlingModel(context.bakeLayer(ClientStuff.ENDERLING_LAYER)), .6f);
         this.addLayer(new EnderlingEyesLayer(this));

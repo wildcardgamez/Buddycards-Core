@@ -11,7 +11,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
-public class KineticChamberBlockRenderer<T extends KineticChamberBlockRenderer> implements BlockEntityRenderer<KineticChamberBlockEntity> {
+public class KineticChamberBlockRenderer implements BlockEntityRenderer<KineticChamberBlockEntity> {
     public KineticChamberBlockRenderer(BlockEntityRendererProvider.Context context) {
     }
 
