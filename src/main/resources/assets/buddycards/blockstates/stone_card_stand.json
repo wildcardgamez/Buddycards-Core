@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "buddycards:block/stone_card_stand"
+    },
+    "facing=east": {
+      "model": "buddycards:block/stone_card_stand",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "buddycards:block/stone_card_stand",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "buddycards:block/stone_card_stand",
+      "y": 270
+    }
+  }
+}

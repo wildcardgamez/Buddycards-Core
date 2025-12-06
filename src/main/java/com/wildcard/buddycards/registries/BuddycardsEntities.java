@@ -1,10 +1,7 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.block.entity.BuddysteelChargerBlockEntity;
-import com.wildcard.buddycards.block.entity.PlaymatBlockEntity;
-import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
-import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
+import com.wildcard.buddycards.block.entity.*;
 import com.wildcard.buddycards.entity.EnderlingEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -31,6 +28,11 @@ public class BuddycardsEntities {
             () -> {
                 Block[] blocks = BuddycardsBlocks.DISPLAY_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
                 return BlockEntityType.Builder.of(CardDisplayBlockEntity::new, blocks).build(null);
+            });
+    public static final RegistryObject<BlockEntityType<CardStandBlockEntity>> CARD_STAND_ENTITY = BLOCK_ENTITIES.register("card_stand",
+            () -> {
+                Block[] blocks = BuddycardsBlocks.STAND_BLOCKS.stream().map(Supplier::get).toArray(Block[]::new);
+                return BlockEntityType.Builder.of(CardStandBlockEntity::new, blocks).build(null);
             });
     public static final RegistryObject<BlockEntityType<PlaymatBlockEntity>> PLAYMAT_ENTITY = BLOCK_ENTITIES.register("battle_board",
             () -> {

@@ -1303,6 +1303,9 @@ public class BuddycardsItems {
     public static final RegistryObject<BlockItem> MANGROVE_CARD_DISPLAY_ITEM = ITEMS.register("mangrove_card_display", () -> new BlockItem(BuddycardsBlocks.MANGROVE_CARD_DISPLAY.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<BlockItem> CHERRY_CARD_DISPLAY_ITEM = ITEMS.register("cherry_card_display", () -> new BlockItem(BuddycardsBlocks.CHERRY_CARD_DISPLAY.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<BlockItem> BAMBOO_CARD_DISPLAY_ITEM = ITEMS.register("bamboo_card_display", () -> new BlockItem(BuddycardsBlocks.BAMBOO_CARD_DISPLAY.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<BlockItem> STONE_CARD_STAND_ITEM = ITEMS.register("stone_card_stand", () -> new BlockItem(BuddycardsBlocks.STONE_CARD_STAND.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<BlockItem> DEEPSLATE_CARD_STAND = ITEMS.register("deepslate_card_stand", () -> new BlockItem(BuddycardsBlocks.DEEPSLATE_CARD_STAND.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<BlockItem> BLACKSTONE_CARD_STAND_ITEM = ITEMS.register("blackstone_card_stand", () -> new BlockItem(BuddycardsBlocks.BLACKSTONE_CARD_STAND.get(), DEFAULT_PROPERTIES));
     //Booster Box Items
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_BASE = ITEMS.register("buddycard_booster_box_base", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_BASE.get(), PACK_BASE, DEFAULT_UNCOMMON_PROPERTIES));
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_NETHER = ITEMS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_NETHER.get(), PACK_NETHER, DEFAULT_UNCOMMON_PROPERTIES));

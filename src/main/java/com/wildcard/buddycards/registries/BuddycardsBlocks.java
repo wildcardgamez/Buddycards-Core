@@ -20,6 +20,7 @@ import java.util.function.Supplier;
 
 public class BuddycardsBlocks {
     public static final List<Supplier<CardDisplayBlock>> DISPLAY_BLOCKS = new ArrayList<>();
+    public static final List<Supplier<CardStandBlock>> STAND_BLOCKS = new ArrayList<>();
     public static final List<Supplier<PlaymatBlock>> PLAYMAT_BLOCKS = new ArrayList<>();
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Buddycards.MOD_ID);
@@ -66,6 +67,9 @@ public class BuddycardsBlocks {
     public static final RegistryObject<CardDisplayBlock> MANGROVE_CARD_DISPLAY = registerDisplay("mangrove_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)));
     public static final RegistryObject<CardDisplayBlock> CHERRY_CARD_DISPLAY = registerDisplay("cherry_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)));
     public static final RegistryObject<CardDisplayBlock> BAMBOO_CARD_DISPLAY = registerDisplay("bamboo_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS)));
+    public static final RegistryObject<CardStandBlock> STONE_CARD_STAND = registerStand("stone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public static final RegistryObject<CardStandBlock> DEEPSLATE_CARD_STAND = registerStand("deepslate_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public static final RegistryObject<CardStandBlock> BLACKSTONE_CARD_STAND = registerStand("blackstone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
     //Booster Boxes
     public static final RegistryObject<Block> BOOSTER_BOX_BASE = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_base", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     public static final RegistryObject<Block> BOOSTER_BOX_NETHER = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
@@ -77,6 +81,12 @@ public class BuddycardsBlocks {
     public static final RegistryObject<PlaymatBlock> PLAYMAT_END = registerPlaymat("playmat_end", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
     //Misc
     public static final RegistryObject<Block> BUDDYSTEEL_CHARGER = BLOCKS.register("buddysteel_charger", () -> new BuddysteelChargerBlock(BUDDYSTEEL_PROPERTIES));
+
+    public static RegistryObject<CardStandBlock> registerStand(String id, Supplier<CardStandBlock> supplier) {
+        RegistryObject<CardStandBlock> stand = BLOCKS.register(id, supplier);
+        STAND_BLOCKS.add(stand);
+        return stand;
+    }
 
     public static RegistryObject<CardDisplayBlock> registerDisplay(String id, Supplier<CardDisplayBlock> supplier) {
         RegistryObject<CardDisplayBlock> display = BLOCKS.register(id, supplier);

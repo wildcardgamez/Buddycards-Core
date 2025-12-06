@@ -3,7 +3,7 @@
 	"render_type": "cutout",
 	"textures": {
 		"0": "buddycards:block/kinetic_chamber",
-		"particle": "buddycards:block/kinetic_chamber"
+		"particle": "buddycards:block/crimson_luminis_block"
 	},
 	"elements": [
 		{

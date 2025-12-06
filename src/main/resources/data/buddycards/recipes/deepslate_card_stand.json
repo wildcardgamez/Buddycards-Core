@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    "#XX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:cobbled_deepslate_slab"
+    },
+    "X": {
+      "item": "minecraft:cobbled_deepslate"
+    }
+  },
+  "result": {
+    "item": "buddycards:deepslate_card_stand",
+    "count": 2
+  }
+}
