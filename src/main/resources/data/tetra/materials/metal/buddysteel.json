@@ -1,0 +1,58 @@
+{
+  "key": "buddysteel",
+  "category": "metal",
+  "primary": "6",
+  "secondary": "6",
+  "tertiary": "1",
+  "durability": "1024",
+  "integrityCost": "2",
+  "integrityGain": "6",
+  "magicCapacity": "60",
+  "toolLevel": "minecraft:diamond",
+  "toolEfficiency": "7.5",
+  "tints": {
+    "glyph": "98e8ff",
+    "texture": "98e8ff"
+  },
+  "textureOverrides": [
+    "item/module/double/handle/basic/",
+    "item/module/double/head/adze/",
+    "item/module/double/head/basic_axe/",
+    "item/module/double/head/basic_pickaxe/",
+    "item/module/double/head/basic_hammer/",
+    "item/module/double/head/butt/",
+    "item/module/double/head/claw/",
+    "item/module/double/head/hoe/",
+    "item/module/double/head/sickle/",
+    "item/module/single/handle/basic/",
+    "item/module/single/handle/light/",
+    "item/module/single/handle/long/",
+    "item/module/single/head/basic_shovel/",
+    "item/module/single/head/spearhead/",
+    "item/module/sword/blade/basic/",
+    "item/module/sword/blade/heavy/",
+    "item/module/sword/blade/machete/",
+    "item/module/sword/blade/short/",
+    "item/module/sword/guard/forefinger_ring/",
+    "item/module/sword/guard/makeshift_guard/",
+    "item/module/sword/guard/wide_guard/",
+    "item/module/sword/hilt/basic/",
+    "item/module/sword/pommel/counterweight/",
+    "item/module/sword/pommel/decorative_pommel/",
+    "item/module/sword/pommel/grip_loop/"
+  ],
+  "tintOverrides": false,
+  "textures": [
+    "buddysteel",
+    "metal",
+    "default"
+  ],
+  "material": {
+    "items": [
+      "buddycards:buddysteel_ingot"
+    ]
+  },
+  "requiredTools": {
+    "hammer_dig": "minecraft:gold"
+  }
+}

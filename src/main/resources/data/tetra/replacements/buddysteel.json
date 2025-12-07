@@ -1,0 +1,57 @@
+[
+  {
+    "predicate": {
+      "items": [ "buddycards:buddysteel_sword" ]
+    },
+    "item": "tetra:modular_sword",
+    "modules": {
+      "sword/blade": [ "sword/basic_blade", "basic_blade/buddysteel" ],
+      "sword/hilt": [ "sword/basic_hilt", "basic_hilt/buddysteel" ],
+      "sword/pommel": [ "sword/decorative_pommel", "decorative_pommel/buddysteel" ],
+      "sword/guard": [ "sword/makeshift_guard", "makeshift_guard/buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:buddysteel_shovel" ]
+    },
+    "item": "tetra:modular_single",
+    "modules": {
+      "single/head": [ "single/basic_shovel", "basic_shovel/buddysteel" ],
+      "single/handle": [ "single/basic_handle", "basic_handle/buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:buddysteel_pickaxe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/basic_pickaxe_left", "basic_pickaxe/buddysteel" ],
+      "double/head_right": [ "double/basic_pickaxe_right", "basic_pickaxe/buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:buddysteel_hoe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/hoe_left", "hoe/buddysteel" ],
+      "double/head_right": [ "double/butt_right", "butt/buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:buddysteel_axe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/basic_axe_left", "basic_axe/buddysteel" ],
+      "double/head_right": [ "double/butt_right", "butt/buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/buddysteel" ]
+    }
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "key": "luminis",
+  "category": "gem",
+  "primary": "0",
+  "secondary": "4",
+  "tertiary": "1",
+  "durability": "128",
+  "integrityCost": "1",
+  "integrityGain": "2",
+  "magicCapacity": "70",
+  "toolLevel": "minecraft:iron",
+  "toolEfficiency": "4",
+  "tints": {
+    "glyph": "ffff89",
+    "texture": "ffff89"
+  },
+  "textures": [
+    "shiny",
+    "metal",
+    "default"
+  ],
+  "material": {
+    "items": [
+      "buddycards:luminis"
+    ]
+  },
+  "requiredTools": {
+    "hammer_dig": "minecraft:stone"
+  }
+}

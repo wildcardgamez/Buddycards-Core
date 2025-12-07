@@ -767,5 +767,10 @@
   "battles.ability.buddycards.big_bang.log": "All buddies lose 1 power from Big Bang",
   "battles.ability.buddycards.chorus_bloom": "Chorus Bloom",
   "battles.ability.buddycards.chorus_bloom.desc": "When you play Flouer, draw as many Chorus cards as you can.",
-  "battles.ability.buddycards.chorus_bloom.log": " draws Chorus cards from Chorus Bloom"
+  "battles.ability.buddycards.chorus_bloom.log": " draws Chorus cards from Chorus Bloom",
+
+  "tetra.material.buddysteel.prefix": "Buddysteel",
+  "tetra.material.buddysteel": "Buddysteel",
+  "tetra.material.charged_buddysteel.prefix": "Charged Buddysteel",
+  "tetra.material.charged_buddysteel": "Charged Buddysteel"
 }

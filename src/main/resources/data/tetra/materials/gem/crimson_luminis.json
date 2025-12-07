@@ -1,0 +1,30 @@
+{
+  "key": "crimson_luminis",
+  "category": "gem",
+  "primary": "7",
+  "secondary": "4",
+  "tertiary": "2",
+  "durability": "1256",
+  "integrityCost": "3",
+  "integrityGain": "7",
+  "magicCapacity": "70",
+  "toolLevel": "minecraft:diamond",
+  "toolEfficiency": "8",
+  "tints": {
+    "glyph": "e25353",
+    "texture": "e25353"
+  },
+  "textures": [
+    "shiny",
+    "metal",
+    "default"
+  ],
+  "material": {
+    "items": [
+      "buddycards:crimson_luminis"
+    ]
+  },
+  "requiredTools": {
+    "hammer_dig": "minecraft:iron"
+  }
+}

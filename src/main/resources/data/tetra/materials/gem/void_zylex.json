@@ -1,0 +1,30 @@
+{
+  "key": "zylex",
+  "category": "gem",
+  "primary": "7",
+  "secondary": "4",
+  "tertiary": "2",
+  "durability": "1674",
+  "integrityCost": "3",
+  "integrityGain": "7",
+  "magicCapacity": "70",
+  "toolLevel": "minecraft:diamond",
+  "toolEfficiency": "8",
+  "tints": {
+    "glyph": "8940b6",
+    "texture": "322c55"
+  },
+  "textures": [
+    "shiny",
+    "metal",
+    "default"
+  ],
+  "material": {
+    "items": [
+      "buddycards:void_zylex"
+    ]
+  },
+  "requiredTools": {
+    "hammer_dig": "minecraft:iron"
+  }
+}

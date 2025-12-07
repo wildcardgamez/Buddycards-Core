@@ -123,7 +123,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     maven { url = "https://maven.theillusivec4.top/" }
     maven { url = "https://www.cursemaven.com" }
-    maven { url 'https://maven.blamejared.com' }
+    maven { url = 'https://maven.blamejared.com' }
 }
 
 dependencies {
@@ -141,6 +141,9 @@ dependencies {
     //runtimeOnly fg.deobf("curse.maven:smooth-boot-reloaded-633412:4162938")
 
     implementation fg.deobf("curse.maven:jei-238222:5846810")
+
+    implementation fg.deobf("curse.maven:tetra-289712:6912921")
+    implementation fg.deobf("curse.maven:mutil-351914:6418901")
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
