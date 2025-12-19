@@ -1,0 +1,57 @@
+[
+  {
+    "predicate": {
+      "items": [ "buddycards:crimson_buddysteel_sword" ]
+    },
+    "item": "tetra:modular_sword",
+    "modules": {
+      "sword/blade": [ "sword/basic_blade", "basic_blade/crimson_buddysteel" ],
+      "sword/hilt": [ "sword/basic_hilt", "basic_hilt/crimson_buddysteel" ],
+      "sword/pommel": [ "sword/decorative_pommel", "decorative_pommel/crimson_buddysteel" ],
+      "sword/guard": [ "sword/makeshift_guard", "makeshift_guard/crimson_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:crimson_buddysteel_shovel" ]
+    },
+    "item": "tetra:modular_single",
+    "modules": {
+      "single/head": [ "single/basic_shovel", "basic_shovel/crimson_buddysteel" ],
+      "single/handle": [ "single/basic_handle", "basic_handle/crimson_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:crimson_buddysteel_pickaxe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/basic_pickaxe_left", "basic_pickaxe/crimson_buddysteel" ],
+      "double/head_right": [ "double/basic_pickaxe_right", "basic_pickaxe/crimson_buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/crimson_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:crimson_buddysteel_hoe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/hoe_left", "hoe/crimson_buddysteel" ],
+      "double/head_right": [ "double/butt_right", "butt/crimson_buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/crimson_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:crimson_buddysteel_axe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/basic_axe_left", "basic_axe/crimson_buddysteel" ],
+      "double/head_right": [ "double/butt_right", "butt/crimson_buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/crimson_buddysteel" ]
+    }
+  }
+]

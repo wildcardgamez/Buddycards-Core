@@ -1,0 +1,57 @@
+[
+  {
+    "predicate": {
+      "items": [ "buddycards:true_perfect_buddysteel_sword" ]
+    },
+    "item": "tetra:modular_sword",
+    "modules": {
+      "sword/blade": [ "sword/basic_blade", "basic_blade/true_perfect_buddysteel" ],
+      "sword/hilt": [ "sword/basic_hilt", "basic_hilt/true_perfect_buddysteel" ],
+      "sword/pommel": [ "sword/decorative_pommel", "decorative_pommel/true_perfect_buddysteel" ],
+      "sword/guard": [ "sword/makeshift_guard", "makeshift_guard/true_perfect_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:true_perfect_buddysteel_shovel" ]
+    },
+    "item": "tetra:modular_single",
+    "modules": {
+      "single/head": [ "single/basic_shovel", "basic_shovel/true_perfect_buddysteel" ],
+      "single/handle": [ "single/basic_handle", "basic_handle/true_perfect_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:true_perfect_buddysteel_pickaxe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/basic_pickaxe_left", "basic_pickaxe/true_perfect_buddysteel" ],
+      "double/head_right": [ "double/basic_pickaxe_right", "basic_pickaxe/true_perfect_buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/true_perfect_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:true_perfect_buddysteel_hoe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/hoe_left", "hoe/true_perfect_buddysteel" ],
+      "double/head_right": [ "double/butt_right", "butt/true_perfect_buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/true_perfect_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:true_perfect_buddysteel_axe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/basic_axe_left", "basic_axe/true_perfect_buddysteel" ],
+      "double/head_right": [ "double/butt_right", "butt/true_perfect_buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/true_perfect_buddysteel" ]
+    }
+  }
+]

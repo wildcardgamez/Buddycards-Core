@@ -1,0 +1,57 @@
+[
+  {
+    "predicate": {
+      "items": [ "buddycards:perfect_buddysteel_sword" ]
+    },
+    "item": "tetra:modular_sword",
+    "modules": {
+      "sword/blade": [ "sword/basic_blade", "basic_blade/perfect_buddysteel" ],
+      "sword/hilt": [ "sword/basic_hilt", "basic_hilt/perfect_buddysteel" ],
+      "sword/pommel": [ "sword/decorative_pommel", "decorative_pommel/perfect_buddysteel" ],
+      "sword/guard": [ "sword/makeshift_guard", "makeshift_guard/perfect_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:perfect_buddysteel_shovel" ]
+    },
+    "item": "tetra:modular_single",
+    "modules": {
+      "single/head": [ "single/basic_shovel", "basic_shovel/perfect_buddysteel" ],
+      "single/handle": [ "single/basic_handle", "basic_handle/perfect_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:perfect_buddysteel_pickaxe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/basic_pickaxe_left", "basic_pickaxe/perfect_buddysteel" ],
+      "double/head_right": [ "double/basic_pickaxe_right", "basic_pickaxe/perfect_buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/perfect_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:perfect_buddysteel_hoe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/hoe_left", "hoe/perfect_buddysteel" ],
+      "double/head_right": [ "double/butt_right", "butt/perfect_buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/perfect_buddysteel" ]
+    }
+  },
+  {
+    "predicate": {
+      "items": [ "buddycards:perfect_buddysteel_axe" ]
+    },
+    "item": "tetra:modular_double",
+    "modules": {
+      "double/head_left": [ "double/basic_axe_left", "basic_axe/perfect_buddysteel" ],
+      "double/head_right": [ "double/butt_right", "butt/perfect_buddysteel" ],
+      "double/handle": [ "double/basic_handle", "basic_handle/perfect_buddysteel" ]
+    }
+  }
+]

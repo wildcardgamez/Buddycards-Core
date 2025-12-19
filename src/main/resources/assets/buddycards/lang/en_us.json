@@ -772,5 +772,13 @@
   "tetra.material.buddysteel.prefix": "Buddysteel",
   "tetra.material.buddysteel": "Buddysteel",
   "tetra.material.charged_buddysteel.prefix": "Charged Buddysteel",
-  "tetra.material.charged_buddysteel": "Charged Buddysteel"
+  "tetra.material.charged_buddysteel": "Charged Buddysteel",
+  "tetra.material.crimson_buddysteel.prefix": "Crimson Buddysteel",
+  "tetra.material.crimson_buddysteel": "Crimson Buddysteel",
+  "tetra.material.void_buddysteel.prefix": "Void Buddysteel",
+  "tetra.material.void_buddysteel": "Void Buddysteel",
+  "tetra.material.perfect_buddysteel.prefix": "Perfect Buddysteel",
+  "tetra.material.perfect_buddysteel": "Perfect Buddysteel",
+  "tetra.material.true_perfect_buddysteel.prefix": "True Perfect Buddysteel",
+  "tetra.material.true_perfect_buddysteel": "True Perfect Buddysteel"
 }
