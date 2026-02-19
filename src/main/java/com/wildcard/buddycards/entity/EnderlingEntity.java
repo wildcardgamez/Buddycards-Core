@@ -228,6 +228,8 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     public void setupGoalItems(Level lvl) {
+        if (!goalTrades.isEmpty())
+            return;
         RandomSource rand = lvl.getRandom();
         List<BuddycardItem> cards = BuddycardsAPI.getAllCards().stream().filter(BuddycardItem::shouldLoad).toList();
         for (int i = 0; i < 10; i++) {
