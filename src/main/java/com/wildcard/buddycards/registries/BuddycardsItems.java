@@ -1139,6 +1139,34 @@ public class BuddycardsItems {
         /*CRYSTAL  */ registerCard(END_SET, 25, Rarity.RARE,     2, 1, DEFAULT_NO_ABILITIES);
         /*GLIDER   */ registerCard(END_SET, 26, Rarity.EPIC,     2, 1, DEFAULT_NO_ABILITIES);
         /*ENDER    */ registerCard(END_SET, 27, Rarity.EPIC,     2, 1, DEFAULT_NO_ABILITIES);
+        //Register Cave set
+        /*PIKAX    */ registerCard(CAVE_SET, 1, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*EXPIRE   */ registerCard(CAVE_SET, 2, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*BUMBLINA */ registerCard(CAVE_SET, 3, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*POTTER   */ registerCard(CAVE_SET, 4, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SHARD    */ registerCard(CAVE_SET, 5, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*ZOMBERT  */ registerCard(CAVE_SET, 6, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*MEDDI POT*/ registerCard(CAVE_SET, 7, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*HURM     */ registerCard(CAVE_SET, 8, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SKELLY   */ registerCard(CAVE_SET, 9, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*FLICKER  */ registerCard(CAVE_SET, 10, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SORD     */ registerCard(CAVE_SET, 11, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SHOOTER  */ registerCard(CAVE_SET, 12, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*BUTIN    */ registerCard(CAVE_SET, 13, Rarity.COMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*TRUMPET  */ registerCard(CAVE_SET, 14, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SHUSH    */ registerCard(CAVE_SET, 15, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*CREEP    */ registerCard(CAVE_SET, 16, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*BOOMS    */ registerCard(CAVE_SET, 17, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*VINDER   */ registerCard(CAVE_SET, 18, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*FLAG     */ registerCard(CAVE_SET, 19, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*BLINKY   */ registerCard(CAVE_SET, 20, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*WATCHER  */ registerCard(CAVE_SET, 21, Rarity.UNCOMMON, 2, 1, DEFAULT_NO_ABILITIES);
+        /*VEKS     */ registerCard(CAVE_SET, 22, Rarity.RARE, 2, 1, DEFAULT_NO_ABILITIES);
+        /*ALLY     */ registerCard(CAVE_SET, 23, Rarity.RARE, 2, 1, DEFAULT_NO_ABILITIES);
+        /*LERN     */ registerCard(CAVE_SET, 24, Rarity.RARE, 2, 1, DEFAULT_NO_ABILITIES);
+        /*BOOMSTOGO*/ registerCard(CAVE_SET, 25, Rarity.RARE, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SCREAMER */ registerCard(CAVE_SET, 26, Rarity.EPIC, 2, 1, DEFAULT_NO_ABILITIES);
+        /*SPAMSY   */ registerCard(CAVE_SET, 27, Rarity.EPIC, 2, 1, DEFAULT_NO_ABILITIES);
 
         //Register seasonal set
         /*HALLOWEEN_YIN    */ registerReprintCard(HOLIDAY_SET, 1, Rarity.UNCOMMON, HALLOWEEN_BUDDYCARD_REQUIREMENT,4, 2, new BattleAbility.Builder().add(BattleEvent.FIGHT.ability("lazy_cat", (game, slot, target, source) -> {
@@ -1182,6 +1210,7 @@ public class BuddycardsItems {
     public static final BuddycardSet BASE_SET = new BuddycardSet("base");
     public static final BuddycardSet NETHER_SET = new BuddycardSet("nether");
     public static final BuddycardSet END_SET = new BuddycardSet("end");
+    public static final BuddycardSet CAVE_SET = new BuddycardSet("cave");
     public static final BuddycardSet HOLIDAY_SET = new BuddycardSet("holiday");
 
     //Default parameters
@@ -1216,11 +1245,13 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddycardPackItem> PACK_BASE = ITEMS.register("buddycard_pack_base", () -> new BuddycardSetPackItem(BASE_SET, 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
     public static final RegistryObject<BuddycardPackItem> PACK_NETHER = ITEMS.register("buddycard_pack_nether", () -> new BuddycardSetPackItem(NETHER_SET, 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
     public static final RegistryObject<BuddycardPackItem> PACK_END = ITEMS.register("buddycard_pack_end", () -> new BuddycardSetPackItem(END_SET, 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
+    public static final RegistryObject<BuddycardPackItem> PACK_CAVE = ITEMS.register("buddycard_pack_cave", () -> new BuddycardSetPackItem(CAVE_SET, 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
     public static final RegistryObject<BuddycardPackItem> MYSTERY_PACK = ITEMS.register("buddycard_pack_mystery", () -> new MysteryBuddycardPackItem(4, 1, DEFAULT_RARITY_WEIGHTS, false, RARE_PACK_PROPERTIES));
     //Binders
     public static final RegistryObject<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, BASE_SET, new ResourceLocation(Buddycards.MOD_ID, "textures/gui/buddycard_binder_base.png")));
     public static final RegistryObject<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, NETHER_SET, new ResourceLocation(Buddycards.MOD_ID, "textures/gui/buddycard_binder_nether.png")));
     public static final RegistryObject<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, END_SET, new ResourceLocation(Buddycards.MOD_ID, "textures/gui/buddycard_binder_end.png")));
+    public static final RegistryObject<BuddycardBinderItem> BINDER_CAVE = ITEMS.register("buddycard_binder_cave", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, CAVE_SET, new ResourceLocation(Buddycards.MOD_ID, "textures/gui/buddycard_binder_cave.png")));
     //Deckboxes
     public static final RegistryObject<DeckboxItem> BUDDYSTEEL_DECKBOX = ITEMS.register("buddysteel_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
     public static final RegistryObject<DeckboxItem> LUMINIS_DECKBOX = ITEMS.register("luminis_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
@@ -1229,6 +1260,7 @@ public class BuddycardsItems {
     public static final RegistryObject<BlockItem> PLAYMAT_BASE = ITEMS.register("playmat_base", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_BASE.get(), DEFAULT_PROPERTIES, BASE_SET));
     public static final RegistryObject<BlockItem> PLAYMAT_NETHER = ITEMS.register("playmat_nether", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_NETHER.get(), DEFAULT_PROPERTIES, NETHER_SET));
     public static final RegistryObject<BlockItem> PLAYMAT_END = ITEMS.register("playmat_end", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_END.get(), DEFAULT_PROPERTIES, END_SET));
+    public static final RegistryObject<BlockItem> PLAYMAT_CAVE = ITEMS.register("playmat_cave", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_CAVE.get(), DEFAULT_PROPERTIES, CAVE_SET));
     //Buddysteel Items
     public static final RegistryObject<Item> BUDDYSTEEL_BLEND = ITEMS.register("buddysteel_blend", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_INGOT = ITEMS.register("buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
@@ -1276,14 +1308,17 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_BASE = ITEMS.register("buddysteel_medal_base", () -> new BuddysteelSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_NETHER = ITEMS.register("buddysteel_medal_nether", () -> new BuddysteelSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_END = ITEMS.register("buddysteel_medal_end", () -> new BuddysteelSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
+    public static final RegistryObject<BuddysteelSetMedalItem> MEDAL_CAVE = ITEMS.register("buddysteel_medal_cave", () -> new BuddysteelSetMedalItem(MedalTypes.CAVE_SET, CAVE_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BlankBuddysteelMedalItem> BLANK_LUMINIS_MEDAL = ITEMS.register("blank_luminis_medal", () -> new BlankLuminisMedalItem(BUDDYSTEEL_MEDAL_PROPERTIES));
     public static final RegistryObject<LuminisSetMedalItem> LUMINIS_MEDAL_BASE = ITEMS.register("luminis_medal_base", () -> new LuminisSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<LuminisSetMedalItem> LUMINIS_MEDAL_NETHER = ITEMS.register("luminis_medal_nether", () -> new LuminisSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<LuminisSetMedalItem> LUMINIS_MEDAL_END = ITEMS.register("luminis_medal_end", () -> new LuminisSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
+    public static final RegistryObject<LuminisSetMedalItem> LUMINIS_MEDAL_CAVE = ITEMS.register("luminis_medal_cave", () -> new LuminisSetMedalItem(MedalTypes.CAVE_SET, CAVE_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<BlankBuddysteelMedalItem> BLANK_ZYLEX_MEDAL = ITEMS.register("blank_zylex_medal", () -> new BlankZylexMedalItem(BUDDYSTEEL_MEDAL_PROPERTIES));
     public static final RegistryObject<ZylexSetMedalItem> ZYLEX_MEDAL_BASE = ITEMS.register("zylex_medal_base", () -> new ZylexSetMedalItem(MedalTypes.BASE_SET, BASE_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<ZylexSetMedalItem> ZYLEX_MEDAL_NETHER = ITEMS.register("zylex_medal_nether", () -> new ZylexSetMedalItem(MedalTypes.NETHER_SET, NETHER_SET, DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<ZylexSetMedalItem> ZYLEX_MEDAL_END = ITEMS.register("zylex_medal_end", () -> new ZylexSetMedalItem(MedalTypes.END_SET, END_SET, DEFAULT_CURIO_PROPERTIES));
+    public static final RegistryObject<ZylexSetMedalItem> ZYLEX_MEDAL_CAVE = ITEMS.register("zylex_medal_cave", () -> new ZylexSetMedalItem(MedalTypes.CAVE_SET, CAVE_SET, DEFAULT_CURIO_PROPERTIES));
     //Grading Sleeves
     public static final RegistryObject<GradingSleeveItem> GRADING_SLEEVE = ITEMS.register("grading_sleeve", () -> new GradingSleeveItem(DEFAULT_PROPERTIES, new float[]{0.4f, 0.3f, 0.225f, 0.073f}));
     public static final RegistryObject<GradingSleeveItem> GOLDEN_GRADING_SLEEVE = ITEMS.register("golden_grading_sleeve", () -> new GradingSleeveItem(DEFAULT_UNCOMMON_PROPERTIES, new float[]{0.1f, 0.4f, 0.3f, 0.195f}));
@@ -1310,6 +1345,7 @@ public class BuddycardsItems {
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_BASE = ITEMS.register("buddycard_booster_box_base", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_BASE.get(), PACK_BASE, DEFAULT_UNCOMMON_PROPERTIES));
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_NETHER = ITEMS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_NETHER.get(), PACK_NETHER, DEFAULT_UNCOMMON_PROPERTIES));
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_END = ITEMS.register("buddycard_booster_box_end", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_END.get(), PACK_END, DEFAULT_UNCOMMON_PROPERTIES));
+    public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_CAVE = ITEMS.register("buddycard_booster_box_cave", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_CAVE.get(), PACK_CAVE, DEFAULT_UNCOMMON_PROPERTIES));
     public static final RegistryObject<BuddycardBoosterBoxItem> BOOSTER_BOX_MYSTERY = ITEMS.register("buddycard_booster_box_mystery", () -> new BuddycardBoosterBoxItem(BuddycardsBlocks.BOOSTER_BOX_MYSTERY.get(), MYSTERY_PACK, DEFAULT_EPIC_PROPERTIES));
     //Charged Buddysteel Items
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_TEMPLATE = ITEMS.register("charged_buddysteel_upgrade_smithing_template", BuddycardsSmithingTemplateItem::createChargedBuddysteelUpgradeTemplate);

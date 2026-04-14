@@ -20,6 +20,13 @@ public enum MedalTypes implements IMedalTypes{
         player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 300, mod / 2, true, false));
         if (player.hasEffect(MobEffects.LEVITATION) && mod > 0)
             player.removeEffect(MobEffects.LEVITATION);
+    }),
+    CAVE_SET((player, mod) -> {
+        player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 300, 0, true, false));
+        if (player.hasEffect(MobEffects.DARKNESS) && mod > 0)
+            player.removeEffect(MobEffects.DARKNESS);
+        if (mod > 1)
+            player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 300, 0, true, false));
     });
 
     MedalTypes(MedalEffect effect) {

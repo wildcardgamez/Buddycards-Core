@@ -1,0 +1,38 @@
+{
+  "parent": "buddycards:item/buddycard",
+  "overrides": [
+    {
+      "model": "buddycards:item/buddycard_cave1_g1",
+      "predicate": {
+        "buddycards:grade": 1.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_cave1_g2",
+      "predicate": {
+        "buddycards:grade": 2.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_cave1_g3",
+      "predicate": {
+        "buddycards:grade": 3.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_cave1_g4",
+      "predicate": {
+        "buddycards:grade": 4.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_cave1_g5",
+      "predicate": {
+        "buddycards:grade": 5.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "buddycards:item/cave_set/1"
+  }
+}

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.ZombieVillager;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -67,6 +68,12 @@ public class MobDropHandler {
                 if (event.getEntity().getRandom().nextFloat() < ConfigManager.witherChance.get()) {
                     drops.add(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(BuddycardsItems.PACK_NETHER.get(),
                             event.getEntity().getRandom().nextInt(ConfigManager.witherMaxPacks.get()) + 1)));
+                }
+            }
+            else if (entity instanceof Warden) {
+                if (event.getEntity().getRandom().nextFloat() < ConfigManager.wardenChance.get()) {
+                    drops.add(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(BuddycardsItems.PACK_CAVE.get(),
+                            event.getEntity().getRandom().nextInt(ConfigManager.wardenMaxPacks.get()) + 1)));
                 }
             }
         }

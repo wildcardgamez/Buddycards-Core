@@ -4,11 +4,14 @@
     "buddycards:buddysteel_medal_base",
     "buddycards:buddysteel_medal_nether",
     "buddycards:buddysteel_medal_end",
+    "buddycards:buddysteel_medal_cave",
     "buddycards:luminis_medal_base",
     "buddycards:luminis_medal_nether",
     "buddycards:luminis_medal_end",
+    "buddycards:luminis_medal_cave",
     "buddycards:zylex_medal_base",
     "buddycards:zylex_medal_nether",
-    "buddycards:zylex_medal_end"
+    "buddycards:zylex_medal_end",
+    "buddycards:zylex_medal_cave"
   ]
 }
