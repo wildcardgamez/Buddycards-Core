@@ -137,6 +137,12 @@ public class BuddycardItem extends Item {
         return 0;
     }
 
+    public static void setGrade(ItemStack stack, int grade) {
+        CompoundTag nbt = stack.getOrCreateTag().copy();
+        nbt.putInt("grade", grade);
+        stack.setTag(nbt);
+    }
+
     public boolean isGraded(ItemStack stack) {
         return stack.hasTag() && stack.getTag().contains("grade") && stack.getTag().getInt("grade") != 0;
     }

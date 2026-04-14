@@ -1,0 +1,32 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "input": {
+    "item": "buddycards:buddysteel_ring"
+  },
+  "meter": {
+    "item": "buddycards:buddysteel_power_meter"
+  },
+  "power": 6,
+  "ingredients": [
+    {
+      "item": "buddycards:luminis_ring",
+      "count": 1
+    },
+    {
+      "item": "buddycards:zylex_ring",
+      "count": 1
+    },
+    {
+      "item": "buddycards:luminis_ring",
+      "count": 1
+    },
+    {
+      "item": "buddycards:zylex_ring",
+      "count": 1
+    }
+  ],
+  "output": {
+    "item": "buddycards:charged_buddysteel_ring",
+    "count": 1
+  }
+}

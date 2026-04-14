@@ -77,6 +77,13 @@ public class ConfigManager {
 
         enableBattles = builder.comment("\nEnables Buddycards Battles Beta, default is false. Currently unfinished and buggy. Some bugged cards may cause crashes or other issues.")
                 .define("battles.enabled", false);
+
+        buddysteelRingChance = builder.comment("\nChance to pull an extra card in a pack when using a Buddysteel Ring, 0-1, default is 25%")
+                .defineInRange("misc.buddysteelRingChance", 0.25, 0, 1);
+        chargedRingFoilChance = builder.comment("\nChance for an additional foiled card when using a Charged Buddysteel Ring, 0-1, default is 25%")
+                .defineInRange("misc.buddysteelRingChance", 0.25, 0, 1);
+        chargedRingGradeChance = builder.comment("\nChance to pull an extra card in a pack when using a Charged Buddysteel Ring, 0-1, default is 50%")
+                .defineInRange("misc.buddysteelRingChance", 0.5, 0, 1);
     }
 
     public static ForgeConfigSpec.DoubleValue zombieChance;
@@ -107,4 +114,8 @@ public class ConfigManager {
     public static ForgeConfigSpec.IntValue deckLimitEpic;
 
     public static ForgeConfigSpec.BooleanValue enableBattles;
+
+    public static ForgeConfigSpec.DoubleValue buddysteelRingChance;
+    public static ForgeConfigSpec.DoubleValue chargedRingFoilChance;
+    public static ForgeConfigSpec.DoubleValue chargedRingGradeChance;
 }

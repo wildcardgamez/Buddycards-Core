@@ -2,6 +2,7 @@ package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.savedata.BuddycardCollectionSaveData;
+import com.wildcard.buddycards.util.ConfigManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
@@ -49,18 +50,40 @@ public abstract class BuddycardPackItem extends Item {
             //Check for luminis ring to determine foil amount
             Optional<ICuriosItemHandler> curios = CuriosApi.getCuriosInventory(player).resolve();
             int foilAmt = curios.isPresent() && curios.get().isEquipped(BuddycardsItems.LUMINIS_RING.get()) ? FOIL_AMT + 1 : FOIL_AMT;
-            for (int i = 0; i < CARD_AMT; i++) {
+            int cardAmt = curios.isPresent() && ((curios.get().isEquipped(BuddycardsItems.BUDDYSTEEL_RING.get())
+                    && level.getRandom().nextFloat() < ConfigManager.buddysteelRingChance.get())
+                    || curios.get().isEquipped(BuddycardsItems.CHARGED_BUDDYSTEEL_RING.get()))
+                    ? CARD_AMT + 1 : CARD_AMT;
+            for (int i = 0; i < cardAmt; i++) {
                 BuddycardItem card = rollCard(level.getRandom());
                 ItemStack item = new ItemStack(card);
                 //If its one of the last ones that needs foil, make it foil
-                int foil = 0;
-                if (i >= CARD_AMT - foilAmt) {
+                int foil = 0, grade = 0;
+                if (i >= cardAmt - foilAmt) {
                     foil = level.getRandom().nextIntBetweenInclusive(0,10);
                     foil = foil == 10 ? 3 : foil > 7 ? 2 : 1;
                     BuddycardItem.setShiny(item, foil);
                 }
+                //If its the first card in a charged buddysteel ring pack, it will get a chance to be foil and/or graded
+                else if (i == 0 && curios.isPresent() && curios.get().isEquipped(BuddycardsItems.CHARGED_BUDDYSTEEL_RING.get())) {
+                    if (level.getRandom().nextFloat() < ConfigManager.chargedRingFoilChance.get()) {
+                        foil = level.getRandom().nextIntBetweenInclusive(0, 10);
+                        foil = foil == 10 ? 3 : foil > 7 ? 2 : 1;
+                        BuddycardItem.setShiny(item, foil);
+                    }
+                    if (level.getRandom().nextFloat() < ConfigManager.chargedRingGradeChance.get()) {
+                        float rand = level.getRandom().nextFloat();
+                        float[] odds = BuddycardsItems.GRADING_SLEEVE.get().ODDS;
+                        for (grade = 1; grade < 5; grade++) {
+                            if(rand < odds[grade-1])
+                                break;
+                            rand -= odds[grade-1];
+                        }
+                        BuddycardItem.setGrade(item, grade);
+                    }
+                }
                 cards.add(item);
-                BuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), card, foil, 0);
+                BuddycardCollectionSaveData.get(serverLevel).addPlayerCardFound(player.getUUID(), card, foil, grade);
             }
             //Handle fake players by spawning item entities in front of them instead of adding to inventory
             if (player instanceof FakePlayer) {

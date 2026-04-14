@@ -1277,6 +1277,7 @@ public class BuddycardsItems {
     public static final RegistryObject<Item> BUDDYSTEEL_AXE = ITEMS.register("buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.BUDDYSTEEL,6, -3.1F, UNCOMMON_TOOL_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_HOE = ITEMS.register("buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.BUDDYSTEEL,-2, -1F, UNCOMMON_TOOL_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_CHARGER = ITEMS.register("buddysteel_charger", () -> new BlockItem(BuddycardsBlocks.BUDDYSTEEL_CHARGER.get(), DEFAULT_PROPERTIES));
+    public static final RegistryObject<Item> BUDDYSTEEL_RING = ITEMS.register("buddysteel_ring", () -> new DescriptionItem(DEFAULT_CURIO_PROPERTIES));
     //Luminis Items
     public static final RegistryObject<BlockItem> LUMINIS_ORE = ITEMS.register("luminis_ore", () -> new BlockItem(BuddycardsBlocks.LUMINIS_ORE.get(), DEFAULT_PROPERTIES));
     public static final RegistryObject<BlockItem> DEEPSLATE_LUMINIS_ORE = ITEMS.register("deepslate_luminis_ore", () -> new BlockItem(BuddycardsBlocks.DEEPSLATE_LUMINIS_ORE.get(), DEFAULT_PROPERTIES));
@@ -1360,6 +1361,7 @@ public class BuddycardsItems {
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_PICKAXE = ITEMS.register("charged_buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL,1, -2.8F, RARE_TOOL_PROPERTIES));
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_AXE = ITEMS.register("charged_buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL,5.5f, -3.1F, RARE_TOOL_PROPERTIES));
     public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_HOE = ITEMS.register("charged_buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL,-3, -1F, RARE_TOOL_PROPERTIES));
+    public static final RegistryObject<Item> CHARGED_BUDDYSTEEL_RING = ITEMS.register("charged_buddysteel_ring", () -> new DescriptionItem(DEFAULT_CURIO_PROPERTIES));
     public static final RegistryObject<ChargedBuddysteelPowerMeterItem> CHARGED_BUDDYSTEEL_POWER_METER = ITEMS.register("charged_buddysteel_power_meter", () -> new ChargedBuddysteelPowerMeterItem(DEFAULT_RARE_PROPERTIES));
     public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_TEMPLATE = ITEMS.register("crimson_buddysteel_upgrade_smithing_template", BuddycardsSmithingTemplateItem::createCrimsonBuddysteelUpgradeTemplate);
     public static final RegistryObject<Item> CRIMSON_BUDDYSTEEL_INGOT = ITEMS.register("crimson_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));

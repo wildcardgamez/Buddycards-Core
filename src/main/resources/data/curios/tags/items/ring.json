@@ -1,7 +1,9 @@
 {
   "replace": "false",
   "values": [
+    "buddycards:buddysteel_ring",
     "buddycards:luminis_ring",
-    "buddycards:zylex_ring"
+    "buddycards:zylex_ring",
+    "buddycards:charged_buddysteel_ring"
   ]
 }
