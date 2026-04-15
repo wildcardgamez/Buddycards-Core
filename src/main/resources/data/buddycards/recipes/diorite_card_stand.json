@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    "#XX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:diorite_slab"
+    },
+    "X": {
+      "item": "minecraft:diorite"
+    }
+  },
+  "result": {
+    "item": "buddycards:diorite_card_stand",
+    "count": 2
+  }
+}

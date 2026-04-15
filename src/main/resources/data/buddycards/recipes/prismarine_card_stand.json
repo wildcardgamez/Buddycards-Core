@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    "#XX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:prismarine_slab"
+    },
+    "X": {
+      "item": "minecraft:prismarine"
+    }
+  },
+  "result": {
+    "item": "buddycards:prismarine_card_stand",
+    "count": 2
+  }
+}

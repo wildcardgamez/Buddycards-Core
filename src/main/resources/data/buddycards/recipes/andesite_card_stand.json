@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    "#XX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:andesite_slab"
+    },
+    "X": {
+      "item": "minecraft:andesite"
+    }
+  },
+  "result": {
+    "item": "buddycards:andesite_card_stand",
+    "count": 2
+  }
+}

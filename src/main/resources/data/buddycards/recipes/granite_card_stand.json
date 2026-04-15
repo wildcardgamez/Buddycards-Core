@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    "#XX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:granite_slab"
+    },
+    "X": {
+      "item": "minecraft:granite"
+    }
+  },
+  "result": {
+    "item": "buddycards:granite_card_stand",
+    "count": 2
+  }
+}

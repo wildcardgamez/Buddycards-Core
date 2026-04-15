@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
   "ingredient": {
-    "item": "minecraft:stone"
+    "item": "minecraft:tuff"
   },
-  "result": "buddycards:stone_card_stand",
+  "result": "buddycards:tuff_card_stand",
   "count": 2
 }

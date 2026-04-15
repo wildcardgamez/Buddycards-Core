@@ -67,9 +67,20 @@ public class BuddycardsBlocks {
     public static final RegistryObject<CardDisplayBlock> MANGROVE_CARD_DISPLAY = registerDisplay("mangrove_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.MANGROVE_PLANKS)));
     public static final RegistryObject<CardDisplayBlock> CHERRY_CARD_DISPLAY = registerDisplay("cherry_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS)));
     public static final RegistryObject<CardDisplayBlock> BAMBOO_CARD_DISPLAY = registerDisplay("bamboo_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.copy(Blocks.BAMBOO_PLANKS)));
+    //Stands
     public static final RegistryObject<CardStandBlock> STONE_CARD_STAND = registerStand("stone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
-    public static final RegistryObject<CardStandBlock> DEEPSLATE_CARD_STAND = registerStand("deepslate_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
-    public static final RegistryObject<CardStandBlock> BLACKSTONE_CARD_STAND = registerStand("blackstone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.STONE)));
+    public static final RegistryObject<CardStandBlock> DEEPSLATE_CARD_STAND = registerStand("deepslate_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE)));
+    public static final RegistryObject<CardStandBlock> BLACKSTONE_CARD_STAND = registerStand("blackstone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.BLACKSTONE)));
+    public static final RegistryObject<CardStandBlock> ANDESITE_CARD_STAND = registerStand("andesite_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE)));
+    public static final RegistryObject<CardStandBlock> DIORITE_CARD_STAND = registerStand("diorite_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.DIORITE)));
+    public static final RegistryObject<CardStandBlock> GRANITE_CARD_STAND = registerStand("granite_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE)));
+    public static final RegistryObject<CardStandBlock> SANDSTONE_CARD_STAND = registerStand("sandstone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE)));
+    public static final RegistryObject<CardStandBlock> RED_SANDSTONE_CARD_STAND = registerStand("red_sandstone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.RED_SANDSTONE)));
+    public static final RegistryObject<CardStandBlock> PRISMARINE_CARD_STAND = registerStand("prismarine_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.PRISMARINE)));
+    public static final RegistryObject<CardStandBlock> CALCITE_CARD_STAND = registerStand("calcite_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.CALCITE)));
+    public static final RegistryObject<CardStandBlock> TUFF_CARD_STAND = registerStand("tuff_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.TUFF)));
+    public static final RegistryObject<CardStandBlock> DRIPSTONE_CARD_STAND = registerStand("dripstone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.DRIPSTONE_BLOCK)));
+    public static final RegistryObject<CardStandBlock> BASALT_CARD_STAND = registerStand("basalt_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.copy(Blocks.BASALT)));
     //Booster Boxes
     public static final RegistryObject<Block> BOOSTER_BOX_BASE = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_base", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
     public static final RegistryObject<Block> BOOSTER_BOX_NETHER = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
