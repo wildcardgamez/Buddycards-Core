@@ -45,10 +45,10 @@ public class ConfigManager {
                 .defineInRange("mobDrops.witherChance", .5f, 0, 1);
         witherMaxPacks = builder.comment("\nMaximum amount of packs dropped when a wither drops packs, default is 3")
                 .defineInRange("mobDrops.witherMaxPacks", 3, 1, 16);
-        wardenChance = builder.comment("\nOdds of withers dropping nether set packs, 0 for 0%, 1 for 100%, default is 50%")
-                .defineInRange("mobDrops.witherChance", .5f, 0, 1);
-        wardenMaxPacks = builder.comment("\nMaximum amount of packs dropped when a wither drops packs, default is 3")
-                .defineInRange("mobDrops.witherMaxPacks", 3, 1, 16);
+        wardenChance = builder.comment("\nOdds of wardens dropping cave set packs, 0 for 0%, 1 for 100%, default is 75%")
+                .defineInRange("mobDrops.wardenChance", .75f, 0, 1);
+        wardenMaxPacks = builder.comment("\nMaximum amount of packs dropped when a warden drops packs, default is 1")
+                .defineInRange("mobDrops.wardenMaxPacks", 1, 1, 16);
 
         luminisToCrimsonAvg = builder.comment("\nAmount of Luminis blocks, on average, needed to make 1 Crimson Luminis in an explosion, default is 2")
                 .defineInRange("luminis.explodeCrimsonAvg", 2, 1, 16);

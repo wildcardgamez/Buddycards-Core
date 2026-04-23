@@ -1257,10 +1257,10 @@ public class BuddycardsItems {
     public static final RegistryObject<DeckboxItem> LUMINIS_DECKBOX = ITEMS.register("luminis_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
     public static final RegistryObject<DeckboxItem> ZYLEX_DECKBOX = ITEMS.register("zylex_deckbox", () -> new DeckboxItem(DEFAULT_BINDER_PROPERTIES));
     //Playmats
-    public static final RegistryObject<BlockItem> PLAYMAT_BASE = ITEMS.register("playmat_base", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_BASE.get(), DEFAULT_PROPERTIES, BASE_SET));
-    public static final RegistryObject<BlockItem> PLAYMAT_NETHER = ITEMS.register("playmat_nether", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_NETHER.get(), DEFAULT_PROPERTIES, NETHER_SET));
-    public static final RegistryObject<BlockItem> PLAYMAT_END = ITEMS.register("playmat_end", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_END.get(), DEFAULT_PROPERTIES, END_SET));
-    public static final RegistryObject<BlockItem> PLAYMAT_CAVE = ITEMS.register("playmat_cave", () -> new SetBasedBlockItem(BuddycardsBlocks.PLAYMAT_CAVE.get(), DEFAULT_PROPERTIES, CAVE_SET));
+    public static final RegistryObject<BlockItem> PLAYMAT_BASE = ITEMS.register("playmat_base", () -> new PlaymatBlockItem(BuddycardsBlocks.PLAYMAT_BASE.get(), DEFAULT_PROPERTIES, BASE_SET));
+    public static final RegistryObject<BlockItem> PLAYMAT_NETHER = ITEMS.register("playmat_nether", () -> new PlaymatBlockItem(BuddycardsBlocks.PLAYMAT_NETHER.get(), DEFAULT_PROPERTIES, NETHER_SET));
+    public static final RegistryObject<BlockItem> PLAYMAT_END = ITEMS.register("playmat_end", () -> new PlaymatBlockItem(BuddycardsBlocks.PLAYMAT_END.get(), DEFAULT_PROPERTIES, END_SET));
+    public static final RegistryObject<BlockItem> PLAYMAT_CAVE = ITEMS.register("playmat_cave", () -> new PlaymatBlockItem(BuddycardsBlocks.PLAYMAT_CAVE.get(), DEFAULT_PROPERTIES, CAVE_SET));
     //Buddysteel Items
     public static final RegistryObject<Item> BUDDYSTEEL_BLEND = ITEMS.register("buddysteel_blend", () -> new Item(DEFAULT_PROPERTIES));
     public static final RegistryObject<Item> BUDDYSTEEL_INGOT = ITEMS.register("buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));

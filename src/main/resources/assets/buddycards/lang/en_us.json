@@ -50,6 +50,8 @@
   "block.buddycards.playmat_nether": "Buddycards Playmat",
   "block.buddycards.playmat_end": "Buddycards Playmat",
   "block.buddycards.playmat_cave": "Buddycards Playmat",
+  "block.buddycards.playmat.desc": "Two Playmats facing eachother can start a battle when both players right click a deckbox onto their playmat.",
+  "block.buddycards.playmat.desc.disabled": "Buddycards Battling is currently disabled in the config, this item is purely cosmetic.",
   "item.buddycards.buddycard_pack_base": "Buddycard Pack",
   "item.buddycards.buddycard_pack_nether": "Buddycard Pack",
   "item.buddycards.buddycard_pack_end": "Buddycard Pack",
