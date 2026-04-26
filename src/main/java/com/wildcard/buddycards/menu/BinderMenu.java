@@ -23,30 +23,52 @@ public class BinderMenu extends AbstractContainerMenu {
     private final BinderItemHandler handler;
     private final DataSlot pageData = DataSlot.standalone();
     private int page;
+    private boolean large;
 
     public BinderMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new BinderItemHandler(playerInv.getSelected(), 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected())));
+        this(id, playerInv, new BinderItemHandler(playerInv.getSelected(), 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), playerInv.getSelected()), ((BuddycardBinderItem) playerInv.getSelected().getItem()).isLarge()));
     }
 
     public BinderMenu(int id, Inventory playerInv, BinderItemHandler handler) {
         super(BuddycardsMisc.BINDER_MENU.get(), id);
         this.handler = handler;
-        //Set up slots for binder
+        this.large = ((BuddycardBinderItem) handler.getBinder().getItem()).isLarge();
         this.addDataSlot(pageData);
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 8; x++) {
-                this.addSlot(new BinderSlot(this.handler, x + (y * 8), (x < 4 ? 8 : 26) + x * 18, 26 + y * 18));
+        if (isLarge()) {
+            //Set up slots for binder
+            for (int y = 0; y < 6; y++) {
+                for (int x = 0; x < 12; x++) {
+                    this.addSlot(new BinderSlot(this.handler, x + (y * 12), (x < 6 ? 8 : 26) + x * 18, 26 + y * 18));
+                }
             }
-        }
-        //Set up slots for inventory
-        for (int y = 0; y < 3; y++) {
+            //Set up slots for inventory
+            for (int y = 0; y < 3; y++) {
+                for (int x = 0; x < 9; x++) {
+                    this.addSlot(new InvSlot(playerInv, x + (y * 9) + 9, 44 + x * 18, 158 + y * 18));
+                }
+            }
+            //Set up slots for hotbar
             for (int x = 0; x < 9; x++) {
-                this.addSlot(new InvSlot(playerInv, x + (y * 9) + 9, 8 + x * 18, 122 + y * 18));
+                this.addSlot(new InvSlot(playerInv, x, 44 + x * 18, 216));
             }
         }
-        //Set up slots for hotbar
-        for (int x = 0; x < 9; x++) {
-            this.addSlot(new InvSlot(playerInv, x, 8 + x * 18, 180));
+        else {
+            //Set up slots for binder
+            for (int y = 0; y < 4; y++) {
+                for (int x = 0; x < 8; x++) {
+                    this.addSlot(new BinderSlot(this.handler, x + (y * 8), (x < 4 ? 8 : 26) + x * 18, 26 + y * 18));
+                }
+            }
+            //Set up slots for inventory
+            for (int y = 0; y < 3; y++) {
+                for (int x = 0; x < 9; x++) {
+                    this.addSlot(new InvSlot(playerInv, x + (y * 9) + 9, 8 + x * 18, 122 + y * 18));
+                }
+            }
+            //Set up slots for hotbar
+            for (int x = 0; x < 9; x++) {
+                this.addSlot(new InvSlot(playerInv, x, 8 + x * 18, 180));
+            }
         }
     }
 
@@ -57,14 +79,14 @@ public class BinderMenu extends AbstractContainerMenu {
 
     @Override
     public boolean clickMenuButton(Player player, int buttonId) {
-        if (buttonId == 0 && 0 < page) {
-            page -= 1;
+        if (buttonId == 0) {
+            page = page > 0 ? page - 1 : handler.getPageAmt() - 1;
             pageData.set(page);
             broadcastChanges();
             return true;
         }
-        else if (buttonId == 1 && page + 1 < handler.getPageAmt()) {
-            page += 1;
+        else if (buttonId == 1) {
+            page = page + 1 < handler.getPageAmt() ? page + 1 : 0;
             pageData.set(page);
             broadcastChanges();
             return true;
@@ -136,7 +158,7 @@ public class BinderMenu extends AbstractContainerMenu {
         }
 
         public int getRealSlotIndex() {
-            return (page * 32) + getSlotIndex();
+            return (page * (large ? 72 : 32)) + getSlotIndex();
         }
     }
     public class InvSlot extends Slot {
@@ -187,6 +209,10 @@ public class BinderMenu extends AbstractContainerMenu {
 
     public ResourceLocation getTexture() {
         return ((BuddycardBinderItem) handler.getBinder().getItem()).getBinderTexture();
+    }
+
+    public boolean isLarge() {
+        return large;
     }
 
     public int getPageAmt() {

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#XX",
+    "#XX",
+    "#XX"
+  ],
+  "key": {
+    "#": {
+      "item": "buddycards:buddysteel_nugget"
+    },
+    "X": {
+      "tag": "buddycards:buddycards_cave"
+    }
+  },
+  "result":
+  {
+    "item": "buddycards:large_buddycard_binder_cave"
+  }
+}

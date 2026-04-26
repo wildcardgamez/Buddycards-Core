@@ -15,22 +15,24 @@ import net.minecraft.world.entity.player.Inventory;
 public class BinderScreen extends AbstractContainerScreen<BinderMenu> {
     public BinderScreen(BinderMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
+        TEXTURE = menu.getTexture();
+        LARGE = menu.isLarge();
         this.leftPos = 0;
         this.topPos = 0;
-        this.imageWidth = 176;
-        this.imageHeight = 204;
-        TEXTURE = menu.getTexture();
+        this.imageWidth = LARGE ? 247 : 176;
+        this.imageHeight = LARGE ? 240 : 204;
     }
 
     public final ResourceLocation TEXTURE;
+    public final boolean LARGE;
 
     @Override
     protected void init() {
         super.init();
-        this.addRenderableWidget(new ImageButton(leftPos - 15, topPos + 52, 15, 18, 176, 0, 18, TEXTURE, btn -> {
+        this.addRenderableWidget(new ImageButton(leftPos - 15, topPos + (LARGE ? 70 : 52), 15, 18, (LARGE ? 247 : 176), 0, 18, TEXTURE, LARGE ? 512 : 256, LARGE ? 512 : 256, btn -> {
             this.sendButtonPress(0);
         }));
-        this.addRenderableWidget(new ImageButton(leftPos + 176, topPos + 52, 15, 18, 191, 0, 18, TEXTURE, btn -> {
+        this.addRenderableWidget(new ImageButton(leftPos + (LARGE ? 248 : 176), topPos + (LARGE ? 70 : 52), 15, 18, (LARGE ? 263 : 191), 0, 18, TEXTURE, LARGE ? 512 : 256, LARGE ? 512 : 256, btn -> {
             this.sendButtonPress(1);
         }));
     }
@@ -42,15 +44,15 @@ public class BinderScreen extends AbstractContainerScreen<BinderMenu> {
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
         //Draw the name of the binder and the inventory titles
-        pGuiGraphics.drawString(font, title, 8, 6, 4210752, false);
-        pGuiGraphics.drawString(font, Component.literal(this.menu.getCurrentPage() + "/" + this.menu.getPageAmt()), 140, 6, 4210752, false);
-        pGuiGraphics.drawString(font, playerInventoryTitle, 8, 110, 4210752, false);
+        pGuiGraphics.drawString(font, title, LARGE ? 44 : 8, 6, 4210752, false);
+        pGuiGraphics.drawString(font, Component.literal(this.menu.getCurrentPage() + "/" + this.menu.getPageAmt()), LARGE ? 176 : 140, 6, 4210752, false);
+        pGuiGraphics.drawString(font, playerInventoryTitle, LARGE ? 44 : 8, LARGE ? 146 : 110, 4210752, false);
     }
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         assert this.minecraft != null;
-        pGuiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        pGuiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, LARGE ? 512 : 256, LARGE ? 512 : 256);
     }
 
     @Override

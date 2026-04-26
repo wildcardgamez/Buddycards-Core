@@ -9,8 +9,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class BinderItemHandler extends ItemStackHandler {
-    public BinderItemHandler(ItemStack binderIn, int pageAmtIn) {
-        super(32 * pageAmtIn);
+    public BinderItemHandler(ItemStack binderIn, int pageAmtIn, boolean large) {
+        super((large ? 72 : 32) * pageAmtIn);
         binder = binderIn;
         pageAmt = pageAmtIn;
         if (binder.hasTag() && binder.getTag().contains("Inventory"))

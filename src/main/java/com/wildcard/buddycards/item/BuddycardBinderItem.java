@@ -24,14 +24,24 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class BuddycardBinderItem extends Item {
+    public BuddycardBinderItem(Properties properties, BuddycardSet set, ResourceLocation texture, boolean large) {
+        super(properties);
+        SET = set;
+        TEXTURE = texture;
+        LARGE = large;
+    }
+
+    @Deprecated
     public BuddycardBinderItem(Properties properties, BuddycardSet set, ResourceLocation texture) {
         super(properties);
         SET = set;
         TEXTURE = texture;
+        LARGE = false;
     }
 
     protected final BuddycardSet SET;
     protected final ResourceLocation TEXTURE;
+    protected final boolean LARGE;
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
@@ -44,7 +54,7 @@ public class BuddycardBinderItem extends Item {
         if(level instanceof ServerLevel) {
             int pages = 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), binder);
             NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderItemHandler(binder, pages))
+                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderItemHandler(binder, pages, LARGE))
                     , player.getItemInHand(hand).getHoverName()));
         }
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
@@ -62,5 +72,9 @@ public class BuddycardBinderItem extends Item {
 
     public ResourceLocation getBinderTexture() {
         return TEXTURE;
+    }
+
+    public boolean isLarge() {
+        return LARGE;
     }
 }
