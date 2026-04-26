@@ -79,7 +79,7 @@ public class BuddycardItem extends Item {
         //Show the set, card number, and shiny symbol if applicable
         MutableComponent cn = Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
         cn.append("" + CARD_NUMBER);
-        if(isFoil(stack)) {
+        if(getFoil(stack) != 0) {
             cn.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol." + getFoil(stack)));
         }
         tooltip.add(Component.translatable(SET.getDescriptionId()).append(cn).withStyle(ChatFormatting.GRAY));
@@ -126,10 +126,11 @@ public class BuddycardItem extends Item {
         stack.setTag(nbt);
     }
 
-    @Override
+    /**
+    //@Override
     public boolean isFoil(ItemStack stack) {
         return stack.hasTag() && stack.getTag().contains("foil") && stack.getTag().getInt("foil") != 0;
-    }
+    }**/
 
     public static int getFoil(ItemStack stack) {
         if (stack.hasTag() && stack.getTag().contains("foil"))

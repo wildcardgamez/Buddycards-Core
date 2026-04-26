@@ -47,16 +47,21 @@ public class ModelGen extends ItemModelProvider {
         ItemModelBuilder card = getBuilder(ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum)
                 .parent(factory.apply(new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard")))
                 .texture("layer0", new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum));
-        for (int i = 1; i <= 5; i++) {
-            card.override().predicate(new ResourceLocation(Buddycards.MOD_ID, "grade"), i).model(genGradedCardModel(setName, cardNum, i));
+        for (int i = 0; i <= 5; i++) {
+            for (int j = 0; j <= 3; j++)
+                if (j + i != 0)
+                    card.override().predicate(new ResourceLocation(Buddycards.MOD_ID, "grade"), i).predicate(new ResourceLocation(Buddycards.MOD_ID, "foil"), j).model(genFoiledGradedCardModel(setName, cardNum, i, j));
         }
     }
-
-    ModelFile genGradedCardModel(String setName, int cardNum, int grade) {
-        return getBuilder(ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum + "_g" + grade)
+    ModelFile genFoiledGradedCardModel(String setName, int cardNum, int grade, int foil) {
+        ItemModelBuilder card = getBuilder(ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum + "_g" + grade + "_f" + foil)
                 .parent(factory.apply(new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard")))
-                .texture("layer0", new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum))
-                .texture("layer1", new ResourceLocation(Buddycards.MOD_ID,ModelProvider.ITEM_FOLDER + "/grade" + grade));
+                .texture("layer0", new ResourceLocation(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum));
+        if (foil != 0)
+                card.texture("layer1", new ResourceLocation(Buddycards.MOD_ID,ModelProvider.ITEM_FOLDER + "/foil" + foil));
+        if (grade != 0)
+                card.texture(foil == 0 ? "layer1" : "layer2", new ResourceLocation(Buddycards.MOD_ID,ModelProvider.ITEM_FOLDER + "/grade" + grade));
+        return card;
     }
 
     private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();

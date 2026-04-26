@@ -34,6 +34,11 @@ public class ClientStuff {
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.CHARGER_CONTAINER.get(), ChargerScreen::new));
         for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
             for (BuddycardItem card : set.getCards()) {
+                event.enqueueWork(() -> ItemProperties.register(card, new ResourceLocation(Buddycards.MOD_ID, "foil"), (stack, world, entity, idk) -> {
+                    if (stack.getTag() != null)
+                        return stack.getTag().getInt("foil");
+                    return 0;
+                }));
                 event.enqueueWork(() -> ItemProperties.register(card, new ResourceLocation(Buddycards.MOD_ID, "grade"), (stack, world, entity, idk) -> {
                     if (stack.getTag() != null)
                         return stack.getTag().getInt("grade");

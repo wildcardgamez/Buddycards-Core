@@ -2,32 +2,163 @@
   "parent": "buddycards:item/buddycard",
   "overrides": [
     {
-      "model": "buddycards:item/buddycard_nether24_g1",
+      "model": "buddycards:item/buddycard_nether24_g0_f1",
       "predicate": {
+        "buddycards:foil": 1.0,
+        "buddycards:grade": 0.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g0_f2",
+      "predicate": {
+        "buddycards:foil": 2.0,
+        "buddycards:grade": 0.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g0_f3",
+      "predicate": {
+        "buddycards:foil": 3.0,
+        "buddycards:grade": 0.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g1_f0",
+      "predicate": {
+        "buddycards:foil": 0.0,
         "buddycards:grade": 1.0
       }
     },
     {
-      "model": "buddycards:item/buddycard_nether24_g2",
+      "model": "buddycards:item/buddycard_nether24_g1_f1",
       "predicate": {
+        "buddycards:foil": 1.0,
+        "buddycards:grade": 1.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g1_f2",
+      "predicate": {
+        "buddycards:foil": 2.0,
+        "buddycards:grade": 1.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g1_f3",
+      "predicate": {
+        "buddycards:foil": 3.0,
+        "buddycards:grade": 1.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g2_f0",
+      "predicate": {
+        "buddycards:foil": 0.0,
         "buddycards:grade": 2.0
       }
     },
     {
-      "model": "buddycards:item/buddycard_nether24_g3",
+      "model": "buddycards:item/buddycard_nether24_g2_f1",
       "predicate": {
+        "buddycards:foil": 1.0,
+        "buddycards:grade": 2.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g2_f2",
+      "predicate": {
+        "buddycards:foil": 2.0,
+        "buddycards:grade": 2.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g2_f3",
+      "predicate": {
+        "buddycards:foil": 3.0,
+        "buddycards:grade": 2.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g3_f0",
+      "predicate": {
+        "buddycards:foil": 0.0,
         "buddycards:grade": 3.0
       }
     },
     {
-      "model": "buddycards:item/buddycard_nether24_g4",
+      "model": "buddycards:item/buddycard_nether24_g3_f1",
       "predicate": {
+        "buddycards:foil": 1.0,
+        "buddycards:grade": 3.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g3_f2",
+      "predicate": {
+        "buddycards:foil": 2.0,
+        "buddycards:grade": 3.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g3_f3",
+      "predicate": {
+        "buddycards:foil": 3.0,
+        "buddycards:grade": 3.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g4_f0",
+      "predicate": {
+        "buddycards:foil": 0.0,
         "buddycards:grade": 4.0
       }
     },
     {
-      "model": "buddycards:item/buddycard_nether24_g5",
+      "model": "buddycards:item/buddycard_nether24_g4_f1",
       "predicate": {
+        "buddycards:foil": 1.0,
+        "buddycards:grade": 4.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g4_f2",
+      "predicate": {
+        "buddycards:foil": 2.0,
+        "buddycards:grade": 4.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g4_f3",
+      "predicate": {
+        "buddycards:foil": 3.0,
+        "buddycards:grade": 4.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g5_f0",
+      "predicate": {
+        "buddycards:foil": 0.0,
+        "buddycards:grade": 5.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g5_f1",
+      "predicate": {
+        "buddycards:foil": 1.0,
+        "buddycards:grade": 5.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g5_f2",
+      "predicate": {
+        "buddycards:foil": 2.0,
+        "buddycards:grade": 5.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddycard_nether24_g5_f3",
+      "predicate": {
+        "buddycards:foil": 3.0,
         "buddycards:grade": 5.0
       }
     }
