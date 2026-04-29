@@ -1,0 +1,42 @@
+package com.wildcard.buddycards.screens;
+
+import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.menu.GraderMenu;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+
+public class GraderScreen extends AbstractContainerScreen<GraderMenu> {
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/grader.png");
+
+    public GraderScreen(GraderMenu menu, Inventory inv, Component title) {
+        super(menu, inv, title);
+        this.leftPos = 0;
+        this.topPos = 0;
+        this.imageWidth = 176;
+        this.imageHeight = 168;
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
+        pGuiGraphics.drawString(font, title, 8, 6, 4210752, false);
+        pGuiGraphics.drawString(font, playerInventoryTitle,8, 74, 4210752, false);
+    }
+
+    @Override
+    protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
+        pGuiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        int progress = menu.getProgress();
+        if(progress > 0)
+            pGuiGraphics.blit(TEXTURE, leftPos + 81, topPos + 24, 176, 0, 14, progress);
+    }
+
+    @Override
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float delta) {
+        super.renderBackground(pGuiGraphics);
+        super.render(pGuiGraphics, pMouseX, pMouseY, delta);
+        renderTooltip(pGuiGraphics, pMouseX, pMouseY);
+    }
+}

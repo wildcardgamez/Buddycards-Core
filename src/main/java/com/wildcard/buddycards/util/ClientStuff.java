@@ -4,16 +4,13 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.*;
 import com.wildcard.buddycards.integration.CuriosIntegration;
-import com.wildcard.buddycards.screens.ChargerScreen;
-import com.wildcard.buddycards.screens.DeckboxScreen;
+import com.wildcard.buddycards.screens.*;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
-import com.wildcard.buddycards.screens.PlaymatScreen;
-import com.wildcard.buddycards.screens.BinderScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -29,9 +26,10 @@ public class ClientStuff {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.BINDER_MENU.get(), BinderScreen::new));
-        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.DECKBOX_CONTAINER.get(), DeckboxScreen::new));
-        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.PLAYMAT_CONTAINER.get(), PlaymatScreen::new));
-        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.CHARGER_CONTAINER.get(), ChargerScreen::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.DECKBOX_MENU.get(), DeckboxScreen::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.PLAYMAT_MENU.get(), PlaymatScreen::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.CHARGER_MENU.get(), ChargerScreen::new));
+        event.enqueueWork(() -> MenuScreens.register(BuddycardsMisc.GRADER_MENU.get(), GraderScreen::new));
         for (BuddycardSet set : BuddycardsAPI.getAllCardsets()) {
             for (BuddycardItem card : set.getCards()) {
                 event.enqueueWork(() -> ItemProperties.register(card, new ResourceLocation(Buddycards.MOD_ID, "foil"), (stack, world, entity, idk) -> {

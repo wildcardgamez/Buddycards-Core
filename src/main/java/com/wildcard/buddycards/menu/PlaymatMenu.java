@@ -54,7 +54,7 @@ public class PlaymatMenu extends AbstractContainerMenu {
     }
 
     public PlaymatMenu(int id, Inventory playerInv, PlaymatBlockEntity entity) {
-        super(BuddycardsMisc.PLAYMAT_CONTAINER.get(), id);
+        super(BuddycardsMisc.PLAYMAT_MENU.get(), id);
         this.entity = entity;
         this.container = entity.container;
         this.addSlot(new DeckSlot(this.container, (entity.p1 ? 7 : 0), 143, 18));

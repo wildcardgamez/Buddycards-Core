@@ -51,7 +51,6 @@ public class BuddycardsBlocks {
     public static final RegistryObject<Block> LUMINIS_CRYSTAL_BLOCK = BLOCKS.register("luminis_crystal_block", () -> new Block(CRYSTAL_LUMINIS_PROPERTIES));
     public static final RegistryObject<Block> LUMINIS_BLOCK = BLOCKS.register("luminis_block", () -> new Block(LUMINIS_PROPERTIES));
     public static final RegistryObject<Block> CRIMSON_LUMINIS_BLOCK = BLOCKS.register("crimson_luminis_block", () -> new Block(CRIMSON_LUMINIS_PROPERTIES));
-    public static final RegistryObject<Block> KINETIC_CHAMBER = BLOCKS.register("kinetic_chamber", () -> new KineticChamberBlock(CRIMSON_LUMINIS_PROPERTIES.explosionResistance(0)));
     public static final RegistryObject<Block> LUMINIS_PANELS = BLOCKS.register("luminis_panels", () -> new Block(LUMINIS_PROPERTIES));
     public static final RegistryObject<Block> ZYLEX_BLOCK = BLOCKS.register("zylex_block", () -> new Block(ZYLEX_PROPERTIES));
     public static final RegistryObject<Block> VOID_ZYLEX_BLOCK = BLOCKS.register("void_zylex_block", () -> new Block(VOID_ZYLEX_PROPERTIES));
@@ -94,6 +93,9 @@ public class BuddycardsBlocks {
     public static final RegistryObject<PlaymatBlock> PLAYMAT_CAVE = registerPlaymat("playmat_cave", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
     //Misc
     public static final RegistryObject<Block> BUDDYSTEEL_CHARGER = BLOCKS.register("buddysteel_charger", () -> new BuddysteelChargerBlock(BUDDYSTEEL_PROPERTIES));
+    public static final RegistryObject<Block> KINETIC_CHAMBER = BLOCKS.register("kinetic_chamber", () -> new KineticChamberBlock(CRIMSON_LUMINIS_PROPERTIES.explosionResistance(0)));
+    public static final RegistryObject<Block> GRADER = BLOCKS.register("grader", () -> new GraderBlock(ZYLEX_PROPERTIES));
+
 
     public static RegistryObject<CardStandBlock> registerStand(String id, Supplier<CardStandBlock> supplier) {
         RegistryObject<CardStandBlock> stand = BLOCKS.register(id, supplier);

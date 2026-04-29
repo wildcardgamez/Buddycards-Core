@@ -43,6 +43,8 @@ public class BuddycardsEntities {
             () -> BlockEntityType.Builder.of(KineticChamberBlockEntity::new, BuddycardsBlocks.KINETIC_CHAMBER.get()).build(null));
     public static final RegistryObject<BlockEntityType<BuddysteelChargerBlockEntity>> BUDDYSTEEL_CHARGER_ENTITY = BLOCK_ENTITIES.register("buddysteel_charger",
             () -> BlockEntityType.Builder.of(BuddysteelChargerBlockEntity::new, BuddycardsBlocks.BUDDYSTEEL_CHARGER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<GraderBlockEntity>> GRADER_ENTITY = BLOCK_ENTITIES.register("grader",
+            () -> BlockEntityType.Builder.of(GraderBlockEntity::new, BuddycardsBlocks.GRADER.get()).build(null));
 
     public static final RegistryObject<EntityType<EnderlingEntity>> ENDERLING = ENTITIES.register("enderling",
             () -> EntityType.Builder.of(EnderlingEntity::new, MobCategory.CREATURE).sized(.6f, 1.8f).build(new ResourceLocation(Buddycards.MOD_ID, "enderling").toString()));

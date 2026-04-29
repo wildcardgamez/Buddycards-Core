@@ -1,6 +1,8 @@
 package com.wildcard.buddycards.menu;
 
-import com.wildcard.buddycards.block.entity.BuddysteelChargerBlockEntity;
+import com.wildcard.buddycards.block.entity.GraderBlockEntity;
+import com.wildcard.buddycards.item.BuddycardItem;
+import com.wildcard.buddycards.item.GradingSleeveItem;
 import com.wildcard.buddycards.registries.BuddycardsBlocks;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
 import net.minecraft.network.FriendlyByteBuf;
@@ -13,32 +15,30 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ChargerMenu extends AbstractContainerMenu {
-    private final BuddysteelChargerBlockEntity entity;
+public class GraderMenu  extends AbstractContainerMenu {
+    private final GraderBlockEntity entity;
     private final Level level;
     private final ContainerData data;
 
-    public ChargerMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
+    public GraderMenu(int id, Inventory playerInv, FriendlyByteBuf buf) {
         this(id, playerInv, playerInv.player.level().getBlockEntity(buf.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public ChargerMenu(int id, Inventory playerInv, BlockEntity entity, ContainerData data) {
-        super(BuddycardsMisc.CHARGER_MENU.get(), id);
+    public GraderMenu(int id, Inventory playerInv, BlockEntity entity, ContainerData data) {
+        super(BuddycardsMisc.GRADER_MENU.get(), id);
         checkContainerSize(playerInv, 7);
-        this.entity = (BuddysteelChargerBlockEntity) entity;
+        this.entity = (GraderBlockEntity) entity;
         this.level = playerInv.player.level();
         this.data = data;
-        IItemHandler handler = ((BuddysteelChargerBlockEntity) entity).getInventory();
+        IItemHandler handler = ((GraderBlockEntity) entity).getInventory();
         if(handler != null) {
             //set up input slot
-            this.addSlot(new SlotItemHandler(handler, 0, 26, 36));
-            //Set up material slots
-            for (int i = 0; i < 4; i++)
-                this.addSlot(new SlotItemHandler(handler, 1 + i, 53 + i * 18, 18));
-            //Set up meter slot
-            this.addSlot(new SlotItemHandler(handler, 5, 80, 54));
-            //Set up output slot
-            this.addSlot(new OutputSlot(handler, 6, 134, 36));
+            this.addSlot(new InputSlot(handler, 0, 62, 18));
+            //set up sleeve slot
+            this.addSlot(new SleeveSlot(handler, 1, 98, 18));
+            //Set up output slots
+            for (int i = 0; i < 5; i++)
+                this.addSlot(new OutputSlot(handler, 2 + i, 44 + i * 18, 54));
         }
         //Set up slots for inventory
         for (int y = 0; y < 3; y++) {
@@ -56,7 +56,29 @@ public class ChargerMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, entity.getBlockPos()), player, BuddycardsBlocks.BUDDYSTEEL_CHARGER.get());
+        return stillValid(ContainerLevelAccess.create(level, entity.getBlockPos()), player, BuddycardsBlocks.GRADER.get());
+    }
+
+    public class InputSlot extends SlotItemHandler {
+        public InputSlot(IItemHandler handler, int index, int xPosition, int yPosition) {
+            super(handler, index, xPosition, yPosition);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return stack.getItem() instanceof BuddycardItem;
+        }
+    }
+
+    public class SleeveSlot extends SlotItemHandler {
+        public SleeveSlot(IItemHandler handler, int index, int xPosition, int yPosition) {
+            super(handler, index, xPosition, yPosition);
+        }
+
+        @Override
+        public boolean mayPlace(ItemStack stack) {
+            return stack.getItem() instanceof GradingSleeveItem;
+        }
     }
 
     public class OutputSlot extends SlotItemHandler {

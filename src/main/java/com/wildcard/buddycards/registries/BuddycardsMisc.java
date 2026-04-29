@@ -5,14 +5,10 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.enchantment.EnchantmentBuddyBoost;
 import com.wildcard.buddycards.enchantment.EnchantmentExtraPage;
 import com.wildcard.buddycards.enchantment.EnchantmentRecovery;
-import com.wildcard.buddycards.enchantment.EnchantmentThickPockets;
 import com.wildcard.buddycards.item.BuddycardBinderItem;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.loot.LootInjectionModifier;
-import com.wildcard.buddycards.menu.BinderMenu;
-import com.wildcard.buddycards.menu.ChargerMenu;
-import com.wildcard.buddycards.menu.DeckboxMenu;
-import com.wildcard.buddycards.menu.PlaymatMenu;
+import com.wildcard.buddycards.menu.*;
 import com.wildcard.buddycards.recipe.BuddysteelChargingRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -58,12 +54,14 @@ public class BuddycardsMisc {
     //Menus
     public static final RegistryObject<MenuType<BinderMenu>> BINDER_MENU = MENUS.register("binder",
             () -> new MenuType<>(BinderMenu::new, FeatureFlags.DEFAULT_FLAGS));
-    public static final RegistryObject<MenuType<DeckboxMenu>> DECKBOX_CONTAINER = MENUS.register("deckbox",
+    public static final RegistryObject<MenuType<DeckboxMenu>> DECKBOX_MENU = MENUS.register("deckbox",
             () -> new MenuType<>(DeckboxMenu::new, FeatureFlags.DEFAULT_FLAGS));
-    public static final RegistryObject<MenuType<PlaymatMenu>> PLAYMAT_CONTAINER = MENUS.register("playmat",
+    public static final RegistryObject<MenuType<PlaymatMenu>> PLAYMAT_MENU = MENUS.register("playmat",
             () -> IForgeMenuType.create((PlaymatMenu::new)));
-    public static final RegistryObject<MenuType<ChargerMenu>> CHARGER_CONTAINER = MENUS.register("buddysteel_charger",
+    public static final RegistryObject<MenuType<ChargerMenu>> CHARGER_MENU = MENUS.register("buddysteel_charger",
             () -> IForgeMenuType.create((ChargerMenu::new)));
+    public static final RegistryObject<MenuType<GraderMenu>> GRADER_MENU = MENUS.register("grader",
+            () -> IForgeMenuType.create((GraderMenu::new)));
 
     //Recipes
     public static final RegistryObject<RecipeSerializer<BuddysteelChargingRecipe>> BUDDYSTEEL_CHARGING_SERIALIZER = RECIPES.register("buddysteel_charging", () -> BuddysteelChargingRecipe.Serializer.INSTANCE);
