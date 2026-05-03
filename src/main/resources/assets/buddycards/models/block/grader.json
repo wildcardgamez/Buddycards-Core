@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "buddycards:block/grader",
+    "side": "buddycards:block/grader_side",
+    "top": "buddycards:block/grader_top"
+  }
+}

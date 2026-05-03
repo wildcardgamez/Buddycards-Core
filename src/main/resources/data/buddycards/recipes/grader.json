@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YYY",
+    "XZX",
+    "YYY"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:piston"
+    },
+    "Y": {
+      "item": "buddycards:zylex_nugget"
+    },
+    "Z": {
+      "item": "buddycards:grading_sleeve"
+    }
+  },
+  "result": {
+    "item": "buddycards:grader"
+  }
+}

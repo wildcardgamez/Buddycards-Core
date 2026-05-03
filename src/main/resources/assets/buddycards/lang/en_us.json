@@ -37,6 +37,8 @@
   "block.buddycards.crimson_luminis_block": "Block of Crimson Luminis",
   "block.buddycards.kinetic_chamber": "Kinetic Chamber",
   "block.buddycards.kinetic_chamber.desc": "Uses nearby explosions as energy to forge items out of blocks of luminis and crimson luminis",
+  "block.buddycards.grader": "Grader",
+  "block.buddycards.grader.desc": "Automatically grades cards when given cards and sleeves",
   "block.buddycards.zylex_block": "Block of Zylex",
   "block.buddycards.void_zylex_block": "Block of Void Zylex",
   "block.buddycards.buddysteel_charger": "Buddysteel Charger",

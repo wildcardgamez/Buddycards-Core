@@ -11,12 +11,12 @@ public class EnchantmentExtraPage extends Enchantment {
 
     @Override
     public int getMinCost(int par1) {
-        return 6 * (par1 - 1);
+        return 8 * (par1 - 1);
     }
 
     @Override
     public int getMaxCost(int par1) {
-        return 6 + (par1 * 6);
+        return 10 + (par1 * 8);
     }
 
     @Override

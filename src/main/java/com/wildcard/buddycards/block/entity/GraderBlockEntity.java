@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.block.GraderBlock;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.item.CreativeGradingSleeveItem;
 import com.wildcard.buddycards.item.GradingSleeveItem;
@@ -10,7 +11,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -27,7 +30,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class GraderBlockEntity extends BlockEntity implements MenuProvider {
+public class GraderBlockEntity extends BlockEntity implements MenuProvider, WorldlyContainer {
     private final ItemStackHandler inventory = new ItemStackHandler(7) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -41,13 +44,6 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider {
                 case 1 -> stack.getItem() instanceof GradingSleeveItem;
                 default -> false;
             };
-        }
-
-        @Override
-        public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (slot < 2)
-                return ItemStack.EMPTY;
-            return super.extractItem(slot, amount, simulate);
         }
     };
 
@@ -87,14 +83,6 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider {
         return new GraderMenu(id, inventory, this, this.data);
     }
 
-    @NotNull
-    @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-        if(cap == ForgeCapabilities.ITEM_HANDLER)
-            return lazyInventory.cast();
-        return super.getCapability(cap);
-    }
-
     @Override
     public void onLoad() {
         super.onLoad();
@@ -125,23 +113,22 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider {
         return this.inventory;
     }
 
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (cap == net.minecraftforge.common.capabilities.ForgeCapabilities.ITEM_HANDLER)
-            return lazyInventory.cast();
-        return super.getCapability(cap, side);
-    }
-
     public static void tick(Level level, BlockPos pos, BlockState state, GraderBlockEntity entity) {
         if(canGrade(entity)) {
             entity.progress++;
-            setChanged(level, pos, state);
             if(entity.progress > 28)
                 performGrade(entity);
+            setChanged(level, pos, state);
+            if (!state.getValue(GraderBlock.GRADING)) {
+                state = state.setValue(GraderBlock.GRADING, true);
+                level.setBlock(pos, state, 3);
+            }
         }
         else if (entity.progress != 0) {
             entity.progress = 0;
+            state = state.setValue(GraderBlock.GRADING, false);
             setChanged(level, pos, state);
+            level.setBlock(pos, state, 3);
         }
     }
 
@@ -160,12 +147,12 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider {
     }
 
     private static void performGrade(GraderBlockEntity entity) {
+        float[] odds = ((GradingSleeveItem) entity.inventory.getStackInSlot(1).getItem()).ODDS;
         if (!(entity.getInventory().getStackInSlot(1).getItem() instanceof CreativeGradingSleeveItem))
             entity.getInventory().getStackInSlot(1).shrink(1);
         ItemStack output = entity.getInventory().getStackInSlot(0).split(1);
         CompoundTag tag = output.getOrCreateTag();
         int grade;
-        float[] odds = ((GradingSleeveItem) entity.inventory.getStackInSlot(1).getItem()).ODDS;
         float rand = entity.level.getRandom().nextFloat();
         for (grade = 1; grade < 5; grade++) {
             if(rand < odds[grade-1])
@@ -186,5 +173,67 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider {
                 break;
             }
         entity.progress = 0;
+    }
+
+    @Override
+    public int[] getSlotsForFace(Direction dir) {
+        if (!dir.equals(Direction.DOWN))
+            return new int[] {0, 1};
+        else return new int[] {2, 3, 4, 5, 6};
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction dir) {
+        return index < 2 && inventory.isItemValid(index, stack);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction dir) {
+        return index > 1;
+    }
+
+    @Override
+    public int getContainerSize() {
+        return 7;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (int i = 0; i < 7; i++) {
+           if(!inventory.getStackInSlot(i).equals(ItemStack.EMPTY))
+               return false;
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack getItem(int index) {
+        return inventory.getStackInSlot(index);
+    }
+
+    @Override
+    public ItemStack removeItem(int index, int amt) {
+        return inventory.extractItem(index, amt, false);
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int index) {
+        return inventory.extractItem(index, inventory.getStackInSlot(index).getCount(), false);
+    }
+
+    @Override
+    public void setItem(int index, ItemStack stack) {
+        inventory.setStackInSlot(index, stack);
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return Container.stillValidBlockEntity(this, player);
+    }
+
+    @Override
+    public void clearContent() {
+        for (int i = 0; i < 7; i++)
+            inventory.setStackInSlot(i, ItemStack.EMPTY);
     }
 }

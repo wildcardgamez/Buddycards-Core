@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,grading=false": {
+      "model": "buddycards:block/grader",
+      "y": 90
+    },
+    "facing=east,grading=true": {
+      "model": "buddycards:block/grader_on",
+      "y": 90
+    },
+    "facing=north,grading=false": {
+      "model": "buddycards:block/grader"
+    },
+    "facing=north,grading=true": {
+      "model": "buddycards:block/grader_on"
+    },
+    "facing=south,grading=false": {
+      "model": "buddycards:block/grader",
+      "y": 180
+    },
+    "facing=south,grading=true": {
+      "model": "buddycards:block/grader_on",
+      "y": 180
+    },
+    "facing=west,grading=false": {
+      "model": "buddycards:block/grader",
+      "y": 270
+    },
+    "facing=west,grading=true": {
+      "model": "buddycards:block/grader_on",
+      "y": 270
+    }
+  }
+}
