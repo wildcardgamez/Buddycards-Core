@@ -39,6 +39,7 @@ public class BuddycardsBlocks {
     static final BlockBehaviour.Properties CRIMSON_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.CRIMSON_NYLIUM).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
     static final BlockBehaviour.Properties ZYLEX_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_MAGENTA).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
     static final BlockBehaviour.Properties VOID_ZYLEX_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.WARPED_HYPHAE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
+    static final BlockBehaviour.Properties KINETIC_CHAMBER_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.CRIMSON_NYLIUM).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER).explosionResistance(0);
 
     public static final BooleanProperty GRADING_PROPERTY = BooleanProperty.create("grading");
 
@@ -96,7 +97,7 @@ public class BuddycardsBlocks {
     public static final RegistryObject<PlaymatBlock> PLAYMAT_CAVE = registerPlaymat("playmat_cave", () -> new PlaymatBlock(PLAYMAT_PROPERTIES));
     //Misc
     public static final RegistryObject<Block> BUDDYSTEEL_CHARGER = BLOCKS.register("buddysteel_charger", () -> new BuddysteelChargerBlock(BUDDYSTEEL_PROPERTIES));
-    public static final RegistryObject<Block> KINETIC_CHAMBER = BLOCKS.register("kinetic_chamber", () -> new KineticChamberBlock(CRIMSON_LUMINIS_PROPERTIES.explosionResistance(0)));
+    public static final RegistryObject<Block> KINETIC_CHAMBER = BLOCKS.register("kinetic_chamber", () -> new KineticChamberBlock(KINETIC_CHAMBER_PROPERTIES));
     public static final RegistryObject<Block> GRADER = BLOCKS.register("grader", () -> new GraderBlock(ZYLEX_PROPERTIES));
 
     public static RegistryObject<CardStandBlock> registerStand(String id, Supplier<CardStandBlock> supplier) {
