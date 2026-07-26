@@ -79,8 +79,8 @@ public class BuddycardsMisc {
     public static final TagKey<Item> BCB_MONSTER = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/monster"));
     public static final TagKey<Item> BCB_REDSTONE = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/redstone"));
 
-    public static final RegistryObject<CreativeModeTab> MAIN_TAB = TABS.register("buddycards_items", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup." + Buddycards.MOD_ID))
+    public static final RegistryObject<CreativeModeTab> MAIN_TAB = TABS.register("buddycards", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.buddycards"))
             .icon(() -> BuddycardsItems.PACK_BASE.get().asItem().getDefaultInstance())
             .displayItems((a, b) -> {
                 for (RegistryObject<Item> i: BuddycardsItems.ITEMS.getEntries()) {
@@ -90,8 +90,8 @@ public class BuddycardsMisc {
             })
             .build());
 
-    public static final RegistryObject<CreativeModeTab> CARDS_TAB = TABS.register("buddycards", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup." + Buddycards.MOD_ID))
+    public static final RegistryObject<CreativeModeTab> CARDS_TAB = TABS.register("buddycards_cards", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.buddycards_cards"))
             .icon(() -> BuddycardsItems.PACK_BASE.get().rollCard(RandomSource.create()).getDefaultInstance())
             .displayItems((a, b) -> {
                 for (RegistryObject<Item> i: BuddycardsItems.ITEMS.getEntries()) {
