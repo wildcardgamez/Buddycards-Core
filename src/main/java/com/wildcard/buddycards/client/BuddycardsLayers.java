@@ -7,19 +7,21 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Buddycards.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod(value = Buddycards.MOD_ID, dist = Dist.CLIENT)
+@EventBusSubscriber(modid = Buddycards.MOD_ID, value = Dist.CLIENT)
 public class BuddycardsLayers {
 
-    public static final ModelLayerLocation HEAD_LAYER = new ModelLayerLocation(new ResourceLocation(Buddycards.MOD_ID, "armor_head"), "main");
-    public static final ModelLayerLocation CHEST_LAYER = new ModelLayerLocation(new ResourceLocation(Buddycards.MOD_ID, "armor_chest"), "main");
-    public static final ModelLayerLocation LEGS_LAYER = new ModelLayerLocation(new ResourceLocation(Buddycards.MOD_ID, "armor_legs"), "main");
-    public static final ModelLayerLocation FEET_LAYER = new ModelLayerLocation(new ResourceLocation(Buddycards.MOD_ID, "armor_feet"), "main");
-    public static final ModelLayerLocation MEDAL_LAYER = new ModelLayerLocation(new ResourceLocation(Buddycards.MOD_ID, "medal"), "main");
+    public static final ModelLayerLocation HEAD_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "armor_head"), "main");
+    public static final ModelLayerLocation CHEST_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "armor_chest"), "main");
+    public static final ModelLayerLocation LEGS_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "armor_legs"), "main");
+    public static final ModelLayerLocation FEET_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "armor_feet"), "main");
+    public static final ModelLayerLocation MEDAL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "medal"), "main");
 
     public static BuddycardsArmorModel<LivingEntity> helmet;
     public static BuddycardsArmorModel<LivingEntity> chestplate;

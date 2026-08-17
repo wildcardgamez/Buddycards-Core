@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:crimson_luminis"
+    }
+  },
+  "result": {
+    "id": "buddycards:crimson_luminis_block"
+  }
+}

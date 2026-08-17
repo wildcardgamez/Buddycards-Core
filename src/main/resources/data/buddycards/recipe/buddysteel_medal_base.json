@@ -1,0 +1,29 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "input": {
+    "item": "buddycards:blank_buddysteel_medal"
+  },
+  "ingredients": [
+    {
+      "tag": "buddycards:buddycards_base",
+      "count": 1
+    },
+    {
+      "tag": "buddycards:buddycards_base",
+      "count": 1
+    },
+    {
+      "tag": "buddycards:buddycards_base",
+      "count": 1
+    },
+    {
+      "tag": "buddycards:buddycards_base",
+      "count": 1
+    }
+  ],
+  "output": {
+    "id": "buddycards:buddysteel_medal_base",
+    "count": 1
+  },
+  "set": "base"
+}

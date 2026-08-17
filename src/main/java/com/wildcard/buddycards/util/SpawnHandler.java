@@ -5,12 +5,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 
 public class SpawnHandler {
     @SubscribeEvent
-    public void onSpawn(MobSpawnEvent.FinalizeSpawn event) {
+    public void onSpawn(FinalizeSpawnEvent event) {
         ServerLevel level = event.getLevel().getLevel();
         if (event.getEntity() instanceof EnderMan && event.getSpawnType() == MobSpawnType.NATURAL) {
             double rand = level.getRandom().nextDouble();

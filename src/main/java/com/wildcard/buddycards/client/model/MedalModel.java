@@ -23,7 +23,7 @@ public class MedalModel<T extends LivingEntity> extends HumanoidModel<LivingEnti
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
         body.render(poseStack, buffer, packedLight, packedOverlay);
     }
 }

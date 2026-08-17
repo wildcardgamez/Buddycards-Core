@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "group": "buddycard_booster_box",
+  "pattern": [
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:buddycard_pack_end"
+    }
+  },
+  "result": {
+    "id": "buddycards:buddycard_booster_box_end"
+  }
+}

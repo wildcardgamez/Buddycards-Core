@@ -1,0 +1,32 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "buddycards:item/buddysteel_scanner"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "buddycards:tier": 1
+      },
+      "model": "buddycards:item/buddysteel_scanner_1"
+    },
+    {
+      "predicate": {
+        "buddycards:tier": 2
+      },
+      "model": "buddycards:item/buddysteel_scanner_2"
+    },
+    {
+      "predicate": {
+        "buddycards:tier": 3
+      },
+      "model": "buddycards:item/buddysteel_scanner_3"
+    },
+    {
+      "predicate": {
+        "buddycards:tier": 4
+      },
+      "model": "buddycards:item/buddysteel_scanner_4"
+    }
+  ]
+}

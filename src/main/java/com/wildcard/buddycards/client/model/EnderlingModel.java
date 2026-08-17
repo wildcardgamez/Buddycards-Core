@@ -77,7 +77,7 @@ public class EnderlingModel<T extends EnderlingEntity> extends HumanoidModel<End
     }
 
     @Override
-    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverightLegay, float red, float green, float blue, float alpha){
+    public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverightLegay, int color){
         body.render(matrixStack, buffer, packedLight, packedOverightLegay);
         head.render(matrixStack, buffer, packedLight, packedOverightLegay);
         leftLeg.render(matrixStack, buffer, packedLight, packedOverightLegay);

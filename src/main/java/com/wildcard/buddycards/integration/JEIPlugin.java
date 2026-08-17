@@ -2,12 +2,16 @@ package com.wildcard.buddycards.integration;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.recipe.BuddysteelChargingRecipe;
+import com.wildcard.buddycards.registries.BuddycardsMisc;
+import com.wildcard.buddycards.screens.ChargerScreen;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 
 import java.util.List;
@@ -17,7 +21,7 @@ import java.util.Objects;
 public class JEIPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(Buddycards.MOD_ID, "jei_plugin");
+        return ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "jei_plugin");
     }
 
     @Override
@@ -27,8 +31,13 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        RecipeManager rm = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
-        List<BuddysteelChargingRecipe> recipes = rm.getAllRecipesFor(BuddysteelChargingRecipe.Type.INSTANCE);
+        RecipeManager manager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
+        List<BuddysteelChargingRecipe> recipes = manager.getAllRecipesFor(BuddycardsMisc.CHARGING_RECIPE.get()).stream().map(RecipeHolder::value).toList();
         registration.addRecipes(BuddysteelChargingRecipeCategory.TYPE, recipes);
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+            registration.addRecipeClickArea(ChargerScreen.class, 52, 30, 72, 20, BuddysteelChargingRecipeCategory.TYPE);
     }
 }

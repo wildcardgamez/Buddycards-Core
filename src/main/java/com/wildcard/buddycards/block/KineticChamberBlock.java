@@ -1,11 +1,13 @@
 package com.wildcard.buddycards.block;
 
+import com.mojang.serialization.MapCodec;
 import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -34,9 +36,15 @@ public class KineticChamberBlock extends BaseEntityBlock {
             Block.box(10, 0, 10, 16, 6, 16),
             Block.box(10, 10, 10, 16, 16, 16)
     );
+    public static final MapCodec<KineticChamberBlock> CODEC = simpleCodec(KineticChamberBlock::new);
 
     public KineticChamberBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     @Override
@@ -51,9 +59,22 @@ public class KineticChamberBlock extends BaseEntityBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity && level instanceof ServerLevel) {
-            ItemStack stack = player.getItemInHand(hand);
+            if(!entity.getItemSlot().isEmpty()) {
+                ItemStack oldItem = entity.getItemSlot();
+                entity.setItemSlot(ItemStack.EMPTY);
+                if(!player.addItem(oldItem))
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldItem);
+            }
+        }
+        level.updateNeighbourForOutputSignal(pos, this);
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity && level instanceof ServerLevel) {
             if(!entity.getItemSlot().isEmpty()) {
                 ItemStack oldItem = entity.getItemSlot();
                 entity.setItemSlot(stack.split(1));
@@ -64,7 +85,7 @@ public class KineticChamberBlock extends BaseEntityBlock {
                 entity.setItemSlot(stack.split(1));
         }
         level.updateNeighbourForOutputSignal(pos, this);
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
     }
 
     @Override

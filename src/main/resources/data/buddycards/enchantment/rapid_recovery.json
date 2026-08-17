@@ -1,0 +1,21 @@
+{
+  "description": {
+    "translate": "enchantment.buddycards.rapid_recovery"
+  },
+  "slots": [
+    "armor"
+  ],
+  "primary_items": "#buddycards:enchantable/cooldown",
+  "supported_items": "#buddycards:enchantable/cooldown",
+  "weight": 3,
+  "max_level": 2,
+  "min_cost": {
+    "base": 7,
+    "per_level_above_first": 15
+  },
+  "max_cost": {
+    "base": 20,
+    "per_level_above_first": 15
+  },
+  "anvil_cost": 2
+}

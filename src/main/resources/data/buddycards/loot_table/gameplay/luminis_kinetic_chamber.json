@@ -1,0 +1,35 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "buddycards:luminis_sleeve",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:luminis_scanner_chip"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:luminis_ring"
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,10 @@
 package com.wildcard.buddycards.block;
 
 import com.google.common.collect.ImmutableMap;
+import com.mojang.serialization.MapCodec;
 import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
+import com.wildcard.buddycards.core.CardInfo;
+import com.wildcard.buddycards.core.CardInfoProviderBlock;
 import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -11,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -36,8 +40,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
-public class CardDisplayBlock extends BaseEntityBlock {
+public class CardDisplayBlock extends BaseEntityBlock implements CardInfoProviderBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
     private static final Map<Direction, VoxelShape> SHAPES = Util.make(() -> {
         Map<Direction, VoxelShape> shape = new HashMap<>();
@@ -47,16 +52,36 @@ public class CardDisplayBlock extends BaseEntityBlock {
         shape.put(Direction.WEST, Shapes.or(Block.box(0, 0, 0, 2, 16, 16), Block.box(2, 0, 0, 3, 1, 16), Block.box(2, 8, 0, 3, 9, 16)));
         return ImmutableMap.copyOf(shape);
     });
+    public static final MapCodec<CardDisplayBlock> CODEC = simpleCodec(CardDisplayBlock::new);
 
     public CardDisplayBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel) {
-            int slot = getSlot(state.getValue(DIR), hit.getLocation());
-            ItemStack stack = player.getItemInHand(hand);
+            int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
+            if(displayEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
+                ItemStack oldCard = displayEntity.getCardInSlot(slot);
+                displayEntity.putCardInSlot(ItemStack.EMPTY, slot);
+                if(!player.addItem(oldCard))
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldCard);
+            }
+        }
+        level.updateNeighbourForOutputSignal(pos, this);
+        return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel) {
+            int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
             if(displayEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
                 ItemStack oldCard = displayEntity.getCardInSlot(slot);
                 if (stack.getItem() instanceof BuddycardItem)
@@ -70,7 +95,7 @@ public class CardDisplayBlock extends BaseEntityBlock {
                 displayEntity.putCardInSlot(stack.split(1), slot);
         }
         level.updateNeighbourForOutputSignal(pos, this);
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
     }
 
     @Override
@@ -139,5 +164,13 @@ public class CardDisplayBlock extends BaseEntityBlock {
             return cardDisplay.getCardsAmt();
         }
         return 0;
+    }
+
+    @Override
+    public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos) {
+        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity cardDisplay) {
+            return cardDisplay.getCardInfo();
+        }
+        return Stream.empty();
     }
 }

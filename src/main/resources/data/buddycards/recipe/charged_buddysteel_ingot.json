@@ -1,0 +1,28 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "input": {
+    "item": "buddycards:buddysteel_ingot"
+  },
+  "ingredients": [
+    {
+      "item": "buddycards:luminis",
+      "count": 1
+    },
+    {
+      "item": "buddycards:zylex",
+      "count": 1
+    },
+    {
+      "item": "buddycards:luminis",
+      "count": 1
+    },
+    {
+      "item": "buddycards:zylex",
+      "count": 1
+    }
+  ],
+  "output": {
+    "id": "buddycards:charged_buddysteel_ingot",
+    "count": 1
+  }
+}

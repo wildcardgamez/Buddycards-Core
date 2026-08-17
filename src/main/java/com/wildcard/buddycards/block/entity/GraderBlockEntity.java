@@ -3,12 +3,13 @@ package com.wildcard.buddycards.block.entity;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.block.GraderBlock;
 import com.wildcard.buddycards.item.BuddycardItem;
-import com.wildcard.buddycards.item.CreativeGradingSleeveItem;
 import com.wildcard.buddycards.item.GradingSleeveItem;
 import com.wildcard.buddycards.menu.GraderMenu;
+import com.wildcard.buddycards.registries.BuddycardsComponents;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
@@ -22,11 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,7 +46,6 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider, Worl
 
     protected final ContainerData data;
 
-    private LazyOptional<IItemHandler> lazyInventory = LazyOptional.empty();
     private int progress;
 
     public GraderBlockEntity(BlockPos pos, BlockState state) {
@@ -84,28 +80,16 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider, Worl
     }
 
     @Override
-    public void onLoad() {
-        super.onLoad();
-        lazyInventory = LazyOptional.of(() -> inventory);
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        lazyInventory.invalidate();
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag compound) {
-        compound.put("inventory", inventory.serializeNBT());
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        compound.put("inventory", inventory.serializeNBT(registries));
         compound.putInt("progress", progress);
-        super.saveAdditional(compound);
+        super.saveAdditional(compound, registries);
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        inventory.deserializeNBT(compound.getCompound("inventory"));
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
+        inventory.deserializeNBT(registries, compound.getCompound("inventory"));
         progress = compound.getInt("progress");
     }
 
@@ -142,33 +126,30 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider, Worl
         if (!flag)
             return false;
         if (entity.inventory.getStackInSlot(0).getItem() instanceof BuddycardItem && entity.inventory.getStackInSlot(1).getItem() instanceof GradingSleeveItem)
-            return entity.inventory.getStackInSlot(0).getTag() == null || !entity.inventory.getStackInSlot(0).getTag().contains("grade");
+            return (BuddycardItem.getGrade(entity.inventory.getStackInSlot(0)) == 0);
         return false;
     }
 
     private static void performGrade(GraderBlockEntity entity) {
         float[] odds = ((GradingSleeveItem) entity.inventory.getStackInSlot(1).getItem()).ODDS;
-        if (!(entity.getInventory().getStackInSlot(1).getItem() instanceof CreativeGradingSleeveItem))
+        if (((GradingSleeveItem)entity.getInventory().getStackInSlot(1).getItem()).CONSUME)
             entity.getInventory().getStackInSlot(1).shrink(1);
         ItemStack output = entity.getInventory().getStackInSlot(0).split(1);
-        CompoundTag tag = output.getOrCreateTag();
         int grade;
         float rand = entity.level.getRandom().nextFloat();
         for (grade = 1; grade < 5; grade++) {
-            if(rand < odds[grade-1])
+            if (rand < odds[grade - 1])
                 break;
-            rand -= odds[grade-1];
+            rand -= odds[grade - 1];
         }
-        tag.putInt("grade", grade);
-        output.setTag(tag);
+        output.set(BuddycardsComponents.BUDDYCARD_GRADE, grade);
         for (int i = 2; i < 7; i++)
             if (entity.inventory.getStackInSlot(i).isEmpty()) {
                 entity.inventory.setStackInSlot(i, output);
                 break;
             } else if (entity.inventory.getStackInSlot(i).getItem().equals(output.getItem()) &&
                     entity.inventory.getStackInSlot(i).getCount() < 64 &&
-                    entity.inventory.getStackInSlot(i).hasTag() &&
-                    entity.inventory.getStackInSlot(i).getTag().equals(tag)) {
+                    entity.inventory.getStackInSlot(i).getComponents().equals(output.getComponents())) {
                 entity.inventory.getStackInSlot(i).grow(1);
                 break;
             }
@@ -176,14 +157,14 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider, Worl
     }
 
     @Override
-    public int[] getSlotsForFace(Direction dir) {
-        if (!dir.equals(Direction.DOWN))
+    public int[] getSlotsForFace(Direction direction) {
+        if (!direction.equals(Direction.DOWN))
             return new int[] {0, 1};
         else return new int[] {2, 3, 4, 5, 6};
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction dir) {
+    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
         return index < 2 && inventory.isItemValid(index, stack);
     }
 

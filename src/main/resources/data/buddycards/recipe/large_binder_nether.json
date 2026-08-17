@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "buddycard_binder_large",
+  "pattern": [
+    "#XX",
+    "#XX",
+    "#XX"
+  ],
+  "key": {
+    "#": {
+      "item": "buddycards:buddysteel_nugget"
+    },
+    "X": {
+      "tag": "buddycards:buddycards_nether"
+    }
+  },
+  "result":
+  {
+    "id": "buddycards:large_buddycard_binder_nether"
+  }
+}

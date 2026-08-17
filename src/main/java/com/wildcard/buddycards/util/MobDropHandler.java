@@ -15,8 +15,8 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
 import java.util.Collection;
 
@@ -27,7 +27,7 @@ public class MobDropHandler {
         Level world = entity.getCommandSenderWorld();
         if (event.getSource().getEntity() instanceof Player) {
             Collection<ItemEntity> drops = event.getDrops();
-            //If killed by player, certain mobs have a chance to drop certain packs, defined in the configs
+            //If killed by player, certain mobs have a chance to drop certain packs, defined in_enchanting_table.json the configs
             if (entity instanceof ZombifiedPiglin && entity.isBaby()) {
                 if (event.getEntity().getRandom().nextFloat() < ConfigManager.zombiePiglinChance.get()) {
                     drops.add(new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), new ItemStack(BuddycardsItems.PACK_BASE.get(), 1)));

@@ -1,9 +1,9 @@
 {
-  "type": "buddycards:loot_injection",
-  "injection": "buddycards:inject/ancient_city",
+  "type": "neoforge:add_table",
+  "table": "buddycards:inject/ancient_city",
   "conditions": [
     {
-      "condition": "forge:loot_table_id",
+      "condition": "neoforge:loot_table_id",
       "loot_table_id": "minecraft:chests/ancient_city"
     }
   ]

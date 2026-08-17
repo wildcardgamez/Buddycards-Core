@@ -1,103 +1,160 @@
 package com.wildcard.buddycards.registries;
 
-import com.mojang.serialization.Codec;
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.enchantment.EnchantmentBuddyBoost;
-import com.wildcard.buddycards.enchantment.EnchantmentExtraPage;
-import com.wildcard.buddycards.enchantment.EnchantmentRecovery;
-import com.wildcard.buddycards.item.BuddycardBinderItem;
 import com.wildcard.buddycards.item.BuddycardItem;
-import com.wildcard.buddycards.loot.LootInjectionModifier;
 import com.wildcard.buddycards.menu.*;
 import com.wildcard.buddycards.recipe.BuddysteelChargingRecipe;
+import net.minecraft.Util;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.function.Supplier;
 
 public class BuddycardsMisc {
-    public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, Buddycards.MOD_ID);
-    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Buddycards.MOD_ID);
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPES = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Buddycards.MOD_ID);
-    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> GLMS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Buddycards.MOD_ID);
+    public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, Buddycards.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, Buddycards.MOD_ID);
+    public static final DeferredRegister<RecipeType<?>> RECIPES = DeferredRegister.create(Registries.RECIPE_TYPE, Buddycards.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Buddycards.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Buddycards.MOD_ID);
 
-    public static void registerStuff() {
-        ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        MENUS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        RECIPES.register(FMLJavaModLoadingContext.get().getModEventBus());
-        GLMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        TABS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    public static void registerStuff(IEventBus eventBus) {
+        ARMOR_MATERIALS.register(eventBus);
+        MENUS.register(eventBus);
+        RECIPE_SERIALIZERS.register(eventBus);
+        RECIPES.register(eventBus);
+        TABS.register(eventBus);
     }
 
-    //Enchantment
-    public static final RegistryObject<Enchantment> EXTRA_PAGE = ENCHANTMENTS.register("extra_page", EnchantmentExtraPage::new);
-    public static final RegistryObject<Enchantment> BUDDY_BOOST = ENCHANTMENTS.register("buddy_boost", EnchantmentBuddyBoost::new);
-    public static final RegistryObject<Enchantment> RECOVERY = ENCHANTMENTS.register("recovery", EnchantmentRecovery::new);
-
-    public static final EnchantmentCategory BUDDYCARD_BINDER = EnchantmentCategory.create("BUDDY_BINDER", BuddycardBinderItem.class::isInstance);
+    //ARMOR MATERIALS
+    public static final Holder<ArmorMaterial> BUDDYSTEEL_ARMOR = registerArmorMaterial("buddysteel",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 3);
+                map.put(ArmorItem.Type.LEGGINGS, 6);
+                map.put(ArmorItem.Type.CHESTPLATE, 8);
+                map.put(ArmorItem.Type.HELMET, 3);
+                map.put(ArmorItem.Type.BODY, 11);
+            }),
+            SoundEvents.ARMOR_EQUIP_IRON,
+            12, 1, 0, BuddycardsItems.BUDDYSTEEL_INGOT);
+    public static final Holder<ArmorMaterial> LUMINIS_ARMOR = registerArmorMaterial("luminis",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 3);
+                map.put(ArmorItem.Type.LEGGINGS, 6);
+                map.put(ArmorItem.Type.CHESTPLATE, 8);
+                map.put(ArmorItem.Type.HELMET, 3);
+                map.put(ArmorItem.Type.BODY, 11);
+            }),
+            SoundEvents.ARMOR_EQUIP_IRON,
+            12, 1, 0, BuddycardsItems.CRIMSON_LUMINIS);
+    public static final Holder<ArmorMaterial> ZYLEX_ARMOR = registerArmorMaterial("zylex",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 3);
+                map.put(ArmorItem.Type.LEGGINGS, 6);
+                map.put(ArmorItem.Type.CHESTPLATE, 8);
+                map.put(ArmorItem.Type.HELMET, 3);
+                map.put(ArmorItem.Type.BODY, 11);
+            }),
+            SoundEvents.ARMOR_EQUIP_IRON,
+            12, 1, 0, BuddycardsItems.VOID_ZYLEX);
+    public static final Holder<ArmorMaterial> CHARGED_BUDDYSTEEL_ARMOR = registerArmorMaterial("charged_buddysteel",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 3);
+                map.put(ArmorItem.Type.LEGGINGS, 6);
+                map.put(ArmorItem.Type.CHESTPLATE, 8);
+                map.put(ArmorItem.Type.HELMET, 3);
+                map.put(ArmorItem.Type.BODY, 11);
+            }),
+            SoundEvents.ARMOR_EQUIP_DIAMOND,
+            13, 2, 0.1f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
+    public static final Holder<ArmorMaterial> PERFECT_BUDDYSTEEL_ARMOR = registerArmorMaterial("perfect_buddysteel",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 4);
+                map.put(ArmorItem.Type.LEGGINGS, 7);
+                map.put(ArmorItem.Type.CHESTPLATE, 9);
+                map.put(ArmorItem.Type.HELMET, 4);
+                map.put(ArmorItem.Type.BODY, 13);
+            }),
+            SoundEvents.ARMOR_EQUIP_DIAMOND,
+            15, 3, 0.15f, BuddycardsItems.PERFECT_BUDDYSTEEL_INGOT);
+    public static final Holder<ArmorMaterial> TRUE_PERFECT_BUDDYSTEEL_ARMOR = registerArmorMaterial("true_perfect_buddysteel",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 4);
+                map.put(ArmorItem.Type.LEGGINGS, 7);
+                map.put(ArmorItem.Type.CHESTPLATE, 9);
+                map.put(ArmorItem.Type.HELMET, 4);
+                map.put(ArmorItem.Type.BODY, 13);
+            }),
+            SoundEvents.ARMOR_EQUIP_DIAMOND,
+            15, 3, 0.15f, BuddycardsItems.TRUE_PERFECT_BUDDYSTEEL_INGOT);
 
     //Menus
-    public static final RegistryObject<MenuType<BinderMenu>> BINDER_MENU = MENUS.register("binder",
-            () -> new MenuType<>(BinderMenu::new, FeatureFlags.DEFAULT_FLAGS));
-    public static final RegistryObject<MenuType<DeckboxMenu>> DECKBOX_MENU = MENUS.register("deckbox",
-            () -> new MenuType<>(DeckboxMenu::new, FeatureFlags.DEFAULT_FLAGS));
-    public static final RegistryObject<MenuType<PlaymatMenu>> PLAYMAT_MENU = MENUS.register("playmat",
-            () -> IForgeMenuType.create((PlaymatMenu::new)));
-    public static final RegistryObject<MenuType<ChargerMenu>> CHARGER_MENU = MENUS.register("buddysteel_charger",
-            () -> IForgeMenuType.create((ChargerMenu::new)));
-    public static final RegistryObject<MenuType<GraderMenu>> GRADER_MENU = MENUS.register("grader",
-            () -> IForgeMenuType.create((GraderMenu::new)));
+    public static final DeferredHolder<MenuType<?>, MenuType<BinderMenu>> BINDER_MENU = MENUS.register("binder", () -> new MenuType<>(BinderMenu::new, FeatureFlags.DEFAULT_FLAGS));
+    public static final DeferredHolder<MenuType<?>, MenuType<ScannerMenu>> SCANNER_MENU = MENUS.register("scanner", () -> new MenuType<>(ScannerMenu::new, FeatureFlags.DEFAULT_FLAGS));
+    public static final DeferredHolder<MenuType<?>, MenuType<ChargerMenu>> CHARGER_MENU = MENUS.register("buddysteel_charger", () -> IMenuTypeExtension.create(ChargerMenu::new));
+    public static final DeferredHolder<MenuType<?>, MenuType<GraderMenu>> GRADER_MENU = MENUS.register("grader", () -> IMenuTypeExtension.create(GraderMenu::new));
 
-    //Recipes
-    public static final RegistryObject<RecipeSerializer<BuddysteelChargingRecipe>> BUDDYSTEEL_CHARGING_SERIALIZER = RECIPES.register("buddysteel_charging", () -> BuddysteelChargingRecipe.Serializer.INSTANCE);
-
-    //GLMs
-    public static RegistryObject<Codec<? extends IGlobalLootModifier>> LOOT_INJECTION = GLMS.register("loot_injection", LootInjectionModifier.SERIALIZER);
-
-    //Tags
-    public static final TagKey<Item> BCB_ANIMAL = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/animal"));
-    public static final TagKey<Item> BCB_ENCHANTABLE = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/enchantable"));
-    public static final TagKey<Item> BCB_FIRE = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/fire"));
-    public static final TagKey<Item> BCB_FOOD = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/food"));
-    public static final TagKey<Item> BCB_FUNGAL = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/fungal"));
-    public static final TagKey<Item> BCB_METAL = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/metal"));
-    public static final TagKey<Item> BCB_MONSTER = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/monster"));
-    public static final TagKey<Item> BCB_REDSTONE = TagKey.create(Registries.ITEM, new ResourceLocation(Buddycards.MOD_ID + ":battles/redstone"));
-
-    public static final RegistryObject<CreativeModeTab> MAIN_TAB = TABS.register("buddycards", () -> CreativeModeTab.builder()
+    //TABS
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = TABS.register("buddycards_items", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.buddycards"))
             .icon(() -> BuddycardsItems.PACK_BASE.get().asItem().getDefaultInstance())
             .displayItems((a, b) -> {
-                for (RegistryObject<Item> i: BuddycardsItems.ITEMS.getEntries()) {
-                    if(!(i.get() instanceof BuddycardItem))
+                for (DeferredHolder<Item, ? extends Item> i : BuddycardsItems.ITEMS.getEntries()) {
+                    if (!(i.get() instanceof BuddycardItem))
+                        b.accept(i.get());
+                }
+            })
+            .build());
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CARDS_TAB = TABS.register("buddycards", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.buddycards_cards"))
+            .icon(() -> BuddycardsItems.PACK_BASE.get().rollCard(RandomSource.create()).getDefaultInstance())
+            .displayItems((a, b) -> {
+                for (DeferredHolder<Item, ? extends Item> i : BuddycardsItems.ITEMS.getEntries()) {
+                    if (i.get() instanceof BuddycardItem && ((BuddycardItem) i.get()).shouldLoad())
                         b.accept(i.get());
                 }
             })
             .build());
 
-    public static final RegistryObject<CreativeModeTab> CARDS_TAB = TABS.register("buddycards_cards", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.buddycards_cards"))
-            .icon(() -> BuddycardsItems.PACK_BASE.get().rollCard(RandomSource.create()).getDefaultInstance())
-            .displayItems((a, b) -> {
-                for (RegistryObject<Item> i: BuddycardsItems.ITEMS.getEntries()) {
-                    if(i.get() instanceof BuddycardItem && ((BuddycardItem) i.get()).shouldLoad())
-                        b.accept(i.get());
+    //RECIPES
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<BuddysteelChargingRecipe>> CHARGING_RECIPE_SERIALIZER =
+            RECIPE_SERIALIZERS.register("buddysteel_charging", BuddysteelChargingRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<BuddysteelChargingRecipe>> CHARGING_RECIPE =
+            RECIPES.register("buddysteel_charging", () -> new RecipeType<>() {
+                @Override
+                public String toString() {
+                    return "buddysteel_charging";
                 }
-            })
-            .build());
+            });
+
+    private static Holder<ArmorMaterial> registerArmorMaterial(String name, EnumMap<ArmorItem.Type, Integer> typeProtection, Holder<SoundEvent> equipSound, int enchantability, float toughness, float knockbackResistance, Supplier<Item> ingredientItem) {
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, name);
+        Supplier<Ingredient> ingredient = () -> Ingredient.of(ingredientItem.get());
+        List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(location));
+
+        EnumMap<ArmorItem.Type, Integer> typeMap = new EnumMap<>(ArmorItem.Type.class);
+        for (ArmorItem.Type type : ArmorItem.Type.values()) {
+            typeMap.put(type, typeProtection.get(type));
+        }
+
+        return ARMOR_MATERIALS.register(name, () -> new ArmorMaterial(typeProtection, enchantability, equipSound, ingredient, layers, toughness, knockbackResistance));
+    }
 }

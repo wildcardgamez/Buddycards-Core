@@ -23,7 +23,7 @@ public class MysteryBuddycardPackItem extends BuddycardPackItem {
     protected final boolean INCLUDE_UNLOADED;
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.set_mystery").withStyle(ChatFormatting.GRAY));
     }
 

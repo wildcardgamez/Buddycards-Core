@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "  #",
+    "#XX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:sandstone_slab"
+    },
+    "X": {
+      "item": "minecraft:sandstone"
+    }
+  },
+  "result": {
+    "id": "buddycards:sandstone_card_stand",
+    "count": 2
+  }
+}

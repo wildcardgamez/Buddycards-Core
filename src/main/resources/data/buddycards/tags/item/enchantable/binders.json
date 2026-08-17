@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:buddycard_binder_base",
+    "buddycards:buddycard_binder_nether",
+    "buddycards:buddycard_binder_end",
+    "buddycards:buddycard_binder_cave",
+    "buddycards:large_buddycard_binder_base",
+    "buddycards:large_buddycard_binder_nether",
+    "buddycards:large_buddycard_binder_end",
+    "buddycards:large_buddycard_binder_cave"
+  ]
+}

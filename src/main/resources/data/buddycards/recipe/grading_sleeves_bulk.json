@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "grading_sleeves",
+  "pattern": [
+    "XYX",
+    "YXY",
+    "XYX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:glass_pane"
+    },
+    "Y": {
+      "item": "buddycards:buddysteel_nugget"
+    }
+  },
+  "result": {
+    "id": "buddycards:grading_sleeve",
+    "count": 5
+  }
+}

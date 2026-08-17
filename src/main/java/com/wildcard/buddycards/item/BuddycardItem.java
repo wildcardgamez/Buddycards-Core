@@ -1,111 +1,64 @@
 package com.wildcard.buddycards.item;
 
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ListMultimap;
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.battles.game.BattleAbility;
-import com.wildcard.buddycards.battles.game.BattleEvent;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
+import com.wildcard.buddycards.core.CardInfo;
+import com.wildcard.buddycards.core.CardInfoProviderItem;
+import com.wildcard.buddycards.registries.BuddycardsComponents;
 import com.wildcard.buddycards.registries.BuddycardsItems;
-import com.wildcard.buddycards.util.ConfigManager;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.stream.Stream;
 
-public class BuddycardItem extends Item {
-    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Properties properties, int cost, int power, ListMultimap<BattleEvent, BattleAbility> abilities) {
-        super(properties);
+public class BuddycardItem extends Item implements CardInfoProviderItem {
+    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity) {
+        super(new Properties().rarity(rarity).component(BuddycardsComponents.BUDDYCARD_FOIL, 0).component(BuddycardsComponents.BUDDYCARD_GRADE, 0));
         SET = set;
         CARD_NUMBER = cardNumber;
-        RARITY = rarity;
         REQUIREMENT = shouldLoad;
-        COST = cost;
-        POWER = power;
-        ABILITIES = ImmutableListMultimap.copyOf(abilities);
-
-        BuddycardsAPI.registerCard(this);
-    }
-    
-    @Deprecated
-    public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity, Properties properties) {
-        super(properties);
-        SET = set;
-        CARD_NUMBER = cardNumber;
-        RARITY = rarity;
-        REQUIREMENT = shouldLoad;
-        COST = 2;
-        POWER = 2;
-        ABILITIES = ImmutableListMultimap.of();
-
         BuddycardsAPI.registerCard(this);
     }
 
     protected final BuddycardSet SET;
     protected final int CARD_NUMBER;
-    protected final Rarity RARITY;
     protected final BuddycardsItems.BuddycardRequirement REQUIREMENT;
 
-    protected final int COST;
-    protected final int POWER;
-    protected final ImmutableListMultimap<BattleEvent, BattleAbility> ABILITIES;
-
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        //Show cost, base power, and abilities for battles
-        if(ConfigManager.enableBattles.get()) {
-            if (ABILITIES.size() > 0) {
-                tooltip.add(Component.literal("" + COST).append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.cost"))
-                        .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
-                        .append("" + POWER).append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.power")));
-                for (BattleAbility ability : ABILITIES.values()) {
-                    tooltip.add(Component.translatable("battles.ability." + Buddycards.MOD_ID + "." + ability.name).withStyle(ChatFormatting.GRAY));
-                    tooltip.add(Component.translatable("battles.ability." + Buddycards.MOD_ID + "." + ability.name + ".desc").withStyle(ChatFormatting.DARK_GRAY));
-                }
-            } else
-                tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.unimplemented").withStyle(ChatFormatting.DARK_GRAY));
-        }
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         //Show the cards joke/tooltip
-        tooltip.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable(getDescriptionId() + ".desc").withStyle(ChatFormatting.ITALIC));
         //Show the set, card number, and shiny symbol if applicable
         MutableComponent cn = Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
         cn.append("" + CARD_NUMBER);
+        int foil = getFoil(stack);
         if(getFoil(stack) != 0) {
-            cn.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol." + getFoil(stack)));
+            if (foil == 1)
+                cn.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol").withStyle(ChatFormatting.YELLOW));
+            else if (foil == 2)
+                cn.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol").withStyle(ChatFormatting.GOLD));
+            else if (foil == 3)
+                cn.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol").withStyle(ChatFormatting.LIGHT_PURPLE));
         }
         tooltip.add(Component.translatable(SET.getDescriptionId()).append(cn).withStyle(ChatFormatting.GRAY));
         //Show grade
         if(isGraded(stack)) {
-            tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.grade." + getGrade(stack)).withStyle(ChatFormatting.LIGHT_PURPLE));
+            MutableComponent grade = Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.grade").withStyle(ChatFormatting.LIGHT_PURPLE);
+            if (getGrade(stack) == 5)
+                grade.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.grade.5").withStyle(ChatFormatting.YELLOW));
+            else
+                grade.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.grade." + getGrade(stack)).withStyle(ChatFormatting.LIGHT_PURPLE));
+            tooltip.add(grade);
         }
-        //Show battle stats
-        if(stack.hasTag() && stack.getTag().contains("wins")) {
-            tooltip.add(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.stats")
-                    .append("" + stack.getTag().getInt("wins"))
-                    .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.power"))
-                    .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator"))
-                    .append("" + stack.getTag().getInt("loss"))
-                    .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.skull"))
-                    .withStyle(ChatFormatting.BLUE));
-        }
-    }
-
-    @Override
-    public Rarity getRarity(ItemStack stack) {
-        return getRarity();
-    }
-
-    public Rarity getRarity() {
-        return RARITY;
     }
 
     public BuddycardSet getSet() {
@@ -116,61 +69,51 @@ public class BuddycardItem extends Item {
         return CARD_NUMBER;
     }
 
-    public static void setShiny(ItemStack stack) {
-        setShiny(stack, 1);
-    }
-
-    public static void setShiny(ItemStack stack, int type) {
-        CompoundTag nbt = stack.getOrCreateTag().copy();
-        nbt.putInt("foil", type);
-        stack.setTag(nbt);
-    }
-
-    /**
-    //@Override
-    public boolean isFoil(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().contains("foil") && stack.getTag().getInt("foil") != 0;
-    }**/
-
-    public static int getFoil(ItemStack stack) {
-        if (stack.hasTag() && stack.getTag().contains("foil"))
-            return stack.getTag().getInt("foil");
-        return 0;
-    }
-
-    public static void setGrade(ItemStack stack, int grade) {
-        CompoundTag nbt = stack.getOrCreateTag().copy();
-        nbt.putInt("grade", grade);
-        stack.setTag(nbt);
-    }
-
-    public boolean isGraded(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().contains("grade") && stack.getTag().getInt("grade") != 0;
-    }
-
-    public static int getGrade(ItemStack stack) {
-        if(stack.hasTag() && stack.getTag().contains("grade"))
-            return stack.getTag().getInt("grade");
-        return 0;
-    }
-    
-    public int getCost() {
-        return this.COST;
-    }
-    
-    public int getPower() {
-        return this.POWER;
-    }
-    
-    public ListMultimap<BattleEvent, BattleAbility> getAbilities() {
-        return this.ABILITIES;
-    }
-
     public boolean shouldLoad() {
         return REQUIREMENT.shouldLoad();
     }
 
-    public BuddycardItem getOriginal() {
-        return this;
+    public Rarity getRarity() {
+        return components().get(DataComponents.RARITY);
+    }
+
+    @Override
+    public DataComponentMap components() {
+        return super.components();
+    }
+
+    public static void setShiny(ItemStack stack, int type) {
+        stack.set(BuddycardsComponents.BUDDYCARD_FOIL, type);
+    }
+
+    public static int getFoil(ItemStack stack) {
+        var foil = stack.get(BuddycardsComponents.BUDDYCARD_FOIL);
+        if (foil == null)
+            return 0;
+        return foil;
+    }
+
+    public static void setGrade(ItemStack stack, int grade) {
+        stack.set(BuddycardsComponents.BUDDYCARD_GRADE, grade);
+    }
+
+    public boolean isGraded(ItemStack stack) {
+        return getGrade(stack) != 0;
+    }
+
+    public static int getGrade(ItemStack stack) {
+        var grade = stack.get(BuddycardsComponents.BUDDYCARD_GRADE);
+        if (grade == null)
+            return 0;
+        return grade;
+    }
+
+    public static CardInfo getCardInfo(ItemStack stack) {
+        BuddycardItem item = (BuddycardItem) stack.getItem();
+        return new CardInfo(item.getSet().getName(), item.getCardNumber(), getFoil(stack), getGrade(stack));
+    }
+
+    public Stream<CardInfo> getAllCardInfo(ItemStack stack) {
+        return Stream.of(new CardInfo(SET.getName(), CARD_NUMBER, getFoil(stack), getGrade(stack)));
     }
 }

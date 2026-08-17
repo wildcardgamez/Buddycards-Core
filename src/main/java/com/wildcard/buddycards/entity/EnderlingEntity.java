@@ -1,22 +1,23 @@
 package com.wildcard.buddycards.entity;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.item.BuddycardItem;
+import com.wildcard.buddycards.registries.BuddycardsComponents;
 import com.wildcard.buddycards.registries.BuddycardsItems;
-import mezz.jei.library.plugins.vanilla.ingredients.ItemStackHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -43,25 +44,24 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.functions.SetLoreFunction;
-import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.EntityTeleportEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 
 import java.util.*;
-import java.util.function.UnaryOperator;
 
 public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     final ArrayList<Pair<ItemStack, ItemStack>> goalTrades = new ArrayList<>();
@@ -70,8 +70,8 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
 
     public EnderlingEntity(EntityType<? extends PathfinderMob> type, Level lvl) {
         super(type, lvl);
-        this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
-        cheap = lvl.getRandom().nextDouble() < .1;
+        this.setPathfindingMalus(PathType.WATER, -1.0F);
+        cheap = lvl.getRandom().nextDouble() < .1F;
         setCanPickUpLoot(true);
         if (lvl instanceof ServerLevel serverLevel)
             setupGoalItems(serverLevel);
@@ -98,7 +98,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
     }
 
     @Override
-    public int getExperienceReward() {
+    public int getBaseExperienceReward() {
         return 1 + this.level().random.nextInt(3);
     }
 
@@ -138,18 +138,22 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
             return false;
     }
 
-    private boolean teleport(double p_70825_1_, double p_70825_3_, double p_70825_5_) {
-        BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(p_70825_1_, p_70825_3_, p_70825_5_);
+    private boolean teleport(double x, double y, double z) {
+        BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(x, y, z);
         while(blockpos$mutable.getY() > 0 && !this.level().getBlockState(blockpos$mutable).blocksMotion())
             blockpos$mutable.move(Direction.DOWN);
         BlockState blockstate = this.level().getBlockState(blockpos$mutable);
         if (blockstate.blocksMotion() && !blockstate.getFluidState().is(Fluids.WATER)) {
-            EntityTeleportEvent event = new EntityTeleportEvent(this, p_70825_1_, p_70825_3_, p_70825_5_);
-            if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return false;
+            EntityTeleportEvent.EnderEntity event = EventHooks.onEnderTeleport(this, x, y, z);
+            if (event.isCanceled()) return false;
+            Vec3 vec3 = this.position();
             boolean success = this.randomTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ(), true);
-            if (success && !this.isSilent()) {
-                this.level().playSound(null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
-                this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+            if (success) {
+                this.level().gameEvent(GameEvent.TELEPORT, vec3, GameEvent.Context.of(this));
+                if (!this.isSilent()) {
+                    this.level().playSound(null, this.xo, this.yo, this.zo, SoundEvents.ENDERMAN_TELEPORT, this.getSoundSource(), 1.0F, 1.0F);
+                    this.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                }
             }
             return success;
         } else
@@ -166,32 +170,28 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
             if (timer == 0) {
                 if (getMainHandItem().getItem().equals(Items.PAPER)) {
                     ItemStack note = new ItemStack(Items.PAPER, 1);
-                    ListTag lore = new ListTag();
+                    List<Component> lore = new ArrayList<>();
                     for (Pair<ItemStack, ItemStack> goalTrade : goalTrades) {
                         ItemStack card = goalTrade.getFirst();
                         if (card.getItem() instanceof BuddycardItem cardItem) {
-                            MutableComponent component = Component.translatable(cardItem.getDescriptionId());
-                            if (card.hasTag()) {
-                                CompoundTag cardTag = card.getTag();
-                                if (cardTag.contains("foil")) {
-                                    component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator"));
-                                    component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol." + cardTag.getInt("foil")));
-                                }
-                                if (cardTag.contains("grade")) {
-                                    component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator"));
-                                    component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.grade." + cardTag.getInt("grade")));
-                                }
+                            MutableComponent component = Component.translatable(cardItem.getSet().getDescriptionId())
+                                    .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator")
+                                            .append(Component.translatable(cardItem.getDescriptionId())));
+                            int foil = card.get(BuddycardsComponents.BUDDYCARD_FOIL), grade = card.get(BuddycardsComponents.BUDDYCARD_GRADE);
+                            if (foil > 0)
+                                component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.foil_symbol").withStyle(foil == 1 ? ChatFormatting.YELLOW : foil == 2 ? ChatFormatting.GOLD : ChatFormatting.LIGHT_PURPLE));
+                            if (grade > 0) {
+                                component.append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator")
+                                        .append(Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.grade." + grade)));
                             }
-                            lore.add(StringTag.valueOf(Component.Serializer.toJson(component.withStyle(ChatFormatting.DARK_PURPLE))));
+                            lore.add(component);
                         }
                     }
                     if(hasCustomName()) {
                         MutableComponent component = Component.translatable("item." + Buddycards.MOD_ID + ".buddycard.number_separator");
-                        lore.add(StringTag.valueOf(Component.Serializer.toJson(component.append(getCustomName()).withStyle(ChatFormatting.DARK_PURPLE))));
+                        lore.add(component.append(getCustomName()));
                     }
-                    CompoundTag displayTag = new CompoundTag();
-                    displayTag.put("Lore", lore);
-                    note.getOrCreateTag().put("display", displayTag);
+                    note.set(DataComponents.LORE, new ItemLore(lore));
                     Vec3 pos = position().add(0, 1, 0);
                     Player player = level().getNearestPlayer(this, 5);
                     if (player != null)
@@ -235,11 +235,11 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         for (int i = 0; i < 10; i++) {
             ItemStack card = new ItemStack(cards.get(rand.nextInt(cards.size())));
             if (i % 3 == 0)
-                BuddycardItem.setShiny(card);
+                BuddycardItem.setShiny(card, rand.nextInt(1,3));
             goalTrades.add(new Pair<>(card, getCardSellValue(card, rand, cheap)));
             if (i < 3) {
                 ItemStack card2 = card.copy();
-                card2.getOrCreateTag().putInt("grade", rand.nextInt(2,5));
+                card2.set(BuddycardsComponents.BUDDYCARD_GRADE, rand.nextInt(2,5));
                 goalTrades.add(new Pair<>(card2, getCardSellValue(card2, rand, cheap)));
             }
         }
@@ -254,18 +254,15 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         goalTrades.add(new Pair<>(card, getCardSellValue(card, rand, cheap)));
     }
 
+    static final ResourceKey<LootTable> ZYLEX_BARTER = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "gameplay/zylex_barter"));
+    static final ResourceKey<LootTable> VOID_ZYLEX_BARTER = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
+
     public static ItemStack getBarterResult(Level level, boolean voidZylex) {
         if (level instanceof ServerLevel lvl) {
-            if (voidZylex) {
-                LootTable table = lvl.getServer().getLootData().getLootTable(new ResourceLocation(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
-                List<ItemStack> items = table.getRandomItems((new LootParams.Builder(lvl)).create(LootContextParamSets.EMPTY));
-                return items.get(0);
-            }
-            else {
-                LootTable table = lvl.getServer().getLootData().getLootTable(new ResourceLocation(Buddycards.MOD_ID, "gameplay/zylex_barter"));
-                List<ItemStack> items = table.getRandomItems((new LootParams.Builder(lvl)).create(LootContextParamSets.EMPTY));
-                return items.get(0);
-            }
+            LootTable table = lvl.getServer().reloadableRegistries().getLootTable(voidZylex ? VOID_ZYLEX_BARTER : ZYLEX_BARTER);
+            List<ItemStack> items = table.getRandomItems((new LootParams.Builder(lvl)).create(LootContextParamSets.EMPTY));
+            System.out.println(items);
+            return items.getFirst();
         }
         return ItemStack.EMPTY;
     }
@@ -277,10 +274,17 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
             value += 4;
         if (card.getRarity() == Rarity.EPIC)
             value += 8;
-        if (card.hasFoil())
-            value += 4;
-        if(card.hasTag() && card.getTag().contains("grade")) {
-            int grade = card.getTag().getInt("grade");
+        if (card.has(BuddycardsComponents.BUDDYCARD_FOIL)) {
+            int foil = card.get(BuddycardsComponents.BUDDYCARD_FOIL);
+            if (foil == 1)
+                value += 4;
+            else if (foil == 2)
+                value += 6;
+            else if (foil == 3)
+                value *= 3;
+        }
+        if(card.has(BuddycardsComponents.BUDDYCARD_GRADE)) {
+            int grade = card.get(BuddycardsComponents.BUDDYCARD_GRADE);
             if (grade == 1)
                 value -= 2;
             else if (grade == 2)
@@ -328,8 +332,8 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         ListTag tradesTag = new ListTag();
         for(Pair<ItemStack, ItemStack> trade : goalTrades) {
             CompoundTag tradeTag = new CompoundTag();
-            tradeTag.put("Goal", trade.getFirst().save(new CompoundTag()));
-            tradeTag.put("Reward", trade.getSecond().save(new CompoundTag()));
+                tradeTag.put("Goal", trade.getFirst().saveOptional(this.registryAccess()));
+            tradeTag.put("Reward", trade.getSecond().saveOptional(this.registryAccess()));
             tradesTag.add(tradeTag);
         }
         tag.put("GoalTrades", tradesTag);
@@ -342,7 +346,7 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         cheap = tag.getBoolean("Cheap");
         goalTrades.clear();
         for(Tag tradeTag : tag.getList("GoalTrades", Tag.TAG_COMPOUND))
-            goalTrades.add(new Pair<>(ItemStack.of(((CompoundTag) tradeTag).getCompound("Goal")), ItemStack.of(((CompoundTag) tradeTag).getCompound("Reward"))));
+            goalTrades.add(new Pair<>(ItemStack.parseOptional(this.registryAccess(), ((CompoundTag) tradeTag).getCompound("Goal")), ItemStack.parseOptional(this.registryAccess(), ((CompoundTag) tradeTag).getCompound("Reward"))));
     }
 
     @Override
@@ -390,11 +394,9 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         }
     }
 
-    private boolean hurtWithCleanWater(DamageSource source, ThrownPotion thrownPotion, float amt) {
-        ItemStack itemstack = thrownPotion.getItem();
-        Potion potion = PotionUtils.getPotion(itemstack);
-        List<MobEffectInstance> list = PotionUtils.getMobEffects(itemstack);
-        boolean flag = potion == Potions.WATER && list.isEmpty();
-        return flag ? super.hurt(source, amt) : false;
+    private boolean hurtWithCleanWater(DamageSource source, ThrownPotion potion, float amount) {
+        ItemStack itemstack = potion.getItem();
+        PotionContents potioncontents = itemstack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+        return potioncontents.is(Potions.WATER) && super.hurt(source, amount);
     }
 }

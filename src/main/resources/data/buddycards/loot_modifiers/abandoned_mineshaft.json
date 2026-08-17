@@ -1,9 +1,9 @@
 {
-  "type": "buddycards:loot_injection",
-  "injection": "buddycards:inject/abandoned_mineshaft",
+  "type": "neoforge:add_table",
+  "table": "buddycards:inject/abandoned_mineshaft",
   "conditions": [
     {
-      "condition": "forge:loot_table_id",
+      "condition": "neoforge:loot_table_id",
       "loot_table_id": "minecraft:chests/abandoned_mineshaft"
     }
   ]

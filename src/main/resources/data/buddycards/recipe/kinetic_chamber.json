@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "YXY",
+    "XZX",
+    "YXY"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:obsidian"
+    },
+    "Y": {
+      "item": "buddycards:crimson_luminis"
+    },
+    "Z": {
+      "item": "minecraft:tinted_glass"
+    }
+  },
+  "result": {
+    "id": "buddycards:kinetic_chamber"
+  }
+}

@@ -12,8 +12,8 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class GraderMenu  extends AbstractContainerMenu {
     private final GraderBlockEntity entity;
@@ -50,7 +50,6 @@ public class GraderMenu  extends AbstractContainerMenu {
         for (int x = 0; x < 9; x++) {
             this.addSlot(new Slot(playerInv, x, 8 + x * 18, 144));
         }
-
         addDataSlots(data);
     }
 

@@ -1,0 +1,9 @@
+{
+  "asset_name": "zylex",
+  "description": {
+    "color": "#d44de3",
+    "translate": "trim_material.buddycards.zylex"
+  },
+  "ingredient": "buddycards:zylex",
+  "item_model_index": 0.5
+}

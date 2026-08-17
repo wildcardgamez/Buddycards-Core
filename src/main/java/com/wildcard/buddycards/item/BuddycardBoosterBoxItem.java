@@ -20,7 +20,7 @@ public class BuddycardBoosterBoxItem extends BlockItem {
     protected final Supplier<BuddycardPackItem> packSupplier;
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        packSupplier.get().appendHoverText(stack, level, tooltip, flag);
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        packSupplier.get().appendHoverText(stack, context, tooltip, flag);
     }
 }

@@ -1,47 +1,40 @@
 package com.wildcard.buddycards;
 
-import com.wildcard.buddycards.battles.BuddycardsPackets;
-import com.wildcard.buddycards.integration.CuriosIntegration;
-import com.wildcard.buddycards.registries.BuddycardsBlocks;
-import com.wildcard.buddycards.registries.BuddycardsEntities;
-import com.wildcard.buddycards.registries.BuddycardsItems;
-import com.wildcard.buddycards.registries.BuddycardsMisc;
+import com.wildcard.buddycards.registries.*;
 import com.wildcard.buddycards.util.*;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 
-// The value here should match an entry in the META-INF/mods.toml file
+// The value here should match an entry in_enchanting_table.json the META-INF/mods.toml file
 @Mod(Buddycards.MOD_ID)
 public class Buddycards
 {
     public static final String MOD_ID = "buddycards";
 
-    public Buddycards() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigManager.config);
+    public Buddycards(IEventBus eventBus, ModContainer modContainer) {
+        eventBus.addListener(this::setup);
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        BuddycardsComponents.registerComponents(eventBus);
+        BuddycardsAttributes.registerAttributes(eventBus);
+        BuddycardsBlocks.registerBlocks(eventBus);
+        BuddycardsEntities.registerEntities(eventBus);
+        BuddycardsItems.registerItems(eventBus);
+        BuddycardsPotions.registerPotions(eventBus);
+        BuddycardsMisc.registerStuff(eventBus);
 
-        ConfigManager.loadConfig(FMLPaths.CONFIGDIR.get().resolve("buddycards-common.toml").toString());
-
-        BuddycardsBlocks.registerBlocks();
-        BuddycardsEntities.registerEntities();
-        BuddycardsItems.registerItems();
-        BuddycardsMisc.registerStuff();
-
-        MinecraftForge.EVENT_BUS.register(this);
-        BuddycardsPackets.registerPackets();
-        FMLJavaModLoadingContext.get().getModEventBus().register(CuriosIntegration.class);
+        modContainer.registerConfig(ModConfig.Type.COMMON, ConfigManager.SPEC);
     }
 
+    @SubscribeEvent
     private void setup(final FMLCommonSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(new MobDropHandler());
-        MinecraftForge.EVENT_BUS.register(new SpawnHandler());
-        MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
-        MinecraftForge.EVENT_BUS.register(new DamageEffectHandler());
+        NeoForge.EVENT_BUS.register(new MobDropHandler());
+        NeoForge.EVENT_BUS.register(new SpawnHandler());
+        NeoForge.EVENT_BUS.register(new ExplosionHandler());
+        NeoForge.EVENT_BUS.register(new DamageEffectHandler());
     }
 }

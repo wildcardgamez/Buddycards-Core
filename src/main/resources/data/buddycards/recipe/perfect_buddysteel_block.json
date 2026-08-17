@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "buddycards:perfect_buddysteel_ingot"
+    }
+  },
+  "result": {
+    "id": "buddycards:perfect_buddysteel_block"
+  }
+}

@@ -1,50 +1,48 @@
 package com.wildcard.buddycards.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.wildcard.buddycards.Buddycards;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.wildcard.buddycards.registries.BuddycardsMisc;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
-    private final ResourceLocation id;
+public class BuddysteelChargingRecipe implements Recipe<BuddysteelChargingRecipeInput> {
     private final ItemStack output;
     private final Ingredient input;
-    private final Ingredient meter;
     private final NonNullList<Ingredient> ingredients;
-    private final int powerReq;
+    private final int tier;
+    private final float percentage;
+    private final String set;
 
-    public BuddysteelChargingRecipe(ResourceLocation id, ItemStack output, Ingredient input, Ingredient meter, NonNullList<Ingredient> ingredients, int powerReq) {
-        this.id = id;
+    public BuddysteelChargingRecipe(ItemStack output, Ingredient input, NonNullList<Ingredient> ingredients, int tier, float percentage, String set) {
         this.output = output;
         this.input = input;
-        this.meter = meter;
         this.ingredients = ingredients;
-        this.powerReq = powerReq;
+        this.tier = tier;
+        this.percentage = percentage;
+        this.set = set;
     }
 
     @Override
-    public boolean matches(SimpleContainer container, Level level) {
-        if(input.test(container.getItem(0)) && meter.test(container.getItem(5))) {
-            for (int i = 0; i < ingredients.size(); i++) {
-                if(!ingredients.get(i).test(container.getItem(i + 1)))
+    public boolean matches(BuddysteelChargingRecipeInput recipeInput, Level level) {
+        if(input.test(recipeInput.getItem(0))) {
+            for (int i = 0; i < ingredients.size(); i++)
+                if(!ingredients.get(i).test(recipeInput.getItem(i + 1)))
                     return false;
-            }
             return true;
         }
         return false;
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer container, RegistryAccess access) {
-        return output;
+    public ItemStack assemble(BuddysteelChargingRecipeInput recipeInput, HolderLookup.Provider provider) {
+        return output.copy();
     }
 
     @Override
@@ -53,23 +51,18 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess access) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output.copy();
     }
 
     @Override
-    public ResourceLocation getId() {
-        return id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
-        return Serializer.INSTANCE;
+        return BuddycardsMisc.CHARGING_RECIPE_SERIALIZER.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return Type.INSTANCE;
+        return BuddycardsMisc.CHARGING_RECIPE.get();
     }
 
     @Override
@@ -77,88 +70,76 @@ public class BuddysteelChargingRecipe implements Recipe<SimpleContainer> {
         return ingredients;
     }
 
-    public int getPowerReq() {
-        return powerReq;
-    }
-
     public Ingredient getInput() {
         return input;
     }
 
-    public Ingredient getMeter() {
-        return meter;
-    }
-
     public ItemStack getResultItem() {
-        return output;
+        return output.copy();
     }
 
-    public static class Type implements RecipeType<BuddysteelChargingRecipe> {
-        private Type() { }
-        public static final Type INSTANCE = new Type();
-        public static final String ID = "buddysteel_charging";
+    public int getTier() {
+        return tier;
+    }
+
+    public float getPercentage() {
+        return percentage;
+    }
+
+    public String getSet() {
+        return set;
     }
 
     public static class Serializer implements RecipeSerializer<BuddysteelChargingRecipe> {
-        public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID =
-                new ResourceLocation(Buddycards.MOD_ID,"buddysteel_charging");
+        public static final MapCodec<BuddysteelChargingRecipe> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+                ItemStack.STRICT_CODEC.fieldOf("output").forGetter(BuddysteelChargingRecipe::getResultItem),
+                Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(BuddysteelChargingRecipe::getInput),
+                Ingredient.LIST_CODEC_NONEMPTY.fieldOf("ingredients").xmap(ingredients -> {
+                    NonNullList<Ingredient> nonNullList = NonNullList.create();
+                    nonNullList.addAll(ingredients);
+                    return nonNullList;
+                }, ingredients -> ingredients).forGetter(BuddysteelChargingRecipe::getIngredients),
+                Codec.INT.optionalFieldOf("tier", 0).forGetter(BuddysteelChargingRecipe::getTier),
+                Codec.FLOAT.optionalFieldOf("percentage", 1f).forGetter(BuddysteelChargingRecipe::getPercentage),
+                Codec.STRING.optionalFieldOf("set", "all").forGetter(BuddysteelChargingRecipe::getSet)
+        ).apply(i, BuddysteelChargingRecipe::new));
+
+        public static final StreamCodec<RegistryFriendlyByteBuf, BuddysteelChargingRecipe> STREAM_CODEC = StreamCodec.of(BuddysteelChargingRecipe.Serializer::toNetwork, BuddysteelChargingRecipe.Serializer::fromNetwork);
 
         @Override
-        public BuddysteelChargingRecipe fromJson(ResourceLocation id, JsonObject json) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
-            Ingredient input = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input"));
-            Ingredient meter = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "meter"));
-            JsonArray ingredientsJson = GsonHelper.getAsJsonArray(json, "ingredients");
-            NonNullList<Ingredient> ingredients = NonNullList.withSize(4, Ingredient.EMPTY);
-            for (int i = 0; i < ingredients.size(); i++) {
-                ingredients.set(i, Ingredient.fromJson(ingredientsJson.get(i)));
+        public MapCodec<BuddysteelChargingRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public StreamCodec<RegistryFriendlyByteBuf, BuddysteelChargingRecipe> streamCodec() {
+            return STREAM_CODEC;
+        }
+
+        public static BuddysteelChargingRecipe fromNetwork(RegistryFriendlyByteBuf buf) {
+            ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
+            Ingredient input = Ingredient.CONTENTS_STREAM_CODEC.decode(buf);
+            int i = buf.readInt();
+            NonNullList<Ingredient> ingredients = NonNullList.withSize(i, Ingredient.EMPTY);
+            for (int j = 0; j < i; j++) {
+                ingredients.set(j, Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
             }
-            int req = GsonHelper.getAsInt(json, "power");
-            return new BuddysteelChargingRecipe(id, output, input, meter, ingredients, req);
+            int tier = buf.readInt();
+            float percentage = buf.readFloat();
+            String set = buf.readUtf();
+            return new BuddysteelChargingRecipe(output, input, ingredients, tier, percentage, set);
         }
 
-        @Override
-        public BuddysteelChargingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
-            inputs.replaceAll(ignored -> Ingredient.fromNetwork(buf));
-            int req = buf.readInt();
-            Ingredient input = Ingredient.fromNetwork(buf);
-            Ingredient meter = Ingredient.fromNetwork(buf);
-            ItemStack output = buf.readItem();
-            return new BuddysteelChargingRecipe(id, output, input, meter, inputs, req);
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, BuddysteelChargingRecipe recipe) {
+        public static void toNetwork(RegistryFriendlyByteBuf buf, BuddysteelChargingRecipe recipe) {
+            ItemStack.STREAM_CODEC.encode(buf, recipe.getResultItem());
+            Ingredient.CONTENTS_STREAM_CODEC.encode(buf, recipe.getInput());
             buf.writeInt(recipe.getIngredients().size());
             for (Ingredient ing : recipe.getIngredients()) {
-                ing.toNetwork(buf);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ing);
             }
-            buf.writeInt(recipe.powerReq);
-            recipe.input.toNetwork(buf);
-            recipe.meter.toNetwork(buf);
-            buf.writeItemStack(recipe.getResultItem(RegistryAccess.EMPTY), false);
-        }
-
-        /**@Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return INSTANCE;
-        }
-
-        @Override
-        public ResourceLocation getRegistryName() {
-            return ID;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return Serializer.castClass(RecipeSerializer.class);
-        }**/
-
-        @SuppressWarnings("unchecked")
-        private static <G> Class<G> castClass(Class<?> cls) {
-            return (Class<G>)cls;
+            buf.writeInt(recipe.getTier());
+            buf.writeFloat(recipe.getPercentage());
+            buf.writeUtf(recipe.getSet());
         }
     }
 }

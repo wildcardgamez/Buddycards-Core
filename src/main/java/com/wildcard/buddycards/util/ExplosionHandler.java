@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.level.ExplosionEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class ExplosionHandler {
         //Calculate and give amt of crimson luminis
         int amt = (int) (luminisBlocks * rng / ConfigManager.luminisToCrimsonAvg.get());
         if (amt >= 1)
-            level.addFreshEntity(new ItemEntity(level, event.getExplosion().getPosition().x, event.getExplosion().getPosition().y, event.getExplosion().getPosition().z,
+            level.addFreshEntity(new ItemEntity(level, event.getExplosion().center().x, event.getExplosion().center().y, event.getExplosion().center().z,
                     new ItemStack(BuddycardsItems.CRIMSON_LUMINIS.get(), amt)));
     }
 }

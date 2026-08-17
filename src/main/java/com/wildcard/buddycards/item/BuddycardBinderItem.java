@@ -2,9 +2,12 @@ package com.wildcard.buddycards.item;
 
 import com.wildcard.buddycards.container.BinderItemHandler;
 import com.wildcard.buddycards.core.BuddycardSet;
+import com.wildcard.buddycards.core.CardInfo;
+import com.wildcard.buddycards.core.CardInfoProviderItem;
+import com.wildcard.buddycards.enchantment.EnchantmentKeys;
 import com.wildcard.buddycards.menu.BinderMenu;
-import com.wildcard.buddycards.registries.BuddycardsMisc;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -16,14 +19,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.stream.Stream;
 
-public class BuddycardBinderItem extends Item {
+public class BuddycardBinderItem extends Item implements CardInfoProviderItem {
     public BuddycardBinderItem(Properties properties, BuddycardSet set, ResourceLocation texture, boolean large) {
         super(properties);
         SET = set;
@@ -44,17 +45,19 @@ public class BuddycardBinderItem extends Item {
     protected final boolean LARGE;
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable(SET.getDescriptionId()).withStyle(ChatFormatting.GRAY));
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        if(hand.equals(InteractionHand.OFF_HAND))
+            return InteractionResultHolder.pass(player.getItemInHand(hand));
         ItemStack binder = player.getItemInHand(hand);
-        if(level instanceof ServerLevel) {
-            int pages = 3 + EnchantmentHelper.getItemEnchantmentLevel(BuddycardsMisc.EXTRA_PAGE.get(), binder);
-            NetworkHooks.openScreen((ServerPlayer) player, new SimpleMenuProvider(
-                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderItemHandler(binder, pages, LARGE))
+        if(level instanceof ServerLevel && player instanceof ServerPlayer serverPlayer && binder.getItem() instanceof BuddycardBinderItem) {
+            int pages = 3 + EnchantmentKeys.getEnchantmentLevel(level, EnchantmentKeys.EXTRA_PAGE, binder);
+            serverPlayer.openMenu(new SimpleMenuProvider(
+                    (id, playerInventory, entity) -> new BinderMenu(id, player.getInventory(), new BinderItemHandler(binder, pages, LARGE, level.registryAccess()))
                     , player.getItemInHand(hand).getHoverName()));
         }
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
@@ -76,5 +79,9 @@ public class BuddycardBinderItem extends Item {
 
     public boolean isLarge() {
         return LARGE;
+    }
+
+    public Stream<CardInfo> getAllCardInfo(ItemStack stack) {
+        return stack.get(DataComponents.CONTAINER).stream().filter(i -> i.getItem() instanceof BuddycardItem).map(BuddycardItem::getCardInfo).distinct();
     }
 }

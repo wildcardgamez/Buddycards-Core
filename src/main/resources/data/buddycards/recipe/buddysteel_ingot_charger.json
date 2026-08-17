@@ -1,0 +1,29 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "input": {
+    "item": "minecraft:iron_ingot"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:lapis_lazuli",
+      "count": 1
+    },
+    {
+      "tag": "buddycards:buddycards",
+      "count": 1
+    },
+    {
+      "tag": "buddycards:buddycards",
+      "count": 1
+    },
+    {
+      "tag": "buddycards:buddycards",
+      "count": 1
+    }
+  ],
+  "output": {
+    "id": "buddycards:buddysteel_ingot",
+    "count": 1
+  },
+  "set": "base"
+}

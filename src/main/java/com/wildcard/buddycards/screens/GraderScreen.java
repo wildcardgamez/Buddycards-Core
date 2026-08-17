@@ -9,7 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class GraderScreen extends AbstractContainerScreen<GraderMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/grader.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/grader.png");
+    private static final ResourceLocation PROGRESS = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/grader/progress");
 
     public GraderScreen(GraderMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -30,12 +31,12 @@ public class GraderScreen extends AbstractContainerScreen<GraderMenu> {
         pGuiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
         int progress = menu.getProgress();
         if(progress > 0)
-            pGuiGraphics.blit(TEXTURE, leftPos + 81, topPos + 24, 176, 0, 14, progress);
+            pGuiGraphics.blitSprite(PROGRESS, 14, 28, 0, 0, leftPos + 81, topPos + 24, 14, progress);
     }
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float delta) {
-        super.renderBackground(pGuiGraphics);
+        super.renderBackground(pGuiGraphics, pMouseX,pMouseY, delta);
         super.render(pGuiGraphics, pMouseX, pMouseY, delta);
         renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }

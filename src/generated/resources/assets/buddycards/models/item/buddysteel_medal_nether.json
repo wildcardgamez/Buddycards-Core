@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "buddycards:item/buddysteel_medal_nether1",
+      "predicate": {
+        "buddycards:tier": 1.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddysteel_medal_nether2",
+      "predicate": {
+        "buddycards:tier": 2.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddysteel_medal_nether3",
+      "predicate": {
+        "buddycards:tier": 3.0
+      }
+    },
+    {
+      "model": "buddycards:item/buddysteel_medal_nether4",
+      "predicate": {
+        "buddycards:tier": 4.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "buddycards:item/nether_set/medal"
+  }
+}

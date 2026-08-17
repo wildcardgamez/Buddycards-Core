@@ -1,0 +1,9 @@
+{
+  "asset_name": "luminis",
+  "description": {
+    "color": "#ffc16a",
+    "translate": "trim_material.buddycards.luminis"
+  },
+  "ingredient": "buddycards:luminis",
+  "item_model_index": 0.5
+}

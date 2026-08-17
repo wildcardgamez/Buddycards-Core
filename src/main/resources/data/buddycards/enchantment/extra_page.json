@@ -1,0 +1,21 @@
+{
+  "description": {
+    "translate": "enchantment.buddycards.extra_page"
+  },
+  "slots": [
+    "hand"
+  ],
+  "primary_items": "#buddycards:enchantable/binders",
+  "supported_items": "#buddycards:enchantable/binders",
+  "weight": 10,
+  "max_level": 7,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 7
+  },
+  "max_cost": {
+    "base": 1,
+    "per_level_above_first": 8
+  },
+  "anvil_cost": 2
+}

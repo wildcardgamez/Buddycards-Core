@@ -2,6 +2,7 @@ package com.wildcard.buddycards.screens;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.menu.ChargerMenu;
+import com.wildcard.buddycards.menu.GraderMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -9,7 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ChargerScreen extends AbstractContainerScreen<ChargerMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Buddycards.MOD_ID, "textures/gui/buddysteel_charger.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/buddysteel_charger.png");
+    private static final ResourceLocation PROGRESS = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/charger/progress");
 
     public ChargerScreen(ChargerMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -30,12 +32,12 @@ public class ChargerScreen extends AbstractContainerScreen<ChargerMenu> {
         pGuiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
         int progress = menu.getProgress();
         if(progress > 0)
-            pGuiGraphics.blit(TEXTURE, leftPos + 52, topPos + 37, 176, 0, progress, 16);
+            pGuiGraphics.blitSprite(PROGRESS, 72, 16, 0, 0, leftPos + 52, topPos + 37, progress, 16);
     }
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float delta) {
-        super.renderBackground(pGuiGraphics);
+        super.renderBackground(pGuiGraphics, pMouseX,pMouseY, delta);
         super.render(pGuiGraphics, pMouseX, pMouseY, delta);
         renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }

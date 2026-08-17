@@ -1,44 +1,44 @@
 {
-  "type": "buddycards:loot_injection",
-  "injection": "buddycards:inject/village_house",
+  "type": "neoforge:add_table",
+  "table": "buddycards:inject/village_house",
   "conditions": [
     {
       "condition": "minecraft:any_of",
       "terms": [
         {
-          "condition": "forge:loot_table_id",
+          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:chests/village/village_butcher"
         },
         {
-          "condition": "forge:loot_table_id",
+          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:chests/village/village_cartographer"
         },
         {
-          "condition": "forge:loot_table_id",
+          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:chests/village/village_desert_house"
         },
         {
-          "condition": "forge:loot_table_id",
+          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:chests/village/village_fisher"
         },
         {
-          "condition": "forge:loot_table_id",
+          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:chests/village/village_plains_house"
         },
         {
-          "condition": "forge:loot_table_id",
+          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:chests/village/village_savanna_house"
         },
         {
-          "condition": "forge:loot_table_id",
+          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:chests/village/village_sheperd"
         },
         {
-          "condition": "forge:loot_table_id",
+          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:chests/village/village_snowy_house"
         },
         {
-          "condition": "forge:loot_table_id",
+          "condition": "neoforge:loot_table_id",
           "loot_table_id": "minecraft:chests/village/village_taiga_house"
         }
       ]

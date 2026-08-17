@@ -11,8 +11,8 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 public class EnderlingRenderer extends MobRenderer<EnderlingEntity, EnderlingModel<EnderlingEntity>> {
     public EnderlingRenderer(EntityRendererProvider.Context context) {
@@ -23,12 +23,12 @@ public class EnderlingRenderer extends MobRenderer<EnderlingEntity, EnderlingMod
 
     @Override
     public ResourceLocation getTextureLocation(EnderlingEntity p_114482_) {
-        return new ResourceLocation(Buddycards.MOD_ID, "textures/entity/enderling.png");
+        return ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/entity/enderling.png");
     }
 
     @OnlyIn(Dist.CLIENT)
     public class EnderlingEyesLayer extends EyesLayer<EnderlingEntity, EnderlingModel<EnderlingEntity>> {
-        private final RenderType RENDER_TYPE = RenderType.eyes(new ResourceLocation("textures/entity/enderman/enderman_eyes.png"));
+        private final RenderType RENDER_TYPE = RenderType.eyes(ResourceLocation.parse("textures/entity/enderman/enderman_eyes.png"));
 
         public EnderlingEyesLayer(RenderLayerParent<EnderlingEntity, EnderlingModel<EnderlingEntity>> rendererIn) {
             super(rendererIn);

@@ -1,7 +1,7 @@
 # This is an example mods.toml file. It contains the data relating to the loading mods.
 # There are several mandatory fields (#mandatory), and many more that are optional (#optional).
 # The overall format is standard TOML format, v0.5.0.
-# Note that there are a couple of TOML lists in this file.
+# Note that there are a couple of TOML lists in_enchanting_table.json this file.
 # Find more information on toml format here:  https://github.com/toml-lang/toml
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
@@ -19,16 +19,16 @@ modId="buddycards" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 # ${file.jarVersion} will substitute the value of the Implementation-Version as read from the mod's JAR file metadata
 # see the associated build.gradle script for how to populate this completely automatically during a build
-version="1.20.1-4.3.2" #mandatory
+version="1.20.1-4.3.0" #mandatory
  # A display name for the mod
 displayName="Buddycards" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
-# A URL for the "homepage" for this mod, displayed in the mod UI
+# A URL for the "homepage" for this mod, displayed in_enchanting_table.json the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
-# A file name (in the root of the mod JAR) containing a logo for display
+# A file name (in_enchanting_table.json the root of the mod JAR) containing a logo for display
 logoFile="examplemod.png" #optional
-# A text field displayed in the mod UI
+# A text field displayed in_enchanting_table.json the mod UI
 credits='''
 Developers:
 justliliandev
@@ -36,7 +36,7 @@ LegoMaster3650
 
 Translators:
 zn_ch - Libellule505''' #optional
-# A text field displayed in the mod UI
+# A text field displayed in_enchanting_table.json the mod UI
 authors="Wildcard" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "  #",
+    "#XX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:tuff_slab"
+    },
+    "X": {
+      "item": "minecraft:tuff"
+    }
+  },
+  "result": {
+    "id": "buddycards:tuff_card_stand",
+    "count": 2
+  }
+}

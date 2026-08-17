@@ -1,0 +1,9 @@
+{
+  "asset_name": "buddysteel",
+  "description": {
+    "color": "#98e8ff",
+    "translate": "trim_material.buddycards.buddysteel"
+  },
+  "ingredient": "buddycards:buddysteel_ingot",
+  "item_model_index": 0.5
+}

@@ -1,0 +1,28 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "input": {
+    "item": "buddycards:buddysteel_nugget"
+  },
+  "ingredients": [
+    {
+      "item": "buddycards:luminis_scanner_chip",
+      "count": 1
+    },
+    {
+      "item": "buddycards:zylex_scanner_chip",
+      "count": 1
+    },
+    {
+      "item": "buddycards:luminis_scanner_chip",
+      "count": 1
+    },
+    {
+      "item": "buddycards:zylex_scanner_chip",
+      "count": 1
+    }
+  ],
+  "output": {
+    "id": "buddycards:perfect_scanner_chip",
+    "count": 1
+  }
+}

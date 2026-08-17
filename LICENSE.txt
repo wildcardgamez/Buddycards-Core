@@ -1,7 +1,0 @@
-Not really much of lisence more of a stand in until something better is put together
-1. Don't upload the mod as your own or under your own projects
-2. You are allowed to reference the mod's code for the purpose of making expansions, but don't copy the mod
-3. Don't add to the mod and upload it as your own. If you want to help with updating, feel free to push to the github and I can try to work it out
-4. Textures are fine to reference for creating expansions mods (such as making use of the card shapes), but don't reuse the textures as is
-5. I have no issues with the mod appearing in blog posts or videos, but don't put your own files or download links. Please use the forge page as that will always be the most updated version of the mod, as I cannot garuntee that one does not modify the mod.
-I reserve the right to judge individual cases now and in the future as I see fit, as 

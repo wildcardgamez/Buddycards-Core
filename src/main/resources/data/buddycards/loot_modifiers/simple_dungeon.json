@@ -1,9 +1,9 @@
 {
-  "type": "buddycards:loot_injection",
-  "injection": "buddycards:inject/simple_dungeon",
+  "type": "neoforge:add_table",
+  "table": "buddycards:inject/simple_dungeon",
   "conditions": [
     {
-      "condition": "forge:loot_table_id",
+      "condition": "neoforge:loot_table_id",
       "loot_table_id": "minecraft:chests/simple_dungeon"
     }
   ]

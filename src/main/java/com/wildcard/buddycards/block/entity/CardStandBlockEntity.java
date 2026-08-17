@@ -1,8 +1,10 @@
 package com.wildcard.buddycards.block.entity;
 
+import com.wildcard.buddycards.core.CardInfo;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -16,6 +18,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.stream.Stream;
+
 public class CardStandBlockEntity extends BlockEntity implements Clearable {
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(12, ItemStack.EMPTY);
 
@@ -28,7 +32,7 @@ public class CardStandBlockEntity extends BlockEntity implements Clearable {
     }
 
     public void putCardInSlot(ItemStack stack, int pos) {
-        if(this.level != null) {
+        if (this.level != null) {
             this.inventory.set(pos - 1, stack);
             this.setChanged();
             this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
@@ -49,24 +53,24 @@ public class CardStandBlockEntity extends BlockEntity implements Clearable {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
-        super.saveAdditional(compound);
+    protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.saveAdditional(compound, registries);
         CompoundTag nbt = new CompoundTag();
-        ContainerHelper.saveAllItems(nbt, this.inventory, true);
+        ContainerHelper.saveAllItems(nbt, this.inventory, registries);
         compound.put("cards", nbt);
     }
 
     @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
+    public void loadAdditional(CompoundTag compound, HolderLookup.Provider registries) {
+        super.loadAdditional(compound, registries);
         this.inventory.clear();
-        ContainerHelper.loadAllItems(compound.getCompound("cards"), this.inventory);
+        ContainerHelper.loadAllItems(compound.getCompound("cards"), this.inventory, registries);
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         CompoundTag nbt = new CompoundTag();
-        saveAdditional(nbt);
+        saveAdditional(nbt, registries);
         return nbt;
     }
 
@@ -87,7 +91,11 @@ public class CardStandBlockEntity extends BlockEntity implements Clearable {
     @Override
     public void setChanged() {
         super.setChanged();
-        if(level instanceof ServerLevel serverLevel)
+        if (level instanceof ServerLevel serverLevel)
             serverLevel.getChunkSource().blockChanged(getBlockPos());
+    }
+
+    public Stream<CardInfo> getCardInfo() {
+        return inventory.stream().filter(i -> i.getItem() instanceof BuddycardItem).map(BuddycardItem::getCardInfo).distinct();
     }
 }
