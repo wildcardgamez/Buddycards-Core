@@ -10,7 +10,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
-// The value here should match an entry in_enchanting_table.json the META-INF/mods.toml file
 @Mod(Buddycards.MOD_ID)
 public class Buddycards
 {

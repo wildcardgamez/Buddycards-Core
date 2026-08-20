@@ -75,7 +75,7 @@ public abstract class BuddycardPackItem extends Item {
                     else if (luck < 0)
                         while (luck <= -1 || (luck < 0 && -level.getRandom().nextFloat() > luck)) {
                             rand = Math.min(rand, level.getRandom().nextFloat());
-                            luck--;
+                            luck++;
                         }
                     foil = rand >= .95 ? 3 : rand >= .8 ? 2 : 1;
                     BuddycardItem.setShiny(item, foil);
@@ -92,7 +92,7 @@ public abstract class BuddycardPackItem extends Item {
                     else if (luck < 0)
                         while (luck <= -1 || (luck < 0 && -level.getRandom().nextFloat() > luck)) {
                             rand = Math.min(rand, level.getRandom().nextFloat());
-                            luck--;
+                            luck++;
                         }
                     for (grade = 1; grade < 5; grade++) {
                         if (rand < GRADING_ODDS[grade - 1])

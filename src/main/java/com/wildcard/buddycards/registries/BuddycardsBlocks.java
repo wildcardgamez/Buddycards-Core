@@ -80,11 +80,11 @@ public class BuddycardsBlocks {
     public static final DeferredBlock<CardStandBlock> DRIPSTONE_CARD_STAND = registerStand("dripstone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DRIPSTONE_BLOCK)));
     public static final DeferredBlock<CardStandBlock> BASALT_CARD_STAND = registerStand("basalt_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BASALT)));
     //Booster Boxes
-    public static final DeferredBlock<Block> BOOSTER_BOX_BASE = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_base", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
-    public static final DeferredBlock<Block> BOOSTER_BOX_NETHER = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
-    public static final DeferredBlock<Block> BOOSTER_BOX_END = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_end", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
-    public static final DeferredBlock<Block> BOOSTER_BOX_CAVE = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_cave", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
-    public static final DeferredBlock<Block> BOOSTER_BOX_MYSTERY = BuddycardsBlocks.BLOCKS.register("buddycard_booster_box_mystery", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BuddycardsBlocks.BOOSTER_BOX_PROPERTIES));
+    public static final DeferredBlock<Block> BOOSTER_BOX_BASE = BLOCKS.register("buddycard_booster_box_base", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BOOSTER_BOX_PROPERTIES));
+    public static final DeferredBlock<Block> BOOSTER_BOX_NETHER = BLOCKS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BOOSTER_BOX_PROPERTIES));
+    public static final DeferredBlock<Block> BOOSTER_BOX_END = BLOCKS.register("buddycard_booster_box_end", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BOOSTER_BOX_PROPERTIES));
+    public static final DeferredBlock<Block> BOOSTER_BOX_CAVE = BLOCKS.register("buddycard_booster_box_cave", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BOOSTER_BOX_PROPERTIES));
+    public static final DeferredBlock<Block> BOOSTER_BOX_MYSTERY = BLOCKS.register("buddycard_booster_box_mystery", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BOOSTER_BOX_PROPERTIES));
     //Misc
     public static final DeferredBlock<Block> CHARGER = BLOCKS.register("buddysteel_charger", () -> new BuddysteelChargerBlock(BUDDYSTEEL_PROPERTIES));
     public static final DeferredBlock<Block> KINETIC_CHAMBER = BLOCKS.register("kinetic_chamber", () -> new KineticChamberBlock(CRIMSON_LUMINIS_PROPERTIES.explosionResistance(0)));

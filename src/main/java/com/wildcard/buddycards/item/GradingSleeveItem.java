@@ -42,7 +42,7 @@ public class GradingSleeveItem extends SleeveItem {
             else if (luck < 0)
                 while (luck <= -1 || (luck < 0 && -level.getRandom().nextFloat() > luck)) {
                     rand = Math.min(rand, level.getRandom().nextFloat());
-                    luck--;
+                    luck++;
                 }
             for (grade = 1; grade < 5; grade++) {
                 if (rand < ODDS[grade - 1])

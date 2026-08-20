@@ -543,7 +543,7 @@
   "upgrade.buddycards.crimson_buddysteel_upgrade": "Crimson Buddysteel Upgrade",
   "upgrade.buddycards.void_buddysteel_upgrade": "Void Buddysteel Upgrade",
   "upgrade.buddycards.true_perfect_buddysteel_upgrade": "True Perfect Buddysteel Upgrade",
-  "curios.identifier.medal": "Medal Slot",
+  "curios.identifier.medal": "Medal",
   "curios.modifiers.medal": "When worn as medal:",
   "misc.buddycards.battles_beta_warning": "Battles are currently disabled, please enable them via the config if you want to play",
 
