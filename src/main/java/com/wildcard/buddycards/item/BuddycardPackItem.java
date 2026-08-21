@@ -142,7 +142,7 @@ public abstract class BuddycardPackItem extends Item {
                 Optional<Rarity> reroll = rarityWeights.getRandomValue(random);
                 if (reroll.get().ordinal() < optional.get().ordinal())
                     optional = reroll;
-                luck--;
+                luck++;
             }
         return optional
                 .map(this::getPossibleCards)

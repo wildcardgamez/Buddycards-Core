@@ -16,14 +16,14 @@ public class LuminisSleeveItem extends SleeveItem {
     }
 
     @Override
-    public boolean trySleeve(ItemStack card, ItemStack sleeves, Player player, Level level) {
-        if(level instanceof ServerLevel && card.getItem() instanceof BuddycardItem && card.get(BuddycardsComponents.BUDDYCARD_FOIL) == 0) {
-            ItemStack newCard = card.split(1);
-            newCard.set(BuddycardsComponents.BUDDYCARD_FOIL, 2);
-            sleeves.shrink(1);
-            ItemHandlerHelper.giveItemToPlayer(player, newCard);
-            return true;
-        }
-        return false;
+    public boolean canSleeve(ItemStack card, ItemStack sleeves) {
+        return card.getItem() instanceof BuddycardItem && card.get(BuddycardsComponents.BUDDYCARD_FOIL) == 0;
+    }
+
+    @Override
+    public ItemStack sleeveResult(ItemStack card, ItemStack sleeves, Player player, Level level) {
+        ItemStack newCard = card.copyWithCount(1);
+        newCard.set(BuddycardsComponents.BUDDYCARD_FOIL, 2);
+        return newCard;
     }
 }

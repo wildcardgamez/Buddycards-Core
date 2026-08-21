@@ -4,6 +4,7 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.block.GraderBlock;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.item.GradingSleeveItem;
+import com.wildcard.buddycards.item.SleeveItem;
 import com.wildcard.buddycards.menu.GraderMenu;
 import com.wildcard.buddycards.registries.BuddycardsComponents;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -125,24 +127,17 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider, Worl
             }
         if (!flag)
             return false;
-        if (entity.inventory.getStackInSlot(0).getItem() instanceof BuddycardItem && entity.inventory.getStackInSlot(1).getItem() instanceof GradingSleeveItem)
-            return (BuddycardItem.getGrade(entity.inventory.getStackInSlot(0)) == 0);
+        if (entity.inventory.getStackInSlot(1).getItem() instanceof SleeveItem sleeveItem)
+            return sleeveItem.canSleeve(entity.inventory.getStackInSlot(0), entity.inventory.getStackInSlot(1));
         return false;
     }
 
     private static void performGrade(GraderBlockEntity entity) {
-        float[] odds = ((GradingSleeveItem) entity.inventory.getStackInSlot(1).getItem()).ODDS;
-        if (((GradingSleeveItem)entity.getInventory().getStackInSlot(1).getItem()).CONSUME)
-            entity.getInventory().getStackInSlot(1).shrink(1);
-        ItemStack output = entity.getInventory().getStackInSlot(0).split(1);
-        int grade;
-        float rand = entity.level.getRandom().nextFloat();
-        for (grade = 1; grade < 5; grade++) {
-            if (rand < odds[grade - 1])
-                break;
-            rand -= odds[grade - 1];
-        }
-        output.set(BuddycardsComponents.BUDDYCARD_GRADE, grade);
+        ItemStack sleeves = entity.getItem(1);
+        ItemStack output = ((SleeveItem)sleeves.getItem()).sleeveResult(entity.getItem(0), entity.getItem(1), null, entity.level);
+        if (((SleeveItem) sleeves.getItem()).CONSUME)
+            sleeves.shrink(1);
+        entity.getItem(1).shrink(1);
         for (int i = 2; i < 7; i++)
             if (entity.inventory.getStackInSlot(i).isEmpty()) {
                 entity.inventory.setStackInSlot(i, output);
