@@ -46,34 +46,34 @@ public class ModelGen extends ItemModelProvider {
     void genCardModel(BuddycardSet set, int cardNum) {
         String setName = set.getName();
         ItemModelBuilder card = getBuilder(ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum)
-                .parent(factory.apply(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard")))
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum));
+                .parent(factory.apply(Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/buddycard")))
+                .texture("layer0", Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum));
         for (int i = 0; i <= 5; i++) {
             for (int j = 0; j <= 3; j++)
                 if (j + i != 0)
-                    card.override().predicate(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "grade"), i).predicate(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "foil"), j).model(genFoiledGradedCardModel(setName, cardNum, i, j));
+                    card.override().predicate(Buddycards.buddycardsLocation("grade"), i).predicate(Buddycards.buddycardsLocation("foil"), j).model(genFoiledGradedCardModel(setName, cardNum, i, j));
         }
     }
     ModelFile genFoiledGradedCardModel(String setName, int cardNum, int grade, int foil) {
         ItemModelBuilder card = getBuilder(ModelProvider.ITEM_FOLDER + "/buddycard_" + setName + cardNum + "_g" + grade + "_f" + foil)
-                .parent(factory.apply(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/buddycard")))
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum));
+                .parent(factory.apply(Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/buddycard")))
+                .texture("layer0", Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/" + setName + "_set/" + cardNum));
         if (foil != 0)
-                card.texture("layer1", ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID,ModelProvider.ITEM_FOLDER + "/foil" + foil));
+                card.texture("layer1", Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/foil" + foil));
         if (grade != 0)
-                card.texture(foil == 0 ? "layer1" : "layer2", ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID,ModelProvider.ITEM_FOLDER + "/grade" + grade));
+                card.texture(foil == 0 ? "layer1" : "layer2", Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/grade" + grade));
         return card;
     }
 
     void genMedalModel(BuddycardSet set) {
         ItemModelBuilder medal = getBuilder(ModelProvider.ITEM_FOLDER + "/buddysteel_medal_" + set.getName())
                 .parent(factory.apply(ResourceLocation.withDefaultNamespace("item/generated")))
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + set.getName() + "_set/" + "medal"));
+                .texture("layer0", Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/" + set.getName() + "_set/" + "medal"));
         for (int i = 1; i < 5; i++) {
             ItemModelBuilder tierMedal = getBuilder(ModelProvider.ITEM_FOLDER + "/buddysteel_medal_" + set.getName() + i)
                     .parent(factory.apply(ResourceLocation.withDefaultNamespace("item/generated")))
-                    .texture("layer0", ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, ModelProvider.ITEM_FOLDER + "/" + set.getName() + "_set/" + "medal" + i));
-            medal.override().predicate(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "tier"), i).model(tierMedal);
+                    .texture("layer0", Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/" + set.getName() + "_set/" + "medal" + i));
+            medal.override().predicate(Buddycards.buddycardsLocation("tier"), i).model(tierMedal);
         }
     }
 }

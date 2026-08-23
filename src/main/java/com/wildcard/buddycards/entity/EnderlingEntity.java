@@ -254,8 +254,8 @@ public class EnderlingEntity extends PathfinderMob implements Npc, Nameable {
         goalTrades.add(new Pair<>(card, getCardSellValue(card, rand, cheap)));
     }
 
-    static final ResourceKey<LootTable> ZYLEX_BARTER = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "gameplay/zylex_barter"));
-    static final ResourceKey<LootTable> VOID_ZYLEX_BARTER = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "gameplay/void_zylex_barter"));
+    static final ResourceKey<LootTable> ZYLEX_BARTER = ResourceKey.create(Registries.LOOT_TABLE, Buddycards.buddycardsLocation("gameplay/zylex_barter"));
+    static final ResourceKey<LootTable> VOID_ZYLEX_BARTER = ResourceKey.create(Registries.LOOT_TABLE, Buddycards.buddycardsLocation("gameplay/void_zylex_barter"));
 
     public static ItemStack getBarterResult(Level level, boolean voidZylex) {
         if (level instanceof ServerLevel lvl) {

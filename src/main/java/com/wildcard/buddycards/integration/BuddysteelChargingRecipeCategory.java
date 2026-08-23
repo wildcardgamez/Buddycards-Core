@@ -19,8 +19,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
 public class BuddysteelChargingRecipeCategory implements IRecipeCategory<BuddysteelChargingRecipe> {
-    public final static ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/buddysteel_charger.png");
-    public final static RecipeType<BuddysteelChargingRecipe> TYPE = new RecipeType<>(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "buddysteel_charging"), BuddysteelChargingRecipe.class);
+    public final static ResourceLocation TEXTURE = Buddycards.buddycardsLocation("textures/gui/buddysteel_charger.png");
+    public final static RecipeType<BuddysteelChargingRecipe> TYPE = new RecipeType<>(Buddycards.buddycardsLocation("buddysteel_charging"), BuddysteelChargingRecipe.class);
 
     private final IDrawable background;
     private final IDrawable icon;

@@ -30,7 +30,7 @@ public class MedalRenderer implements ICurioRenderer {
         model.prepareMobModel(slotContext.entity(), limbSwing, limbSwingAmount, partialTicks);
         ICurioRenderer.followBodyRotations(slotContext.entity(), model);
         int i = stack.has(BuddycardsComponents.COLLECTION_TIER) ? stack.get(BuddycardsComponents.COLLECTION_TIER) : -1;
-        ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, i == -1 ? id + ".png" : id + i + ".png");
+        ResourceLocation texture = Buddycards.buddycardsLocation(i == -1 ? id + ".png" : id + i + ".png");
         model.renderToBuffer(matrixStack, ItemRenderer.getFoilBuffer(renderTypeBuffer, BuddycardsLayers.medal.renderType(texture), false, stack.hasFoil()), light, OverlayTexture.NO_OVERLAY);
     }
 }

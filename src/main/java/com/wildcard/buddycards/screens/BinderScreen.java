@@ -76,10 +76,10 @@ public class BinderScreen extends AbstractContainerScreen<BinderMenu> {
     }
 
     public static class BinderPageButton extends Button {
-        private static final ResourceLocation PAGE_FORWARD_HIGHLIGHTED_SPRITE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/binder/page_forward_highlighted");
-        private static final ResourceLocation PAGE_FORWARD_SPRITE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/binder/page_forward");
-        private static final ResourceLocation PAGE_BACKWARD_HIGHLIGHTED_SPRITE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/binder/page_backward_highlighted");
-        private static final ResourceLocation PAGE_BACKWARD_SPRITE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/binder/page_backward");
+        private static final ResourceLocation PAGE_FORWARD_HIGHLIGHTED_SPRITE = Buddycards.buddycardsLocation("container/binder/page_forward_highlighted");
+        private static final ResourceLocation PAGE_FORWARD_SPRITE = Buddycards.buddycardsLocation("container/binder/page_forward");
+        private static final ResourceLocation PAGE_BACKWARD_HIGHLIGHTED_SPRITE = Buddycards.buddycardsLocation("container/binder/page_backward_highlighted");
+        private static final ResourceLocation PAGE_BACKWARD_SPRITE = Buddycards.buddycardsLocation("container/binder/page_backward");
 
         protected BinderPageButton(int x, int y, boolean isForward, OnPress onPress) {
             super(x, y, 15, 18, CommonComponents.EMPTY, onPress, DEFAULT_NARRATION);

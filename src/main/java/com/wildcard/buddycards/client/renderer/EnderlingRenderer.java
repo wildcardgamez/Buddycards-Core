@@ -23,7 +23,7 @@ public class EnderlingRenderer extends MobRenderer<EnderlingEntity, EnderlingMod
 
     @Override
     public ResourceLocation getTextureLocation(EnderlingEntity p_114482_) {
-        return ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/entity/enderling.png");
+        return Buddycards.buddycardsLocation("textures/entity/enderling.png");
     }
 
     @OnlyIn(Dist.CLIENT)

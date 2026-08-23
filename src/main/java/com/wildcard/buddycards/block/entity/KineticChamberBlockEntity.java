@@ -53,7 +53,7 @@ public class KineticChamberBlockEntity extends BlockEntity implements Clearable 
         }
     }
 
-    static final ResourceKey<LootTable> SPECIALTY_ITEMS = ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "gameplay/luminis_kinetic_chamber"));
+    static final ResourceKey<LootTable> SPECIALTY_ITEMS = ResourceKey.create(Registries.LOOT_TABLE, Buddycards.buddycardsLocation("gameplay/luminis_kinetic_chamber"));
 
     public void absorbExplosion(ServerLevel lvl) {
         if(lvl.random.nextFloat() < ConfigManager.kineticSuccessRate.get()) {

@@ -110,7 +110,7 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider, Worl
                 level.setBlock(pos, state, 3);
             }
         }
-        else if (entity.progress != 0) {
+        else if (entity.progress != 0 || state.getValue(GraderBlock.GRADING)) {
             entity.progress = 0;
             state = state.setValue(GraderBlock.GRADING, false);
             setChanged(level, pos, state);
@@ -137,7 +137,7 @@ public class GraderBlockEntity extends BlockEntity implements MenuProvider, Worl
         ItemStack output = ((SleeveItem)sleeves.getItem()).sleeveResult(entity.getItem(0), entity.getItem(1), null, entity.level);
         if (((SleeveItem) sleeves.getItem()).CONSUME)
             sleeves.shrink(1);
-        entity.getItem(1).shrink(1);
+        entity.getItem(0).shrink(1);
         for (int i = 2; i < 7; i++)
             if (entity.inventory.getStackInSlot(i).isEmpty()) {
                 entity.inventory.setStackInSlot(i, output);

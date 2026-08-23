@@ -13,9 +13,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
 public class ScannerScreen extends AbstractContainerScreen<ScannerMenu> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/scanner.png");
-    private static final ResourceLocation SLOT = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/scanner/card_slot");
-    private static final ResourceLocation PACK = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/scanner/pack_slot");
+    private static final ResourceLocation TEXTURE = Buddycards.buddycardsLocation("textures/gui/scanner.png");
+    private static final ResourceLocation SLOT = Buddycards.buddycardsLocation("container/scanner/card_slot");
+    private static final ResourceLocation PACK = Buddycards.buddycardsLocation("container/scanner/pack_slot");
 
     public ScannerScreen(ScannerMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);
@@ -68,7 +68,7 @@ public class ScannerScreen extends AbstractContainerScreen<ScannerMenu> {
         }
         //Place the pack
         guiGraphics.blitSprite(PACK, leftPos + 144, topPos - 8, 18, 24);
-        guiGraphics.blitSprite(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/scanner/packs/" + menu.getCurrentSet().getName()), leftPos + 145, topPos - 4, 16, 16);
+        guiGraphics.blitSprite(Buddycards.buddycardsLocation("container/scanner/packs/" + menu.getCurrentSet().getName()), leftPos + 145, topPos - 4, 16, 16);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
@@ -81,10 +81,10 @@ public class ScannerScreen extends AbstractContainerScreen<ScannerMenu> {
     }
 
     public static class ScannerPageButton extends Button {
-        private static final ResourceLocation PAGE_FORWARD_HIGHLIGHTED_SPRITE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/scanner/page_forward_highlighted");
-        private static final ResourceLocation PAGE_FORWARD_SPRITE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/scanner/page_forward");
-        private static final ResourceLocation PAGE_BACKWARD_HIGHLIGHTED_SPRITE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/scanner/page_backward_highlighted");
-        private static final ResourceLocation PAGE_BACKWARD_SPRITE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/scanner/page_backward");
+        private static final ResourceLocation PAGE_FORWARD_HIGHLIGHTED_SPRITE = Buddycards.buddycardsLocation("container/scanner/page_forward_highlighted");
+        private static final ResourceLocation PAGE_FORWARD_SPRITE = Buddycards.buddycardsLocation("container/scanner/page_forward");
+        private static final ResourceLocation PAGE_BACKWARD_HIGHLIGHTED_SPRITE = Buddycards.buddycardsLocation("container/scanner/page_backward_highlighted");
+        private static final ResourceLocation PAGE_BACKWARD_SPRITE = Buddycards.buddycardsLocation("container/scanner/page_backward");
 
         protected ScannerPageButton(int x, int y, boolean isForward, OnPress onPress) {
             super(x, y, 15, 18, CommonComponents.EMPTY, onPress, DEFAULT_NARRATION);

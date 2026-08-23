@@ -146,7 +146,7 @@ public class BuddycardsMisc {
             });
 
     private static Holder<ArmorMaterial> registerArmorMaterial(String name, EnumMap<ArmorItem.Type, Integer> typeProtection, Holder<SoundEvent> equipSound, int enchantability, float toughness, float knockbackResistance, Supplier<Item> ingredientItem) {
-        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, name);
+        ResourceLocation location = Buddycards.buddycardsLocation(name);
         Supplier<Ingredient> ingredient = () -> Ingredient.of(ingredientItem.get());
         List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(location));
 

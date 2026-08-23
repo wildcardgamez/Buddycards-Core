@@ -30,24 +30,24 @@ public class ClientStuff {
     public static void clientSetup(FMLClientSetupEvent event) {
         for (BuddycardSet set : BuddycardsAPI.getAllSets()) {
             for (BuddycardItem card : set.getCards()) {
-                event.enqueueWork(() -> ItemProperties.register(card, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "foil"), (stack, world, entity, idk) -> {
+                event.enqueueWork(() -> ItemProperties.register(card, Buddycards.buddycardsLocation("foil"), (stack, world, entity, idk) -> {
                     if (stack.has(BuddycardsComponents.BUDDYCARD_FOIL))
                         return stack.get(BuddycardsComponents.BUDDYCARD_FOIL);
                     return 0;
                 }));
-                event.enqueueWork(() -> ItemProperties.register(card, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "grade"), (stack, world, entity, idk) -> {
+                event.enqueueWork(() -> ItemProperties.register(card, Buddycards.buddycardsLocation("grade"), (stack, world, entity, idk) -> {
                     if (stack.has(BuddycardsComponents.BUDDYCARD_GRADE))
                         return stack.get(BuddycardsComponents.BUDDYCARD_GRADE);
                     return 0;
                 }));
             }
-            event.enqueueWork(() -> ItemProperties.register(set.getMedal(), ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "tier"), (stack, world, entity, idk) -> {
+            event.enqueueWork(() -> ItemProperties.register(set.getMedal(), Buddycards.buddycardsLocation("tier"), (stack, world, entity, idk) -> {
                 if (stack.has(BuddycardsComponents.COLLECTION_TIER))
                     return stack.get(BuddycardsComponents.COLLECTION_TIER);
                 return 0;
             }));
         }
-        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.BUDDYSTEEL_SCANNER.get(), ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "tier"), (stack, world, entity, idk) -> {
+        event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.BUDDYSTEEL_SCANNER.get(), Buddycards.buddycardsLocation("tier"), (stack, world, entity, idk) -> {
             if (stack.has(BuddycardsComponents.COLLECTION_TIER))
                 return stack.get(BuddycardsComponents.COLLECTION_TIER);
             return 0;
@@ -55,7 +55,7 @@ public class ClientStuff {
         CuriosIntegration.setupRenderers();
     }
 
-    public static ModelLayerLocation ENDERLING_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "enderling"), "enderling");
+    public static ModelLayerLocation ENDERLING_LAYER = new ModelLayerLocation(Buddycards.buddycardsLocation("enderling"), "enderling");
 
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {

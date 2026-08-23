@@ -17,11 +17,11 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 @EventBusSubscriber(modid = Buddycards.MOD_ID, value = Dist.CLIENT)
 public class BuddycardsLayers {
 
-    public static final ModelLayerLocation HEAD_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "armor_head"), "main");
-    public static final ModelLayerLocation CHEST_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "armor_chest"), "main");
-    public static final ModelLayerLocation LEGS_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "armor_legs"), "main");
-    public static final ModelLayerLocation FEET_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "armor_feet"), "main");
-    public static final ModelLayerLocation MEDAL_LAYER = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "medal"), "main");
+    public static final ModelLayerLocation HEAD_LAYER = new ModelLayerLocation(Buddycards.buddycardsLocation("armor_head"), "main");
+    public static final ModelLayerLocation CHEST_LAYER = new ModelLayerLocation(Buddycards.buddycardsLocation("armor_chest"), "main");
+    public static final ModelLayerLocation LEGS_LAYER = new ModelLayerLocation(Buddycards.buddycardsLocation("armor_legs"), "main");
+    public static final ModelLayerLocation FEET_LAYER = new ModelLayerLocation(Buddycards.buddycardsLocation("armor_feet"), "main");
+    public static final ModelLayerLocation MEDAL_LAYER = new ModelLayerLocation(Buddycards.buddycardsLocation("medal"), "main");
 
     public static BuddycardsArmorModel<LivingEntity> helmet;
     public static BuddycardsArmorModel<LivingEntity> chestplate;

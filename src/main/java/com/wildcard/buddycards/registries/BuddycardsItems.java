@@ -75,14 +75,14 @@ public class BuddycardsItems {
     public static final DeferredItem<BuddycardPackItem> PACK_CAVE = ITEMS.register("buddycard_pack_cave", () -> new BuddycardSetPackItem(CAVE_SET, 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
     public static final DeferredItem<BuddycardPackItem> MYSTERY_PACK = ITEMS.register("buddycard_pack_mystery", () -> new MysteryBuddycardPackItem(4, 1, DEFAULT_RARITY_WEIGHTS, false, RARE_PACK_PROPERTIES));
     //Binders
-    public static final DeferredItem<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, BASE_SET, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/buddycard_binder_base.png"), false));
-    public static final DeferredItem<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, NETHER_SET, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/buddycard_binder_nether.png"), false));
-    public static final DeferredItem<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, END_SET, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/buddycard_binder_end.png"), false));
-    public static final DeferredItem<BuddycardBinderItem> BINDER_CAVE = ITEMS.register("buddycard_binder_cave", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, CAVE_SET, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/buddycard_binder_cave.png"), false));
-    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_BASE = ITEMS.register("large_buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, BASE_SET, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/large_buddycard_binder_base.png"), true));
-    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_NETHER = ITEMS.register("large_buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, NETHER_SET, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/large_buddycard_binder_nether.png"), true));
-    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_END = ITEMS.register("large_buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, END_SET, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/large_buddycard_binder_end.png"), true));
-    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_CAVE = ITEMS.register("large_buddycard_binder_cave", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, CAVE_SET, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/large_buddycard_binder_cave.png"), true));
+    public static final DeferredItem<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, BASE_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_base.png"), false));
+    public static final DeferredItem<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, NETHER_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_nether.png"), false));
+    public static final DeferredItem<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, END_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_end.png"), false));
+    public static final DeferredItem<BuddycardBinderItem> BINDER_CAVE = ITEMS.register("buddycard_binder_cave", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, CAVE_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_cave.png"), false));
+    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_BASE = ITEMS.register("large_buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, BASE_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_base.png"), true));
+    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_NETHER = ITEMS.register("large_buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, NETHER_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_nether.png"), true));
+    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_END = ITEMS.register("large_buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, END_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_end.png"), true));
+    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_CAVE = ITEMS.register("large_buddycard_binder_cave", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, CAVE_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_cave.png"), true));
     //Buddysteel Items
     public static final DeferredItem<Item> BUDDYSTEEL_BLEND = ITEMS.register("buddysteel_blend", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<Item> BUDDYSTEEL_INGOT = ITEMS.register("buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
@@ -99,7 +99,7 @@ public class BuddycardsItems {
     //public static final DeferredItem<Item> BUDDYSTEEL_AXE = ITEMS.register("buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.BUDDYSTEEL, UNCOMMON_TOOL_PROPERTIES));
     //public static final DeferredItem<Item> BUDDYSTEEL_HOE = ITEMS.register("buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.BUDDYSTEEL, UNCOMMON_TOOL_PROPERTIES));
     public static final DeferredItem<Item> BUDDYSTEEL_RING = ITEMS.register("buddysteel_ring", () -> new AttributeCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON),
-            (m) -> m.put(BuddycardsAttributes.BUDDY_BONUS, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "buddy_bonus"), 0.25, AttributeModifier.Operation.ADD_VALUE))));
+            (m) -> m.put(BuddycardsAttributes.BUDDY_BONUS, new AttributeModifier(Buddycards.buddycardsLocation("buddysteel_ring"), 0.25, AttributeModifier.Operation.ADD_VALUE))));
     //Charger
     public static final DeferredItem<BlockItem> CHARGER = ITEMS.register("buddysteel_charger", () -> new DescriptionBlockItem(BuddycardsBlocks.CHARGER.get(), DEFAULT_PROPERTIES));
     //Medals
@@ -158,10 +158,10 @@ public class BuddycardsItems {
     public static final DeferredItem<BlockItem> CRIMSON_LUMINIS_BLOCK = ITEMS.register("crimson_luminis_block", () -> new BlockItem(BuddycardsBlocks.CRIMSON_LUMINIS_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> KINETIC_CHAMBER = ITEMS.register("kinetic_chamber", () -> new DescriptionBlockItem(BuddycardsBlocks.KINETIC_CHAMBER.get(), DEFAULT_PROPERTIES));
     //public static final DeferredItem<Item> LUMINIS_HELMET = ITEMS.register("luminis_helmet", () -> new BuddycardsArmorItem(BuddycardsMisc.LUMINIS_ARMOR, ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1)
-    //        .attributes(ItemAttributeModifiers.builder().add(BuddycardsAttributes.FOIL_LUCK, (new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "foil_luck"), 0.5, AttributeModifier.Operation.ADD_VALUE)), EquipmentSlotGroup.HEAD).build())));
+    //        .attributes(ItemAttributeModifiers.builder().add(BuddycardsAttributes.FOIL_LUCK, (new AttributeModifier(Buddycards.buddycardsLocation("foil_luck"), 0.5, AttributeModifier.Operation.ADD_VALUE)), EquipmentSlotGroup.HEAD).build())));
     public static final DeferredItem<Item> LUMINIS_PICKAXE = ITEMS.register("luminis_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.LUMINIS, UNCOMMON_TOOL_PROPERTIES));
     public static final DeferredItem<Item> LUMINIS_RING = ITEMS.register("luminis_ring", () -> new AttributeCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON),
-            (m) -> m.put(BuddycardsAttributes.FOIL_BONUS, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "foil_bonus"), 0.5, AttributeModifier.Operation.ADD_VALUE))));
+            (m) -> m.put(BuddycardsAttributes.FOIL_BONUS, new AttributeModifier(Buddycards.buddycardsLocation("luminis_ring"), 0.5, AttributeModifier.Operation.ADD_VALUE))));
 
     public static final DeferredItem<Item> LUMINIS_SCANNER_CHIP = ITEMS.register("luminis_scanner_chip", () -> new DescriptionItem(DEFAULT_PROPERTIES));
     //Zylex Items
@@ -172,10 +172,10 @@ public class BuddycardsItems {
     public static final DeferredItem<Item> VOID_ZYLEX = ITEMS.register("void_zylex", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> VOID_ZYLEX_BLOCK = ITEMS.register("void_zylex_block", () -> new BlockItem(BuddycardsBlocks.VOID_ZYLEX_BLOCK.get(), DEFAULT_PROPERTIES));
     //public static final DeferredItem<Item> ZYLEX_BOOTS = ITEMS.register("zylex_boots", () -> new BuddycardsArmorItem(BuddycardsMisc.ZYLEX_ARMOR, ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1)
-    //        .attributes(ItemAttributeModifiers.builder().add(BuddycardsAttributes.GRADING_LUCK, (new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "grading_luck"), 0.5, AttributeModifier.Operation.ADD_VALUE)), EquipmentSlotGroup.FEET).build())));
+    //        .attributes(ItemAttributeModifiers.builder().add(BuddycardsAttributes.GRADING_LUCK, (new AttributeModifier(Buddycards.buddycardsLocation("grading_luck"), 0.5, AttributeModifier.Operation.ADD_VALUE)), EquipmentSlotGroup.FEET).build())));
     public static final DeferredItem<Item> ZYLEX_HOE = ITEMS.register("zylex_hoe", () -> new HoeItem(BuddycardsToolTier.ZYLEX, UNCOMMON_TOOL_PROPERTIES));
     public static final DeferredItem<Item> ZYLEX_RING = ITEMS.register("zylex_ring", () -> new AttributeCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON),
-            (m) -> m.put(BuddycardsAttributes.GRADING_LUCK, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "grading_luck"), 0.5, AttributeModifier.Operation.ADD_VALUE))));
+            (m) -> m.put(BuddycardsAttributes.GRADING_LUCK, new AttributeModifier(Buddycards.buddycardsLocation("zylex_ring"), 0.5, AttributeModifier.Operation.ADD_VALUE))));
     public static final DeferredItem<Item> ZYLEX_SCANNER_CHIP = ITEMS.register("zylex_scanner_chip", () -> new DescriptionItem(DEFAULT_PROPERTIES));
     //Charged Buddysteel Items
     public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_INGOT = ITEMS.register("charged_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
@@ -190,9 +190,9 @@ public class BuddycardsItems {
     //public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_AXE = ITEMS.register("charged_buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL, RARE_TOOL_PROPERTIES));
     //public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_HOE = ITEMS.register("charged_buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.CHARGED_BUDDYSTEEL, RARE_TOOL_PROPERTIES));
     public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_RING = ITEMS.register("charged_buddysteel_ring", () -> new AttributeCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), (m) -> {
-        m.put(BuddycardsAttributes.BUDDY_BONUS, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "buddy_bonus"), 1, AttributeModifier.Operation.ADD_VALUE));
-        m.put(BuddycardsAttributes.FOIL_BONUS, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "foil_bonus"), 0.5, AttributeModifier.Operation.ADD_VALUE));
-        m.put(BuddycardsAttributes.GRADING_BONUS, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "grading_bonus"), 0.5, AttributeModifier.Operation.ADD_VALUE));
+        m.put(BuddycardsAttributes.BUDDY_BONUS, new AttributeModifier(Buddycards.buddycardsLocation("charged_buddysteel_ring"), 1, AttributeModifier.Operation.ADD_VALUE));
+        m.put(BuddycardsAttributes.FOIL_BONUS, new AttributeModifier(Buddycards.buddycardsLocation("charged_buddysteel_ring"), 0.5, AttributeModifier.Operation.ADD_VALUE));
+        m.put(BuddycardsAttributes.GRADING_BONUS, new AttributeModifier(Buddycards.buddycardsLocation("charged_buddysteel_ring"), 0.5, AttributeModifier.Operation.ADD_VALUE));
     }));
     public static final DeferredItem<Item> PERFECT_BUDDYSTEEL_INGOT = ITEMS.register("perfect_buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<Item> PERFECT_BUDDYSTEEL_BLOCK = ITEMS.register("perfect_buddysteel_block", () -> new BlockItem(BuddycardsBlocks.PERFECT_BUDDYSTEEL_BLOCK.get(), DEFAULT_PROPERTIES));

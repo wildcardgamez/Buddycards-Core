@@ -10,8 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ChargerScreen extends AbstractContainerScreen<ChargerMenu> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/buddysteel_charger.png");
-    private static final ResourceLocation PROGRESS = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/charger/progress");
+    private static final ResourceLocation TEXTURE = Buddycards.buddycardsLocation("textures/gui/buddysteel_charger.png");
+    private static final ResourceLocation PROGRESS = Buddycards.buddycardsLocation("container/charger/progress");
 
     public ChargerScreen(ChargerMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);

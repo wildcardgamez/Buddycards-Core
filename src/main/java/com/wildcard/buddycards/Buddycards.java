@@ -2,6 +2,7 @@ package com.wildcard.buddycards;
 
 import com.wildcard.buddycards.registries.*;
 import com.wildcard.buddycards.util.*;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -35,5 +36,9 @@ public class Buddycards
         NeoForge.EVENT_BUS.register(new SpawnHandler());
         NeoForge.EVENT_BUS.register(new ExplosionHandler());
         NeoForge.EVENT_BUS.register(new DamageEffectHandler());
+    }
+
+    public static ResourceLocation buddycardsLocation(String string) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, string);
     }
 }

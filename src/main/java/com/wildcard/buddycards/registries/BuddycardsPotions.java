@@ -22,10 +22,10 @@ public class BuddycardsPotions {
         POTIONS.register(eventBus);
     }
 
-    public static final DeferredHolder<MobEffect, MobEffect> GRADING_LUCK = EFFECTS.register("grading_luck", () ->
-        new AttributeMobEffect(MobEffectCategory.BENEFICIAL, 16548863).addAttributeModifier(BuddycardsAttributes.GRADING_LUCK, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "grading_luck"), 1, AttributeModifier.Operation.ADD_VALUE));
-    public static final DeferredHolder<MobEffect, MobEffect> FOIL_LUCK = EFFECTS.register("foil_luck", () ->
-            new AttributeMobEffect(MobEffectCategory.BENEFICIAL, 16765009).addAttributeModifier(BuddycardsAttributes.FOIL_LUCK, ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "foil_luck"), 1, AttributeModifier.Operation.ADD_VALUE));
+    public static final DeferredHolder<MobEffect, MobEffect> GRADING_LUCK = EFFECTS.register("grading_luck_effect", () ->
+        new AttributeMobEffect(MobEffectCategory.BENEFICIAL, 16548863).addAttributeModifier(BuddycardsAttributes.GRADING_LUCK, Buddycards.buddycardsLocation("grading_luck"), 1, AttributeModifier.Operation.ADD_VALUE));
+    public static final DeferredHolder<MobEffect, MobEffect> FOIL_LUCK = EFFECTS.register("foil_luck_effect", () ->
+            new AttributeMobEffect(MobEffectCategory.BENEFICIAL, 16765009).addAttributeModifier(BuddycardsAttributes.FOIL_LUCK, Buddycards.buddycardsLocation("foil_luck"), 1, AttributeModifier.Operation.ADD_VALUE));
 
     public static final DeferredHolder<Potion, Potion> GRADING_LUCK_POTION = POTIONS.register("grading_luck_potion", () -> new Potion(new MobEffectInstance(GRADING_LUCK, 1200)));
     public static final DeferredHolder<Potion, Potion> GRADING_LUCK_POTION_LONG = POTIONS.register("grading_luck_potion_long", () -> new Potion(new MobEffectInstance(GRADING_LUCK, 3000)));

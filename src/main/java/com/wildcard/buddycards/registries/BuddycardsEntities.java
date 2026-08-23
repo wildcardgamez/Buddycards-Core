@@ -41,5 +41,5 @@ public class BuddycardsEntities {
             () -> BlockEntityType.Builder.of(KineticChamberBlockEntity::new, BuddycardsBlocks.KINETIC_CHAMBER.get()).build(null));
 
     public static final Supplier<EntityType<EnderlingEntity>> ENDERLING = ENTITIES.register("enderling",
-            () -> EntityType.Builder.of(EnderlingEntity::new, MobCategory.CREATURE).sized(.6f, 1.8f).build(ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "enderling").toString()));
+            () -> EntityType.Builder.of(EnderlingEntity::new, MobCategory.CREATURE).sized(.6f, 1.8f).build(Buddycards.buddycardsLocation("enderling").toString()));
 }

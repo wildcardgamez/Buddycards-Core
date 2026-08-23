@@ -21,7 +21,7 @@ import java.util.Objects;
 public class JEIPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-        return ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "jei_plugin");
+        return Buddycards.buddycardsLocation("jei_plugin");
     }
 
     @Override

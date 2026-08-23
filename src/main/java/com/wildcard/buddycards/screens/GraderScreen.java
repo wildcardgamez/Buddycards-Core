@@ -9,8 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class GraderScreen extends AbstractContainerScreen<GraderMenu> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "textures/gui/grader.png");
-    private static final ResourceLocation PROGRESS = ResourceLocation.fromNamespaceAndPath(Buddycards.MOD_ID, "container/grader/progress");
+    private static final ResourceLocation TEXTURE = Buddycards.buddycardsLocation("textures/gui/grader.png");
+    private static final ResourceLocation PROGRESS = Buddycards.buddycardsLocation("container/grader/progress");
 
     public GraderScreen(GraderMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
