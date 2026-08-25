@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "buddycards:block/luminis_pillar_top",
+    "side": "buddycards:block/luminis_pillar"
+  }
+}
