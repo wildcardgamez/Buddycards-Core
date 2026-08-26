@@ -65,7 +65,7 @@ public class CardDisplayBlock extends BaseEntityBlock implements CardInfoProvide
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel) {
+        if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel && !displayEntity.isLocked()) {
             int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
             if(displayEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
                 ItemStack oldCard = displayEntity.getCardInSlot(slot);
@@ -80,7 +80,7 @@ public class CardDisplayBlock extends BaseEntityBlock implements CardInfoProvide
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel) {
+        if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel && !displayEntity.isLocked()) {
             int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
             if(displayEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
                 ItemStack oldCard = displayEntity.getCardInSlot(slot);
@@ -168,7 +168,7 @@ public class CardDisplayBlock extends BaseEntityBlock implements CardInfoProvide
 
     @Override
     public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos) {
-        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity cardDisplay) {
+        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity cardDisplay && !cardDisplay.isLocked()) {
             return cardDisplay.getCardInfo();
         }
         return Stream.empty();

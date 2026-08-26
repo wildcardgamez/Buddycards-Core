@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "blocks",
+  "pattern": [
+    "###",
+    " # ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "buddycards:luminis_panel"
+    }
+  },
+  "result": {
+    "id": "buddycards:luminis_card_display"
+  }
+}

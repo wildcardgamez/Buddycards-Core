@@ -2,7 +2,6 @@ package com.wildcard.buddycards.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
-import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
 import com.wildcard.buddycards.block.entity.CardStandBlockEntity;
 import com.wildcard.buddycards.core.CardInfo;
 import com.wildcard.buddycards.core.CardInfoProviderBlock;
@@ -67,6 +66,8 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof CardStandBlockEntity standEntity && level instanceof ServerLevel) {
+            if (standEntity.isLocked())
+                return InteractionResult.PASS;
             int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
             if(standEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
                 ItemStack oldCard = standEntity.getCardInSlot(slot);
@@ -150,10 +151,10 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
     }
 
     @Override
-    public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity)
-            Containers.dropContents(world, pos, ((CardStandBlockEntity) (world.getBlockEntity(pos))).getInventory());
-        return super.onDestroyedByPlayer(state, world, pos, player, willHarvest, fluid);
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
+        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity)
+            Containers.dropContents(level, pos, ((CardStandBlockEntity) (level.getBlockEntity(pos))).getInventory());
+        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
     }
 
     @Override
@@ -162,8 +163,8 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
-        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand) {
+    public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand) {
             return cardStand.getCardsAmt();
         }
         return 0;
@@ -171,7 +172,7 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
 
     @Override
     public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos) {
-        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand) {
+        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand && !cardStand.isLocked()) {
             return cardStand.getCardInfo();
         }
         return Stream.empty();

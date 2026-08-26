@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "blocks",
+  "ingredients": [
+    {
+      "item": "buddycards:luminis_pillar"
+    },
+    {
+      "item": "buddycards:luminis_crystal"
+    }
+  ],
+  "result": {
+    "id": "buddycards:luminis_crystal_pillar"
+  }
+}

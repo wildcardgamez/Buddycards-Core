@@ -89,6 +89,7 @@ public class BuddycardsItems {
     public static final DeferredItem<Item> BUDDYSTEEL_NUGGET = ITEMS.register("buddysteel_nugget", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<Item> BUDDYSTEEL_BLOCK = ITEMS.register("buddysteel_block", () -> new BlockItem(BuddycardsBlocks.BUDDYSTEEL_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<Item> BUDDYSTEEL_SCANNER = ITEMS.register("buddysteel_scanner", () -> new BuddysteelScannerItem());
+    public static final DeferredItem<Item> BUDDYSTEEL_KEY = ITEMS.register("buddysteel_key", BuddysteelKeyItem::new);
     //public static final DeferredItem<Item> BUDDYSTEEL_HELMET = ITEMS.register("buddysteel_helmet", () -> new BuddycardsArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.HELMET));
     //public static final DeferredItem<Item> BUDDYSTEEL_CHESTPLATE = ITEMS.register("buddysteel_chestplate", () -> new BuddycardsArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.CHESTPLATE));
     //public static final DeferredItem<Item> BUDDYSTEEL_LEGGINGS = ITEMS.register("buddysteel_leggings", () -> new BuddycardsArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.LEGGINGS));
@@ -155,6 +156,8 @@ public class BuddycardsItems {
     public static final DeferredItem<Item> LUMINIS_PANEL = ITEMS.register("luminis_panel", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> LUMINIS_PANELS = ITEMS.register("luminis_panels", () -> new BlockItem(BuddycardsBlocks.LUMINIS_PANELS.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> LUMINIS_PILLAR = ITEMS.register("luminis_pillar", () -> new BlockItem(BuddycardsBlocks.LUMINIS_PILLAR.get(), DEFAULT_PROPERTIES));
+    public static final DeferredItem<BlockItem> LUMINIS_CRYSTAL_PILLAR = ITEMS.register("luminis_crystal_pillar", () -> new BlockItem(BuddycardsBlocks.LUMINIS_CRYSTAL_PILLAR.get(), DEFAULT_PROPERTIES));
+    public static final DeferredItem<BlockItem> LUMINIS_CARD_DISPLAY_ITEM = ITEMS.register("luminis_card_display", () -> new BlockItem(BuddycardsBlocks.LUMINIS_CARD_DISPLAY.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<Item> CRIMSON_LUMINIS = ITEMS.register("crimson_luminis", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> CRIMSON_LUMINIS_BLOCK = ITEMS.register("crimson_luminis_block", () -> new BlockItem(BuddycardsBlocks.CRIMSON_LUMINIS_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> KINETIC_CHAMBER = ITEMS.register("kinetic_chamber", () -> new DescriptionBlockItem(BuddycardsBlocks.KINETIC_CHAMBER.get(), DEFAULT_PROPERTIES));

@@ -49,6 +49,7 @@ public class BuddycardsBlocks {
     public static final DeferredBlock<Block> CRIMSON_LUMINIS_BLOCK = BLOCKS.register("crimson_luminis_block", () -> new Block(CRIMSON_LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> LUMINIS_PANELS = BLOCKS.register("luminis_panels", () -> new Block(LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> LUMINIS_PILLAR = BLOCKS.register("luminis_pillar", () -> new RotatedPillarBlock(LUMINIS_PROPERTIES));
+    public static final DeferredBlock<Block> LUMINIS_CRYSTAL_PILLAR = BLOCKS.register("luminis_crystal_pillar", () -> new RotatedPillarBlock(LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> ZYLEX_BLOCK = BLOCKS.register("zylex_block", () -> new Block(ZYLEX_PROPERTIES));
     public static final DeferredBlock<Block> VOID_ZYLEX_BLOCK = BLOCKS.register("void_zylex_block", () -> new Block(VOID_ZYLEX_PROPERTIES));
     //Displays
@@ -63,6 +64,7 @@ public class BuddycardsBlocks {
     public static final DeferredBlock<CardDisplayBlock> MANGROVE_CARD_DISPLAY = registerDisplay("mangrove_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.MANGROVE_PLANKS)));
     public static final DeferredBlock<CardDisplayBlock> CHERRY_CARD_DISPLAY = registerDisplay("cherry_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.CHERRY_PLANKS)));
     public static final DeferredBlock<CardDisplayBlock> BAMBOO_CARD_DISPLAY = registerDisplay("bamboo_card_display", () -> new CardDisplayBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BAMBOO_PLANKS)));
+    public static final DeferredBlock<CardDisplayBlock> LUMINIS_CARD_DISPLAY = registerDisplay("luminis_card_display", () -> new CardDisplayBlock(LUMINIS_PROPERTIES));
     //Stands
     public static final DeferredBlock<CardStandBlock> STONE_CARD_STAND = registerStand("stone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)));
     public static final DeferredBlock<CardStandBlock> DEEPSLATE_CARD_STAND = registerStand("deepslate_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE)));

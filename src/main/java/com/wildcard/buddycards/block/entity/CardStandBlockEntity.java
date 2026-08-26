@@ -1,5 +1,6 @@
 package com.wildcard.buddycards.block.entity;
 
+import com.wildcard.buddycards.block.LockableBlockEntity;
 import com.wildcard.buddycards.core.CardInfo;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
@@ -13,15 +14,18 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
-public class CardStandBlockEntity extends BlockEntity implements Clearable {
+public class CardStandBlockEntity extends BlockEntity implements Clearable, LockableBlockEntity {
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(12, ItemStack.EMPTY);
+    private UUID player;
 
     public CardStandBlockEntity(BlockPos pos, BlockState state) {
         super(BuddycardsEntities.CARD_STAND_ENTITY.get(), pos, state);
@@ -54,10 +58,12 @@ public class CardStandBlockEntity extends BlockEntity implements Clearable {
 
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-        super.saveAdditional(compound, registries);
+        super.saveAdditional(compound,registries);
         CompoundTag nbt = new CompoundTag();
         ContainerHelper.saveAllItems(nbt, this.inventory, registries);
         compound.put("cards", nbt);
+        if(player != null)
+            compound.putUUID("player", player);
     }
 
     @Override
@@ -65,6 +71,8 @@ public class CardStandBlockEntity extends BlockEntity implements Clearable {
         super.loadAdditional(compound, registries);
         this.inventory.clear();
         ContainerHelper.loadAllItems(compound.getCompound("cards"), this.inventory, registries);
+        if(compound.contains("player"))
+            player = compound.getUUID("player");
     }
 
     @Override
@@ -97,5 +105,28 @@ public class CardStandBlockEntity extends BlockEntity implements Clearable {
 
     public Stream<CardInfo> getCardInfo() {
         return inventory.stream().filter(i -> i.getItem() instanceof BuddycardItem).map(BuddycardItem::getCardInfo).distinct();
+    }
+
+    public boolean playerHasAccess(UUID player) {
+        return this.player == null || this.player.equals(player);
+    }
+
+    public boolean isLocked() {
+        return player != null;
+    }
+
+    @Override
+    public LockResult tryLock(Player player) {
+        if(playerHasAccess(player.getUUID())) {
+            if (isLocked()) {
+                this.player = null;
+                this.setChanged();
+                return LockResult.UNLOCK;
+            }
+            this.player = player.getUUID();
+            this.setChanged();
+            return LockResult.LOCK;
+        }
+        return LockResult.FAIL;
     }
 }
