@@ -155,6 +155,8 @@ public class BuddycardsItems {
     public static final DeferredItem<BlockItem> LUMINIS_BLOCK = ITEMS.register("luminis_block", () -> new BlockItem(BuddycardsBlocks.LUMINIS_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<Item> LUMINIS_PANEL = ITEMS.register("luminis_panel", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> LUMINIS_PANELS = ITEMS.register("luminis_panels", () -> new BlockItem(BuddycardsBlocks.LUMINIS_PANELS.get(), DEFAULT_PROPERTIES));
+    public static final DeferredItem<BlockItem> LUMINIS_SLAB = ITEMS.register("luminis_slab", () -> new BlockItem(BuddycardsBlocks.LUMINIS_SLAB.get(), DEFAULT_PROPERTIES));
+    public static final DeferredItem<BlockItem> LUMINIS_STAIRS = ITEMS.register("luminis_stairs", () -> new BlockItem(BuddycardsBlocks.LUMINIS_STAIRS.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> LUMINIS_PILLAR = ITEMS.register("luminis_pillar", () -> new BlockItem(BuddycardsBlocks.LUMINIS_PILLAR.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> LUMINIS_CRYSTAL_PILLAR = ITEMS.register("luminis_crystal_pillar", () -> new BlockItem(BuddycardsBlocks.LUMINIS_CRYSTAL_PILLAR.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> LUMINIS_CARD_DISPLAY_ITEM = ITEMS.register("luminis_card_display", () -> new BlockItem(BuddycardsBlocks.LUMINIS_CARD_DISPLAY.get(), DEFAULT_PROPERTIES));

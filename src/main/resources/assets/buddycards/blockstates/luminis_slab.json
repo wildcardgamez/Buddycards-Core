@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "buddycards:block/luminis_slab"
+    },
+    "type=double": {
+      "model": "buddycards:block/luminis_panels"
+    },
+    "type=top": {
+      "model": "buddycards:block/luminis_slab_top"
+    }
+  }
+}

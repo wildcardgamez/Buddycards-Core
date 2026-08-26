@@ -48,6 +48,8 @@ public class BuddycardsBlocks {
     public static final DeferredBlock<Block> LUMINIS_BLOCK = BLOCKS.register("luminis_block", () -> new Block(LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> CRIMSON_LUMINIS_BLOCK = BLOCKS.register("crimson_luminis_block", () -> new Block(CRIMSON_LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> LUMINIS_PANELS = BLOCKS.register("luminis_panels", () -> new Block(LUMINIS_PROPERTIES));
+    public static final DeferredBlock<Block> LUMINIS_STAIRS = BLOCKS.register("luminis_stairs", () -> new StairBlock(LUMINIS_BLOCK.get().defaultBlockState(), LUMINIS_PROPERTIES));
+    public static final DeferredBlock<Block> LUMINIS_SLAB = BLOCKS.register("luminis_slab", () -> new SlabBlock(LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> LUMINIS_PILLAR = BLOCKS.register("luminis_pillar", () -> new RotatedPillarBlock(LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> LUMINIS_CRYSTAL_PILLAR = BLOCKS.register("luminis_crystal_pillar", () -> new RotatedPillarBlock(LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> ZYLEX_BLOCK = BLOCKS.register("zylex_block", () -> new Block(ZYLEX_PROPERTIES));
