@@ -2,6 +2,7 @@ package com.wildcard.buddycards.block;
 
 import com.mojang.serialization.MapCodec;
 import com.wildcard.buddycards.block.entity.BuddysteelChargerBlockEntity;
+import com.wildcard.buddycards.block.entity.GraderBlockEntity;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -63,28 +64,23 @@ public class BuddysteelChargerBlock extends BaseEntityBlock {
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.getBlock().equals(newState.getBlock()) && level.getBlockEntity(pos) instanceof BuddysteelChargerBlockEntity entity) {
-            SimpleContainer inventory = new SimpleContainer(7);
+        if (!state.getBlock().equals(newState.getBlock()) && level.getBlockEntity(pos) instanceof BuddysteelChargerBlockEntity entity)
             for (int i = 0; i < 7; i++)
-                inventory.setItem(i, entity.getInventory().getStackInSlot(i));
-            Containers.dropContents(level, pos, inventory);
-        }
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), entity.getItem(i));
         super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof BuddysteelChargerBlockEntity entity) {
+        if(player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof BuddysteelChargerBlockEntity entity)
             serverPlayer.openMenu(entity, pos);
-        }
         return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof BuddysteelChargerBlockEntity entity) {
+        if(player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof BuddysteelChargerBlockEntity entity)
             serverPlayer.openMenu(entity, pos);
-        }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 }

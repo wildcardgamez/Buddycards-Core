@@ -58,28 +58,23 @@ public class GraderBlock extends BaseEntityBlock {
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (!state.getBlock().equals(newState.getBlock()) && level.getBlockEntity(pos) instanceof GraderBlockEntity entity) {
-            SimpleContainer inventory = new SimpleContainer(7);
+        if (!state.getBlock().equals(newState.getBlock()) && level.getBlockEntity(pos) instanceof GraderBlockEntity entity)
             for (int i = 0; i < 7; i++)
-                inventory.setItem(i, entity.getInventory().getStackInSlot(i));
-            Containers.dropContents(level, pos, inventory);
-        }
+                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), entity.getItem(i));
         super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof GraderBlockEntity entity) {
+        if(player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof GraderBlockEntity entity)
             serverPlayer.openMenu(entity, pos);
-        }
         return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if(player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof GraderBlockEntity entity) {
+        if(player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof GraderBlockEntity entity)
             serverPlayer.openMenu(entity, pos);
-        }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 

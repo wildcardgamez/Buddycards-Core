@@ -57,14 +57,12 @@ public class BuddycardBoosterBoxBlock extends Block {
     public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
         int i = state.getValue(LAYERS);
         if (context.getItemInHand().getItem() == this.asItem() && i < 4) {
-            if (context.replacingClickedOnBlock()) {
+            if (context.replacingClickedOnBlock())
                 return context.getClickedFace() == Direction.UP;
-            } else {
+            else
                 return true;
-            }
-        } else {
+        } else
             return false;
-        }
     }
 
     @Nullable
@@ -74,9 +72,8 @@ public class BuddycardBoosterBoxBlock extends Block {
         if (blockstate.is(this)) {
             int i = blockstate.getValue(LAYERS);
             return blockstate.setValue(LAYERS, Math.min(4, i + 1));
-        } else {
+        } else
             return super.getStateForPlacement(context).setValue(DIR, context.getHorizontalDirection());
-        }
     }
 
     @Override
@@ -87,9 +84,8 @@ public class BuddycardBoosterBoxBlock extends Block {
 
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        if (!player.isCreative()) {
+        if (!player.isCreative())
                 Containers.dropItemStack(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(state.getBlock().asItem(), state.getValue(LAYERS)));
-        }
         return super.onDestroyedByPlayer(state, world, pos, player, willHarvest, fluid);
     }
 }

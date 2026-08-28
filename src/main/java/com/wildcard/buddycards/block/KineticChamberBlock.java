@@ -1,13 +1,11 @@
 package com.wildcard.buddycards.block;
 
 import com.mojang.serialization.MapCodec;
+import com.wildcard.buddycards.block.entity.GraderBlockEntity;
 import com.wildcard.buddycards.block.entity.KineticChamberBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -89,12 +87,10 @@ public class KineticChamberBlock extends BaseEntityBlock {
     }
 
     @Override
-    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.getBlock().equals(newState.getBlock()) && level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity && !entity.getItemSlot().isEmpty())
             Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), entity.getItemSlot());
-            entity.setItemSlot(ItemStack.EMPTY);
-        }
-        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override
@@ -104,9 +100,8 @@ public class KineticChamberBlock extends BaseEntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity && !entity.getItemSlot().isEmpty()) {
+        if (level.getBlockEntity(pos) instanceof KineticChamberBlockEntity entity && !entity.getItemSlot().isEmpty())
             return 10;
-        }
         else
             return 0;
     }

@@ -179,10 +179,10 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
     }
 
     @Override
-    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity)
-            Containers.dropContents(level, pos, ((CardStandBlockEntity) (level.getBlockEntity(pos))).getInventory());
-        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof CardStandBlockEntity entity)
+            Containers.dropContents(level, pos, (entity.getInventory()));
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     @Override
@@ -192,17 +192,15 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
 
     @Override
     public int getAnalogOutputSignal(BlockState blockState, Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand) {
+        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand)
             return cardStand.getCardsAmt();
-        }
         return 0;
     }
 
     @Override
     public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos, Player player) {
-        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand && cardStand.playerHasAccess(player.getUUID())) {
+        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand && cardStand.playerHasAccess(player.getUUID()))
             return cardStand.getCardInfo();
-        }
         return Stream.empty();
     }
 
