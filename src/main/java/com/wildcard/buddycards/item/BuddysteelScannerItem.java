@@ -44,7 +44,7 @@ public class BuddysteelScannerItem extends Item implements CardInfoProviderItem 
         BlockPos pos = context.getClickedPos();
         if (context.getLevel() instanceof ServerLevel level) {
             if (level.getBlockState(pos).getBlock() instanceof CardInfoProviderBlock block) {
-                addCardInfo(context.getItemInHand(), block.getAllCardInfo(level.getBlockState(pos), level, pos));
+                addCardInfo(context.getItemInHand(), block.getAllCardInfo(level.getBlockState(pos), level, pos, context.getPlayer()));
                 return InteractionResult.SUCCESS;
             }
         }
@@ -67,14 +67,14 @@ public class BuddysteelScannerItem extends Item implements CardInfoProviderItem 
                 Stream<CardInfo> stream = Stream.empty();
                 for(ItemStack stack : player.getAllSlots()) {
                     if (stack.getItem() instanceof CardInfoProviderItem item)
-                        stream = Stream.concat(stream, item.getAllCardInfo(stack)).distinct();
+                        stream = Stream.concat(stream, item.getAllCardInfo(stack, player)).distinct();
                 }
                 System.out.println();
                 addCardInfo(scanner, stream);
                 return InteractionResultHolder.success(scanner);
             }
             else if (offhandItem.getItem() instanceof CardInfoProviderItem item) {
-                addCardInfo(scanner, item.getAllCardInfo(offhandItem));
+                addCardInfo(scanner, item.getAllCardInfo(offhandItem, player));
                 return InteractionResultHolder.success(scanner);
             } else if (player instanceof ServerPlayer serverPlayer && scanner.getItem() instanceof BuddysteelScannerItem) {
                 int type = scanner.get(BuddycardsComponents.COLLECTION_TIER);
@@ -105,7 +105,7 @@ public class BuddysteelScannerItem extends Item implements CardInfoProviderItem 
                     return InteractionResultHolder.success(scanner);
                 }
                 if (usedHand.equals(InteractionHand.MAIN_HAND)) {
-                    serverPlayer.openMenu(new SimpleMenuProvider((id, playerInventory, entity) -> new ScannerMenu(id, getAllCardInfo(scanner), scanner.get(BuddycardsComponents.COLLECTION_TIER)), Component.empty()));
+                    serverPlayer.openMenu(new SimpleMenuProvider((id, playerInventory, entity) -> new ScannerMenu(id, getAllCardInfo(scanner, player), scanner.get(BuddycardsComponents.COLLECTION_TIER)), Component.empty()));
                 }
             }
         }
@@ -129,7 +129,7 @@ public class BuddysteelScannerItem extends Item implements CardInfoProviderItem 
     }
 
     @Override
-    public Stream<CardInfo> getAllCardInfo(ItemStack stack) {
+    public Stream<CardInfo> getAllCardInfo(ItemStack stack, Player player) {
         NonNullList<CardInfo> list = NonNullList.create();
         if (!CREATIVE) {
             CompoundTag tag = stack.has(BuddycardsComponents.SCANNER_COLLECTION) ? stack.get(BuddycardsComponents.SCANNER_COLLECTION) : new CompoundTag();
@@ -164,7 +164,7 @@ public class BuddysteelScannerItem extends Item implements CardInfoProviderItem 
     public float getCompletionPercentageForSet(ItemStack stack, int tier, String set) {
         if (!stack.has(BuddycardsComponents.SCANNER_COLLECTION))
             return 0;
-        List<CardInfo> info = getAllCardInfo(stack).toList();
+        List<CardInfo> info = getAllCardInfo(stack, null).toList();
         int top = 0, bottom = 0;
         if (set == "all") {
             for (BuddycardSet buddycardSet : BuddycardsAPI.getAllSets()) {

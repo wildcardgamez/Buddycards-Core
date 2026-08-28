@@ -81,7 +81,7 @@ public class BuddycardBinderItem extends Item implements CardInfoProviderItem {
         return LARGE;
     }
 
-    public Stream<CardInfo> getAllCardInfo(ItemStack stack) {
+    public Stream<CardInfo> getAllCardInfo(ItemStack stack, Player player) {
         return stack.get(DataComponents.CONTAINER).stream().filter(i -> i.getItem() instanceof BuddycardItem).map(BuddycardItem::getCardInfo).distinct();
     }
 }

@@ -167,8 +167,8 @@ public class CardDisplayBlock extends BaseEntityBlock implements CardInfoProvide
     }
 
     @Override
-    public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos) {
-        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity cardDisplay && !cardDisplay.isLocked()) {
+    public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos, Player player) {
+        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity cardDisplay && (!cardDisplay.isLocked() || cardDisplay.playerHasAccess(player.getUUID()))) {
             return cardDisplay.getCardInfo();
         }
         return Stream.empty();

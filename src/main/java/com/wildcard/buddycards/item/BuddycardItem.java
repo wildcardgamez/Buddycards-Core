@@ -12,6 +12,7 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -113,7 +114,7 @@ public class BuddycardItem extends Item implements CardInfoProviderItem {
         return new CardInfo(item.getSet().getName(), item.getCardNumber(), getFoil(stack), getGrade(stack));
     }
 
-    public Stream<CardInfo> getAllCardInfo(ItemStack stack) {
+    public Stream<CardInfo> getAllCardInfo(ItemStack stack, Player player) {
         return Stream.of(new CardInfo(SET.getName(), CARD_NUMBER, getFoil(stack), getGrade(stack)));
     }
 }

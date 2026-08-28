@@ -196,8 +196,8 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
     }
 
     @Override
-    public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos) {
-        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand && !cardStand.isLocked()) {
+    public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos, Player player) {
+        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand && (!cardStand.isLocked() || cardStand.playerHasAccess(player.getUUID()))) {
             return cardStand.getCardInfo();
         }
         return Stream.empty();

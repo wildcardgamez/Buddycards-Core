@@ -32,7 +32,7 @@ public class ScannerMenu extends AbstractContainerMenu {
     private final DataSlot setData = DataSlot.standalone();
 
     public ScannerMenu(int id, Inventory playerInv) {
-        this(id, ((BuddysteelScannerItem)playerInv.getSelected().getItem()).getAllCardInfo(playerInv.getSelected()), playerInv.getSelected().get(BuddycardsComponents.COLLECTION_TIER));
+        this(id, ((BuddysteelScannerItem)playerInv.getSelected().getItem()).getAllCardInfo(playerInv.getSelected(), playerInv.player), playerInv.getSelected().get(BuddycardsComponents.COLLECTION_TIER));
     }
 
     public ScannerMenu(int id, Stream<CardInfo> info, int type) {
