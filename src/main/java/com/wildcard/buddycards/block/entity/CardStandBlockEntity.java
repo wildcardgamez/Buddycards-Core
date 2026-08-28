@@ -1,5 +1,6 @@
 package com.wildcard.buddycards.block.entity;
 
+import com.wildcard.buddycards.block.CardStandBlock;
 import com.wildcard.buddycards.block.LockableBlockEntity;
 import com.wildcard.buddycards.core.CardInfo;
 import com.wildcard.buddycards.item.BuddycardItem;
@@ -24,7 +25,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 public class CardStandBlockEntity extends BlockEntity implements Clearable, LockableBlockEntity {
-    private final NonNullList<ItemStack> inventory = NonNullList.withSize(12, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> inventory = NonNullList.withSize(13, ItemStack.EMPTY);
     private UUID player;
 
     public CardStandBlockEntity(BlockPos pos, BlockState state) {
@@ -54,6 +55,19 @@ public class CardStandBlockEntity extends BlockEntity implements Clearable, Lock
                 amt++;
         }
         return amt;
+    }
+
+    public void putGlass(ItemStack stack) {
+        if(this.level != null) {
+            this.inventory.set(12, stack);
+            this.setChanged();
+            BlockState state = getBlockState().setValue(CardStandBlock.COVERED, !stack.isEmpty());
+            this.level.setBlock(getBlockPos(), state, 3);
+        }
+    }
+
+    public ItemStack getGlass() {
+        return this.inventory.get(12);
     }
 
     @Override

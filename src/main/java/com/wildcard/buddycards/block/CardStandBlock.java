@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -44,6 +46,7 @@ import java.util.stream.Stream;
 
 public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty COVERED = BooleanProperty.create("covered");
     private static final Map<Direction, VoxelShape> SHAPES = Util.make(() -> {
         Map<Direction, VoxelShape> shape = new HashMap<>();
         shape.put(Direction.NORTH, Shapes.or(Block.box(0, 0, 12, 16, 2, 16), Block.box(0, 0, 8, 16, 4, 12), Block.box(0, 0, 4, 16, 6, 8), Block.box(0, 0, 0, 16, 8, 4)));
@@ -68,12 +71,20 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
         if (level.getBlockEntity(pos) instanceof CardStandBlockEntity standEntity && level instanceof ServerLevel) {
             if (standEntity.isLocked())
                 return InteractionResult.PASS;
-            int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
-            if(standEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
-                ItemStack oldCard = standEntity.getCardInSlot(slot);
-                standEntity.putCardInSlot(ItemStack.EMPTY, slot);
-                if(!player.addItem(oldCard))
-                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldCard);
+            if (!standEntity.getGlass().isEmpty()) {
+                ItemStack glass = standEntity.getGlass();
+                standEntity.putGlass(ItemStack.EMPTY);
+                if(!player.addItem(glass))
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), glass);
+            }
+            else {
+                int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
+                if (standEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
+                    ItemStack oldCard = standEntity.getCardInSlot(slot);
+                    standEntity.putCardInSlot(ItemStack.EMPTY, slot);
+                    if (!player.addItem(oldCard))
+                        Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldCard);
+                }
             }
         }
         level.updateNeighbourForOutputSignal(pos, this);
@@ -83,18 +94,30 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (level.getBlockEntity(pos) instanceof CardStandBlockEntity standEntity && level instanceof ServerLevel) {
-            int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
-            if(standEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
-                ItemStack oldCard = standEntity.getCardInSlot(slot);
-                if (stack.getItem() instanceof BuddycardItem)
+            if (standEntity.isLocked())
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            if (!standEntity.getGlass().isEmpty()) {
+                ItemStack glass = standEntity.getGlass();
+                standEntity.putGlass(ItemStack.EMPTY);
+                if (!player.addItem(glass))
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), glass);
+            } else if (stack.getItem().equals(Items.GLASS))
+                standEntity.putGlass(stack.split(1));
+            else {
+                int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
+                if (standEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
+                    {
+                        ItemStack oldCard = standEntity.getCardInSlot(slot);
+                        if (stack.getItem() instanceof BuddycardItem)
+                            standEntity.putCardInSlot(stack.split(1), slot);
+                        else
+                            standEntity.putCardInSlot(ItemStack.EMPTY, slot);
+                        if (!player.addItem(oldCard))
+                            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldCard);
+                    }
+                } else if (stack.getItem() instanceof BuddycardItem)
                     standEntity.putCardInSlot(stack.split(1), slot);
-                else
-                    standEntity.putCardInSlot(ItemStack.EMPTY, slot);
-                if(!player.addItem(oldCard))
-                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), oldCard);
             }
-            else if(stack.getItem() instanceof BuddycardItem)
-                standEntity.putCardInSlot(stack.split(1), slot);
         }
         level.updateNeighbourForOutputSignal(pos, this);
         return ItemInteractionResult.SUCCESS;
@@ -113,17 +136,19 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+        if (state.getValue(COVERED))
+            return Shapes.block();
         return SHAPES.get(state.getValue(DIR));
     }
 
     @Override
     public BlockState getStateForPlacement (BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(DIR, context.getHorizontalDirection());
+        return this.defaultBlockState().setValue(DIR, context.getHorizontalDirection()).setValue(COVERED, false);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(DIR);
+        builder.add(DIR).add(COVERED);
     }
 
     @Override
@@ -176,5 +201,10 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
             return cardStand.getCardInfo();
         }
         return Stream.empty();
+    }
+
+    @Override
+    protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return SHAPES.get(state.getValue(DIR));
     }
 }

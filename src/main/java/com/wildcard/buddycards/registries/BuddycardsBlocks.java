@@ -81,6 +81,7 @@ public class BuddycardsBlocks {
     public static final DeferredBlock<CardStandBlock> TUFF_CARD_STAND = registerStand("tuff_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TUFF)));
     public static final DeferredBlock<CardStandBlock> DRIPSTONE_CARD_STAND = registerStand("dripstone_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DRIPSTONE_BLOCK)));
     public static final DeferredBlock<CardStandBlock> BASALT_CARD_STAND = registerStand("basalt_card_stand", () -> new CardStandBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BASALT)));
+    public static final DeferredBlock<CardStandBlock> LUMINIS_CARD_STAND = registerStand("luminis_card_stand", () -> new CardStandBlock(LUMINIS_PROPERTIES));
     //Booster Boxes
     public static final DeferredBlock<Block> BOOSTER_BOX_BASE = BLOCKS.register("buddycard_booster_box_base", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BOOSTER_BOX_PROPERTIES));
     public static final DeferredBlock<Block> BOOSTER_BOX_NETHER = BLOCKS.register("buddycard_booster_box_nether", () -> new BuddycardBoosterBoxBlock(BuddycardsItems.DEFAULT_BUDDYCARD_REQUIREMENT, BOOSTER_BOX_PROPERTIES));

@@ -1,0 +1,7 @@
+{
+  "parent": "buddycards:block/stone_card_stand",
+  "textures": {
+    "0": "buddycards:block/luminis_card_stand",
+    "particle": "buddycards:block/luminis_card_stand"
+  }
+}

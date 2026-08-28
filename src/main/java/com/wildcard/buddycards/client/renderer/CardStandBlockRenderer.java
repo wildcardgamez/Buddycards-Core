@@ -10,13 +10,19 @@ import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.client.model.data.ModelData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,17 +80,26 @@ public class CardStandBlockRenderer implements BlockEntityRenderer<CardStandBloc
         Direction direction = blockEntity.getBlockState().getValue(CardStandBlock.DIR);
         List<Vec3> vec3s = positions.get(direction);
         for (int i = 0; i < 12; i++) {
-            ItemStack itemstack = blockEntity.getCardInSlot(i+1);
+            ItemStack itemstack = blockEntity.getCardInSlot(i + 1);
             if (itemstack.getItem() instanceof BuddycardItem) {
                 poseStack.pushPose();
                 Vec3 vec3 = vec3s.get(i);
                 poseStack.translate(vec3.x(), vec3.y(), vec3.z());
                 poseStack.scale(0.5f, 0.5f, 0.5f);
-                poseStack.mulPose(Axis.YP.rotationDegrees(360 - direction.get2DDataValue()*90));
+                poseStack.mulPose(Axis.YP.rotationDegrees(360 - direction.get2DDataValue() * 90));
                 BakedModel ibakedmodel = Minecraft.getInstance().getItemRenderer().getModel(itemstack, blockEntity.getLevel(), null, 0);
                 Minecraft.getInstance().getItemRenderer().render(itemstack, ItemDisplayContext.FIXED, true, poseStack, bufferIn, combinedLightIn, combinedOverlayIn, ibakedmodel);
                 poseStack.popPose();
             }
+        }
+        if (!blockEntity.getGlass().isEmpty()) {
+            poseStack.pushPose();
+            poseStack.translate(0.001f, 0.001f, 0.001f);
+            poseStack.scale(0.998f, 0.998f, 0.998f);
+            BlockState state = Blocks.GLASS.defaultBlockState();
+            BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+            Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(poseStack.last(), bufferIn.getBuffer(RenderType.CUTOUT), state, model, 0, 0, 0, combinedLightIn, combinedOverlayIn, ModelData.EMPTY, RenderType.CUTOUT);
+            poseStack.popPose();
         }
     }
 }
