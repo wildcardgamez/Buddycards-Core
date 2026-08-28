@@ -2,6 +2,7 @@ package com.wildcard.buddycards.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
+import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
 import com.wildcard.buddycards.block.entity.CardStandBlockEntity;
 import com.wildcard.buddycards.core.CardInfo;
 import com.wildcard.buddycards.core.CardInfoProviderBlock;
@@ -15,6 +16,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -68,9 +70,7 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity standEntity && level instanceof ServerLevel) {
-            if (standEntity.isLocked())
-                return InteractionResult.PASS;
+        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity standEntity && level instanceof ServerLevel && standEntity.playerHasAccess(player.getUUID())) {
             if (!standEntity.getGlass().isEmpty()) {
                 ItemStack glass = standEntity.getGlass();
                 standEntity.putGlass(ItemStack.EMPTY);
@@ -93,9 +93,7 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity standEntity && level instanceof ServerLevel) {
-            if (standEntity.isLocked())
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (level.getBlockEntity(pos) instanceof CardStandBlockEntity standEntity && level instanceof ServerLevel && standEntity.playerHasAccess(player.getUUID())) {
             if (!standEntity.getGlass().isEmpty()) {
                 ItemStack glass = standEntity.getGlass();
                 standEntity.putGlass(ItemStack.EMPTY);
@@ -138,6 +136,11 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
         if (state.getValue(COVERED))
             return Shapes.block();
+        return SHAPES.get(state.getValue(DIR));
+    }
+
+    @Override
+    protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return SHAPES.get(state.getValue(DIR));
     }
 
@@ -197,14 +200,16 @@ public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderB
 
     @Override
     public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos, Player player) {
-        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand && (!cardStand.isLocked() || cardStand.playerHasAccess(player.getUUID()))) {
+        if (world.getBlockEntity(pos) instanceof CardStandBlockEntity cardStand && cardStand.playerHasAccess(player.getUUID())) {
             return cardStand.getCardInfo();
         }
         return Stream.empty();
     }
 
     @Override
-    protected VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
-        return SHAPES.get(state.getValue(DIR));
+    public boolean canEntityDestroy(BlockState state, BlockGetter level, BlockPos pos, Entity entity) {
+        if(level.getBlockEntity(pos) instanceof CardStandBlockEntity standEntity && (!standEntity.isLocked() || (entity instanceof Player player && (player.isCreative() || standEntity.playerHasAccess(player.getUUID())))))
+            return super.canEntityDestroy(state, level, pos, entity);
+        return false;
     }
 }

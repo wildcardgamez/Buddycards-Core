@@ -3,6 +3,7 @@ package com.wildcard.buddycards.block;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
+import com.wildcard.buddycards.block.entity.CardStandBlockEntity;
 import com.wildcard.buddycards.core.CardInfo;
 import com.wildcard.buddycards.core.CardInfoProviderBlock;
 import com.wildcard.buddycards.item.BuddycardItem;
@@ -15,6 +16,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -65,7 +67,7 @@ public class CardDisplayBlock extends BaseEntityBlock implements CardInfoProvide
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel && !displayEntity.isLocked()) {
+        if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel && displayEntity.playerHasAccess(player.getUUID())) {
             int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
             if(displayEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
                 ItemStack oldCard = displayEntity.getCardInSlot(slot);
@@ -80,7 +82,7 @@ public class CardDisplayBlock extends BaseEntityBlock implements CardInfoProvide
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel && !displayEntity.isLocked()) {
+        if (level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && level instanceof ServerLevel && displayEntity.playerHasAccess(player.getUUID())) {
             int slot = getSlot(state.getValue(DIR), hitResult.getLocation());
             if(displayEntity.getCardInSlot(slot).getItem() instanceof BuddycardItem) {
                 ItemStack oldCard = displayEntity.getCardInSlot(slot);
@@ -168,9 +170,16 @@ public class CardDisplayBlock extends BaseEntityBlock implements CardInfoProvide
 
     @Override
     public Stream<CardInfo> getAllCardInfo(BlockState blockState, Level world, BlockPos pos, Player player) {
-        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity cardDisplay && (!cardDisplay.isLocked() || cardDisplay.playerHasAccess(player.getUUID()))) {
+        if (world.getBlockEntity(pos) instanceof CardDisplayBlockEntity cardDisplay && cardDisplay.playerHasAccess(player.getUUID())) {
             return cardDisplay.getCardInfo();
         }
         return Stream.empty();
+    }
+
+    @Override
+    public boolean canEntityDestroy(BlockState state, BlockGetter level, BlockPos pos, Entity entity) {
+        if(level.getBlockEntity(pos) instanceof CardDisplayBlockEntity displayEntity && (!displayEntity.isLocked() || (entity instanceof Player player && displayEntity.playerHasAccess(player.getUUID()))))
+            return super.canEntityDestroy(state, level, pos, entity);
+        return false;
     }
 }
