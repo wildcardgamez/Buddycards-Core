@@ -1,0 +1,28 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "ingredients": [
+    {
+      "item": "buddycards:void_zylex"
+    },
+    {
+      "item": "buddycards:zylex"
+    },
+    {
+      "item": "buddycards:void_zylex"
+    },
+    {
+      "item": "buddycards:zylex"
+    }
+  ],
+  "input": {
+    "item": "buddycards:charged_buddysteel_boots"
+  },
+  "output": {
+    "components": {
+      "buddycards:tier": 2
+    },
+    "count": 1,
+    "id": "buddycards:charged_buddysteel_boots"
+  },
+  "tier": 2
+}

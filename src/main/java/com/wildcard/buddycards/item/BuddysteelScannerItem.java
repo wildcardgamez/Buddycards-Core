@@ -28,7 +28,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class BuddysteelScannerItem extends Item implements CardInfoProviderItem {
+public class BuddysteelScannerItem extends Item implements ICardInfoProviderItem {
     public BuddysteelScannerItem(boolean creative) {
         super(new Properties().rarity(Rarity.UNCOMMON).stacksTo(1).component(BuddycardsComponents.SCANNER_COLLECTION, new CompoundTag()).component(BuddycardsComponents.COLLECTION_TIER, creative ? 4 : 0));
         CREATIVE = creative;
@@ -43,7 +43,7 @@ public class BuddysteelScannerItem extends Item implements CardInfoProviderItem 
     public InteractionResult useOn(UseOnContext context) {
         BlockPos pos = context.getClickedPos();
         if (context.getLevel() instanceof ServerLevel level) {
-            if (level.getBlockState(pos).getBlock() instanceof CardInfoProviderBlock block) {
+            if (level.getBlockState(pos).getBlock() instanceof ICardInfoProviderBlock block) {
                 addCardInfo(context.getItemInHand(), block.getAllCardInfo(level.getBlockState(pos), level, pos, context.getPlayer()));
                 return InteractionResult.SUCCESS;
             }
@@ -66,14 +66,14 @@ public class BuddysteelScannerItem extends Item implements CardInfoProviderItem 
             if (player.isCrouching() && usedHand.equals(InteractionHand.MAIN_HAND) && scanner.getItem() instanceof BuddysteelScannerItem) {
                 Stream<CardInfo> stream = Stream.empty();
                 for(ItemStack stack : player.getAllSlots()) {
-                    if (stack.getItem() instanceof CardInfoProviderItem item)
+                    if (stack.getItem() instanceof ICardInfoProviderItem item)
                         stream = Stream.concat(stream, item.getAllCardInfo(stack, player)).distinct();
                 }
                 System.out.println();
                 addCardInfo(scanner, stream);
                 return InteractionResultHolder.success(scanner);
             }
-            else if (offhandItem.getItem() instanceof CardInfoProviderItem item) {
+            else if (offhandItem.getItem() instanceof ICardInfoProviderItem item) {
                 addCardInfo(scanner, item.getAllCardInfo(offhandItem, player));
                 return InteractionResultHolder.success(scanner);
             } else if (player instanceof ServerPlayer serverPlayer && scanner.getItem() instanceof BuddysteelScannerItem) {

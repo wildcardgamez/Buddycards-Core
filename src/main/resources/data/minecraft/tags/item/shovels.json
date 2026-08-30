@@ -1,9 +1,6 @@
 {
   "replace": false,
   "values": [
-    "buddycards:buddysteel_shovel",
-    "buddycards:charged_buddysteel_shovel",
-    "buddycards:perfect_buddysteel_shovel",
-    "buddycards:true_perfect_buddysteel_shovel"
+    "buddycards:buddysteel_shovel"
   ]
 }

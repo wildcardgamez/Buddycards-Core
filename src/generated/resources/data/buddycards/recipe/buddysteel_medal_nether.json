@@ -1,0 +1,25 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "ingredients": [
+    {
+      "tag": "buddycards:buddycards_nether"
+    },
+    {
+      "tag": "buddycards:buddycards_nether"
+    },
+    {
+      "tag": "buddycards:buddycards_nether"
+    },
+    {
+      "tag": "buddycards:buddycards_nether"
+    }
+  ],
+  "input": {
+    "item": "buddycards:blank_buddysteel_medal"
+  },
+  "output": {
+    "count": 1,
+    "id": "buddycards:buddysteel_medal_nether"
+  },
+  "set": "nether"
+}

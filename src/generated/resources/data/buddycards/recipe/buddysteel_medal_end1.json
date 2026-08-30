@@ -1,0 +1,29 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "ingredients": [
+    {
+      "item": "buddycards:luminis"
+    },
+    {
+      "item": "buddycards:crimson_luminis"
+    },
+    {
+      "item": "buddycards:luminis"
+    },
+    {
+      "item": "buddycards:crimson_luminis"
+    }
+  ],
+  "input": {
+    "item": "buddycards:buddysteel_medal_end"
+  },
+  "output": {
+    "components": {
+      "buddycards:tier": 1
+    },
+    "count": 1,
+    "id": "buddycards:buddysteel_medal_end"
+  },
+  "set": "end",
+  "tier": 1
+}

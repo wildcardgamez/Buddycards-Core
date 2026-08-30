@@ -2,10 +2,9 @@ package com.wildcard.buddycards.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
-import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
 import com.wildcard.buddycards.block.entity.CardStandBlockEntity;
 import com.wildcard.buddycards.core.CardInfo;
-import com.wildcard.buddycards.core.CardInfoProviderBlock;
+import com.wildcard.buddycards.core.ICardInfoProviderBlock;
 import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -34,7 +33,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -46,7 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class CardStandBlock extends BaseEntityBlock implements CardInfoProviderBlock {
+public class CardStandBlock extends BaseEntityBlock implements ICardInfoProviderBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty COVERED = BooleanProperty.create("covered");
     private static final Map<Direction, VoxelShape> SHAPES = Util.make(() -> {

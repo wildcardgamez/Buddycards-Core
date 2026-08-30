@@ -4,7 +4,7 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.core.CardInfo;
-import com.wildcard.buddycards.core.CardInfoProviderItem;
+import com.wildcard.buddycards.core.ICardInfoProviderItem;
 import com.wildcard.buddycards.registries.BuddycardsComponents;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.ChatFormatting;
@@ -21,7 +21,7 @@ import net.minecraft.world.item.TooltipFlag;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class BuddycardItem extends Item implements CardInfoProviderItem {
+public class BuddycardItem extends Item implements ICardInfoProviderItem {
     public BuddycardItem(BuddycardsItems.BuddycardRequirement shouldLoad, BuddycardSet set, int cardNumber, Rarity rarity) {
         super(new Properties().rarity(rarity).component(BuddycardsComponents.BUDDYCARD_FOIL, 0).component(BuddycardsComponents.BUDDYCARD_GRADE, 0));
         SET = set;

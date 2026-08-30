@@ -1,5 +1,31 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "buddycards:item/charged_buddysteel_chestplate1",
+      "predicate": {
+        "buddycards:tier": 1.0
+      }
+    },
+    {
+      "model": "buddycards:item/charged_buddysteel_chestplate2",
+      "predicate": {
+        "buddycards:tier": 2.0
+      }
+    },
+    {
+      "model": "buddycards:item/charged_buddysteel_chestplate3",
+      "predicate": {
+        "buddycards:tier": 3.0
+      }
+    },
+    {
+      "model": "buddycards:item/charged_buddysteel_chestplate4",
+      "predicate": {
+        "buddycards:tier": 4.0
+      }
+    }
+  ],
   "textures": {
     "layer0": "buddycards:item/charged_buddysteel_chestplate"
   }

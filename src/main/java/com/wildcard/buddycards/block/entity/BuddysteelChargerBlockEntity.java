@@ -154,8 +154,7 @@ public class BuddysteelChargerBlockEntity extends BlockEntity implements MenuPro
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, BuddysteelChargerBlockEntity entity) {
-        if((entity.inventory.getStackInSlot(0).getItem() instanceof BuddysteelSetMedalItem && entity.inventory.getStackInSlot(5).getItem() instanceof BuddysteelScannerItem) ||
-                (hasRecipe(entity) && (entity.progress > 0 || hasCompletion(entity)))) {
+        if(hasRecipe(entity) && (entity.progress > 0 || hasCompletion(entity))) {
             entity.progress++;
             setChanged(level, pos, state);
             if (entity.progress > entity.maxProgress)

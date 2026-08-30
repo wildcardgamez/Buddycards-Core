@@ -12,5 +12,6 @@ public class Datagen {
     @SubscribeEvent
     static void onGatherData(GatherDataEvent event) {
         event.getGenerator().addProvider(true, new ModelGen(event.getGenerator().getPackOutput(), Buddycards.MOD_ID, event.getExistingFileHelper()));
+        event.getGenerator().addProvider(true, new RecipeGen(event.getGenerator().getPackOutput(), event.getLookupProvider()));
     }
 }

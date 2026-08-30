@@ -1,0 +1,28 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "ingredients": [
+    {
+      "item": "buddycards:luminis"
+    },
+    {
+      "item": "buddycards:crimson_luminis"
+    },
+    {
+      "item": "buddycards:luminis"
+    },
+    {
+      "item": "buddycards:crimson_luminis"
+    }
+  ],
+  "input": {
+    "item": "buddycards:charged_buddysteel_leggings"
+  },
+  "output": {
+    "components": {
+      "buddycards:tier": 1
+    },
+    "count": 1,
+    "id": "buddycards:charged_buddysteel_leggings"
+  },
+  "tier": 1
+}

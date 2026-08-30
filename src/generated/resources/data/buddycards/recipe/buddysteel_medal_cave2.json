@@ -1,0 +1,29 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "ingredients": [
+    {
+      "item": "buddycards:void_zylex"
+    },
+    {
+      "item": "buddycards:zylex"
+    },
+    {
+      "item": "buddycards:void_zylex"
+    },
+    {
+      "item": "buddycards:zylex"
+    }
+  ],
+  "input": {
+    "item": "buddycards:buddysteel_medal_cave"
+  },
+  "output": {
+    "components": {
+      "buddycards:tier": 2
+    },
+    "count": 1,
+    "id": "buddycards:buddysteel_medal_cave"
+  },
+  "set": "cave",
+  "tier": 2
+}

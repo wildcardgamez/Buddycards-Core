@@ -1,9 +1,6 @@
 {
   "replace": false,
   "values": [
-    "buddycards:buddysteel_chestplate",
-    "buddycards:charged_buddysteel_chestplate",
-    "buddycards:perfect_buddysteel_chestplate",
-    "buddycards:true_perfect_buddysteel_chestplate"
+    "buddycards:buddysteel_chestplate"
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "ingredients": [
+    {
+      "tag": "buddycards:buddycards_cave"
+    },
+    {
+      "tag": "buddycards:buddycards_cave"
+    },
+    {
+      "tag": "buddycards:buddycards_cave"
+    },
+    {
+      "tag": "buddycards:buddycards_cave"
+    }
+  ],
+  "input": {
+    "item": "buddycards:blank_buddysteel_medal"
+  },
+  "output": {
+    "count": 1,
+    "id": "buddycards:buddysteel_medal_cave"
+  },
+  "set": "cave"
+}

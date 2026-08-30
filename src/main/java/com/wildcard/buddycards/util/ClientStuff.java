@@ -5,6 +5,7 @@ import com.wildcard.buddycards.client.BuddycardsLayers;
 import com.wildcard.buddycards.client.model.BuddycardsArmorModel;
 import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.*;
+import com.wildcard.buddycards.core.ICollectionTieredItem;
 import com.wildcard.buddycards.integration.CuriosIntegration;
 import com.wildcard.buddycards.registries.BuddycardsComponents;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
@@ -17,6 +18,7 @@ import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -24,6 +26,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 @Mod(value = Buddycards.MOD_ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = Buddycards.MOD_ID, value = Dist.CLIENT)
@@ -43,17 +46,20 @@ public class ClientStuff {
                     return 0;
                 }));
             }
-            event.enqueueWork(() -> ItemProperties.register(set.getMedal(), Buddycards.buddycardsLocation("tier"), (stack, world, entity, idk) -> {
-                if (stack.has(BuddycardsComponents.COLLECTION_TIER))
-                    return stack.get(BuddycardsComponents.COLLECTION_TIER);
-                return 0;
-            }));
         }
         event.enqueueWork(() -> ItemProperties.register(BuddycardsItems.BUDDYSTEEL_SCANNER.get(), Buddycards.buddycardsLocation("tier"), (stack, world, entity, idk) -> {
             if (stack.has(BuddycardsComponents.COLLECTION_TIER))
                 return stack.get(BuddycardsComponents.COLLECTION_TIER);
             return 0;
         }));
+        for (DeferredHolder<Item, ? extends Item> item : BuddycardsItems.ITEMS.getEntries()) {
+            if (item.get() instanceof ICollectionTieredItem)
+                event.enqueueWork(() -> ItemProperties.register(item.get(), Buddycards.buddycardsLocation("tier"), (stack, world, entity, idk) -> {
+                    if (stack.has(BuddycardsComponents.COLLECTION_TIER))
+                        return stack.get(BuddycardsComponents.COLLECTION_TIER);
+                    return 0;
+                }));
+        }
         CuriosIntegration.setupRenderers();
     }
 

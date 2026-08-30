@@ -3,9 +3,8 @@ package com.wildcard.buddycards.block;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
-import com.wildcard.buddycards.block.entity.CardStandBlockEntity;
 import com.wildcard.buddycards.core.CardInfo;
-import com.wildcard.buddycards.core.CardInfoProviderBlock;
+import com.wildcard.buddycards.core.ICardInfoProviderBlock;
 import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -44,7 +43,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class CardDisplayBlock extends BaseEntityBlock implements CardInfoProviderBlock {
+public class CardDisplayBlock extends BaseEntityBlock implements ICardInfoProviderBlock {
     public static final DirectionProperty DIR = BlockStateProperties.HORIZONTAL_FACING;
     private static final Map<Direction, VoxelShape> SHAPES = Util.make(() -> {
         Map<Direction, VoxelShape> shape = new HashMap<>();

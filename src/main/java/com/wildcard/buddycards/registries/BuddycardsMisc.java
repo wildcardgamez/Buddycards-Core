@@ -1,6 +1,7 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.core.ICollectionTieredItem;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.menu.*;
 import com.wildcard.buddycards.recipe.BuddysteelChargingRecipe;
@@ -84,7 +85,17 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 11);
             }),
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            13, 2, 0.1f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
+            13, 2, 0, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
+    public static final Holder<ArmorMaterial> MIXED_BUDDYSTEEL_ARMOR = registerArmorMaterial("mixed_buddysteel",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 3);
+                map.put(ArmorItem.Type.LEGGINGS, 6);
+                map.put(ArmorItem.Type.CHESTPLATE, 8);
+                map.put(ArmorItem.Type.HELMET, 3);
+                map.put(ArmorItem.Type.BODY, 11);
+            }),
+            SoundEvents.ARMOR_EQUIP_DIAMOND,
+            13, 3, 0.05f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
     public static final Holder<ArmorMaterial> PERFECT_BUDDYSTEEL_ARMOR = registerArmorMaterial("perfect_buddysteel",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 4);
@@ -130,6 +141,20 @@ public class BuddycardsMisc {
                 for (DeferredHolder<Item, ? extends Item> i : BuddycardsItems.ITEMS.getEntries()) {
                     if (i.get() instanceof BuddycardItem && ((BuddycardItem) i.get()).shouldLoad())
                         b.accept(i.get());
+                }
+            })
+            .build());
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> GEAR_TAB = TABS.register("buddycards_gear", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.buddycards_gear"))
+            .icon(() -> BuddycardsItems.CHARGER.get().getDefaultInstance())
+            .displayItems((a, b) -> {
+                for (DeferredHolder<Item, ? extends Item> i : BuddycardsItems.ITEMS.getEntries()) {
+                    if (i.get() instanceof ICollectionTieredItem)
+                        for (int j = 0; j < 5; j++) {
+                            ItemStack stack = i.get().getDefaultInstance();
+                            stack.set(BuddycardsComponents.COLLECTION_TIER, j);
+                            b.accept(stack);
+                        }
                 }
             })
             .build());

@@ -1,5 +1,31 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "buddycards:item/charged_buddysteel_boots1",
+      "predicate": {
+        "buddycards:tier": 1.0
+      }
+    },
+    {
+      "model": "buddycards:item/charged_buddysteel_boots2",
+      "predicate": {
+        "buddycards:tier": 2.0
+      }
+    },
+    {
+      "model": "buddycards:item/charged_buddysteel_boots3",
+      "predicate": {
+        "buddycards:tier": 3.0
+      }
+    },
+    {
+      "model": "buddycards:item/charged_buddysteel_boots4",
+      "predicate": {
+        "buddycards:tier": 4.0
+      }
+    }
+  ],
   "textures": {
     "layer0": "buddycards:item/charged_buddysteel_boots"
   }

@@ -1,0 +1,24 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "ingredients": [
+    {
+      "item": "buddycards:luminis"
+    },
+    {
+      "item": "buddycards:zylex"
+    },
+    {
+      "item": "buddycards:luminis"
+    },
+    {
+      "item": "buddycards:zylex"
+    }
+  ],
+  "input": {
+    "item": "buddycards:buddysteel_boots"
+  },
+  "output": {
+    "count": 1,
+    "id": "buddycards:charged_buddysteel_boots"
+  }
+}

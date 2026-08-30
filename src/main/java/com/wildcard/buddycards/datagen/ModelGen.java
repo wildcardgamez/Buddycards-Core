@@ -3,6 +3,7 @@ package com.wildcard.buddycards.datagen;
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
+import com.wildcard.buddycards.core.ICollectionTieredItem;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.item.BuddysteelSetMedalItem;
 import com.wildcard.buddycards.registries.BuddycardsItems;
@@ -31,11 +32,9 @@ public class ModelGen extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        for (DeferredHolder<Item, ? extends Item> i : BuddycardsItems.ITEMS.getEntries()) {
-            if (i.get() instanceof ArmorItem) {
-                getBuilder(ModelProvider.ITEM_FOLDER + "/" + i.getId().getPath())
-                        .parent(factory.apply(ResourceLocation.withDefaultNamespace("item/generated")))
-                        .texture("layer0", (ModelProvider.ITEM_FOLDER + "/" + i.getId().getPath()));
+        for (DeferredHolder<Item, ? extends Item> item : BuddycardsItems.ITEMS.getEntries()) {
+            if (item.get() instanceof ICollectionTieredItem && !(item.get() instanceof BuddysteelSetMedalItem)) {
+                genTieredModel(item);
             }
         }
         for (BuddycardItem card: BuddycardsAPI.getAllCards())
@@ -81,6 +80,18 @@ public class ModelGen extends ItemModelProvider {
                     .parent(factory.apply(ResourceLocation.withDefaultNamespace("item/generated")))
                     .texture("layer0", Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/" + set.getName() + "_set/" + "medal" + i));
             medal.override().predicate(Buddycards.buddycardsLocation("tier"), i).model(tierMedal);
+        }
+    }
+
+    void genTieredModel(DeferredHolder<Item, ? extends Item> item) {
+        ItemModelBuilder model = getBuilder(ModelProvider.ITEM_FOLDER + "/" + item.getId().getPath())
+                .parent(factory.apply(ResourceLocation.withDefaultNamespace("item/generated")))
+                .texture("layer0", (ModelProvider.ITEM_FOLDER + "/" + item.getId().getPath()));
+        for (int i = 1; i < 5; i++) {
+            ItemModelBuilder tierModel = getBuilder(ModelProvider.ITEM_FOLDER + "/" + item.getId().getPath() + i)
+                    .parent(factory.apply(ResourceLocation.withDefaultNamespace("item/generated")))
+                    .texture("layer0", Buddycards.buddycardsLocation(ModelProvider.ITEM_FOLDER + "/" + item.getId().getPath() + i));
+            model.override().predicate(Buddycards.buddycardsLocation("tier"), i).model(tierModel);
         }
     }
 }

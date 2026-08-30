@@ -3,7 +3,7 @@ package com.wildcard.buddycards.item;
 import com.wildcard.buddycards.container.BinderItemHandler;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.CardInfo;
-import com.wildcard.buddycards.core.CardInfoProviderItem;
+import com.wildcard.buddycards.core.ICardInfoProviderItem;
 import com.wildcard.buddycards.enchantment.EnchantmentKeys;
 import com.wildcard.buddycards.menu.BinderMenu;
 import net.minecraft.ChatFormatting;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class BuddycardBinderItem extends Item implements CardInfoProviderItem {
+public class BuddycardBinderItem extends Item implements ICardInfoProviderItem {
     public BuddycardBinderItem(Properties properties, BuddycardSet set, ResourceLocation texture, boolean large) {
         super(properties);
         SET = set;
