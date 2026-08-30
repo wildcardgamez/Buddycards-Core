@@ -14,7 +14,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 public class DamageEffectHandler {
     @SubscribeEvent
     public void onDamagePlayer (LivingDamageEvent.Pre event) {
-        /**if (event.getEntity() instanceof Player entity) {
+        if (event.getEntity() instanceof Player entity) {
             if (entity.getItemBySlot(EquipmentSlot.HEAD).getItem().equals(BuddycardsItems.LUMINIS_HELMET.get()) && !entity.getCooldowns().isOnCooldown(BuddycardsItems.LUMINIS_HELMET.get())) {
                 if (entity.getHealth() <= event.getOriginalDamage()+2) {
                     event.setNewDamage(1);
@@ -32,6 +32,6 @@ public class DamageEffectHandler {
                     entity.getCooldowns().addCooldown(BuddycardsItems.ZYLEX_BOOTS.get(), 5000 / (1 + EnchantmentKeys.getEnchantmentLevel(entity.level(), EnchantmentKeys.RAPID_RECOVERY, entity.getItemBySlot(EquipmentSlot.FEET))));
                 }
             }
-        }**/
+        }
     }
 }

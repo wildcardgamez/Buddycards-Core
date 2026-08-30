@@ -1,6 +1,8 @@
 package com.wildcard.buddycards.util;
 
 import com.wildcard.buddycards.Buddycards;
+import com.wildcard.buddycards.client.BuddycardsLayers;
+import com.wildcard.buddycards.client.model.BuddycardsArmorModel;
 import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.*;
 import com.wildcard.buddycards.integration.CuriosIntegration;

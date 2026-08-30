@@ -31,6 +31,13 @@ public class ModelGen extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        for (DeferredHolder<Item, ? extends Item> i : BuddycardsItems.ITEMS.getEntries()) {
+            if (i.get() instanceof ArmorItem) {
+                getBuilder(ModelProvider.ITEM_FOLDER + "/" + i.getId().getPath())
+                        .parent(factory.apply(ResourceLocation.withDefaultNamespace("item/generated")))
+                        .texture("layer0", (ModelProvider.ITEM_FOLDER + "/" + i.getId().getPath()));
+            }
+        }
         for (BuddycardItem card: BuddycardsAPI.getAllCards())
             genCardModel(card.getSet(), card.getCardNumber());
         for (BuddycardSet set : BuddycardsAPI.getAllSets())

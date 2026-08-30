@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:buddysteel_pickaxe",
+    "buddycards:luminus_pickaxe",
+    "buddycards:charged_buddysteel_pickaxe",
+    "buddycards:perfect_buddysteel_pickaxe",
+    "buddycards:true_perfect_buddysteel_pickaxe"
+  ]
+}

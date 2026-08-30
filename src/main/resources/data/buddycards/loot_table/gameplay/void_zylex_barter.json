@@ -21,14 +21,14 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
+          "weight": 3,
           "name": "buddycards:buddycard_pack_mystery",
           "functions": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 6.0,
+                "max": 12.0,
                 "min": 2.0
               },
               "function": "minecraft:set_count"
@@ -37,7 +37,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
+          "weight": 4,
           "name": "buddycards:buddycard_pack_end",
           "functions": [
             {
@@ -53,13 +53,67 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
+          "weight": 3,
           "name": "buddycards:zylex_ring"
         },
         {
           "type": "minecraft:item",
-          "weight": 1,
+          "weight": 3,
           "name": "buddycards:zylex_scanner_chip"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:zylex_hoe"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "buddycards:zylex_boots"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:zylex_hoe",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:efficiency",
+                "minecraft:silk_touch"
+              ]
+            },
+            {
+              "function": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:unbreaking",
+                "minecraft:mending"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "buddycards:zylex_boots",
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:projectile_protection",
+                "minecraft:feather_falling",
+                "minecraft:protection"
+              ]
+            },
+            {
+              "function": "minecraft:enchant_randomly",
+              "enchantments": [
+                "minecraft:unbreaking",
+                "minecraft:mending",
+                "buddycards:recovery"
+              ]
+            }
+          ]
         }
       ]
     }

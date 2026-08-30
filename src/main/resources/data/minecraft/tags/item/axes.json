@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "buddycards:buddysteel_axe",
+    "buddycards:charged_buddysteel_axe",
+    "buddycards:perfect_buddysteel_axe",
+    "buddycards:true_perfect_buddysteel_axe"
+  ]
+}
