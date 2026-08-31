@@ -2,11 +2,13 @@ package com.wildcard.buddycards.block.entity;
 
 import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.CardInfo;
+import com.wildcard.buddycards.core.ICollectionTieredItem;
 import com.wildcard.buddycards.item.BuddysteelScannerItem;
 import com.wildcard.buddycards.item.BuddysteelSetMedalItem;
 import com.wildcard.buddycards.menu.ChargerMenu;
 import com.wildcard.buddycards.recipe.BuddysteelChargingRecipe;
 import com.wildcard.buddycards.recipe.BuddysteelChargingRecipeInput;
+import com.wildcard.buddycards.registries.BuddycardsComponents;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
@@ -158,14 +160,7 @@ public class BuddysteelChargerBlockEntity extends BlockEntity implements MenuPro
             entity.progress++;
             setChanged(level, pos, state);
             if (entity.progress > entity.maxProgress)
-                if (entity.inventory.getStackInSlot(0).getItem() instanceof BuddysteelSetMedalItem medal) {
-                    ItemStack stack = entity.inventory.extractItem(0, 1, false);
-                    medal.updateMedal(stack, entity.inventory.getStackInSlot(5), (ServerLevel) level);
-                    entity.inventory.setStackInSlot(6, stack);
-                    entity.progress = 0;
-                    entity.setChanged();
-                } else
-                    craftItem(entity);
+                craftItem(entity);
         }
         else if (entity.progress != 0) {
             entity.progress = 0;
@@ -174,14 +169,26 @@ public class BuddysteelChargerBlockEntity extends BlockEntity implements MenuPro
     }
 
     private static void craftItem(BuddysteelChargerBlockEntity entity) {
-        Optional<RecipeHolder<BuddysteelChargingRecipe>> recipe = entity.currentRecipe();
-        for (int i = 0; i < 5; i++) {
+        BuddysteelChargingRecipe recipe = entity.currentRecipe().get().value();
+        //Extract all the items, keeping the input in case it's a tiered item
+        ItemStack input = entity.inventory.extractItem(0, 1, false);
+        for (int i = 1; i < 5; i++) {
             entity.inventory.extractItem(i, 1, false);
         }
-        ItemStack output = recipe.get().value().getResultItem();
-        if (output.getItem() instanceof BuddysteelSetMedalItem medal) {
+        //By default, output is output
+        ItemStack output = recipe.getResultItem();
+        if (input.getItem().equals(output.getItem()) && output.getItem() instanceof ICollectionTieredItem) {
+            //If the input and output are the same, and it's a tiered item, so we base the output on the input
+            output = input;
+            //If it's a medal we need to update it so it gets dated
+            if (output.getItem() instanceof BuddysteelSetMedalItem medal)
+                medal.updateMedal(output, recipe.getTier(), (ServerLevel) entity.level);
+            else
+                output.set(BuddycardsComponents.COLLECTION_TIER, recipe.getTier());
+            entity.inventory.setStackInSlot(6, output);
+        } else if (output.getItem() instanceof BuddysteelSetMedalItem medal) {
+            //If it's a medal recipe without the same medal as input, it needs proper initializing for dating
             medal.initializeMedal(output, (ServerLevel) entity.level);
-            medal.updateMedal(output, entity.inventory.getStackInSlot(5), (ServerLevel) entity.level);
             entity.inventory.setStackInSlot(6, output);
         }
         else

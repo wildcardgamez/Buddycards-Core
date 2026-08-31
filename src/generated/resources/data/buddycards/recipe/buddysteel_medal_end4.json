@@ -2,16 +2,16 @@
   "type": "buddycards:buddysteel_charging",
   "ingredients": [
     {
-      "item": "buddycards:crimson_luminis"
+      "item": "buddycards:crimson_luminis_block"
     },
     {
-      "item": "buddycards:void_zylex"
+      "item": "buddycards:void_zylex_block"
     },
     {
-      "item": "buddycards:crimson_luminis"
+      "item": "buddycards:crimson_luminis_block"
     },
     {
-      "item": "buddycards:void_zylex"
+      "item": "buddycards:void_zylex_block"
     }
   ],
   "input": {

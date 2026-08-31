@@ -38,6 +38,6 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-            registration.addRecipeClickArea(ChargerScreen.class, 52, 30, 72, 20, BuddysteelChargingRecipeCategory.TYPE);
+            registration.addRecipeClickArea(ChargerScreen.class, 52, 35, 72, 18, BuddysteelChargingRecipeCategory.TYPE);
     }
 }

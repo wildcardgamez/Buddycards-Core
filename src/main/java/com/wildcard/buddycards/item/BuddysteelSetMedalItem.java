@@ -62,43 +62,18 @@ public class BuddysteelSetMedalItem extends Item implements ICurioItem, ICollect
         stack.set(DataComponents.LORE, new ItemLore(List.of(Component.translatable(SET.getDescriptionId()).append(Component.translatable("item.buddycards.buddysteel_medal.completion.0")).append("" + (int)(level.getDayTime()/24000)).withStyle(ChatFormatting.GRAY))));
     }
 
-    public void updateMedal(ItemStack medal, ItemStack scanner, ServerLevel level) {
-        int current = medal.get(BuddycardsComponents.COLLECTION_TIER);
+    public void updateMedal(ItemStack medal, int newTier, ServerLevel level) {
+        int currentTier = medal.get(BuddycardsComponents.COLLECTION_TIER);
         NonNullList<Component> lore = NonNullList.create();
         lore.addAll(NonNullList.copyOf(medal.get(DataComponents.LORE).lines()));
-        if (current == 0) {
-            if (((BuddysteelScannerItem)scanner.getItem()).getCompletionPercentageForSet(scanner, 1, SET.getName()) >= 1) {
-                lore.add(Component.translatable("item.buddycards.buddysteel_medal.completion.1").append("" + (int)(level.getDayTime()/24000)).withStyle(ChatFormatting.YELLOW));
-                medal.set(DataComponents.LORE, new ItemLore(lore));
-                medal.set(BuddycardsComponents.COLLECTION_TIER, 1);
-                updateMedal(medal, scanner, level);
-            } else if (((BuddysteelScannerItem)scanner.getItem()).getCompletionPercentageForSet(scanner, 2, SET.getName()) >= 1) {
-                lore.add(Component.translatable("item.buddycards.buddysteel_medal.completion.2").append("" + (int)(level.getDayTime()/24000)).withStyle(ChatFormatting.LIGHT_PURPLE));
-                medal.set(DataComponents.LORE, new ItemLore(lore));
-                medal.set(BuddycardsComponents.COLLECTION_TIER, 2);
-                updateMedal(medal, scanner, level);
-            }
-        }
-        else if (current == 1) {
-            if (((BuddysteelScannerItem)scanner.getItem()).getCompletionPercentageForSet(scanner, 2, SET.getName()) >= 1) {
-                lore.add(Component.translatable("item.buddycards.buddysteel_medal.completion.2").append("" + (int)(level.getDayTime()/24000)).withStyle(ChatFormatting.LIGHT_PURPLE));
-                medal.set(DataComponents.LORE, new ItemLore(lore));
-                medal.set(BuddycardsComponents.COLLECTION_TIER, 3);
-                updateMedal(medal, scanner, level);
-            }
-        }
-        else if (current == 2) {
-            if (((BuddysteelScannerItem)scanner.getItem()).getCompletionPercentageForSet(scanner, 1, SET.getName()) >= 1) {
-                lore.add(1, Component.translatable("item.buddycards.buddysteel_medal.completion.1").append("" + (int)(level.getDayTime()/24000)).withStyle(ChatFormatting.YELLOW));
-                medal.set(DataComponents.LORE, new ItemLore(lore));
-                medal.set(BuddycardsComponents.COLLECTION_TIER, 3);
-                updateMedal(medal, scanner, level);
-            }
-        } else if (((BuddysteelScannerItem)scanner.getItem()).getCompletionPercentageForSet(scanner, 4, SET.getName()) >= 1) {
+        if ((currentTier == 0 || currentTier == 2) && (newTier == 1 || newTier >= 3))
+            lore.add(Component.translatable("item.buddycards.buddysteel_medal.completion.1").append("" + (int)(level.getDayTime()/24000)).withStyle(ChatFormatting.YELLOW));
+        if (currentTier < 2 && newTier >= 2)
+            lore.add(Component.translatable("item.buddycards.buddysteel_medal.completion.2").append("" + (int)(level.getDayTime()/24000)).withStyle(ChatFormatting.LIGHT_PURPLE));
+        if (currentTier < 4 && newTier >= 4)
             lore.add(Component.translatable("item.buddycards.buddysteel_medal.completion.4").append("" + (int)(level.getDayTime()/24000)).withStyle(ChatFormatting.AQUA));
-            medal.set(DataComponents.LORE, new ItemLore(lore));
-            medal.set(BuddycardsComponents.COLLECTION_TIER, 4);
-        }
+        medal.set(DataComponents.LORE, new ItemLore(lore));
+        medal.set(BuddycardsComponents.COLLECTION_TIER, newTier);
     }
 
     public BuddycardSet getSet() {

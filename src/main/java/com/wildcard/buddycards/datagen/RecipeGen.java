@@ -40,24 +40,24 @@ public class RecipeGen extends VanillaRecipeProvider {
         ItemStack medal = set.getMedal().getDefaultInstance();
         recipeOutput.accept(Buddycards.buddycardsLocation("buddysteel_medal_" + set.getName()),
                 new BuddysteelChargingRecipe(medal, ingredientOf(BLANK_BUDDYSTEEL_MEDAL.get()),
-                        NonNullList.withSize(4, Ingredient.of(TagKey.create(Registries.ITEM, Buddycards.buddycardsLocation("buddycards_" + set.getName())))),
-                0, 1, set.getName()), null);
+                        sameIngredient(Ingredient.of(TagKey.create(Registries.ITEM, Buddycards.buddycardsLocation("buddycards_" + set.getName())))),
+                        0, 1, set.getName()), null);
         recipeOutput.accept(Buddycards.buddycardsLocation("buddysteel_medal_" + set.getName() + "1"),
                 new BuddysteelChargingRecipe(itemCopyWithTier(medal, 1), Ingredient.of(medal),
-                doubleIngredients(ingredientOf(LUMINIS.get()), ingredientOf(CRIMSON_LUMINIS.get())),
-                1, 1, set.getName()), null);
+                        doubleIngredients(ingredientOf(LUMINIS.get()), ingredientOf(CRIMSON_LUMINIS.get())),
+                        1, 1, set.getName()), null);
         recipeOutput.accept(Buddycards.buddycardsLocation("buddysteel_medal_" + set.getName() + "2"),
                 new BuddysteelChargingRecipe(itemCopyWithTier(medal, 2), Ingredient.of(medal),
-                doubleIngredients(ingredientOf(VOID_ZYLEX.get()), ingredientOf(ZYLEX.get())),
-                2, 1, set.getName()), null);
+                        doubleIngredients(ingredientOf(VOID_ZYLEX.get()), ingredientOf(ZYLEX.get())),
+                        2, 1, set.getName()), null);
         recipeOutput.accept(Buddycards.buddycardsLocation("buddysteel_medal_" + set.getName() + "3"),
                 new BuddysteelChargingRecipe(itemCopyWithTier(medal, 3), Ingredient.of(medal),
-                doubleIngredients(ingredientOf(CRIMSON_LUMINIS.get()), ingredientOf(VOID_ZYLEX.get())),
-                3, 1, set.getName()), null);
+                        doubleIngredients(ingredientOf(CRIMSON_LUMINIS.get()), ingredientOf(VOID_ZYLEX.get())),
+                        3, 1, set.getName()), null);
         recipeOutput.accept(Buddycards.buddycardsLocation("buddysteel_medal_" + set.getName() + "4"),
                 new BuddysteelChargingRecipe(itemCopyWithTier(medal, 4), Ingredient.of(medal),
-                doubleIngredients(ingredientOf(CRIMSON_LUMINIS.get()), ingredientOf(VOID_ZYLEX.get())),
-                4, 1, set.getName()), null);
+                        doubleIngredients(ingredientOf(CRIMSON_LUMINIS_BLOCK.get()), ingredientOf(VOID_ZYLEX_BLOCK.get())),
+                        4, 1, set.getName()), null);
     }
 
     static void generateTieredBuddysteelRecipes(String name, ItemStack basic, ItemStack charged, RecipeOutput recipeOutput) {
@@ -79,7 +79,7 @@ public class RecipeGen extends VanillaRecipeProvider {
                         3, 1, "all"), null);
         recipeOutput.accept(Buddycards.buddycardsLocation(name + "4"),
                 new BuddysteelChargingRecipe(itemCopyWithTier(charged, 4), Ingredient.of(charged),
-                        doubleIngredients(ingredientOf(CRIMSON_LUMINIS.get()), ingredientOf(VOID_ZYLEX.get())),
+                        sameIngredient(ingredientOf(TRUE_PERFECT_BUDDYSTEEL_INGOT.get())),
                         4, 1, "all"), null);
     }
 
@@ -95,5 +95,9 @@ public class RecipeGen extends VanillaRecipeProvider {
 
     static NonNullList<Ingredient> doubleIngredients(Ingredient ingredient1, Ingredient ingredient2) {
         return NonNullList.of(ingredient1, ingredient1, ingredient2, ingredient1, ingredient2);
+    }
+
+    static NonNullList<Ingredient> sameIngredient(Ingredient ingredient) {
+        return NonNullList.withSize(4, ingredient);
     }
 }
