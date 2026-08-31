@@ -95,27 +95,27 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 11);
             }),
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            13, 3, 0.05f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
+            13, 3, 0f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
     public static final Holder<ArmorMaterial> PERFECT_BUDDYSTEEL_ARMOR = registerArmorMaterial("perfect_buddysteel",
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 3);
+                map.put(ArmorItem.Type.LEGGINGS, 6);
+                map.put(ArmorItem.Type.CHESTPLATE, 8);
+                map.put(ArmorItem.Type.HELMET, 3);
+                map.put(ArmorItem.Type.BODY, 11);
+            }),
+            SoundEvents.ARMOR_EQUIP_DIAMOND,
+            15, 3, 0.05f, BuddycardsItems.PERFECT_BUDDYSTEEL_INGOT);
+    public static final Holder<ArmorMaterial> TRUE_PERFECT_BUDDYSTEEL_ARMOR = registerArmorMaterial("true_perfect_buddysteel",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 4);
                 map.put(ArmorItem.Type.LEGGINGS, 7);
-                map.put(ArmorItem.Type.CHESTPLATE, 9);
+                map.put(ArmorItem.Type.CHESTPLATE, 10);
                 map.put(ArmorItem.Type.HELMET, 4);
                 map.put(ArmorItem.Type.BODY, 13);
             }),
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            15, 3, 0.15f, BuddycardsItems.PERFECT_BUDDYSTEEL_INGOT);
-    public static final Holder<ArmorMaterial> TRUE_PERFECT_BUDDYSTEEL_ARMOR = registerArmorMaterial("true_perfect_buddysteel",
-            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-                map.put(ArmorItem.Type.BOOTS, 5);
-                map.put(ArmorItem.Type.LEGGINGS, 8);
-                map.put(ArmorItem.Type.CHESTPLATE, 10);
-                map.put(ArmorItem.Type.HELMET, 5);
-                map.put(ArmorItem.Type.BODY, 13);
-            }),
-            SoundEvents.ARMOR_EQUIP_DIAMOND,
-            15, 3, 0.15f, BuddycardsItems.TRUE_PERFECT_BUDDYSTEEL_INGOT);
+            15, 3, 0.1f, BuddycardsItems.TRUE_PERFECT_BUDDYSTEEL_INGOT);
 
     //Menus
     public static final DeferredHolder<MenuType<?>, MenuType<BinderMenu>> BINDER_MENU = MENUS.register("binder", () -> new MenuType<>(BinderMenu::new, FeatureFlags.DEFAULT_FLAGS));

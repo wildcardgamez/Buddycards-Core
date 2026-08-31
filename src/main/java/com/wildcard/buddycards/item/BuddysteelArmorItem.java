@@ -34,7 +34,7 @@ public class BuddysteelArmorItem extends ArmorItem implements ICollectionTieredI
     }
 
     public BuddysteelArmorItem(Holder<ArmorMaterial>[] materialIn, Type type, ExtraAttributes attributes) {
-        super(materialIn[0], type, new Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(BuddycardsComponents.COLLECTION_TIER, 0));
+        super(materialIn[0], type, new Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(BuddycardsComponents.COLLECTION_TIER, 0).durability(type.getDurability(32)));
         tieredMaterials = materialIn;
         tieredModifiers = new Supplier[4];
         for (int i = 0; i < 4; i++) {

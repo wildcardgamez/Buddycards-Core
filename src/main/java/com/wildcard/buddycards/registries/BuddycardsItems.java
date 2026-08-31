@@ -7,8 +7,11 @@ import com.wildcard.buddycards.gear.MedalTypes;
 import com.wildcard.buddycards.item.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.bus.api.IEventBus;
@@ -43,7 +46,6 @@ public class BuddycardsItems {
     //Properties
     public static final Item.Properties DEFAULT_PROPERTIES = new Item.Properties();
     public static final Item.Properties DEFAULT_UNCOMMON_PROPERTIES = new Item.Properties().rarity(Rarity.UNCOMMON);
-    public static final Item.Properties UNCOMMON_TOOL_PROPERTIES = new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1);
     public static final Item.Properties RARE_TOOL_PROPERTIES = new Item.Properties().rarity(Rarity.RARE).stacksTo(1);
     public static final Item.Properties DEFAULT_RARE_PROPERTIES = new Item.Properties().rarity(Rarity.RARE);
     public static final Item.Properties DEFAULT_EPIC_PROPERTIES = new Item.Properties().rarity(Rarity.EPIC);
@@ -88,24 +90,28 @@ public class BuddycardsItems {
     public static final DeferredItem<Item> BUDDYSTEEL_BLOCK = ITEMS.register("buddysteel_block", () -> new BlockItem(BuddycardsBlocks.BUDDYSTEEL_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<Item> BUDDYSTEEL_SCANNER = ITEMS.register("buddysteel_scanner", () -> new BuddysteelScannerItem());
     public static final DeferredItem<Item> BUDDYSTEEL_KEY = ITEMS.register("buddysteel_key", BuddysteelKeyItem::new);
-    public static final DeferredItem<Item> BUDDYSTEEL_HELMET = ITEMS.register("buddysteel_helmet", () -> new ArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.HELMET, UNCOMMON_TOOL_PROPERTIES));
-    public static final DeferredItem<Item> BUDDYSTEEL_CHESTPLATE = ITEMS.register("buddysteel_chestplate", () -> new ArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.CHESTPLATE, UNCOMMON_TOOL_PROPERTIES));
-    public static final DeferredItem<Item> BUDDYSTEEL_LEGGINGS = ITEMS.register("buddysteel_leggings", () -> new ArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.LEGGINGS, UNCOMMON_TOOL_PROPERTIES));
-    public static final DeferredItem<Item> BUDDYSTEEL_BOOTS = ITEMS.register("buddysteel_boots", () -> new ArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.BOOTS, UNCOMMON_TOOL_PROPERTIES));
-    public static final DeferredItem<Item> BUDDYSTEEL_SWORD = ITEMS.register("buddysteel_sword", () -> new SwordItem(BuddycardsToolTier.BUDDYSTEEL, UNCOMMON_TOOL_PROPERTIES));
-    public static final DeferredItem<Item> BUDDYSTEEL_SHOVEL = ITEMS.register("buddysteel_shovel", () -> new ShovelItem(BuddycardsToolTier.BUDDYSTEEL, UNCOMMON_TOOL_PROPERTIES));
-    public static final DeferredItem<Item> BUDDYSTEEL_PICKAXE = ITEMS.register("buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.BUDDYSTEEL, UNCOMMON_TOOL_PROPERTIES));
-    public static final DeferredItem<Item> BUDDYSTEEL_AXE = ITEMS.register("buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.BUDDYSTEEL, UNCOMMON_TOOL_PROPERTIES));
-    public static final DeferredItem<Item> BUDDYSTEEL_HOE = ITEMS.register("buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.BUDDYSTEEL, UNCOMMON_TOOL_PROPERTIES));
+    public static final DeferredItem<Item> BUDDYSTEEL_HELMET = ITEMS.register("buddysteel_helmet", () -> new ArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.HELMET, new Item.Properties().stacksTo(1).durability(ArmorItem.Type.HELMET.getDurability(23))));
+    public static final DeferredItem<Item> BUDDYSTEEL_CHESTPLATE = ITEMS.register("buddysteel_chestplate", () -> new ArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.CHESTPLATE, new Item.Properties().stacksTo(1).durability(ArmorItem.Type.CHESTPLATE.getDurability(23))));
+    public static final DeferredItem<Item> BUDDYSTEEL_LEGGINGS = ITEMS.register("buddysteel_leggings", () -> new ArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.LEGGINGS, new Item.Properties().stacksTo(1).durability(ArmorItem.Type.LEGGINGS.getDurability(23))));
+    public static final DeferredItem<Item> BUDDYSTEEL_BOOTS = ITEMS.register("buddysteel_boots", () -> new ArmorItem(BuddycardsMisc.BUDDYSTEEL_ARMOR, ArmorItem.Type.BOOTS, new Item.Properties().stacksTo(1).durability(ArmorItem.Type.BOOTS.getDurability(23))));
+    public static final DeferredItem<Item> BUDDYSTEEL_SWORD = ITEMS.register("buddysteel_sword", () -> new SwordItem(BuddycardsToolTier.BUDDYSTEEL, new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> BUDDYSTEEL_SHOVEL = ITEMS.register("buddysteel_shovel", () -> new ShovelItem(BuddycardsToolTier.BUDDYSTEEL, new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> BUDDYSTEEL_PICKAXE = ITEMS.register("buddysteel_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.BUDDYSTEEL, new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> BUDDYSTEEL_AXE = ITEMS.register("buddysteel_axe", () -> new AxeItem(BuddycardsToolTier.BUDDYSTEEL, new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<Item> BUDDYSTEEL_HOE = ITEMS.register("buddysteel_hoe", () -> new HoeItem(BuddycardsToolTier.BUDDYSTEEL, new Item.Properties().stacksTo(1)));
     public static final DeferredItem<Item> BUDDYSTEEL_RING = ITEMS.register("buddysteel_ring", () -> new AttributeCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON),
             (m) -> m.put(BuddycardsAttributes.BUDDY_BONUS, new AttributeModifier(Buddycards.buddycardsLocation("buddysteel_ring"), 0.25, AttributeModifier.Operation.ADD_VALUE))));
     //Charger
     public static final DeferredItem<BlockItem> CHARGER = ITEMS.register("buddysteel_charger", () -> new DescriptionBlockItem(BuddycardsBlocks.CHARGER.get(), DEFAULT_PROPERTIES));
     //Tiered Gear
-    public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_HELMET = ITEMS.register("charged_buddysteel_helmet", () -> new BuddysteelArmorItem(TIERED_BUDDYSTEEL_MATERIALS, ArmorItem.Type.HELMET));
-    public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_CHESTPLATE = ITEMS.register("charged_buddysteel_chestplate", () -> new BuddysteelArmorItem(TIERED_BUDDYSTEEL_MATERIALS, ArmorItem.Type.CHESTPLATE));
-    public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_LEGGINGS = ITEMS.register("charged_buddysteel_leggings", () -> new BuddysteelArmorItem(TIERED_BUDDYSTEEL_MATERIALS, ArmorItem.Type.LEGGINGS));
-    public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_BOOTS = ITEMS.register("charged_buddysteel_boots", () -> new BuddysteelArmorItem(TIERED_BUDDYSTEEL_MATERIALS, ArmorItem.Type.BOOTS));
+    static final BuddysteelArmorItem.ExtraAttributes TIERED_SPEED_ATTRIBUTE = (builder, tier, slot) ->
+            builder.add(Attributes.MOVEMENT_SPEED, new AttributeModifier(ResourceLocation.withDefaultNamespace("armor." + slot.getSerializedName()),
+            (slot.equals(EquipmentSlotGroup.HEAD) || slot.equals(EquipmentSlotGroup.FEET) ? 2 : 3) * (tier + 1) * .005f,
+            AttributeModifier.Operation.ADD_MULTIPLIED_BASE), slot);
+    public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_HELMET = ITEMS.register("charged_buddysteel_helmet", () -> new BuddysteelArmorItem(TIERED_BUDDYSTEEL_MATERIALS, ArmorItem.Type.HELMET, TIERED_SPEED_ATTRIBUTE));
+    public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_CHESTPLATE = ITEMS.register("charged_buddysteel_chestplate", () -> new BuddysteelArmorItem(TIERED_BUDDYSTEEL_MATERIALS, ArmorItem.Type.CHESTPLATE, TIERED_SPEED_ATTRIBUTE));
+    public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_LEGGINGS = ITEMS.register("charged_buddysteel_leggings", () -> new BuddysteelArmorItem(TIERED_BUDDYSTEEL_MATERIALS, ArmorItem.Type.LEGGINGS, TIERED_SPEED_ATTRIBUTE));
+    public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_BOOTS = ITEMS.register("charged_buddysteel_boots", () -> new BuddysteelArmorItem(TIERED_BUDDYSTEEL_MATERIALS, ArmorItem.Type.BOOTS, TIERED_SPEED_ATTRIBUTE));
     //Tiered Medals
     public static final DeferredItem<Item> BLANK_BUDDYSTEEL_MEDAL = ITEMS.register("blank_buddysteel_medal", () -> new Item(DEFAULT_CURIO_PROPERTIES));
     public static final DeferredItem<BuddysteelSetMedalItem> MEDAL_BASE = ITEMS.register("buddysteel_medal_base", () -> new BuddysteelSetMedalItem(MedalTypes.BASE_SET, BASE_SET, new Item.Properties().stacksTo(1).component(BuddycardsComponents.COLLECTION_TIER, 0)));
@@ -167,8 +173,8 @@ public class BuddycardsItems {
     public static final DeferredItem<Item> CRIMSON_LUMINIS = ITEMS.register("crimson_luminis", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> CRIMSON_LUMINIS_BLOCK = ITEMS.register("crimson_luminis_block", () -> new BlockItem(BuddycardsBlocks.CRIMSON_LUMINIS_BLOCK.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> KINETIC_CHAMBER = ITEMS.register("kinetic_chamber", () -> new DescriptionBlockItem(BuddycardsBlocks.KINETIC_CHAMBER.get(), DEFAULT_PROPERTIES));
-    public static final DeferredItem<Item> LUMINIS_HELMET = ITEMS.register("luminis_helmet", () -> new ArmorItem(BuddycardsMisc.LUMINIS_ARMOR, ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1)));
-    public static final DeferredItem<Item> LUMINIS_PICKAXE = ITEMS.register("luminis_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.LUMINIS, UNCOMMON_TOOL_PROPERTIES));
+    public static final DeferredItem<Item> LUMINIS_HELMET = ITEMS.register("luminis_helmet", () -> new ArmorItem(BuddycardsMisc.LUMINIS_ARMOR, ArmorItem.Type.HELMET, new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1).durability(ArmorItem.Type.HELMET.getDurability(30))));
+    public static final DeferredItem<Item> LUMINIS_PICKAXE = ITEMS.register("luminis_pickaxe", () -> new PickaxeItem(BuddycardsToolTier.LUMINIS, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> LUMINIS_RING = ITEMS.register("luminis_ring", () -> new AttributeCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON),
             (m) -> m.put(BuddycardsAttributes.FOIL_BONUS, new AttributeModifier(Buddycards.buddycardsLocation("luminis_ring"), 0.5, AttributeModifier.Operation.ADD_VALUE))));
 
@@ -180,8 +186,8 @@ public class BuddycardsItems {
     public static final DeferredItem<BlockItem> GRADER = ITEMS.register("grader", () -> new DescriptionBlockItem(BuddycardsBlocks.GRADER.get(), DEFAULT_PROPERTIES));
     public static final DeferredItem<Item> VOID_ZYLEX = ITEMS.register("void_zylex", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<BlockItem> VOID_ZYLEX_BLOCK = ITEMS.register("void_zylex_block", () -> new BlockItem(BuddycardsBlocks.VOID_ZYLEX_BLOCK.get(), DEFAULT_PROPERTIES));
-    public static final DeferredItem<Item> ZYLEX_BOOTS = ITEMS.register("zylex_boots", () -> new ArmorItem(BuddycardsMisc.ZYLEX_ARMOR, ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1)));
-    public static final DeferredItem<Item> ZYLEX_HOE = ITEMS.register("zylex_hoe", () -> new HoeItem(BuddycardsToolTier.ZYLEX, UNCOMMON_TOOL_PROPERTIES));
+    public static final DeferredItem<Item> ZYLEX_BOOTS = ITEMS.register("zylex_boots", () -> new ArmorItem(BuddycardsMisc.ZYLEX_ARMOR, ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1).durability(ArmorItem.Type.HELMET.getDurability(30))));
+    public static final DeferredItem<Item> ZYLEX_HOE = ITEMS.register("zylex_hoe", () -> new HoeItem(BuddycardsToolTier.ZYLEX, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredItem<Item> ZYLEX_RING = ITEMS.register("zylex_ring", () -> new AttributeCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON),
             (m) -> m.put(BuddycardsAttributes.GRADING_LUCK, new AttributeModifier(Buddycards.buddycardsLocation("zylex_ring"), 0.5, AttributeModifier.Operation.ADD_VALUE))));
     public static final DeferredItem<Item> ZYLEX_SCANNER_CHIP = ITEMS.register("zylex_scanner_chip", () -> new DescriptionItem(DEFAULT_PROPERTIES));
