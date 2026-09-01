@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.block.entity;
 
-import com.wildcard.buddycards.block.LockableBlockEntity;
+import com.wildcard.buddycards.block.ILockableBlockEntity;
 import com.wildcard.buddycards.core.CardInfo;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.registries.BuddycardsEntities;
@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-public class CardDisplayBlockEntity extends BlockEntity implements Clearable, LockableBlockEntity {
+public class CardDisplayBlockEntity extends BlockEntity implements Clearable, ILockableBlockEntity {
     private final NonNullList<ItemStack> inventory = NonNullList.withSize(6, ItemStack.EMPTY);
     private UUID player;
 

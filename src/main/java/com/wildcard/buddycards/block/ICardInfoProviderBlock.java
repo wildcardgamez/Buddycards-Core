@@ -1,5 +1,6 @@
-package com.wildcard.buddycards.core;
+package com.wildcard.buddycards.block;
 
+import com.wildcard.buddycards.core.CardInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;

@@ -4,7 +4,6 @@ import com.wildcard.buddycards.Buddycards;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.BuddycardsAPI;
 import com.wildcard.buddycards.core.CardInfo;
-import com.wildcard.buddycards.core.ICardInfoProviderItem;
 import com.wildcard.buddycards.registries.BuddycardsComponents;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.ChatFormatting;

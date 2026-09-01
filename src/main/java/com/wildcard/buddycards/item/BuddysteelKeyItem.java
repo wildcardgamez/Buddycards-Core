@@ -1,6 +1,6 @@
 package com.wildcard.buddycards.item;
 
-import com.wildcard.buddycards.block.LockableBlockEntity;
+import com.wildcard.buddycards.block.ILockableBlockEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +15,7 @@ public class BuddysteelKeyItem extends Item {
 
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
-        if (context.getPlayer() instanceof Player player && context.getLevel().getBlockEntity(context.getClickedPos()) instanceof LockableBlockEntity entity) {
+        if (context.getPlayer() instanceof Player player && context.getLevel().getBlockEntity(context.getClickedPos()) instanceof ILockableBlockEntity entity) {
             switch (entity.tryLock(player)) {
                 case FAIL -> player.displayClientMessage(context.getLevel().getBlockState(context.getClickedPos()).getBlock().getName().append(Component.translatable("item.buddycards.buddysteel_key.result.fail")), true);
                 case UNLOCK -> player.displayClientMessage(context.getLevel().getBlockState(context.getClickedPos()).getBlock().getName().append(Component.translatable("item.buddycards.buddysteel_key.result.unlock")), true);

@@ -1,7 +1,7 @@
 package com.wildcard.buddycards.registries;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.core.ICollectionTieredItem;
+import com.wildcard.buddycards.item.tiered.ICollectionTieredItem;
 import com.wildcard.buddycards.item.BuddycardItem;
 import com.wildcard.buddycards.menu.*;
 import com.wildcard.buddycards.recipe.BuddysteelChargingRecipe;
@@ -12,10 +12,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;

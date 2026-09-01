@@ -1,39 +1,28 @@
-package com.wildcard.buddycards.item;
+package com.wildcard.buddycards.item.tiered;
 
 import com.google.common.base.Suppliers;
-import com.google.common.collect.Multimap;
-import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.core.ICollectionTieredItem;
 import com.wildcard.buddycards.registries.BuddycardsComponents;
-import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Supplier;
 
-public class BuddysteelArmorItem extends ArmorItem implements ICollectionTieredItem {
-    public BuddysteelArmorItem(Holder<ArmorMaterial>[] materialIn, Type type) {
+public class CollectionTieredArmorItem extends ArmorItem implements ICollectionTieredItem {
+    public CollectionTieredArmorItem(Holder<ArmorMaterial>[] materialIn, Type type) {
         this(materialIn, type, null);
     }
 
-    public BuddysteelArmorItem(Holder<ArmorMaterial>[] materialIn, Type type, ExtraAttributes attributes) {
+    public CollectionTieredArmorItem(Holder<ArmorMaterial>[] materialIn, Type type, ExtraAttributes attributes) {
         super(materialIn[0], type, new Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(BuddycardsComponents.COLLECTION_TIER, 0).durability(type.getDurability(32)));
         tieredMaterials = materialIn;
         tieredModifiers = new Supplier[4];
@@ -58,33 +47,29 @@ public class BuddysteelArmorItem extends ArmorItem implements ICollectionTieredI
 
     @Override
     public Component getName(ItemStack stack) {
-        return getTier(stack) == 3 ? Component.translatable(getDescriptionId() + ".perfect") : super.getName(stack);
+        return getCollectionTier(stack) == 3 ? Component.translatable(getDescriptionId() + ".perfect") : super.getName(stack);
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(getTierComponent(stack));
+        tooltipComponents.add(getCollectionTierComponent(stack));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
-    private final Supplier<ItemAttributeModifiers>[] tieredModifiers;
+    protected final Supplier<ItemAttributeModifiers>[] tieredModifiers;
     protected final Holder<ArmorMaterial>[] tieredMaterials;
 
     @Override
     public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
-        return tieredModifiers[getTier(stack)].get();
+        return tieredModifiers[getCollectionTier(stack)].get();
     }
 
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return (this.tieredMaterials[getTier(toRepair)].value()).repairIngredient().get().test(repair) || super.isValidRepairItem(toRepair, repair);
-    }
-
-    public interface ExtraAttributes {
-        void applyAttributes(ItemAttributeModifiers.Builder builder, int tier, EquipmentSlotGroup slot);
+        return this.tieredMaterials[getCollectionTier(toRepair)].value().repairIngredient().get().test(repair);
     }
 
     @Override
     public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-        return ResourceLocation.fromNamespaceAndPath(this.getCreatorModId(stack), "textures/models/armor/charged_buddysteel_tier" + getExactTier(stack) + (slot == EquipmentSlot.LEGS ? "_layer2.png" : "_layer1.png"));
+        return ResourceLocation.fromNamespaceAndPath(this.getCreatorModId(stack), "textures/models/armor/charged_buddysteel_tier" + getExactCollectionTier(stack) + (slot == EquipmentSlot.LEGS ? "_layer2.png" : "_layer1.png"));
     }
 }

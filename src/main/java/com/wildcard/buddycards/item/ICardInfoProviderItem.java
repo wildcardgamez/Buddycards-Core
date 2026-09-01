@@ -1,5 +1,6 @@
-package com.wildcard.buddycards.core;
+package com.wildcard.buddycards.item;
 
+import com.wildcard.buddycards.core.CardInfo;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 

@@ -3,7 +3,7 @@ package com.wildcard.buddycards.item;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.wildcard.buddycards.core.BuddycardSet;
-import com.wildcard.buddycards.core.ICollectionTieredItem;
+import com.wildcard.buddycards.item.tiered.ICollectionTieredItem;
 import com.wildcard.buddycards.gear.IMedalTypes;
 import com.wildcard.buddycards.registries.BuddycardsComponents;
 import net.minecraft.ChatFormatting;
@@ -37,25 +37,25 @@ public class BuddysteelSetMedalItem extends Item implements ICurioItem, ICollect
 
     @Override
     public Component getName(ItemStack stack) {
-        return getTier(stack) == 3 ? Component.translatable("item.buddycards.perfect_buddysteel_medal") : super.getName(stack);
+        return getCollectionTier(stack) == 3 ? Component.translatable("item.buddycards.perfect_buddysteel_medal") : super.getName(stack);
     }
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(getTierComponent(stack));
+        tooltipComponents.add(getCollectionTierComponent(stack));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
     @Override
     public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
         Multimap<Holder<Attribute>, AttributeModifier> map = LinkedHashMultimap.create();
-        TYPE.applyAttributes(map, getTier(stack));
+        TYPE.applyAttributes(map, getCollectionTier(stack));
         return map;
     }
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
-        TYPE.effectTick(slotContext.entity(), getTier(stack));
+        TYPE.effectTick(slotContext.entity(), getCollectionTier(stack));
     }
 
     public void initializeMedal(ItemStack stack, ServerLevel level) {

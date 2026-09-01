@@ -1,5 +1,6 @@
 package com.wildcard.buddycards.item;
 
+import com.wildcard.buddycards.block.ICardInfoProviderBlock;
 import com.wildcard.buddycards.core.*;
 import com.wildcard.buddycards.menu.ScannerMenu;
 import com.wildcard.buddycards.registries.BuddycardsComponents;

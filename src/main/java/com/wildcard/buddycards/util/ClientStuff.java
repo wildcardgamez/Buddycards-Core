@@ -1,11 +1,9 @@
 package com.wildcard.buddycards.util;
 
 import com.wildcard.buddycards.Buddycards;
-import com.wildcard.buddycards.client.BuddycardsLayers;
-import com.wildcard.buddycards.client.model.BuddycardsArmorModel;
 import com.wildcard.buddycards.client.model.EnderlingModel;
 import com.wildcard.buddycards.client.renderer.*;
-import com.wildcard.buddycards.core.ICollectionTieredItem;
+import com.wildcard.buddycards.item.tiered.ICollectionTieredItem;
 import com.wildcard.buddycards.integration.CuriosIntegration;
 import com.wildcard.buddycards.registries.BuddycardsComponents;
 import com.wildcard.buddycards.registries.BuddycardsMisc;
@@ -17,7 +15,6 @@ import com.wildcard.buddycards.registries.BuddycardsEntities;
 import com.wildcard.buddycards.registries.BuddycardsItems;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

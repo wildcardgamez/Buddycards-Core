@@ -3,7 +3,6 @@ package com.wildcard.buddycards.item;
 import com.wildcard.buddycards.container.BinderItemHandler;
 import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.CardInfo;
-import com.wildcard.buddycards.core.ICardInfoProviderItem;
 import com.wildcard.buddycards.enchantment.EnchantmentKeys;
 import com.wildcard.buddycards.menu.BinderMenu;
 import net.minecraft.ChatFormatting;

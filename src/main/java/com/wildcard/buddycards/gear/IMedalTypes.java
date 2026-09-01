@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 
 public interface IMedalTypes {
-    public void effectTick(LivingEntity player, int mod);
+    void effectTick(LivingEntity player, int mod);
 
-    public void applyAttributes(Multimap<Holder<Attribute>, AttributeModifier> map, int mod);
+    void applyAttributes(Multimap<Holder<Attribute>, AttributeModifier> map, int mod);
 }

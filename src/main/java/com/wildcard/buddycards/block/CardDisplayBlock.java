@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.MapCodec;
 import com.wildcard.buddycards.block.entity.CardDisplayBlockEntity;
 import com.wildcard.buddycards.core.CardInfo;
-import com.wildcard.buddycards.core.ICardInfoProviderBlock;
 import com.wildcard.buddycards.item.BuddycardItem;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
