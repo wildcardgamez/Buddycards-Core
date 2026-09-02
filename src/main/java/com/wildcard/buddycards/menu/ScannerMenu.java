@@ -119,7 +119,7 @@ public class ScannerMenu extends AbstractContainerMenu {
             return List.of(Component.translatable(currentSet.getDescriptionId()), Component.translatable(currentSet.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY));
         //If it's bigger than the set, its blank
         if (number > currentSet.getCards().size())
-            return List.of();
+            return null;
         List<CardInfo> cardInfo = collectionInfo.stream().filter(card -> card.set().equals(currentSet.getName()) && card.number() == number).toList();
         //If it's a missing card, give the missing card tooltip
         if (cardInfo.isEmpty())

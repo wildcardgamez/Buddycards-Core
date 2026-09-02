@@ -12,6 +12,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.List;
+
 public class ScannerScreen extends AbstractContainerScreen<ScannerMenu> {
     private static final ResourceLocation TEXTURE = Buddycards.buddycardsLocation("textures/gui/scanner.png");
     private static final ResourceLocation SLOT = Buddycards.buddycardsLocation("container/scanner/card_slot");
@@ -76,7 +78,9 @@ public class ScannerScreen extends AbstractContainerScreen<ScannerMenu> {
     protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
         if (this.hoveredSlot != null) {
             ItemStack itemstack = this.hoveredSlot.getItem();
-            guiGraphics.renderTooltip(this.font, menu.getCollectionTooltip(this.hoveredSlot.index + 1), itemstack.getTooltipImage(), itemstack, x, y);
+            List<Component> list = menu.getCollectionTooltip(this.hoveredSlot.index + 1);
+            if (list != null)
+                guiGraphics.renderTooltip(this.font, list, itemstack.getTooltipImage(), itemstack, x, y);
         }
     }
 
