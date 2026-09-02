@@ -1,10 +1,10 @@
 package com.wildcard.buddycards.container;
 
 import com.wildcard.buddycards.item.BuddycardItem;
+import com.wildcard.buddycards.item.component.BinderContents;
+import com.wildcard.buddycards.registries.BuddycardsComponents;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,8 +13,8 @@ public class BinderItemHandler extends ItemStackHandler {
         super((large ? 72 : 32) * pageAmtIn);
         binder = binderIn;
         pageAmt = pageAmtIn;
-        if (binder.has(DataComponents.CONTAINER))
-            binder.get(DataComponents.CONTAINER).copyInto(stacks);
+        if (binder.has(BuddycardsComponents.BINDER))
+            binder.get(BuddycardsComponents.BINDER).copyInto(stacks);
     }
 
     protected ItemStack binder;
@@ -34,6 +34,6 @@ public class BinderItemHandler extends ItemStackHandler {
     }
 
     public void saveAndClose() {
-        binder.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(stacks));
+        binder.set(BuddycardsComponents.BINDER, BinderContents.fromItems(stacks));
     }
 }

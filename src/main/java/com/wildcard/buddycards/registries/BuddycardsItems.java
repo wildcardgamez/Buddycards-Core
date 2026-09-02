@@ -5,6 +5,7 @@ import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.gear.BuddycardsToolTier;
 import com.wildcard.buddycards.gear.MedalTypes;
 import com.wildcard.buddycards.item.*;
+import com.wildcard.buddycards.item.component.BinderContents;
 import com.wildcard.buddycards.item.tiered.CollectionTieredArmorItem;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -14,7 +15,6 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.ItemContainerContents;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -22,6 +22,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import javax.annotation.Nonnull;
 import java.util.Calendar;
+import java.util.function.Supplier;
 
 public class BuddycardsItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Buddycards.MOD_ID);
@@ -52,7 +53,7 @@ public class BuddycardsItems {
     public static final Item.Properties DEFAULT_EPIC_PROPERTIES = new Item.Properties().rarity(Rarity.EPIC);
     public static final Item.Properties DEFAULT_PACK_PROPERTIES = new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON);
     public static final Item.Properties RARE_PACK_PROPERTIES = new Item.Properties().stacksTo(16).rarity(Rarity.RARE);
-    public static final Item.Properties DEFAULT_BINDER_PROPERTIES = new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
+    public static final Supplier<Item.Properties> DEFAULT_BINDER_PROPERTIES = () -> new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).component(BuddycardsComponents.BINDER, BinderContents.EMPTY);
     public static final Item.Properties DEFAULT_CURIO_PROPERTIES = new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON);
 
     public static final Holder<ArmorMaterial>[] TIERED_BUDDYSTEEL_MATERIALS = new Holder[]{BuddycardsMisc.CHARGED_BUDDYSTEEL_ARMOR, BuddycardsMisc.MIXED_BUDDYSTEEL_ARMOR, BuddycardsMisc.PERFECT_BUDDYSTEEL_ARMOR, BuddycardsMisc.TRUE_PERFECT_BUDDYSTEEL_ARMOR};
@@ -76,14 +77,14 @@ public class BuddycardsItems {
     public static final DeferredItem<BuddycardPackItem> PACK_CAVE = ITEMS.register("buddycard_pack_cave", () -> new BuddycardSetPackItem(CAVE_SET, 4, 1, DEFAULT_RARITY_WEIGHTS, DEFAULT_PACK_PROPERTIES));
     public static final DeferredItem<BuddycardPackItem> MYSTERY_PACK = ITEMS.register("buddycard_pack_mystery", () -> new MysteryBuddycardPackItem(4, 1, DEFAULT_RARITY_WEIGHTS, false, RARE_PACK_PROPERTIES));
     //Binders
-    public static final DeferredItem<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, BASE_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_base.png"), false));
-    public static final DeferredItem<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, NETHER_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_nether.png"), false));
-    public static final DeferredItem<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, END_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_end.png"), false));
-    public static final DeferredItem<BuddycardBinderItem> BINDER_CAVE = ITEMS.register("buddycard_binder_cave", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, CAVE_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_cave.png"), false));
-    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_BASE = ITEMS.register("large_buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, BASE_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_base.png"), true));
-    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_NETHER = ITEMS.register("large_buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, NETHER_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_nether.png"), true));
-    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_END = ITEMS.register("large_buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, END_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_end.png"), true));
-    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_CAVE = ITEMS.register("large_buddycard_binder_cave", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES, CAVE_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_cave.png"), true));
+    public static final DeferredItem<BuddycardBinderItem> BINDER_BASE = ITEMS.register("buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES.get(), BASE_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_base.png"), false));
+    public static final DeferredItem<BuddycardBinderItem> BINDER_NETHER = ITEMS.register("buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES.get(), NETHER_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_nether.png"), false));
+    public static final DeferredItem<BuddycardBinderItem> BINDER_END = ITEMS.register("buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES.get(), END_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_end.png"), false));
+    public static final DeferredItem<BuddycardBinderItem> BINDER_CAVE = ITEMS.register("buddycard_binder_cave", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES.get(), CAVE_SET, Buddycards.buddycardsLocation("textures/gui/buddycard_binder_cave.png"), false));
+    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_BASE = ITEMS.register("large_buddycard_binder_base", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES.get(), BASE_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_base.png"), true));
+    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_NETHER = ITEMS.register("large_buddycard_binder_nether", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES.get(), NETHER_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_nether.png"), true));
+    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_END = ITEMS.register("large_buddycard_binder_end", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES.get(), END_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_end.png"), true));
+    public static final DeferredItem<BuddycardBinderItem> LARGE_BINDER_CAVE = ITEMS.register("large_buddycard_binder_cave", () -> new BuddycardBinderItem(DEFAULT_BINDER_PROPERTIES.get(), CAVE_SET, Buddycards.buddycardsLocation("textures/gui/large_buddycard_binder_cave.png"), true));
     //Buddysteel Items
     public static final DeferredItem<Item> BUDDYSTEEL_BLEND = ITEMS.register("buddysteel_blend", () -> new Item(DEFAULT_PROPERTIES));
     public static final DeferredItem<Item> BUDDYSTEEL_INGOT = ITEMS.register("buddysteel_ingot", () -> new Item(DEFAULT_PROPERTIES));
