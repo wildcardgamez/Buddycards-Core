@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.function.Supplier;
 
 public enum BuddycardsToolTier implements Tier {
-    BUDDYSTEEL(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 2048, 9.0F, 2.5F, 3, 12, BuddycardsItems.BUDDYSTEEL_INGOT),
+    BUDDYSTEEL(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 2048, 8.0F, 2.5F, 3, 12, BuddycardsItems.BUDDYSTEEL_INGOT),
     LUMINIS(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 1256, 9.0F, 3.0F, 3, 9, BuddycardsItems.CRIMSON_LUMINIS),
     ZYLEX(BlockTags.INCORRECT_FOR_DIAMOND_TOOL, 1674, 9.0F, 3.0F, 3, 9, BuddycardsItems.ZYLEX),
     CHARGED_BUDDYSTEEL(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2560, 9.0F, 3.5F, 4, 14, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT),

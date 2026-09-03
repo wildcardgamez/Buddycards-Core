@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "buddycards:buddysteel_leggings"
+    "buddycards:buddysteel_leggings",
+    "buddycards:charged_buddysteel_leggings"
   ]
 }
