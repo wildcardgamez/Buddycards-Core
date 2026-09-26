@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/handheld",
+  "overrides": [
+    {
+      "model": "buddycards:item/charged_buddysteel_axe1",
+      "predicate": {
+        "buddycards:tier": 1.0
+      }
+    },
+    {
+      "model": "buddycards:item/charged_buddysteel_axe2",
+      "predicate": {
+        "buddycards:tier": 2.0
+      }
+    },
+    {
+      "model": "buddycards:item/charged_buddysteel_axe3",
+      "predicate": {
+        "buddycards:tier": 3.0
+      }
+    },
+    {
+      "model": "buddycards:item/charged_buddysteel_axe4",
+      "predicate": {
+        "buddycards:tier": 4.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "buddycards:item/charged_buddysteel_axe"
+  }
+}

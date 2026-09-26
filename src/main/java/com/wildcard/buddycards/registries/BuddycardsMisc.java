@@ -103,7 +103,7 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 11);
             }),
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            15, 3, 0.05f, BuddycardsItems.PERFECT_BUDDYSTEEL_INGOT);
+            15, 3, 0.05f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
     public static final Holder<ArmorMaterial> TRUE_PERFECT_BUDDYSTEEL_ARMOR = registerArmorMaterial("true_perfect_buddysteel",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 4);
@@ -113,7 +113,7 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 13);
             }),
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            15, 3, 0.1f, BuddycardsItems.TRUE_PERFECT_BUDDYSTEEL_INGOT);
+            15, 3, 0.1f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
 
     //Menus
     public static final DeferredHolder<MenuType<?>, MenuType<BinderMenu>> BINDER_MENU = MENUS.register("binder", () -> new MenuType<>(BinderMenu::new, FeatureFlags.DEFAULT_FLAGS));

@@ -29,9 +29,9 @@ public class BuddycardsBlocks {
     public static final BlockBehaviour.Properties BOOSTER_BOX_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(0.8F).sound(SoundType.WOOL);
     public static final BlockBehaviour.Properties PLAYMAT_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_BLUE).strength(0.8F).sound(SoundType.WOOL);
 
-    static final BlockBehaviour.Properties LUMINIS_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 12).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
-    static final BlockBehaviour.Properties CRYSTAL_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(1.5F, 3.0F).sound(SoundType.AMETHYST);
-    static final BlockBehaviour.Properties CRIMSON_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.CRIMSON_NYLIUM).requiresCorrectToolForDrops().lightLevel((i) -> 8).noOcclusion().strength(3.0F, 6.0F).sound(SoundType.COPPER);
+    static final BlockBehaviour.Properties LUMINIS_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 12).strength(3.0F, 6.0F).sound(SoundType.COPPER);
+    static final BlockBehaviour.Properties CRYSTAL_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).requiresCorrectToolForDrops().lightLevel((i) -> 8).strength(1.5F, 3.0F).sound(SoundType.AMETHYST);
+    static final BlockBehaviour.Properties CRIMSON_LUMINIS_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.CRIMSON_NYLIUM).requiresCorrectToolForDrops().lightLevel((i) -> 8).strength(3.0F, 6.0F).sound(SoundType.COPPER);
     static final BlockBehaviour.Properties ZYLEX_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_MAGENTA).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
     static final BlockBehaviour.Properties VOID_ZYLEX_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.WARPED_HYPHAE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL);
 
@@ -42,8 +42,8 @@ public class BuddycardsBlocks {
     public static final DeferredBlock<Block> CHARGED_BUDDYSTEEL_BLOCK = BLOCKS.register("charged_buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
     public static final DeferredBlock<Block> PERFECT_BUDDYSTEEL_BLOCK = BLOCKS.register("perfect_buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
     public static final DeferredBlock<Block> TRUE_PERFECT_BUDDYSTEEL_BLOCK = BLOCKS.register("true_perfect_buddysteel_block", () -> new Block(BUDDYSTEEL_PROPERTIES));
-    public static final DeferredBlock<Block> LUMINIS_ORE = BLOCKS.register("luminis_ore", () -> new DropExperienceBlock(UniformInt.of(2, 5), BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_ORE).lightLevel((i) -> 3).noOcclusion()));
-    public static final DeferredBlock<Block> DEEPSLATE_LUMINIS_ORE = BLOCKS.register("deepslate_luminis_ore", () -> new DropExperienceBlock(UniformInt.of(2, 5), BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_GOLD_ORE).lightLevel((i) -> 3).noOcclusion()));
+    public static final DeferredBlock<Block> LUMINIS_ORE = BLOCKS.register("luminis_ore", () -> new DropExperienceBlock(UniformInt.of(2, 5), BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_ORE).lightLevel((i) -> 3)));
+    public static final DeferredBlock<Block> DEEPSLATE_LUMINIS_ORE = BLOCKS.register("deepslate_luminis_ore", () -> new DropExperienceBlock(UniformInt.of(2, 5), BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_GOLD_ORE).lightLevel((i) -> 3)));
     public static final DeferredBlock<Block> LUMINIS_CRYSTAL_BLOCK = BLOCKS.register("luminis_crystal_block", () -> new Block(CRYSTAL_LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> LUMINIS_BLOCK = BLOCKS.register("luminis_block", () -> new Block(LUMINIS_PROPERTIES));
     public static final DeferredBlock<Block> CRIMSON_LUMINIS_BLOCK = BLOCKS.register("crimson_luminis_block", () -> new Block(CRIMSON_LUMINIS_PROPERTIES));

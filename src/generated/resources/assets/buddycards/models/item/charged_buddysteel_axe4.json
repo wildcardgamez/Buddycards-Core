@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "buddycards:item/charged_buddysteel_axe4"
+  }
+}

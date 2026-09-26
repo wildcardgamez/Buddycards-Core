@@ -34,9 +34,14 @@ public class RecipeGen extends VanillaRecipeProvider {
         generateTieredBuddysteelRecipes("charged_buddysteel_chestplate", BUDDYSTEEL_CHESTPLATE.toStack(), CHARGED_BUDDYSTEEL_CHESTPLATE.toStack(), recipeOutput);
         generateTieredBuddysteelRecipes("charged_buddysteel_leggings", BUDDYSTEEL_LEGGINGS.toStack(), CHARGED_BUDDYSTEEL_LEGGINGS.toStack(), recipeOutput);
         generateTieredBuddysteelRecipes("charged_buddysteel_boots", BUDDYSTEEL_BOOTS.toStack(), CHARGED_BUDDYSTEEL_BOOTS.toStack(), recipeOutput);
+        generateTieredBuddysteelRecipes("charged_buddysteel_sword", BUDDYSTEEL_SWORD.toStack(), CHARGED_BUDDYSTEEL_SWORD.toStack(), recipeOutput);
+        generateTieredBuddysteelRecipes("charged_buddysteel_axe", BUDDYSTEEL_AXE.toStack(), CHARGED_BUDDYSTEEL_AXE.toStack(), recipeOutput);
+        generateTieredBuddysteelRecipes("charged_buddysteel_pickaxe", BUDDYSTEEL_PICKAXE.toStack(), CHARGED_BUDDYSTEEL_PICKAXE.toStack(), recipeOutput);
+        generateTieredBuddysteelRecipes("charged_buddysteel_shovel", BUDDYSTEEL_SHOVEL.toStack(), CHARGED_BUDDYSTEEL_SHOVEL.toStack(), recipeOutput);
+        generateTieredBuddysteelRecipes("charged_buddysteel_hoe", BUDDYSTEEL_HOE.toStack(), CHARGED_BUDDYSTEEL_HOE.toStack(), recipeOutput);
     }
 
-    static void generateMedalRecipes(BuddycardSet set, RecipeOutput recipeOutput) {
+    protected static void generateMedalRecipes(BuddycardSet set, RecipeOutput recipeOutput) {
         ItemStack medal = set.getMedal().getDefaultInstance();
         recipeOutput.accept(Buddycards.buddycardsLocation("buddysteel_medal_" + set.getName()),
                 new BuddysteelChargingRecipe(medal, ingredientOf(BLANK_BUDDYSTEEL_MEDAL.get()),
@@ -60,7 +65,7 @@ public class RecipeGen extends VanillaRecipeProvider {
                         4, 1, set.getName()), null);
     }
 
-    static void generateTieredBuddysteelRecipes(String name, ItemStack basic, ItemStack charged, RecipeOutput recipeOutput) {
+    protected static void generateTieredBuddysteelRecipes(String name, ItemStack basic, ItemStack charged, RecipeOutput recipeOutput) {
         recipeOutput.accept(Buddycards.buddycardsLocation(name),
                 new BuddysteelChargingRecipe(charged, Ingredient.of(basic),
                         doubleIngredients(ingredientOf(LUMINIS.get()), ingredientOf(ZYLEX.get())),
@@ -83,21 +88,21 @@ public class RecipeGen extends VanillaRecipeProvider {
                         4, 1, "all"), null);
     }
 
-    static ItemStack itemCopyWithTier(ItemStack stack, int tier) {
+    protected static ItemStack itemCopyWithTier(ItemStack stack, int tier) {
         stack = stack.copy();
         stack.set(BuddycardsComponents.COLLECTION_TIER, tier);
         return stack;
     }
 
-    static Ingredient ingredientOf(Item item) {
+    protected static Ingredient ingredientOf(Item item) {
         return Ingredient.of(item.getDefaultInstance());
     }
 
-    static NonNullList<Ingredient> doubleIngredients(Ingredient ingredient1, Ingredient ingredient2) {
+    protected static NonNullList<Ingredient> doubleIngredients(Ingredient ingredient1, Ingredient ingredient2) {
         return NonNullList.of(ingredient1, ingredient1, ingredient2, ingredient1, ingredient2);
     }
 
-    static NonNullList<Ingredient> sameIngredient(Ingredient ingredient) {
+    protected static NonNullList<Ingredient> sameIngredient(Ingredient ingredient) {
         return NonNullList.withSize(4, ingredient);
     }
 }

@@ -1,0 +1,28 @@
+{
+  "type": "buddycards:buddysteel_charging",
+  "ingredients": [
+    {
+      "item": "buddycards:true_perfect_buddysteel_ingot"
+    },
+    {
+      "item": "buddycards:true_perfect_buddysteel_ingot"
+    },
+    {
+      "item": "buddycards:true_perfect_buddysteel_ingot"
+    },
+    {
+      "item": "buddycards:true_perfect_buddysteel_ingot"
+    }
+  ],
+  "input": {
+    "item": "buddycards:charged_buddysteel_pickaxe"
+  },
+  "output": {
+    "components": {
+      "buddycards:tier": 4
+    },
+    "count": 1,
+    "id": "buddycards:charged_buddysteel_pickaxe"
+  },
+  "tier": 4
+}
