@@ -4,6 +4,7 @@ import com.wildcard.buddycards.registries.BuddycardsComponents;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
@@ -11,8 +12,8 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 import java.util.function.Supplier;
 
-public class CollectionTieredPickaxeItem extends PickaxeItem implements ICollectionTieredItem {
-    public CollectionTieredPickaxeItem(Tier[] tiers, Properties properties, ExtraAttributes attributes) {
+public class CollectionTieredAxeItem extends AxeItem implements ICollectionTieredItem {
+    public CollectionTieredAxeItem(Tier[] tiers, Properties properties, ExtraAttributes attributes) {
         super(tiers[0], properties.component(BuddycardsComponents.COLLECTION_TIER, 0).durability(tiers[0].getUses()));
         this.tiers = tiers;
         this.tieredModifiers = new Supplier[4];

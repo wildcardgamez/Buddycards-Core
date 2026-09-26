@@ -6,13 +6,14 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 import java.util.function.Supplier;
 
-public class CollectionTieredPickaxeItem extends PickaxeItem implements ICollectionTieredItem {
-    public CollectionTieredPickaxeItem(Tier[] tiers, Properties properties, ExtraAttributes attributes) {
+public class CollectionTieredSwordItem extends SwordItem implements ICollectionTieredItem {
+    public CollectionTieredSwordItem(Tier[] tiers, Properties properties, ExtraAttributes attributes) {
         super(tiers[0], properties.component(BuddycardsComponents.COLLECTION_TIER, 0).durability(tiers[0].getUses()));
         this.tiers = tiers;
         this.tieredModifiers = new Supplier[4];
