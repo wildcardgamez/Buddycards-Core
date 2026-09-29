@@ -53,7 +53,7 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 11);
             }),
             SoundEvents.ARMOR_EQUIP_IRON,
-            12, 1, 0, BuddycardsItems.BUDDYSTEEL_INGOT);
+            12, 1, 0, () -> Ingredient.of(BuddycardsItems.BUDDYSTEEL_INGOT));
     public static final Holder<ArmorMaterial> LUMINIS_ARMOR = registerArmorMaterial("luminis",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 3);
@@ -63,7 +63,7 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 11);
             }),
             SoundEvents.ARMOR_EQUIP_IRON,
-            12, 1, 0, BuddycardsItems.CRIMSON_LUMINIS);
+            12, 1, 0, () -> Ingredient.of(BuddycardsItems.CRIMSON_LUMINIS));
     public static final Holder<ArmorMaterial> ZYLEX_ARMOR = registerArmorMaterial("zylex",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 3);
@@ -73,7 +73,7 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 11);
             }),
             SoundEvents.ARMOR_EQUIP_IRON,
-            12, 1, 0, BuddycardsItems.VOID_ZYLEX);
+            12, 1, 0, () -> Ingredient.of(BuddycardsItems.VOID_ZYLEX));
     public static final Holder<ArmorMaterial> CHARGED_BUDDYSTEEL_ARMOR = registerArmorMaterial("charged_buddysteel",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 3);
@@ -83,7 +83,7 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 11);
             }),
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            13, 2, 0, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
+            13, 2, 0, () -> Ingredient.of(BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT));
     public static final Holder<ArmorMaterial> MIXED_BUDDYSTEEL_ARMOR = registerArmorMaterial("mixed_buddysteel",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 3);
@@ -93,7 +93,7 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 11);
             }),
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            13, 3, 0f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
+            13, 3, 0f, () -> Ingredient.of(BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT));
     public static final Holder<ArmorMaterial> PERFECT_BUDDYSTEEL_ARMOR = registerArmorMaterial("perfect_buddysteel",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 3);
@@ -103,7 +103,7 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 11);
             }),
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            15, 3, 0.05f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
+            15, 3, 0.05f, () -> Ingredient.of(BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT));
     public static final Holder<ArmorMaterial> TRUE_PERFECT_BUDDYSTEEL_ARMOR = registerArmorMaterial("true_perfect_buddysteel",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 4);
@@ -113,7 +113,7 @@ public class BuddycardsMisc {
                 map.put(ArmorItem.Type.BODY, 13);
             }),
             SoundEvents.ARMOR_EQUIP_DIAMOND,
-            15, 3, 0.1f, BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT);
+            15, 3, 0.1f, () -> Ingredient.of(BuddycardsItems.CHARGED_BUDDYSTEEL_INGOT));
 
     //Menus
     public static final DeferredHolder<MenuType<?>, MenuType<BinderMenu>> BINDER_MENU = MENUS.register("binder", () -> new MenuType<>(BinderMenu::new, FeatureFlags.DEFAULT_FLAGS));
@@ -168,9 +168,8 @@ public class BuddycardsMisc {
                 }
             });
 
-    private static Holder<ArmorMaterial> registerArmorMaterial(String name, EnumMap<ArmorItem.Type, Integer> typeProtection, Holder<SoundEvent> equipSound, int enchantability, float toughness, float knockbackResistance, Supplier<Item> ingredientItem) {
+    private static Holder<ArmorMaterial> registerArmorMaterial(String name, EnumMap<ArmorItem.Type, Integer> typeProtection, Holder<SoundEvent> equipSound, int enchantability, float toughness, float knockbackResistance, Supplier<Ingredient> ingredient) {
         ResourceLocation location = Buddycards.buddycardsLocation(name);
-        Supplier<Ingredient> ingredient = () -> Ingredient.of(ingredientItem.get());
         List<ArmorMaterial.Layer> layers = List.of(new ArmorMaterial.Layer(location));
 
         EnumMap<ArmorItem.Type, Integer> typeMap = new EnumMap<>(ArmorItem.Type.class);
@@ -178,6 +177,6 @@ public class BuddycardsMisc {
             typeMap.put(type, typeProtection.get(type));
         }
 
-        return ARMOR_MATERIALS.register(name, () -> new ArmorMaterial(typeProtection, enchantability, equipSound, ingredient, layers, toughness, knockbackResistance));
+        return ARMOR_MATERIALS.register(name, () -> new ArmorMaterial(typeMap, enchantability, equipSound, ingredient, layers, toughness, knockbackResistance));
     }
 }
