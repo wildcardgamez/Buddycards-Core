@@ -127,7 +127,7 @@ public class BuddycardsMisc {
             .icon(() -> BuddycardsItems.PACK_BASE.get().asItem().getDefaultInstance())
             .displayItems((a, b) -> {
                 for (DeferredHolder<Item, ? extends Item> i : BuddycardsItems.ITEMS.getEntries()) {
-                    if (!(i.get() instanceof BuddycardItem))
+                    if (!(i.get() instanceof BuddycardItem) && !(i.get() instanceof ICollectionTieredItem))
                         b.accept(i.get());
                 }
             })

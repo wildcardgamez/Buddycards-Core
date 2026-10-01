@@ -114,18 +114,15 @@ public class BuddycardsItems {
     public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_LEGGINGS = ITEMS.register("charged_buddysteel_leggings", () -> new CollectionTieredArmorItem(TIERED_BUDDYSTEEL_ARMOR_MATERIALS, ArmorItem.Type.LEGGINGS, TIERED_SPEED_ATTRIBUTE));
     public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_BOOTS = ITEMS.register("charged_buddysteel_boots", () -> new CollectionTieredArmorItem(TIERED_BUDDYSTEEL_ARMOR_MATERIALS, ArmorItem.Type.BOOTS, TIERED_SPEED_ATTRIBUTE));
     public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_SWORD = ITEMS.register("charged_buddysteel_sword", () -> new CollectionTieredSwordItem(TIERED_BUDDYSTEEL_TOOL_TIERS,
-            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).attributes(SwordItem.createAttributes(BuddycardsToolTier.CHARGED_BUDDYSTEEL, 3, -2.4F)), (builder, tier, slot) -> {
-        if (tier > 0)
-            builder.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, (0.5 * tier), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
-    }));
+            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), null));
     public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_SHOVEL = ITEMS.register("charged_buddysteel_shovel", () -> new CollectionTieredShovelItem(TIERED_BUDDYSTEEL_TOOL_TIERS,
-            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).attributes(ShovelItem.createAttributes(BuddycardsToolTier.BUDDYSTEEL, 1F, -3.0F)), null));
+            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), null));
     public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_PICKAXE = ITEMS.register("charged_buddysteel_pickaxe", () -> new CollectionTieredPickaxeItem(TIERED_BUDDYSTEEL_TOOL_TIERS,
-            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).attributes(PickaxeItem.createAttributes(BuddycardsToolTier.BUDDYSTEEL, 0.5F, -2.8F)), null));
+            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), null));
     public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_AXE = ITEMS.register("charged_buddysteel_axe", () -> new CollectionTieredAxeItem(TIERED_BUDDYSTEEL_TOOL_TIERS,
-            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).attributes(AxeItem.createAttributes(BuddycardsToolTier.BUDDYSTEEL, 5.0F, -3.05F)), null));
+            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), null));
     public static final DeferredItem<Item> CHARGED_BUDDYSTEEL_HOE = ITEMS.register("charged_buddysteel_hoe", () -> new CollectionTieredHoeItem(TIERED_BUDDYSTEEL_TOOL_TIERS,
-            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).attributes(HoeItem.createAttributes(BuddycardsToolTier.BUDDYSTEEL, -3F, -0.5F)), null));
+            new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), null));
     //Tiered Medals
     public static final DeferredItem<Item> BLANK_BUDDYSTEEL_MEDAL = ITEMS.register("blank_buddysteel_medal", () -> new Item(DEFAULT_CURIO_PROPERTIES));
     public static final DeferredItem<BuddysteelSetMedalItem> MEDAL_BASE = ITEMS.register("buddysteel_medal_base", () -> new BuddysteelSetMedalItem(MedalTypes.BASE_SET, BASE_SET, new Item.Properties().stacksTo(1).component(BuddycardsComponents.COLLECTION_TIER, 0)));

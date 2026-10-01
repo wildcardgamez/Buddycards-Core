@@ -28,7 +28,7 @@ public class CollectionTieredArmorItem extends ArmorItem implements ICollectionT
         tieredModifiers = new Supplier[4];
         for (int i = 0; i < 4; i++) {
             int finalI = i;
-            tieredModifiers[i] = Suppliers.memoize(() -> {
+            tieredModifiers[i] = () -> {
                 ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
                 EquipmentSlotGroup equipmentslotgroup = EquipmentSlotGroup.bySlot(type.getSlot());
                 ResourceLocation resourcelocation = ResourceLocation.withDefaultNamespace("armor." + type.getName());
@@ -41,9 +41,12 @@ public class CollectionTieredArmorItem extends ArmorItem implements ICollectionT
                 if (attributes != null)
                     attributes.applyAttributes(builder, finalI, equipmentslotgroup);
                 return builder.build();
-            });
+            };
         }
     }
+
+    protected final Supplier<ItemAttributeModifiers>[] tieredModifiers;
+    protected final Holder<ArmorMaterial>[] tieredMaterials;
 
     @Override
     public Component getName(ItemStack stack) {
@@ -56,14 +59,12 @@ public class CollectionTieredArmorItem extends ArmorItem implements ICollectionT
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
-    protected final Supplier<ItemAttributeModifiers>[] tieredModifiers;
-    protected final Holder<ArmorMaterial>[] tieredMaterials;
-
     @Override
     public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
         return tieredModifiers[getCollectionTier(stack)].get();
     }
 
+    @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
         return this.tieredMaterials[getCollectionTier(toRepair)].value().repairIngredient().get().test(repair);
     }

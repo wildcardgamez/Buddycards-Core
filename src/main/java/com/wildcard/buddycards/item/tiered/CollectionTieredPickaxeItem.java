@@ -1,14 +1,17 @@
 package com.wildcard.buddycards.item.tiered;
 
 import com.wildcard.buddycards.registries.BuddycardsComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class CollectionTieredPickaxeItem extends PickaxeItem implements ICollectionTieredItem {
@@ -20,8 +23,8 @@ public class CollectionTieredPickaxeItem extends PickaxeItem implements ICollect
             int finalI = i;
             this.tieredModifiers[i] = () -> {
                 ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
-                        builder.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, tiers[finalI].getAttackDamageBonus() + (0.5 * finalI), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
-                        builder.add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, tiers[finalI].getSpeed(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+                        builder.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 0.5 + tiers[finalI].getAttackDamageBonus() + (0.5 * finalI), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
+                        builder.add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.8f, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND);
                 if (attributes != null)
                     attributes.applyAttributes(builder, finalI, EquipmentSlotGroup.MAINHAND);
                 return builder.build();
@@ -32,6 +35,18 @@ public class CollectionTieredPickaxeItem extends PickaxeItem implements ICollect
     final Tier[] tiers;
     private final Supplier<ItemAttributeModifiers>[] tieredModifiers;
 
+    @Override
+    public Component getName(ItemStack stack) {
+        return getCollectionTier(stack) == 3 ? Component.translatable(getDescriptionId() + ".perfect") : super.getName(stack);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(getCollectionTierComponent(stack));
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+    }
+
+    @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
         return this.tiers[getCollectionTier(toRepair)].getRepairIngredient().test(repair);
     }

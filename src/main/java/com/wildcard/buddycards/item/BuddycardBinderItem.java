@@ -5,6 +5,7 @@ import com.wildcard.buddycards.core.BuddycardSet;
 import com.wildcard.buddycards.core.CardInfo;
 import com.wildcard.buddycards.enchantment.EnchantmentKeys;
 import com.wildcard.buddycards.menu.BinderMenu;
+import com.wildcard.buddycards.registries.BuddycardsComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -81,6 +82,6 @@ public class BuddycardBinderItem extends Item implements ICardInfoProviderItem {
     }
 
     public Stream<CardInfo> getAllCardInfo(ItemStack stack, Player player) {
-        return stack.get(DataComponents.CONTAINER).stream().filter(i -> i.getItem() instanceof BuddycardItem).map(BuddycardItem::getCardInfo).distinct();
+        return stack.get(BuddycardsComponents.BINDER).stream().filter(i -> i.getItem() instanceof BuddycardItem).map(BuddycardItem::getCardInfo).distinct();
     }
 }
